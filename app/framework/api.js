@@ -26,7 +26,7 @@ var api = {
     getAddresses: function (idPerson) {
       return api.getEmber('Addresses/?idPerson=' + idPerson);
     },
-    getAddressSchema: function (idPerson) {
+    getAddressSchema: function () {
       return api.getEmber('Addresses/schema/');
     },
     getLanguages: function () {
@@ -382,12 +382,12 @@ var api = {
     api.call('GET', relativeUrl, null, success, error, ignoreToken, headers);
   },
   getEmber: function (relativeUrl, doHandledUnhandled) {
-    return new Promise(function (resolve, reject) {
+    return new Promise(function (resolve) {
       api.get(relativeUrl,
         function (data) {
           resolve(data);
         },
-        function (jqXHR, textStatus, errorThrown) {
+        function (jqXHR) {
           if (jqXHR.status === 409) {
             resolve({
               hasError: true,
@@ -477,11 +477,6 @@ var api = {
   },
 
   handleError: function (method, url, error, jqXHR, textStatus, errorThrown) {
-    if (jqXHR.status === 200) {
-      if (success)
-        success();
-      return;
-    }
     var doInstrumentation = true;
     if (error)
       doInstrumentation = error(jqXHR, textStatus, errorThrown);

@@ -71,7 +71,7 @@ var storage = {
   tempInvoice: function (value) {
     return storage.sessionStoreItem('tempInvoice', value);
   },
-  removeTempInvoice: function (value) {
+  removeTempInvoice: function () {
     storage.removeSessionStoreItem('tempInvoice');
   },
 
@@ -95,7 +95,7 @@ var storage = {
     return storage.sessionStoreItem('selectedEventDesignation', value);
   },
 
-  removeSelectedSubscriptionInfo: function (value) {
+  removeSelectedSubscriptionInfo: function () {
     storage.removeSessionStoreItem('selectedIdSubscription');
     storage.removeSessionStoreItem('selectedEventDesignation');
   },
@@ -104,7 +104,7 @@ var storage = {
     return storage.sessionStoreItem('entryPointUrl', value);
   },
 
-  removeEntryPointUrl: function (value) {
+  removeEntryPointUrl: function () {
     storage.removeSessionStoreItem('entryPointUrl');
   },
 
