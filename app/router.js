@@ -7,6 +7,7 @@ const Router = EmberRouter.extend({
 });
 
 Router.map(function() {
+  this.route('list', {path: '/:area_of_education'});
 });
 
 export default Router;
