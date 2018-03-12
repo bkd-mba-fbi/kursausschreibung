@@ -20,5 +20,12 @@ module.exports = function(defaults) {
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
 
+  // uikit css
+  app.import('node_modules/uikit/dist/css/uikit.css');
+
+  // uikit js
+  app.import('node_modules/uikit/dist/js/uikit.js');
+  app.import('node_modules/uikit/dist/js/uikit-icons.js');
+
   return app.toTree();
 };

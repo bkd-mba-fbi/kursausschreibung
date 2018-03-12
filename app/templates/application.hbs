@@ -1,5 +1,80 @@
-{{!-- The following component displays Ember's default welcome message. --}}
-{{welcome-page}}
-{{!-- Feel free to remove this! --}}
+<div class="uk-width-1-1">
+  <ul uk-tab class="uk-width-1-1 uk-margin-top">
+    <li class="uk-active">
+      <a href="#">Ausbildung</a>
+    </li>
+    <li>
+      <a href="#">Weiterbildung</a>
+    </li>
+  </ul>
 
-{{outlet}}
+  <div class="uk-flex uk-flex-top uk-flex-wrap">
+    <!-- LEFT -->
+    <div class="uk-visible@m uk-width-1-4@m">
+      <div class="uk-card uk-card-default uk-card-small uk-card-body">
+        <h2 class="uk-h3">Ausbildung</h2>
+        <ul class="uk-list">
+          <li>
+            <a href="#" class="uk-link-muted">Kursübersicht</a>
+          </li>
+          <li>
+            <a href="#" class="uk-link-muted">Kategorie 1</a>
+          </li>
+          <li>
+            <a href="#" class="uk-link-muted">Kategorie 2</a>
+          </li>
+          <li>
+            <a href="#" class="uk-link-muted">Kategorie 3</a>
+          </li>
+          <li>
+            <a href="#" class="uk-link-muted">Kategorie 4</a>
+          </li>
+          <li>
+            <a href="#" class="uk-link-muted">Kategorie 5</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- CENTER -->
+    <div class="uk-width-3-4@m uk-width-1-2@l center-container uk-margin-bottom">
+      {{outlet}}
+    </div>
+
+    <!-- RIGHT -->
+    <div class="uk-width-1-4@l">
+
+      <!-- LOGO -->
+      <img class="uk-margin uk-preserve-width" src="{{rootURL}}assets/images/logo.jpg">
+
+      <!-- LEGEND -->
+      <div class="uk-margin uk-card uk-card-default uk-card-small uk-card-body">
+        <h2 class="uk-h3 uk-card-title">Legende</h2>
+
+        <ul class="uk-list uk-list-divider">
+          <li>
+            <span class="lamp-green" uk-tooltip="Freie Plätze vorhanden"></span>Freie Plätze vorhanden</li>
+          <li>
+            <span class="lamp-orange" uk-tooltip="Anmeldefrist abgelaufen"></span>Anmeldefrist abgelaufen</li>
+          <li>
+            <span class="lamp-red" uk-tooltip="Alle Plätze belegt"></span>Alle Plätze belegt</li>
+        </ul>
+      </div>
+
+      <!-- CONTACT -->
+      <div class="uk-margin uk-card uk-card-default uk-card-small uk-card-body">
+        <h2 class="uk-h3 uk-card-title">Kontakt</h2>
+        <p>Kasernenstrasse 27
+          <br> Postfach
+          <br> 3000 Bern 22
+          <br> Telefon: 031 633 87 00
+        </p>
+      </div>
+
+      <!-- TWEETS -->
+      <div class="uk-margin uk-card uk-card-default uk-card-small uk-card-body uk-visible@l">
+        {{twitter-feed username="erz_kantonbern"}}
+      </div>
+    </div>
+  </div>
+</div>

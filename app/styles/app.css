@@ -1,0 +1,65 @@
+@import 'progress-bar.css';
+
+/*
+  TODO (maybe) use scss
+  https://ember-cli.com/asset-compilation
+  https://getuikit.com/docs/sass
+*/
+.lamp-red, .lamp-green, .lamp-orange, .lamp-yellow {
+  display: inline-block;
+  height: 16px;
+  width: 16px;
+  border-radius: 8px;
+  margin-right: 8px;
+}
+
+.lamp-red {
+  background-color: red;
+}
+
+.lamp-green {
+  background-color: green;
+}
+
+.lamp-orange {
+  background-color: orange;
+}
+
+.lamp-yellow {
+  background-color: yellow;
+}
+
+.details-table>tbody>tr>td:first-child {
+  padding-right: 15px;
+  font-weight: bolder;
+}
+
+/* mobile */
+
+@media (max-width: 959px) {
+  .subscribe-button {
+    position: fixed;
+    bottom: 0px;
+    min-width: 200px;
+    left: calc((100vw - 200px) / 2);
+    z-index: 200;
+    /* always on top */
+  }
+}
+
+/* tablet or larger */
+
+@media (min-width: 960px) {
+  .center-container {
+    padding-left: 40px;
+  }
+}
+
+/* desktop */
+
+@media (min-width: 1200px) {
+  .center-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+}

@@ -1,25 +1,60 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Kursausschreibung</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Kursausschreibung</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {{content-for "head"}}
 
-    {{content-for "head"}}
+  <link integrity="" rel="stylesheet" href="{{rootURL}}assets/vendor.css">
+  <link integrity="" rel="stylesheet" href="{{rootURL}}assets/kursausschreibung.css">
 
-    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/vendor.css">
-    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/kursausschreibung.css">
+  <style>
+    /* this is not part of the module itself */
 
-    {{content-for "head-footer"}}
-  </head>
-  <body>
-    {{content-for "body"}}
+    .dummy-header {
+      background-color: #e3001a;
+    }
 
-    <script src="{{rootURL}}assets/vendor.js"></script>
-    <script src="{{rootURL}}assets/kursausschreibung.js"></script>
+    .dummy-header>h1 {
+      color: white;
+      margin-bottom: 0px;
+    }
 
-    {{content-for "body-footer"}}
-  </body>
+    .dummy-footer {
+      background-color: #18184b;
+    }
+
+    .dummy-footer>h1 {
+      color: #bddeff;
+      margin-bottom: 0px;
+    }
+  </style>
+
+  {{content-for "head-footer"}}
+</head>
+<body>
+  {{content-for "body"}}
+
+  <!-- HEADER -->
+  <div class="uk-padding-small uk-width-1-1 dummy-header">
+    <h1 class="uk-h3">Header</h1>
+  </div>
+
+  <!-- MAIN APPLICATION -->
+  <div id="kursausschreibung-root" class="uk-container uk-width-1-1"></div>
+
+
+  <!-- FOOTER -->
+  <div class="uk-padding-small uk-width-1-1 dummy-footer">
+    <h1 class="uk-h3">Footer</h1>
+  </div>
+
+  <script src="{{rootURL}}assets/vendor.js"></script>
+  <script src="{{rootURL}}assets/kursausschreibung.js"></script>
+
+  {{content-for "body-footer"}}
+</body>
 </html>
