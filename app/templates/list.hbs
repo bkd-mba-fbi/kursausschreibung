@@ -53,29 +53,7 @@
 <!-- LIST OF EVENTS -->
 <ul class="uk-list uk-list-divider">
   {{#each model as |event|}}
-  <li>
-    <a class="event-list-item uk-link-reset" href="details.html">
-      <h3 class="uk-margin-small">
-        <span class="lamp-green" uk-tooltip="Freie Plätze vorhanden"></span>Anlass {{event.Id}}
-      </h3>
-      <table class="details-table">
-        <tbody>
-          <tr>
-            <td>Start</td>
-            <td>{{event.SubscriptionDateFrom}}</td>
-          </tr>
-          <tr>
-            <td>Ort</td>
-            <td>{{event.Location}}</td>
-          </tr>
-          <tr>
-            <td>Preis</td>
-            <td>{{event.Price}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </a>
-  </li>
+    {{event-list-item event=event}}
   {{/each}}
 </ul>
 

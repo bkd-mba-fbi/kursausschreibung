@@ -1,0 +1,21 @@
+<a class="event-list-item uk-link-reset" href="details.html">
+  <h3 class="uk-margin-small">
+    {{status-lamp status=status}}{{event.Designation}}
+  </h3>
+  <table class="details-table">
+    <tbody>
+      <tr>
+        <td>Start</td>
+        <td>{{event.SubscriptionDateFrom}} (TODO: format this)</td>
+      </tr>
+      <tr>
+        <td>Ort</td>
+        <td>{{event.Location}}</td>
+      </tr>
+      <tr>
+        <td>Preis</td>
+        <td>CHF {{event.Price}}</td>
+      </tr>
+    </tbody>
+  </table>
+</a>

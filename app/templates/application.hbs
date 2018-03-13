@@ -53,11 +53,13 @@
 
         <ul class="uk-list uk-list-divider">
           <li>
-            <span class="lamp-green" uk-tooltip="Freie Plätze vorhanden"></span>Freie Plätze vorhanden</li>
+            {{status-lamp status="green"}}Freie Plätze vorhanden</li>
           <li>
-            <span class="lamp-orange" uk-tooltip="Anmeldefrist abgelaufen"></span>Anmeldefrist abgelaufen</li>
+            {{status-lamp status="yellow"}}Anmeldefrist abgelaufen</li>
           <li>
-            <span class="lamp-red" uk-tooltip="Alle Plätze belegt"></span>Alle Plätze belegt</li>
+            {{status-lamp status="red"}}Alle Plätze belegt</li>
+            <li>
+            {{status-lamp status="orange"}}Anmeldung im Internet nicht möglich</li>
         </ul>
       </div>
 
