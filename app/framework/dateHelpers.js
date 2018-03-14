@@ -1,5 +1,3 @@
-import $ from 'jquery';
-
 function datesEqual(date1, date2) {
   date1 = this.getDate(date1);
   date2 = this.getDate(date2);
