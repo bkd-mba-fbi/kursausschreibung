@@ -6,8 +6,7 @@ import config from './config/environment';
 const App = Application.extend({
   modulePrefix: config.modulePrefix,
   podModulePrefix: config.podModulePrefix,
-  Resolver,
-  rootElement: '#kursausschreibung-root'
+  Resolver
 });
 
 loadInitializers(App, config.modulePrefix);
