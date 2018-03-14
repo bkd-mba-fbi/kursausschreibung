@@ -1,10 +1,15 @@
 @import 'progress-bar.css';
-
 /*
   TODO (maybe) use scss
   https://ember-cli.com/asset-compilation
   https://getuikit.com/docs/sass
 */
+
+.event-list-item:hover {
+  display: block;
+  background-color: #f7f2f1;
+}
+
 .lamp-red, .lamp-green, .lamp-orange, .lamp-yellow {
   display: inline-block;
   height: 16px;
