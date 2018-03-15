@@ -6,93 +6,13 @@
 <div class="uk-margin">
   <form class="uk-search uk-search-default">
     <span uk-search-icon></span>
-    {{input class="uk-search-input" type="search" placeholder="Suche..." value=searchString}}
+    {{input class="uk-search-input" type="search" placeholder="Suche..." value=query}}
   </form>
 </div>
 
-<ul class="uk-pagination" uk-margin>
-  <li>
-    <a href="#">
-      <span uk-pagination-previous></span>
-    </a>
-  </li>
-  <li>
-    <a href="#">1</a>
-  </li>
-  <li class="uk-disabled">
-    <span>...</span>
-  </li>
-  <li>
-    <a href="#">5</a>
-  </li>
-  <li>
-    <a href="#">6</a>
-  </li>
-  <li class="uk-active">
-    <span>7</span>
-  </li>
-  <li>
-    <a href="#">8</a>
-  </li>
-  <li>
-    <a href="#">9</a>
-  </li>
-  <li class="uk-disabled">
-    <span>...</span>
-  </li>
-  <li>
-    <a href="#">20</a>
-  </li>
-  <li>
-    <a href="#">
-      <span uk-pagination-next></span>
-    </a>
-  </li>
-</ul>
-
 <!-- LIST OF EVENTS -->
-<ul class="uk-list uk-list-divider">
-  {{#each events as |event|}}
+{{#list-pagination page=page items=events as |eventsOnCurrentPage|}}
+  {{#each eventsOnCurrentPage as |event|}}
     {{event-list-item event=event}}
   {{/each}}
-</ul>
-
-<ul class="uk-pagination uk-margin">
-  <li>
-    <a href="#">
-      <span uk-pagination-previous></span>
-    </a>
-  </li>
-  <li>
-    <a href="#">1</a>
-  </li>
-  <li class="uk-disabled">
-    <span>...</span>
-  </li>
-  <li>
-    <a href="#">5</a>
-  </li>
-  <li>
-    <a href="#">6</a>
-  </li>
-  <li class="uk-active">
-    <span>7</span>
-  </li>
-  <li>
-    <a href="#">8</a>
-  </li>
-  <li>
-    <a href="#">9</a>
-  </li>
-  <li class="uk-disabled">
-    <span>...</span>
-  </li>
-  <li>
-    <a href="#">20</a>
-  </li>
-  <li>
-    <a href="#">
-      <span uk-pagination-next></span>
-    </a>
-  </li>
-</ul>
+{{/list-pagination}}
