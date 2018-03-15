@@ -3,16 +3,11 @@
   Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
   aliquyam erat, sed diam voluptua. At vero eos et accusam et.</p>
 
-<div class="uk-margin">
-  <form class="uk-search uk-search-default">
-    <span uk-search-icon></span>
-    {{input class="uk-search-input" type="search" placeholder="Suche..." value=query}}
-  </form>
-</div>
-
 <!-- LIST OF EVENTS -->
-{{#list-pagination page=page items=events as |eventsOnCurrentPage|}}
-  {{#each eventsOnCurrentPage as |event|}}
-    {{event-list-item event=event}}
-  {{/each}}
-{{/list-pagination}}
+{{#list-search queryChanged=(action 'queryChanged') items=model query=query as |filteredEvents|}}
+  {{#list-pagination page=page items=filteredEvents as |eventsOnCurrentPage|}}
+    {{#each eventsOnCurrentPage as |event|}}
+      {{event-list-item event=event}}
+    {{/each}}
+  {{/list-pagination}}
+{{/list-search}}
