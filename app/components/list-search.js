@@ -1,31 +1,20 @@
 import Component from '@ember/component';
-import { observer, computed } from "@ember/object";
-import { throttle } from '@ember/runloop';
-
-// context for throttle
-let myContext = { name: 'throttle' };
+import { oneWay } from '@ember/object/computed';
 
 export default Component.extend({
-  // the idea is this:
-  // when the user types something, the input changes
-  // inputChanged observes this and calls queryChanged
-  // throttled. queryChanged changes the query string
-  // (Actions up, Data down)
-  input: '',
-  query: '',
+  value: '',
+  filteredItems: oneWay('items'),
 
-  inputChanged: observer('input', function () {
-    throttle(myContext, () => {
-      this.get('queryChanged')(this.get('input'));
-    }, 200, false);
-  }),
+  actions: {
+    handleFilterEntry() {
+      let query = this.get('value');
 
-  filteredItems: computed('items', 'query', function () {
-    let query = this.get('query');
-    return this.get('items').filter((event) =>
-      event.Designation.toLowerCase()
-        .indexOf(this.get('query').toLowerCase()) !== -1
-    );
-  }),
+      this.set('filteredItems', this.get('items').filter((event) =>
+        event.Designation.toLowerCase()
+          .indexOf(query.toLowerCase()) !== -1
+      ));
 
+      this.get('queryChanged')(query);
+    }
+  }
 });
