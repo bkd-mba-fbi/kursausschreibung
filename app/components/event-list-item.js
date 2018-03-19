@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from "@ember/object";
-import { isInSubscriptionRange } from '../framework/dateHelpers';
+import { isInSubscriptionRange } from '../framework/date-helpers';
 
 export default Component.extend({
   tagName: 'li',
