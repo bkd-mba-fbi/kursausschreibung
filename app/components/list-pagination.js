@@ -1,15 +1,13 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import settings from '../framework/settings';
 
 // pages to show before and after the current page
 let n = 2;
 
-// number of items per page
-let itemsPerPage = 5;
-
 export default Component.extend({
   lastPage: computed('items', function () {
-    return Math.ceil(this.get('items').length / itemsPerPage);
+    return Math.ceil(this.get('items').length / settings.itemsPerPage);
   }),
 
   isFirstPage: computed('page', function () {
@@ -63,6 +61,6 @@ export default Component.extend({
   itemsOnCurrentPage: computed('items', 'page', function () {
     let page = this.get('page');
 
-    return this.get('items').slice(itemsPerPage * (page - 1), itemsPerPage * page);
+    return this.get('items').slice(settings.itemsPerPage * (page - 1), settings.itemsPerPage * page);
   })
 });
