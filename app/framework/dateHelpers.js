@@ -48,11 +48,6 @@ function isInSubscriptionRange(event) {
   let to = combineDate(event.SubscriptionDateTo, event.SubscriptionTimeTo);
   let now = new Date();
 
-
-  // the api seems to swap from to (to is always erlier than from)
-  // TODO: look into this
-  [from, to] = [to, from];
-
   return (now > from && now < to);
 }
 
