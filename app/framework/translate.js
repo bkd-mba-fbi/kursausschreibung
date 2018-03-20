@@ -8,6 +8,7 @@ export function init() {
   return new Promise(function (resolve, reject) {
     $.get({
       url: 'locale/de-CH.json',
+      dataType: 'json',
       success(response) { $.extend(locale, response); resolve(); }
     });
   });
