@@ -40,31 +40,12 @@
 }
 
 /* mobile */
-
 @media (max-width: 959px) {
   .subscribe-button {
     position: fixed;
     bottom: 0px;
     min-width: 200px;
     left: calc((100vw - 200px) / 2);
-    z-index: 200;
-    /* always on top */
-  }
-}
-
-/* tablet or larger */
-
-@media (min-width: 960px) {
-  .center-container {
-    padding-left: 40px;
-  }
-}
-
-/* desktop */
-
-@media (min-width: 1200px) {
-  .center-container {
-    padding-left: 40px;
-    padding-right: 40px;
+    z-index: 200; /* always on top */
   }
 }
