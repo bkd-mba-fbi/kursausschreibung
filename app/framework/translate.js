@@ -9,7 +9,16 @@ export function init() {
     $.get({
       url: 'locale/de-CH.json',
       dataType: 'json',
-      success(response) { $.extend(locale, response); resolve(); }
+
+      dataFilter(data) {
+        // remove comments
+        return data.replace(/\/\/.*/g, '');
+      },
+
+      success(response) {
+        $.extend(locale, response);
+        resolve();
+      }
     });
   });
 }

@@ -8,7 +8,16 @@ export function init() {
     $.get({
       url: 'settings.json',
       dataType: 'json',
-      success(response) { $.extend(settings, response); resolve(); }
+
+      dataFilter(data) {
+        // remove comments
+        return data.replace(/\/\/.*/g, '');
+      },
+
+      success(response) {
+        $.extend(settings, response);
+        resolve();
+      }
     });
   });
 }
