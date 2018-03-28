@@ -4,18 +4,12 @@
   </h3>
   <table class="details-table">
     <tbody>
+      {{#each fields as |field|}}
       <tr>
-        <td>Start</td>
-        <td>{{event.SubscriptionDateFrom}} (TODO: format this)</td>
+        <td>{{field.name}}</td>
+        <td>{{get event.displayData field.value}}</td>
       </tr>
-      <tr>
-        <td>Ort</td>
-        <td>{{event.Location}}</td>
-      </tr>
-      <tr>
-        <td>Preis</td>
-        <td>CHF {{event.Price}}</td>
-      </tr>
+      {{/each}}
     </tbody>
   </table>
 </a>

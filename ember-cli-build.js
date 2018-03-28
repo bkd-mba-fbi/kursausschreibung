@@ -35,5 +35,11 @@ module.exports = function (defaults) {
   app.import('node_modules/uikit/dist/js/uikit.js');
   app.import('node_modules/uikit/dist/js/uikit-icons.js');
 
+  // moment
+  app.import('node_modules/moment/moment.js');
+  app.import('node_modules/moment/locale/de-ch.js');
+  app.import('node_modules/moment/locale/fr-ch.js');
+  app.import('vendor/shims/moment.js');
+
   return app.toTree();
 };

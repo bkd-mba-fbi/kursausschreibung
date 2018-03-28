@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 function datesEqual(date1, date2) {
   date1 = this.getDate(date1);
   date2 = this.getDate(date2);
@@ -29,27 +31,16 @@ function getDate(date) {
 
 // combine date and time
 function combineDate(dateString, timeString) {
-  let date = new Date(dateString);
-
-  let [hours, minutes] = timeString
-    .split(':').map(str => parseInt(str));
-
-  date.setUTCHours(hours, minutes);
-
-  return date;
+  let [hours, minutes] = timeString.split(':').map(str => parseInt(str));
+  return moment(dateString).hours(hours).minutes(minutes);
 }
 
 // returns true when the current Date is between
 // SubscriptionDateFrom/SubscriptionTimeFrom and
-// SubscriptionDateTo/SubscriptionTimeTo
+// SubscriptionDateTo/Subscription  TimeTo
 function isInSubscriptionRange(event) {
-
-  let from = combineDate(event.SubscriptionDateFrom, event.SubscriptionTimeFrom);
-  let to = combineDate(event.SubscriptionDateTo, event.SubscriptionTimeTo);
-  let now = new Date();
-
-  return (now > from && now < to);
+  return moment().isBetween(event.SubscriptionFrom, event.SubscriptionTo);
 }
 
-export { datesEqual, isDateToday, getDate, isInSubscriptionRange };
+export { datesEqual, isDateToday, getDate, combineDate, isInSubscriptionRange };
 
