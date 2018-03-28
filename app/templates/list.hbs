@@ -4,10 +4,4 @@
   aliquyam erat, sed diam voluptua. At vero eos et accusam et.</p>
 
 <!-- LIST OF EVENTS -->
-{{#list-search queryChanged=(action 'queryChanged') items=model query=query as |filteredEvents|}}
-  {{#list-pagination page=page items=filteredEvents as |eventsOnCurrentPage|}}
-    {{#each eventsOnCurrentPage as |event|}}
-      {{event-list-item event=event}}
-    {{/each}}
-  {{/list-pagination}}
-{{/list-search}}
+{{event-list items=model queryChanged=(action 'queryChanged') page=page}}
