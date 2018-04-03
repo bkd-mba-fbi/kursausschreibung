@@ -1,5 +1,5 @@
 {
-  "itemsPerPage": 5,
+  "itemsPerPage": 10,
   "eventListFields": [
     {"name": "Start", "value": "SubscriptionFrom"},
     {"name": "Ort", "value": "Location"},
