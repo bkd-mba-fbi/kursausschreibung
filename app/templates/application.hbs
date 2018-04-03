@@ -1,37 +1,29 @@
 <div class="uk-width-1-1">
   <ul uk-tab class="uk-width-1-1 uk-margin-top">
-    <li class="uk-active">
-      {{#link-to "list" "ausbildung"}}Ausbildung{{/link-to}}
-    </li>
-    <li>
-      {{#link-to "list" "weiterbildung"}}Weiterbildung{{/link-to}}
-    </li>
+    {{#each-in model.eventsByArea as |area data|}}
+      {{!-- https://stackoverflow.com/questions/16380523/create-a-li-class-active-around-an-active-linkto#answer-18630506 --}}
+      {{#link-to  "list" area tagName='li' href=false activeClass="uk-active"}}
+        {{#link-to "list" area}}{{data.name}}{{/link-to}}
+      {{/link-to}}
+    {{/each-in}}
   </ul>
 
   <div class="uk-grid uk-margin" uk-grid>
     <!-- LEFT -->
+    {{!-- TODO: put this in list so the active event can be used --}}
+    {{!-- TODO: consider renaming list to area --}}
     <div class="uk-visible@m uk-width-1-4@m">
       <div class="uk-card uk-card-default uk-card-small uk-card-body">
-        <h2 class="uk-h3">Ausbildung</h2>
+        <h2 class="uk-h3">{{model.activeArea.name}}</h2>
         <ul class="uk-list">
           <li>
-            <a href="#" class="uk-link-muted">Kursübersicht</a>
+            {{#link-to "list" model.activeArea.key class="uk-link-muted" activeClass="uk-text-bold"}}Kursübersicht{{/link-to}}
           </li>
+          {{#each-in model.activeArea.categories as |category categoryData|}}
           <li>
-            <a href="#" class="uk-link-muted">Kategorie 1</a>
+            {{#link-to "list.category" model.activeArea.key category class="uk-link-muted" activeClass="uk-text-bold"}}{{categoryData.name}}{{/link-to}}
           </li>
-          <li>
-            <a href="#" class="uk-link-muted">Kategorie 2</a>
-          </li>
-          <li>
-            <a href="#" class="uk-link-muted">Kategorie 3</a>
-          </li>
-          <li>
-            <a href="#" class="uk-link-muted">Kategorie 4</a>
-          </li>
-          <li>
-            <a href="#" class="uk-link-muted">Kategorie 5</a>
-          </li>
+          {{/each-in}}
         </ul>
       </div>
     </div>
@@ -58,7 +50,7 @@
             {{status-lamp status="yellow"}}Anmeldefrist abgelaufen</li>
           <li>
             {{status-lamp status="red"}}Alle Plätze belegt</li>
-            <li>
+          <li>
             {{status-lamp status="orange"}}Anmeldung im Internet nicht möglich</li>
         </ul>
       </div>

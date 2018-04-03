@@ -1,7 +1,7 @@
 <div class="uk-margin">
   <form class="uk-search uk-search-default">
     <span uk-search-icon></span>
-    {{input class="uk-search-input" type="search" placeholder="Suche..." value=value key-up=(action 'handleFilterEntry')}}
+    {{input class="uk-search-input" type="search" placeholder="Suche..." value=value key-up=(action 'queryChanged')}}
   </form>
 </div>
 

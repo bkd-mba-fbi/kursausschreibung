@@ -1,4 +1,4 @@
-{{#list-search queryChanged=queryChanged items=items as |filteredEvents|}}
+{{#list-search queryChanged="queryChanged" items=items as |filteredEvents|}}
   {{#list-pagination page=page items=filteredEvents as |eventsOnCurrentPage|}}
     {{#each eventsOnCurrentPage as |event|}}
       {{event-list-item event=event}}

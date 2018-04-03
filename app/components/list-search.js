@@ -6,7 +6,7 @@ export default Component.extend({
   filteredItems: oneWay('items'),
 
   actions: {
-    handleFilterEntry() {
+    queryChanged() {
       let query = this.get('value');
 
       this.set('filteredItems', this.get('items').filter((event) =>
@@ -14,7 +14,7 @@ export default Component.extend({
           .indexOf(query.toLowerCase()) !== -1
       ));
 
-      this.get('queryChanged')(query);
+      this.sendAction('queryChanged', query);
     }
   }
 });
