@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import { Promise } from 'rsvp';
 
 let locale = {};
 
