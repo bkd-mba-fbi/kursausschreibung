@@ -17,7 +17,7 @@
         <h2 class="uk-h3">{{model.activeArea.name}}</h2>
         <ul class="uk-list">
           <li>
-            {{#link-to "list" model.activeArea.key class="uk-link-muted" activeClass="uk-text-bold"}}Kursübersicht{{/link-to}}
+            {{#link-to "list.index" model.activeArea.key class="uk-link-muted" activeClass="uk-text-bold"}}Kursübersicht{{/link-to}}
           </li>
           {{#each-in model.activeArea.categories as |category categoryData|}}
           <li>
