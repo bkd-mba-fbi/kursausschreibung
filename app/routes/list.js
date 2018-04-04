@@ -1,7 +1,7 @@
 import Route from '@ember/routing/route';
 
 export default Route.extend({
-  model(params, transition) {
+  model(params) {
     let eventsByArea = this.modelFor('application').get('eventsByArea');
 
     // check if area of education exists

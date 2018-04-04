@@ -22,7 +22,7 @@ export default Route.extend({
     return all([appConfigInit(), settingsInit(), translateInit()]);
   },
 
-  model(params) {
+  model() {
     // TODO: also fetch these
     // https://b17eb32d-b72d-4238-a677-74639b5dbf20.mock.pstmn.io/Lessons/
     // https://b17eb32d-b72d-4238-a677-74639b5dbf20.mock.pstmn.io/EventLocations
