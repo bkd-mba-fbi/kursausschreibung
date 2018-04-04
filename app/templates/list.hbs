@@ -1,1 +1,23 @@
-{{outlet}}
+{{!-- potential TODO: consider renaming list to area --}}
+
+<!-- LEFT -->
+<div class="uk-visible@m uk-width-1-4@m">
+  <div class="uk-card uk-card-default uk-card-small uk-card-body">
+    <h2 class="uk-h3">{{model.name}}</h2>
+    <ul class="uk-list">
+      <li>
+        {{#link-to "list.index" model.key class="uk-link-muted" activeClass="uk-text-bold"}}Kursübersicht{{/link-to}}
+      </li>
+      {{#each-in model.categories as |category categoryData|}}
+      <li>
+        {{#link-to "list.category" model.key category class="uk-link-muted" activeClass="uk-text-bold"}}{{categoryData.name}}{{/link-to}}
+      </li>
+      {{/each-in}}
+    </ul>
+  </div>
+</div>
+
+<!-- CENTER -->
+<div class="uk-width-3-4@m uk-width-1-2@l center-container uk-margin-bottom">
+  {{outlet}}
+</div>

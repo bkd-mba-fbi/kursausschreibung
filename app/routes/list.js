@@ -10,12 +10,6 @@ export default Route.extend({
       return;
     }
 
-    let activeArea = eventsByArea[params.area_of_education];
-
-    // save the active area on the application model
-    // so it can be used for the navigation
-    this.modelFor('application').set('activeArea', activeArea);
-
-    return activeArea;
+    return eventsByArea[params.area_of_education];
   }
 });
