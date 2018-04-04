@@ -1,6 +1,6 @@
 import Route from '@ember/routing/route';
 import { init as appConfigInit } from '../framework/app-config';
-import { init as settingsInit } from '../framework/settings';
+import { init as settingsInit, default as settings } from '../framework/settings';
 import { init as translateInit } from '../framework/translate';
 import moment from 'moment';
 import { all } from 'rsvp';
@@ -8,6 +8,7 @@ import api from '../framework/api';
 import ObjectProxy from '@ember/object/proxy';
 import { combineDate } from '../framework/date-helpers';
 import EmberObject from "@ember/object";
+import { isPresent } from "@ember/utils";
 
 export default Route.extend({
   beforeModel() {
@@ -29,6 +30,10 @@ export default Route.extend({
     // https://b17eb32d-b72d-4238-a677-74639b5dbf20.mock.pstmn.io/EventTexts/
 
     return api.ember.getEvents().then(function (events) {
+
+      if (isPresent(settings.hostId)) {
+        events = events.filter(event => event.HostId === settings.hostId);
+      }
 
       // combine date and time
       events.forEach(function (event) {

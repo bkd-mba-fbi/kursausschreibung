@@ -1,4 +1,5 @@
 {
+  "hostId": "bern",
   "itemsPerPage": 10,
   "eventListFields": [
     {"name": "Start", "value": "SubscriptionFrom"},
