@@ -11,7 +11,7 @@ export function init() {
 
       dataFilter(data) {
         // remove comments
-        return data.replace(/\/\/.*/g, '');
+        return data.replace(/^((([^"\n]*)"([^"\n]*)")*?([^"\n]*?))\/\/.*/gm, '$1');
       },
 
       success(response) {
