@@ -1,14 +1,30 @@
 import $ from 'jquery';
 import { Promise } from 'rsvp';
+import storage from './storage';
 
 let locale = {};
+let language;
 
 export function init() {
-  var userLanguage = $('html').attr('lang');
+  language = storage.userSettings.language();
+
+  if (language === null) {
+    let navigatorLanguage = navigator.language !== undefined ?
+      navigator.language : navigator.userLanguage;
+
+    if (navigatorLanguage.split('-')[0] === 'fr') {
+      language = 'fr-CH';
+    } else {
+      language = 'de-CH';
+    }
+  }
+
+  // set locale for moment.js
+  moment.locale(language);
 
   return new Promise(function (resolve, reject) {
     $.get({
-      url: 'locale/de-CH.json',
+      url: `locale/${language}.json`,
       dataType: 'json',
 
       dataFilter(data) {
@@ -24,6 +40,14 @@ export function init() {
   });
 }
 
+export function setLanguage(newLanguage) {
+  storage.userSettings.language(newLanguage);
+
+  if (newLanguage !== language) {
+    window.location.assign('./');
+  }
+}
+
 export function getString(key, placeholderValues) {
   /// <summary>gets a localized sring with the key. also replaces the placeholders provided</summary>
   /// <param name="key" type="String">the key of the string</param>
@@ -32,7 +56,7 @@ export function getString(key, placeholderValues) {
 
   // translation should never throw an exception. the rest of the application might still run normally
   try {
-    var string = translate.locale[key];
+    var string = locale[key];
     if (string === undefined)
       return '<span style="color:red;">Key not found: ' + key + '</span>';
 

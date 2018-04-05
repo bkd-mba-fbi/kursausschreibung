@@ -1,3 +1,5 @@
+// TODO: I would like to restructure this
+
 var storage = {
   // will be called on application initialisation (reload)
   clearTempData: function () {
@@ -46,7 +48,12 @@ var storage = {
     },
     personId: function (value) {
       return storage.localStoreItem('personId', value);
-    }
+    },
+
+    // not part of the framework, used by kursausschreibung
+    language: function (value) {
+      return storage.localStoreItem('language', value);
+    },
   },
 
   searchSettings: {

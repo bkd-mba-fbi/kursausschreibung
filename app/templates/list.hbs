@@ -6,7 +6,7 @@
     <h2 class="uk-h3">{{model.name}}</h2>
     <ul class="uk-list">
       <li>
-        {{#link-to "list.index" model.key class="uk-link-muted" activeClass="uk-text-bold"}}Kursübersicht{{/link-to}}
+        {{#link-to "list.index" model.key class="uk-link-muted" activeClass="uk-text-bold"}}{{translate "overview"}}{{/link-to}}
       </li>
       {{#each-in model.categories as |category categoryData|}}
       <li>

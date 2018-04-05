@@ -1,9 +1,5 @@
 {
   "hostId": "bern",
   "itemsPerPage": 10,
-  "eventListFields": [
-    {"name": "Start", "value": "SubscriptionFrom"},
-    {"name": "Ort", "value": "Location"},
-    {"name": "Preis", "value": "Price"}
-  ]
+  "eventListFields": ["SubscriptionFrom", "Location", "Price"]
 }

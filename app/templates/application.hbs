@@ -1,4 +1,15 @@
 <div class="uk-width-1-1">
+
+  <div class="uk-inline" style="float:right;margin:20px 20px 0px 0;">
+    <a href="#" class="uk-icon-link uk-margin-small-right" uk-icon="world">{{translate "language"}} </a>
+    <div uk-dropdown="mode: click">
+      <ul class="uk-list uk-link-text uk-margin-remove">
+        <li><a href="#" {{action "setLanguage" "de-CH"}}>{{translate "german"}}</a></li>
+        <li><a href="#" {{action "setLanguage" "fr-CH"}}>{{translate "french"}}</a></li>
+      </ul>
+    </div>
+  </div>
+
   <ul uk-tab class="uk-width-1-1 uk-margin-top">
     {{#each-in model.eventsByArea as |area data|}}
       {{!-- https://stackoverflow.com/questions/16380523/create-a-li-class-active-around-an-active-linkto#answer-18630506 --}}
@@ -20,23 +31,23 @@
 
       <!-- LEGEND -->
       <div class="uk-margin uk-card uk-card-default uk-card-small uk-card-body">
-        <h2 class="uk-h3 uk-card-title">Legende</h2>
+        <h2 class="uk-h3 uk-card-title">{{translate "legend"}}</h2>
 
         <ul class="uk-list uk-list-divider">
           <li>
-            {{status-lamp status="green"}}Freie Plätze vorhanden</li>
+            {{status-lamp status="green"}}{{translate "freeSeatsAvailable"}}</li>
           <li>
-            {{status-lamp status="yellow"}}Anmeldefrist abgelaufen</li>
+            {{status-lamp status="yellow"}}{{translate "deadlineExpired"}}</li>
           <li>
-            {{status-lamp status="red"}}Alle Plätze belegt</li>
+            {{status-lamp status="red"}}{{translate "noFreeSeats"}}</li>
           <li>
-            {{status-lamp status="orange"}}Anmeldung im Internet nicht möglich</li>
+            {{status-lamp status="orange"}}{{translate "notAvailableOnline"}}</li>
         </ul>
       </div>
 
       <!-- CONTACT -->
       <div class="uk-margin uk-card uk-card-default uk-card-small uk-card-body">
-        <h2 class="uk-h3 uk-card-title">Kontakt</h2>
+        <h2 class="uk-h3 uk-card-title">{{translate "contact"}}</h2>
         <p>Kasernenstrasse 27
           <br> Postfach
           <br> 3000 Bern 22

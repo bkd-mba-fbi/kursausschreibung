@@ -1,12 +1,12 @@
 import Component from '@ember/component';
-import { observer } from "@ember/object";
+import { observer } from '@ember/object';
+import { getString } from '../framework/translate';
 
-// TODO: move this to config
 const statuses = {
-  green: { tooltip: 'Freie Plätze vorhanden', className: 'lamp-green' },
-  yellow: { tooltip: 'Anmeldefrist abgelaufen', className: 'lamp-yellow' },
-  red: { tooltip: 'Alle Plätze belegt', className: 'lamp-red' },
-  orange: { tooltip: 'Anmeldung im Internet nicht möglich', className: 'lamp-orange' }
+  green: { tooltip: getString('freeSeatsAvailable'), className: 'lamp-green' },
+  yellow: { tooltip: getString('deadlineExpired'), className: 'lamp-yellow' },
+  red: { tooltip: getString('noFreeSeats'), className: 'lamp-red' },
+  orange: { tooltip: getString('notAvailableOnline'), className: 'lamp-orange' }
 };
 
 export default Component.extend({
