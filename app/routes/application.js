@@ -26,7 +26,7 @@ export default Route.extend({
   model() {
     // TODO: also fetch these
     // https://b17eb32d-b72d-4238-a677-74639b5dbf20.mock.pstmn.io/Lessons/
-    // https://b17eb32d-b72d-4238-a677-74639b5dbf20.mock.pstmn.io/EventLocations
+    // https://b17eb32d-b72d-4238-a677-74639b5dbf20.mock.pstmn.io/EventLocations/
     // https://b17eb32d-b72d-4238-a677-74639b5dbf20.mock.pstmn.io/EventTexts/
 
     return api.ember.getEvents().then(function (events) {
@@ -90,7 +90,7 @@ export default Route.extend({
         eventsByArea[area].categories[category].events.push(event);
       });
 
-      return EmberObject.create({ eventsByArea, eventsById, activeArea: null });
+      return EmberObject.create({ eventsByArea, eventsById });
     });
   }
 });
