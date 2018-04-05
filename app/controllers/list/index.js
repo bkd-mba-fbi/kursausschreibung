@@ -7,7 +7,7 @@ export default Controller.extend({
   actions: {
     queryChanged(query) {
       // reset page
-      this.set('controller.page', 1);
+      this.set('page', 1);
     }
   }
 });
