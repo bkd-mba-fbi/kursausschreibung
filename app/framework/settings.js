@@ -1,25 +1,10 @@
-import $ from 'jquery';
-import { Promise } from 'rsvp';
+import { fetchJSON } from './ajax-helpers';
 
 let settings = {};
 
 export function init() {
-  return new Promise(function (resolve) {
-    $.get({
-      url: 'settings.json',
-      dataType: 'json',
-
-      dataFilter(data) {
-        // remove comments
-        return data.replace(/^((([^"\n]*)"([^"\n]*)")*?([^"\n]*?))\/\/.*/gm, '$1');
-      },
-
-      success(response) {
-        $.extend(settings, response);
-        resolve();
-      }
-    });
-  });
+  // fetch settings
+  return fetchJSON('settings.json', settings)
 }
 
 export default settings;

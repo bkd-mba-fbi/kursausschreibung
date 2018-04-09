@@ -1,5 +1,4 @@
-import $ from 'jquery';
-import { Promise } from 'rsvp';
+import { fetchJSON } from './ajax-helpers';
 import storage from './storage';
 import moment from 'moment';
 
@@ -23,22 +22,8 @@ export function init() {
   // set locale for moment.js
   moment.locale(language);
 
-  return new Promise(function (resolve) {
-    $.get({
-      url: `locale/${language}.json`,
-      dataType: 'json',
-
-      dataFilter(data) {
-        // remove comments
-        return data.replace(/^((([^"\n]*)"([^"\n]*)")*?([^"\n]*?))\/\/.*/gm, '$1');
-      },
-
-      success(response) {
-        $.extend(locale, response);
-        resolve();
-      }
-    });
-  });
+  // fetch translations
+  return fetchJSON(`locale/${language}.json`, locale);
 }
 
 export function setLanguage(newLanguage) {
