@@ -4,7 +4,7 @@ import { init as settingsInit, default as settings } from '../framework/settings
 import { init as translateInit } from '../framework/translate';
 import moment from 'moment';
 import { all } from 'rsvp';
-import api from '../framework/api';
+import { getEvents } from '../framework/api';
 import ObjectProxy from '@ember/object/proxy';
 import { combineDate } from '../framework/date-helpers';
 import EmberObject from "@ember/object";
@@ -24,7 +24,7 @@ export default Route.extend({
     // https://b17eb32d-b72d-4238-a677-74639b5dbf20.mock.pstmn.io/EventLocations/
     // https://b17eb32d-b72d-4238-a677-74639b5dbf20.mock.pstmn.io/EventTexts/
 
-    return api.ember.getEvents().then(function (events) {
+    return getEvents().then(function (events) {
 
       if (isPresent(settings.hostId)) {
         events = events.filter(event => event.HostId === settings.hostId);
