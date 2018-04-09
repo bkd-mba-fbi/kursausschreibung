@@ -106,6 +106,10 @@ export default Route.extend({
 
       // add lessons to events
       lessons.forEach(function (lesson) {
+        if (eventsById.hasOwnProperty(lesson.EventId)) {
+          return;
+        }
+
         eventsById[lesson.EventId].lessons.push(lesson);
       });
 
@@ -113,11 +117,19 @@ export default Route.extend({
       eventLocations.forEach(function (location) {
         let eventId = location.EventId;
 
+        if (eventsById.hasOwnProperty(eventId)) {
+          return;
+        }
+
         eventsById[eventId] = $.extend(eventsById[eventId], location);
       });
 
       // add texts to events
       eventTexts.forEach(function (textItem) {
+        if (eventsById.hasOwnProperty(textItem.EventId)) {
+          return;
+        }
+
         let text = eventsById[textItem.EventId].texts[textItem.Number];
 
         if (text === undefined) {
