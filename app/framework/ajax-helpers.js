@@ -5,20 +5,15 @@ import { Promise } from 'rsvp';
 // its values with `object`
 // (also removes comments)
 export function fetchJSON(url, object) {
-  return new Promise(function (resolve) {
-    $.get({
-      url,
-      dataType: 'json',
+  return $.get({
+    url,
+    dataType: 'json',
 
-      dataFilter(data) {
-        // remove comments
-        return data.replace(/^((([^"\n]*)"([^"\n]*)")*?([^"\n]*?))\/\/.*/gm, '$1');
-      },
-
-      success(response) {
-        $.extend(object, response);
-        resolve();
-      }
-    });
+    dataFilter(data) {
+      // remove comments
+      return data.replace(/^((([^"\n]*)"([^"\n]*)")*?([^"\n]*?))\/\/.*/gm, '$1');
+    }
+  }).then(function (response) {
+    $.extend(object, response);
   });
 }
