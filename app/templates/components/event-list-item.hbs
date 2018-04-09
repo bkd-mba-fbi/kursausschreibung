@@ -5,10 +5,12 @@
   <table class="details-table">
     <tbody>
       {{#each fields as |field|}}
+      {{#if (get event.displayData field.key)}}
       <tr>
         <td>{{field.name}}</td>
         <td>{{get event.displayData field.key}}</td>
       </tr>
+      {{/if}}
       {{/each}}
     </tbody>
   </table>
