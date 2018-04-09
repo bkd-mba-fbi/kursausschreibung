@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import Route from '@ember/routing/route';
 import { init as appConfigInit } from '../framework/app-config';
 import { init as settingsInit, default as settings } from '../framework/settings';
