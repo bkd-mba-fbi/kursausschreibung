@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import { Promise } from 'rsvp';
 import storage from './storage';
+import moment from 'moment';
 
 let locale = {};
 let language;
@@ -22,7 +23,7 @@ export function init() {
   // set locale for moment.js
   moment.locale(language);
 
-  return new Promise(function (resolve, reject) {
+  return new Promise(function (resolve) {
     $.get({
       url: `locale/${language}.json`,
       dataType: 'json',

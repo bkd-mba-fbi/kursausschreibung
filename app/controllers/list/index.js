@@ -5,7 +5,7 @@ export default Controller.extend({
   queryParams: ['page'],
 
   actions: {
-    queryChanged(query) {
+    queryChanged() {
       // reset page
       this.set('page', 1);
     }

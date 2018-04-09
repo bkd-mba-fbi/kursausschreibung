@@ -4,7 +4,7 @@ import { Promise } from 'rsvp';
 let settings = {};
 
 export function init() {
-  return new Promise(function (resolve, reject) {
+  return new Promise(function (resolve) {
     $.get({
       url: 'settings.json',
       dataType: 'json',
