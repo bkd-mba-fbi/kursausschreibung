@@ -1,5 +1,5 @@
 {
   "hostId": "bern",
   "itemsPerPage": 10,
-  "eventListFields": ["SubscriptionFrom", "Location", "Price"]
+  "eventListFields": ["SubscriptionFrom", "BuildingAddress", "Location", "Price"]
 }

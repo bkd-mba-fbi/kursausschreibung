@@ -4,7 +4,7 @@ import { init as settingsInit, default as settings } from '../framework/settings
 import { init as translateInit } from '../framework/translate';
 import moment from 'moment';
 import { all } from 'rsvp';
-import { getEvents } from '../framework/api';
+import { getEvents, getLessons, getEventLocations, getEventTexts } from '../framework/api';
 import ObjectProxy from '@ember/object/proxy';
 import { combineDate } from '../framework/date-helpers';
 import EmberObject from "@ember/object";
@@ -19,25 +19,43 @@ export default Route.extend({
   },
 
   model() {
-    // TODO: also fetch these
-    // https://b17eb32d-b72d-4238-a677-74639b5dbf20.mock.pstmn.io/Lessons/
-    // https://b17eb32d-b72d-4238-a677-74639b5dbf20.mock.pstmn.io/EventLocations/
-    // https://b17eb32d-b72d-4238-a677-74639b5dbf20.mock.pstmn.io/EventTexts/
+    // there is probably an elegant ember-data solution
+    // that could replace this monster
 
-    return getEvents().then(function (events) {
+    // fetch all events
+    let promises = [getEvents(), getLessons(), getEventLocations(), getEventTexts()];
 
+    return all(promises).then(function ([events, lessons, eventLocations, eventTexts]) {
+
+      // group events by areaOfEducation, EventCategory and Id
+      let eventsByArea = {};
+      let eventsById = {};
+
+      // filter out events with wrong hostId
       if (isPresent(settings.hostId)) {
         events = events.filter(event => event.HostId === settings.hostId);
       }
 
-      // combine date and time
       events.forEach(function (event) {
+
+        // alter the event-object
+        // ======================
+
+        // add lessons-array
+        event.lessons = [];
+
+        // add texts-array
+        event.texts = [];
+
+        // combine date and time
         event.SubscriptionFrom = combineDate(event.SubscriptionDateFrom, event.SubscriptionTimeFrom);
         event.SubscriptionTo = combineDate(event.SubscriptionDateTo, event.SubscriptionTimeTo);
 
         event.From = combineDate(event.DateFrom, event.TimeFrom);
         event.To = combineDate(event.DateTo, event.TimeTo);
 
+        // proxy for string-representations
+        // ================================
         event.displayData = ObjectProxy.create({
           content: event,
 
@@ -56,20 +74,16 @@ export default Route.extend({
 
           Price: 'CHF ' + event.Price
         });
-      });
 
-      // group events by areaOfEducation, EventCategory and Id
-      let eventsByArea = {};
-      let eventsById = {};
+        // put event into assoc arrays so no searching is required
+        // =======================================================
 
-      events.forEach(function (event) {
-        eventsById[event.Id] = event.Id;
+        // by id
+        eventsById[event.Id] = event;
 
+        // by area
         let areaName = event.AreaOfEducation;
         let area = areaName.toLowerCase();
-
-        let categoryName = event.EventCategory;
-        let category = categoryName.toLowerCase();
 
         if (!(eventsByArea.hasOwnProperty(area))) {
 
@@ -78,11 +92,38 @@ export default Route.extend({
 
         eventsByArea[area].events.push(event);
 
+        // by category (in area)
+        let categoryName = event.EventCategory;
+        let category = categoryName.toLowerCase();
+
         if (!(eventsByArea[area].categories.hasOwnProperty(category))) {
           eventsByArea[area].categories[category] = { name: categoryName, key: category, events: [] };
         }
 
         eventsByArea[area].categories[category].events.push(event);
+      });
+
+      // add lessons to events
+      lessons.forEach(function (lesson) {
+        eventsById[lesson.EventId].lessons.push(lesson);
+      });
+
+      // add eventLocations to events
+      eventLocations.forEach(function (location) {
+        let eventId = location.EventId;
+
+        eventsById[eventId] = $.extend(eventsById[eventId], location);
+      });
+
+      // add texts to events
+      eventTexts.forEach(function (textItem) {
+        let text = eventsById[textItem.EventId].texts[textItem.Number];
+
+        if (text === undefined) {
+          text = eventsById[textItem.EventId].texts[textItem.Number] = { label: null, memo: null };
+        }
+
+        text[textItem.Type.toLowerCase()] = textItem.Value;
       });
 
       return EmberObject.create({ eventsByArea, eventsById });

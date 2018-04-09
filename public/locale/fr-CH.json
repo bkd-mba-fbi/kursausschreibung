@@ -15,6 +15,6 @@
   // properties of an event
   "subscriptionFrom": "Start [FR]",
   "location": "Ort [FR]",
-  "price": "Preis [FR]"
-
+  "price": "Preis [FR]",
+  "buildingAddress": "Adresse [FR]"
 }
