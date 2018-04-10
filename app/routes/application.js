@@ -106,7 +106,7 @@ export default Route.extend({
 
       // add lessons to events
       lessons.forEach(function (lesson) {
-        if (eventsById.hasOwnProperty(lesson.EventId)) {
+        if (!eventsById.hasOwnProperty(lesson.EventId)) {
           return;
         }
 
@@ -117,7 +117,7 @@ export default Route.extend({
       eventLocations.forEach(function (location) {
         let eventId = location.EventId;
 
-        if (eventsById.hasOwnProperty(eventId)) {
+        if (!eventsById.hasOwnProperty(eventId)) {
           return;
         }
 
@@ -126,7 +126,7 @@ export default Route.extend({
 
       // add texts to events
       eventTexts.forEach(function (textItem) {
-        if (eventsById.hasOwnProperty(textItem.EventId)) {
+        if (!eventsById.hasOwnProperty(textItem.EventId)) {
           return;
         }
 
