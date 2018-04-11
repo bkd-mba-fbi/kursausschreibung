@@ -34,6 +34,7 @@ module.exports = function (defaults) {
   // uikit js
   app.import('node_modules/uikit/dist/js/uikit.js');
   app.import('node_modules/uikit/dist/js/uikit-icons.js');
+  app.import('vendor/shims/uikit.js');
 
   // moment
   app.import('node_modules/moment/moment.js');

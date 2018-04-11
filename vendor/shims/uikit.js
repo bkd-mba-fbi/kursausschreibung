@@ -1,12 +1,12 @@
-(function () {
+(function() {
   function vendorModule() {
     'use strict';
 
     return {
-      'default': self.moment,
+      'default': self.UIkit,
       __esModule: true,
     };
   }
 
-  define('moment', [], vendorModule);
+  define('uikit', [], vendorModule);
 })();
