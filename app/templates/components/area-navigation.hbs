@@ -1,0 +1,11 @@
+<h3 class="uk-margin-small">{{area.name}}</h3>
+<ul class="uk-nav uk-nav-default">
+  {{#link-to "list.index" area.key tagName="li" activeClass="uk-active"}}
+    {{link-to (translate "overview") "list.index" area.key}}
+  {{/link-to}}
+  {{#each-in area.categories as |category categoryData|}}
+    {{#link-to "list.category" area.key category tagName="li" activeClass="uk-active"}}
+      {{link-to categoryData.name "list.category" area.key category}}
+   {{/link-to}}
+  {{/each-in}}
+</ul>

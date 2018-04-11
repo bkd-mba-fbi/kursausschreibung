@@ -11,6 +11,8 @@
   "language": "Sprache",
   "german": "Deutsch",
   "french": "Französisch",
+  "menu": "Menu",
+  "navigation": "Navigation",
 
   // properties of an event
   "subscriptionFrom": "Start",
