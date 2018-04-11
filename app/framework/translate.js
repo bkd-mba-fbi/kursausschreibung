@@ -9,8 +9,12 @@ export function init() {
   language = storage.userSettings.language();
 
   if (language === null) {
-    let navigatorLanguage = navigator.language !== undefined ?
-      navigator.language : navigator.userLanguage;
+    let navigatorLanguage = navigator.language;
+
+    if (navigatorLanguage === undefined) {
+      // for IE
+      navigatorLanguage = navigator.userLanguage;
+    }
 
     if (navigatorLanguage.split('-')[0] === 'fr') {
       language = 'fr-CH';
@@ -24,6 +28,10 @@ export function init() {
 
   // fetch translations
   return fetchJSON(`locale/${language}.json`, locale);
+}
+
+export function getLanguage() {
+  return language;
 }
 
 export function setLanguage(newLanguage) {
@@ -51,13 +59,13 @@ export function getString(key, placeholderValues) {
         for (var i = 0; i < placeholderValues.length; i++) {
           string = string.replace('{' + i + '}', placeholderValues[i]);
         }
-      } else
+      } else {
         string = string.replace('{0}', placeholderValues);
+      }
     }
 
     return string;
-  }
-  catch (ex) {
+  } catch (ex) {
     console.error('translate ERROR: ' + ex);
     return '<span style="color:red;">error in translation.</span>';
   }

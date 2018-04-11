@@ -78,9 +78,11 @@
       </div>
 
       <!-- TWEETS -->
-      <div class="uk-margin uk-card uk-card-default uk-card-small uk-card-body uk-visible@l">
-        {{twitter-feed username="erz_kantonbern"}}
-      </div>
+      {{#if twitterHandle}}
+        <div class="uk-margin uk-card uk-card-default uk-card-small uk-card-body uk-visible@l">
+          {{twitter-feed twitterHandle}}
+        </div>
+      {{/if}}
     </div>
   </div>
 </div>
