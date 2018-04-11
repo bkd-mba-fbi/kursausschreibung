@@ -27,7 +27,7 @@ export default Component.extend({
         )
       );
 
-      this.sendAction('queryChanged', query);
+      this.get('queryChanged')(query);
     }
   }
 });

@@ -1,2 +1,2 @@
 <h2>{{model.name}}</h2>
-{{event-list items=model.events page=page queryChanged="queryChanged"}}
+{{event-list items=model.events page=page queryChanged=(action "queryChanged")}}
