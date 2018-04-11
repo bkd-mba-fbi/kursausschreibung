@@ -1,12 +1,12 @@
 import { fetchJSON } from './ajax-helpers';
-import storage from './storage';
+import { storeItem, getItem } from './storage';
 import moment from 'moment';
 
 let locale = {};
 let language;
 
 export function init() {
-  language = storage.userSettings.language();
+  language = getItem('language');
 
   if (language === null) {
     let navigatorLanguage = navigator.language;
@@ -35,37 +35,20 @@ export function getLanguage() {
 }
 
 export function setLanguage(newLanguage) {
-  storage.userSettings.language(newLanguage);
+  storeItem('language', newLanguage);
 
   if (newLanguage !== language) {
     window.location.assign('./');
   }
 }
 
-export function getString(key, placeholderValues) {
-  /// <summary>gets a localized sring with the key. also replaces the placeholders provided</summary>
-  /// <param name="key" type="String">the key of the string</param>
-  /// <param name="placeholderValues" type="Object">the values to replace the placeholders in the string.
-  /// can be a string or an array of strings. placeholders are defined in the format string pattern ({0})</param>
+// returns a localized sring
+export function getString(key) {
+  let string = locale[key];
 
-  // translation should never throw an exception. the rest of the application might still run normally
-  try {
-    var string = locale[key];
-    if (string === undefined)
-      return '<span style="color:red;">Key not found: ' + key + '</span>';
-
-    if (placeholderValues) {
-      if (placeholderValues instanceof Array) {
-        for (var i = 0; i < placeholderValues.length; i++) {
-          string = string.replace('{' + i + '}', placeholderValues[i]);
-        }
-      } else {
-        string = string.replace('{0}', placeholderValues);
-      }
-    }
-
-    return string;
-  } catch (ex) {
-    return '<span style="color:red;">error in translation.</span>';
+  if (string === undefined) {
+    return `<span style="color:red;">key not found: ${key}</span>`;
   }
+
+  return string;
 }

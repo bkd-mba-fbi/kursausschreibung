@@ -1,7 +1,14 @@
 {
+  // API base URL without trailing slash
+  "apiUrl": "https://b17eb32d-b72d-4238-a677-74639b5dbf20.mock.pstmn.io",
   "hostId": "bern",
   "itemsPerPage": 10,
-  "eventListFields": ["SubscriptionFrom", "BuildingAddress", "Location", "Price"],
+  "eventListFields": [
+    "SubscriptionFrom",
+    "BuildingAddress",
+    "Location",
+    "Price"
+  ],
   "logoImage": "assets/images/logo.jpg",
   "logoLink": "https://emberjs.com/",
   "showContact": true,
