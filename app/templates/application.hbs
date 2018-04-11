@@ -49,7 +49,15 @@
     <div class="uk-width-1-4@l">
 
       <!-- LOGO -->
-      <img class="uk-margin uk-preserve-width" src="{{rootURL}}assets/images/logo.jpg">
+      {{#if logoImage}}
+        {{#if logoLink}}
+          <a target="_blank" href={{logoLink}}>
+            <img class="uk-margin" src={{logoImage}}>
+          </a>
+        {{else}}
+          <img class="uk-margin" src={{logoImage}}>
+        {{/if}}
+      {{/if}}
 
       <!-- LEGEND -->
       <div class="uk-margin uk-card uk-card-default uk-card-small uk-card-body">
