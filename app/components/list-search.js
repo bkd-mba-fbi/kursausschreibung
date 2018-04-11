@@ -3,12 +3,12 @@ import { oneWay } from '@ember/object/computed';
 import { get } from "@ember/object";
 
 export default Component.extend({
-  value: '',
+  query: '',
   filteredItems: oneWay('items'),
 
   actions: {
     queryChanged() {
-      let query = this.get('value').toLowerCase();
+      let query = this.get('query').toLowerCase();
 
       this.set('filteredItems',
         this.get('items').filter((item) =>
