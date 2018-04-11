@@ -3,7 +3,7 @@ import uikit from 'uikit';
 
 export default Route.extend({
   model(params) {
-    let eventsByArea = this.modelFor('application').get('eventsByArea');
+    let eventsByArea = this.modelFor('application');
 
     // check if area of education exists
     if (!eventsByArea.hasOwnProperty(params.area_of_education)) {
