@@ -3,9 +3,10 @@ import { setLanguage } from '../framework/translate';
 import settings from '../framework/settings';
 
 export default Controller.extend({
-  twitterHandle: settings.twitterHandle,
   logoImage: settings.logoImage,
   logoLink: settings.logoLink,
+  showContact: settings.showContact,
+  twitterHandle: settings.twitterHandle,
 
   actions: {
     setLanguage(language) {

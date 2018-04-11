@@ -2,7 +2,8 @@
   "hostId": "bern",
   "itemsPerPage": 10,
   "eventListFields": ["SubscriptionFrom", "BuildingAddress", "Location", "Price"],
-  "twitterHandle": "erz_kantonbern",
   "logoImage": "assets/images/logo.jpg",
-  "logoLink": "https://emberjs.com/"
+  "logoLink": "https://emberjs.com/",
+  "showContact": true,
+  "twitterHandle": "erz_kantonbern"
 }

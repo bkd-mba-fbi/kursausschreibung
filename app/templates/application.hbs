@@ -76,14 +76,12 @@
       </div>
 
       <!-- CONTACT -->
-      <div class="uk-margin uk-card uk-card-default uk-card-small uk-card-body">
-        <h2 class="uk-h3 uk-card-title">{{translate "contact"}}</h2>
-        <p>Kasernenstrasse 27
-          <br> Postfach
-          <br> 3000 Bern 22
-          <br> Telefon: 031 633 87 00
-        </p>
-      </div>
+      {{#if showContact}}
+        <div class="uk-margin uk-card uk-card-default uk-card-small uk-card-body">
+          <h2 class="uk-h3 uk-card-title">{{translate "contact"}}</h2>
+          <p>{{translate "contactContent"}}</p>
+        </div>
+      {{/if}}
 
       <!-- TWEETS -->
       {{#if twitterHandle}}
