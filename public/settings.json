@@ -1,16 +1,41 @@
 {
-  // API base URL without trailing slash
+  // API-URL without trailing slash (required)
   "apiUrl": "https://b17eb32d-b72d-4238-a677-74639b5dbf20.mock.pstmn.io",
-  "hostId": "bern",
+
+  // only show hosts with a specific hostId (optional)
+  "hostId": null,
+
+  // items per page on the event-list (required)
   "itemsPerPage": 10,
+
+  // fields to show on the event-list (required)
+  // possible values in this array can be
+  // * keys of the /Events API-endpoint
+  // * keys of the /EventLocations API-endpoint
+  // * one of the following constructed values:
+  //  + "SubscriptionFrom" (combination of SubscriptionDateFrom and SubscriptionTimeFrom)
+  //  + "SubscriptionTo" (combination of SubscriptionDateTo and SubscriptionTimeTo)
+  //  + "From" (combination of dateFrom and timeFrom)
+  //  + "To" (combination of dateTo and timeTo)
+  // a translation has to be provided for each of the values
+  // (the key of the translation has to be in camelCase)
   "eventListFields": [
     "SubscriptionFrom",
     "BuildingAddress",
     "Location",
     "Price"
   ],
-  "logoImage": "assets/images/logo.jpg",
-  "logoLink": "https://emberjs.com/",
+
+  // URL to a logo image (optional)
+  "logoImage": "assets/images/logo.gif",
+
+  // URL to which the logo should link (optional)
+  "logoLink": "https://www.erz.be.ch/",
+
+  // set this to true to show contact information (optional)
+  // (key "contactContent" in de-CH.json and fr-CH.json)
   "showContact": true,
+
+  // show a twitter-feed (optional)
   "twitterHandle": "erz_kantonbern"
 }
