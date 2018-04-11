@@ -66,7 +66,6 @@ export function getString(key, placeholderValues) {
 
     return string;
   } catch (ex) {
-    console.error('translate ERROR: ' + ex);
     return '<span style="color:red;">error in translation.</span>';
   }
 }
