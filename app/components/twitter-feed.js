@@ -1,5 +1,4 @@
 import Component from '@ember/component';
-import settings from '../framework/settings';
 import { getLanguage } from '../framework/translate';
 
 export default Component.extend({
