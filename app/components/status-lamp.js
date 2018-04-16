@@ -3,10 +3,10 @@ import { observer } from '@ember/object';
 import { getString } from '../framework/translate';
 
 const statuses = {
-  green: { tooltip: getString('freeSeatsAvailable'), className: 'lamp-green' },
-  yellow: { tooltip: getString('deadlineExpired'), className: 'lamp-yellow' },
-  red: { tooltip: getString('noFreeSeats'), className: 'lamp-red' },
-  orange: { tooltip: getString('notAvailableOnline'), className: 'lamp-orange' }
+  green: { tooltip: getString('greenLamp'), className: 'lamp-green' },
+  yellow: { tooltip: getString('yellowLamp'), className: 'lamp-yellow' },
+  red: { tooltip: getString('redLamp'), className: 'lamp-red' },
+  orange: { tooltip: getString('orangeLamp'), className: 'lamp-orange' }
 };
 
 export default Component.extend({
