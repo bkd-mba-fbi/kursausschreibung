@@ -1,7 +1,7 @@
 {
   "overview": "Kursübersicht",
   "contact": "Kontakt",
-  "contactContent": "Kasernenstrasse 27<br>Postfach<br>3000 Bern 22<br>Telefon: 031 633 87 00",
+  "contactContent": "Kasernenstrasse 27<br>Postfach<br>3000 Bern 22<br>Telefon: <a href=\"tel:0316338700\"> 031 633 87 00</a><br><br>",
   "search": "Suche...",
   "legend": "Legende",
   "noResults": "Keine Ergebnisse",
@@ -19,5 +19,6 @@
   "subscriptionFrom": "Start",
   "location": "Ort",
   "price": "Preis",
-  "buildingAddress": "Adresse"
+  "buildingAddress": "Adresse",
+  "languageOfInstruction": "Unterrichtssprache"
 }
