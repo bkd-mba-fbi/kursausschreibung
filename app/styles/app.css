@@ -49,3 +49,8 @@
     z-index: 200; /* always on top */
   }
 }
+
+/* overwrite erz css */
+.uk-scope a:focus {
+  background-color: transparent !important;
+}

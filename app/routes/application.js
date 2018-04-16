@@ -5,6 +5,7 @@ import { init as translateInit } from '../framework/translate';
 import { init as storeInit, getAllEvents } from '../framework/store';
 import { all } from 'rsvp';
 import uikit from 'uikit';
+import $ from 'jquery';
 
 export default Route.extend({
   beforeModel() {
@@ -22,6 +23,9 @@ export default Route.extend({
   },
 
   model() {
+    // remove loader
+    $('#kursausschreibung-loading').remove();
+
     return getAllEvents();
   }
 });

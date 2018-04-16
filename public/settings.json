@@ -46,5 +46,5 @@
   "showContact": true,
 
   // show a twitter-feed (optional)
-  "twitterHandle": "erz_kantonbern"
+  "twitterHandle": null
 }

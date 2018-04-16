@@ -1,5 +1,6 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
 
 <head>
     <title>Kursausschreibung</title>
@@ -13,7 +14,9 @@
     <meta name="lastModifiedDate" content="19.Jan.2018" />
     <meta name="author" content="Erziehungsdirektion des Kantons Bern" />
 
-    {{content-for "head"}}
+
+<meta name="kursausschreibung/config/environment" content="%7B%22modulePrefix%22%3A%22kursausschreibung%22%2C%22environment%22%3A%22development%22%2C%22rootURL%22%3A%22%22%2C%22locationType%22%3A%22hash%22%2C%22EmberENV%22%3A%7B%22FEATURES%22%3A%7B%7D%2C%22EXTEND_PROTOTYPES%22%3A%7B%22Date%22%3Afalse%7D%7D%2C%22APP%22%3A%7B%22rootElement%22%3A%22%23kursausschreibung-root%22%2C%22name%22%3A%22kursausschreibung%22%2C%22version%22%3A%220.0.0+c25b2e44%22%7D%2C%22exportApplicationGlobal%22%3Atrue%7D" />
+<script src="/ember-cli-live-reload.js" type="text/javascript"></script>
 
     <link rel="canonical" href="http://www.erz.be.ch/erz/de/index.html" />
     <link rel="stylesheet" type="text/css" href="KtBe/css/screen.css" />
@@ -24,8 +27,8 @@
     <link rel="stylesheet" type="text/css"  href="KtBe/css/erz_apps.css"/>
 
 
-    <link rel="stylesheet" href="{{rootURL}}assets/vendor.css">
-    <link rel="stylesheet" href="{{rootURL}}assets/kursausschreibung.css">
+    <link rel="stylesheet" href="assets/vendor.css">
+    <link rel="stylesheet" href="assets/kursausschreibung.css">
 
     <script type="text/javascript" src="KtBe/js/head.1466852872083.js"></script>
     <script type="text/javascript" src="KtBe/js/csrf.min.js"></script>
@@ -58,106 +61,106 @@
         }
     </style>
 
-    {{content-for "head-footer"}}
+
 </head>
 
 
 <body class="one-tab " id="home">
-    {{content-for "body"}}
+
 
 <!-- **************************************************************************
         HEADER
 ************************************************************************** //-->
-    <a name="top"></a>
-    <div id="wrapper">
-        <div class="floatingComponent header abstractHeader">
-            <div id="div_header">
-                <!--googleoff: all-->
-                <!--stopindex-->
+<a name="top"></a>
+<div id="wrapper">
+    <div class="floatingComponent header abstractHeader">
+        <div id="div_header">
+            <!--googleoff: all-->
+            <!--stopindex-->
 
-                <div id="identity">
-                    <div id="div-header-meta">
-                        <h1 class="noOverwrite">
+            <div id="identity">
+                <div id="div-header-meta">
+                    <h1 class="noOverwrite">
 
-                            <a href="http://www.be.ch/portal/de/index.html" target="_blank" title="index">
-                                Kanton Bern
-                                <span class="hidden">Zur </span>
-                                <span class="small">Startseite</span>
-                                <span class='hidden'> Link öffnet in einem neuen Fenster.</span>
-                            </a>
-                        </h1>
-
-                    </div>
-
-                    <div id="div_header-main">
-
-                        <div id="div-header-main-logohomelink">
-                            <a href="index.html" title="Startseite">
-                                <img alt="Kanton Bern" src="KtBe/css/media/logo.gif" id="logo" />
-                            </a>
-                            <h2>
-                                <a href="index.html" title="Startseite">BIZ Berufsberatungs- und Informationszentren</a>
-                                <a class="small" href="index.html" title="Startseite">
-                                    <span class="hidden"> Zur </span>Startseite</a>
-                            </h2>
-                        </div>
-
-                    </div>
-                </div>
-
-                <!-- **************************************************************************
-                    Meta- & Sprach-Navigation
-                ************************************************************************** //-->
-                <div class="header-meta">
-
-                    <!-- Sprach-Navigation -->
-                    <a name="anchor-nav-lang"></a>
-
-                    <h2 class="hidden">Andere Sprachen</h2>
-
-
-                    <div id="header-nav-lang">
-                        <ul>
-                            <li>
-                                <a href="indexfr.html" title="Page principale">Français</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- /Sprach-Navigation -->
-
-
-                    <!-- Meta-Navigation -->
-
-                    <a name="anchor-nav-meta"></a>
-                    <h2 class="hidden">Hilfsnavigation (Kontakt, Sitemap, A bis Z)</h2>
-                    <div id="header-nav-meta">
-                        <ul>
-
-                            <li>
-                                <a href="https://www.erz.be.ch/erz/de/index/direktion/ueber-die-direktion/kontakt.html" target="_blank" title="Kontakte">
-                                    Kontakt
-                                </a>
-                            </li>
-
-                        </ul>
-                    </div>
-                    <!-- /Meta-Navigation -->
+                        <a href="http://www.be.ch/portal/de/index.html" target="_blank" title="index">
+                            Kanton Bern
+                            <span class="hidden">Zur </span>
+                            <span class="small">Startseite</span>
+                            <span class='hidden'> Link öffnet in einem neuen Fenster.</span>
+                        </a>
+                    </h1>
 
                 </div>
-                <!-- / Meta- & Sprach-Navigation -->
 
+                <div id="div_header-main">
+
+                    <div id="div-header-main-logohomelink">
+                        <a href="index.html" title="Startseite">
+                            <img alt="Kanton Bern" src="KtBe/css/media/logo.gif" id="logo" />
+                        </a>
+                        <h2>
+                            <a href="index.html" title="Startseite">BIZ Berufsberatungs- und Informationszentren</a>
+                            <a class="small" href="index.html" title="Startseite">
+                                <span class="hidden"> Zur </span>Startseite</a>
+                        </h2>
+                    </div>
+
+                </div>
             </div>
-            <!-- /wrapper -->
 
             <!-- **************************************************************************
-                MAIN APPLICATION
+                Meta- & Sprach-Navigation
             ************************************************************************** //-->
+            <div class="header-meta">
+
+                <!-- Sprach-Navigation -->
+                <a name="anchor-nav-lang"></a>
+
+                <h2 class="hidden">Andere Sprachen</h2>
+
+
+                <div id="header-nav-lang">
+                    <ul>
+                        <li>
+                            <a href="index.html" title="Page principale">Deutsch</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /Sprach-Navigation -->
+
+
+                <!-- Meta-Navigation -->
+
+                <a name="anchor-nav-meta"></a>
+                <h2 class="hidden">Hilfsnavigation (Kontakt, Sitemap, A bis Z)</h2>
+                <div id="header-nav-meta">
+                    <ul>
+
+                        <li>
+                            <a href="https://www.erz.be.ch/erz/de/index/direktion/ueber-die-direktion/kontakt.html" target="_blank" title="Kontakte">
+                                Kontakt
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+                <!-- /Meta-Navigation -->
+
+            </div>
+            <!-- / Meta- & Sprach-Navigation -->
+
+        </div>
+        <!-- /wrapper -->
+
+        <!-- **************************************************************************
+            MAIN APPLICATION
+        ************************************************************************** //-->
             <div id="content">
 
                 <!-- MAIN APPLICATION -->
                 <div class="uk-scope">
-                  <div id="kursausschreibung-root" class="uk-container uk-width-1-1"></div>
-                  <span id="kursausschreibung-loading" class="uk-position-center" uk-spinner="ratio: 2.5"></span>
+                    <div id="kursausschreibung-root" class="uk-container uk-width-1-1"></div>
+                    <span id="kursausschreibung-loading" class="uk-position-center" uk-spinner="ratio: 2.5"></span>
                 </div>
 
             </div>
@@ -218,10 +221,10 @@
                 <!--googleon: all-->
                 <!--startindex-->
 
-                <script src="{{rootURL}}assets/vendor.js"></script>
-                <script src="{{rootURL}}assets/kursausschreibung.js"></script>
+                <script src="assets/vendor.js"></script>
+                <script src="assets/kursausschreibung.js"></script>
 
-                {{content-for "body-footer"}}
+
               </div>
 </body>
 
