@@ -24,6 +24,9 @@
     "Price"
   ],
 
+  // set this to true to add a button to change the langauge (optional)
+  "showLanguageButton": false,
+
   // URL to a logo image (optional)
   "logoImage": "assets/images/berufsberatung.png",
 

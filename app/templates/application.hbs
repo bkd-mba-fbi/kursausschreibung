@@ -12,26 +12,30 @@
             {{area-navigation data}}
           </div>
         {{/each-in}}
-        <div class="uk-margin">
-          <h2>{{translate "language"}}</h2>
-            <ul class="uk-nav uk-nav-default">
-              <li><a {{action "setLanguage" "de-CH"}}>{{translate "german"}}</a></li>
-              <li><a {{action "setLanguage" "fr-CH"}}>{{translate "french"}}</a></li>
-            </ul>
-        </div>
+        {{#if showLanguageButton}}
+          <div class="uk-margin">
+            <h2>{{translate "language"}}</h2>
+              <ul class="uk-nav uk-nav-default">
+                <li><a {{action "setLanguage" "de-CH"}}>{{translate "german"}}</a></li>
+                <li><a {{action "setLanguage" "fr-CH"}}>{{translate "french"}}</a></li>
+              </ul>
+          </div>
+        {{/if}}
       </div>
     </div>
   </div>
 
-  <div class="uk-float-right uk-margin-top uk-margin-right uk-visible@m">
-    <a href="#" class="uk-icon-link uk-margin-small-right" uk-icon="world">{{translate "language"}} </a>
-    <div uk-dropdown="mode: click">
-      <ul class="uk-list uk-link-text uk-margin-remove">
-        <li><a href="#" {{action "setLanguage" "de-CH"}}>{{translate "german"}}</a></li>
-        <li><a href="#" {{action "setLanguage" "fr-CH"}}>{{translate "french"}}</a></li>
-      </ul>
+  {{#if showLanguageButton}}
+    <div class="uk-float-right uk-margin-top uk-margin-right uk-visible@m">
+      <a href="#" class="uk-icon-link uk-margin-small-right" uk-icon="world">{{translate "language"}} </a>
+      <div uk-dropdown="mode: click">
+        <ul class="uk-list uk-link-text uk-margin-remove">
+          <li><a href="#" {{action "setLanguage" "de-CH"}}>{{translate "german"}}</a></li>
+          <li><a href="#" {{action "setLanguage" "fr-CH"}}>{{translate "french"}}</a></li>
+        </ul>
+      </div>
     </div>
-  </div>
+  {{/if}}
 
   <ul uk-tab class="uk-width-1-1 uk-margin-top">
     {{#each-in model as |area data|}}
