@@ -6,7 +6,7 @@ let locale = {};
 let language;
 
 export function init() {
-  language = getItem('language');
+  language = getItem('uiCulture');
 
   if (language === null) {
     let navigatorLanguage = navigator.language;
@@ -35,7 +35,7 @@ export function getLanguage() {
 }
 
 export function setLanguage(newLanguage) {
-  storeItem('language', newLanguage);
+  storeItem('uiCulture', newLanguage);
 
   if (newLanguage !== language) {
     window.location.assign('./');
