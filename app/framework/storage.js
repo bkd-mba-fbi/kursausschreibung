@@ -11,5 +11,5 @@ export function getItem(key) {
     return JSON.parse(item);
   }
 
-  return null;
+  return undefined;
 }

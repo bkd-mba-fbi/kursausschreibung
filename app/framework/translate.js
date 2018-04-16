@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import { fetchJSON } from './ajax-helpers';
 import { storeItem, getItem } from './storage';
 import moment from 'moment';
@@ -6,9 +7,23 @@ let locale = {};
 let language;
 
 export function init() {
-  language = getItem('uiCulture');
+  // detect language
+  // first priority: html lang attribute
+  let htmlLang = $('html').attr('lang');
 
-  if (language === null) {
+  if (htmlLang === 'de') {
+    language = 'de-CH';
+  } else if (htmlLang === 'fr') {
+    language = 'fr-CH';
+  }
+
+  // second priority: uiCulture in localStorage
+  if (language === undefined) {
+    language = getItem('uiCulture');
+  }
+
+  // third priority: browser-language
+  if (language === undefined) {
     let navigatorLanguage = navigator.language;
 
     if (navigatorLanguage === undefined) {
@@ -19,6 +34,7 @@ export function init() {
     if (navigatorLanguage.split('-')[0] === 'fr') {
       language = 'fr-CH';
     } else {
+      // default to de-CH
       language = 'de-CH';
     }
   }
