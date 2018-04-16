@@ -27,6 +27,14 @@
   // set this to true to add a button to change the langauge (optional)
   "showLanguageButton": false,
 
+  // callback methods for status-lamps (optional)
+  // every string gets evaluated using Function()
+  // these get executed in order to determine the status of an event
+  // the parameters of the callback are isInSubscriptionRange and event
+  "lampIsGreen": "event.AllowSubscriptionInternetByStatus && isInSubscriptionRange(event) && event.FreeSeats > 0",
+  "lampIsYellow": "event.AllowSubscriptionInternetByStatus && !isInSubscriptionRange(event)",
+  "lampIsRed": "event.AllowSubscriptionInternetByStatus && event.FreeSeats === 0",
+
   // URL to a logo image (optional)
   "logoImage": "assets/images/berufsberatung.png",
 
