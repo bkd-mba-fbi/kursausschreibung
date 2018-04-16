@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import settings from '../framework/settings';
+import appConfig from '../framework/app-config';
 
 // not using the framework-version for now
 // because it seems to be missing almost every call
@@ -7,7 +7,7 @@ import settings from '../framework/settings';
 // module doesn't need
 
 export function get(relativeUrl) {
-  return $.getJSON(settings.apiUrl + '/' + relativeUrl);
+  return $.getJSON(appConfig.apiUrl + '/' + relativeUrl);
 }
 
 export function getEvents() {

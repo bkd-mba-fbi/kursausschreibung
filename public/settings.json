@@ -1,7 +1,4 @@
 {
-  // API-URL without trailing slash (required)
-  "apiUrl": "https://b17eb32d-b72d-4238-a677-74639b5dbf20.mock.pstmn.io",
-
   // only show hosts with a specific hostId (optional)
   "hostId": "bern",
 
