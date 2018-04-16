@@ -5,7 +5,7 @@
   // items per page on the event-list (required)
   "itemsPerPage": 10,
 
-  // fields to show on the event-list (required)
+  // title and fields to show on the event-list (required)
   // possible values in this array can be
   // * keys of the /Events API-endpoint
   // * keys of the /EventLocations API-endpoint
@@ -16,6 +16,7 @@
   //  + "To" (combination of dateTo and timeTo)
   // a translation has to be provided for each of the values
   // (the key of the translation has to be in camelCase)
+  "eventListTitle": "Designation",
   "eventListFields": [
     "SubscriptionFrom",
     "LanguageOfInstruction",
