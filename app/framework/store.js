@@ -8,7 +8,6 @@ import {
 } from '../framework/api';
 import ObjectProxy from '@ember/object/proxy';
 import { combineDate } from '../framework/date-helpers';
-import { isPresent } from '@ember/utils';
 import { all } from 'rsvp';
 import settings from '../framework/settings';
 
@@ -47,8 +46,8 @@ export function init() {
     getEventTexts()
   ]).then(function([events, lessons, eventLocations, eventTexts]) {
     // filter out events with wrong hostId
-    if (isPresent(settings.hostId)) {
-      events = events.filter(event => event.HostId === settings.hostId);
+    if (settings.hostIds instanceof Array) {
+      events = events.filter(event => settings.hostIds.indexOf(event.HostId) !== -1);
     }
 
     events.forEach(function(event) {

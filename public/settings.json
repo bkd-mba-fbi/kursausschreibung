@@ -1,6 +1,6 @@
 {
-  // only show hosts with a specific hostId (optional)
-  "hostId": "bern",
+  // only show hosts with one of these hostIds (optional)
+  "hostIds": ["bern"],
 
   // items per page on the event-list (required)
   "itemsPerPage": 10,
