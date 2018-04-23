@@ -16,8 +16,7 @@ export default Route.extend({
     // this is loosely based on
     // https://github.com/emberjs/ember.js/issues/11247#issuecomment-118143934
     return all([
-      settingsInit().then(storeInit), // store relies on settings
-      appConfigInit(),
+      all([appConfigInit(), settingsInit()]).then(storeInit), // store relies on settings and appConfig
       translateInit()
     ]);
   },
