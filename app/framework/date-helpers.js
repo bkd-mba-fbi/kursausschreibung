@@ -1,6 +1,7 @@
 import moment from 'moment';
 
 // combine date and time
+// TODO: remove this
 export function combineDate(dateString, timeString) {
   let [hours, minutes] = timeString.split(':').map(str => parseInt(str));
   return moment(dateString)

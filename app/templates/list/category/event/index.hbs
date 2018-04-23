@@ -1,12 +1,4 @@
-<ul class="uk-breadcrumb">
-  <li>
-    <a href="#">Ausbildung</a>
-  </li>
-  <li>
-    <a href="#">Kategorie 1 (breadcrumbs deaktivierbar)</a>
-  </li>
-</ul>
-<h2>Anlassbezeichnung 1</h2>
+<h2>{{model.displayData.Designation}}</h2>
 <table class="uk-table uk-table-striped details-table">
   <tbody>
     <tr>
@@ -50,6 +42,10 @@
     </tr>
   </tbody>
 </table>
+
+{{#each model.displayData.lessons as |lesson|}}
+  {{lesson.DateFrom}} - {{lesson.DateTo}}: {{lesson.Designation}}<br>
+{{/each}}
 
 <div class="uk-margin">
   <a class="uk-link-reset">
