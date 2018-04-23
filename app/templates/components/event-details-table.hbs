@@ -9,10 +9,12 @@
       {{/if}}
     {{/each}}
     {{#each event.texts as |text|}}
-      <tr>
-        <td>{{text.label}}</td>
-        <td>{{text.memo}}</td>
-      </tr>
+      {{#if text.label}}
+        <tr>
+          <td>{{text.label}}</td>
+          <td>{{text.memo}}</td>
+        </tr>
+      {{/if}}
     {{/each}}
   </tbody>
 </table>
