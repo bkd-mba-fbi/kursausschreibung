@@ -47,7 +47,9 @@ export function init() {
   ]).then(function([events, lessons, eventLocations, eventTexts]) {
     // filter out events with wrong hostId
     if (settings.hostIds instanceof Array) {
-      events = events.filter(event => settings.hostIds.indexOf(event.HostId) !== -1);
+      events = events.filter(
+        event => settings.hostIds.indexOf(event.HostId) !== -1
+      );
     }
 
     events.forEach(function(event) {
@@ -102,32 +104,32 @@ export function init() {
 
       // by area
       let areaName = event.AreaOfEducation;
-      let area = areaName.toLowerCase();
+      let areaKey = (event.areaKey = areaName.toLowerCase());
 
-      if (!eventsByArea.hasOwnProperty(area)) {
-        eventsByArea[area] = {
+      if (!eventsByArea.hasOwnProperty(areaKey)) {
+        eventsByArea[areaKey] = {
           name: areaName,
-          key: area,
+          key: areaKey,
           events: [],
           categories: {}
         };
       }
 
-      eventsByArea[area].events.push(event);
+      eventsByArea[areaKey].events.push(event);
 
       // by category (in area)
       let categoryName = event.EventCategory;
-      let category = categoryName.toLowerCase();
+      let categoryKey = (event.categoryKey = categoryName.toLowerCase());
 
-      if (!eventsByArea[area].categories.hasOwnProperty(category)) {
-        eventsByArea[area].categories[category] = {
+      if (!eventsByArea[areaKey].categories.hasOwnProperty(categoryKey)) {
+        eventsByArea[areaKey].categories[categoryKey] = {
           name: categoryName,
-          key: category,
+          key: categoryKey,
           events: []
         };
       }
 
-      eventsByArea[area].categories[category].events.push(event);
+      eventsByArea[areaKey].categories[categoryKey].events.push(event);
     });
 
     // add lessons to events
@@ -137,7 +139,9 @@ export function init() {
       }
 
       // make DateFrom and DateTo human-readable
-      lesson.DateFrom = moment(lesson.DateFrom, 'YYYY-MM-DD HH:mm').format('LLL');
+      lesson.DateFrom = moment(lesson.DateFrom, 'YYYY-MM-DD HH:mm').format(
+        'LLL'
+      );
       lesson.DateTo = moment(lesson.DateTo, 'YYYY-MM-DD HH:mm').format('LLL');
 
       eventsById[lesson.EventId].lessons.push(lesson);
@@ -151,16 +155,14 @@ export function init() {
         return;
       }
 
+      // don't overwrite event-Id
+      delete location.Id;
+
       eventsById[eventId] = $.extend(eventsById[eventId], location);
     });
 
     // add texts to events
     eventTexts.forEach(function(textItem) {
-      // 0-based counting instead of 1-based counting
-      // this prevents an empty line from appearing in the
-      // template when iterating over the texts
-      textItem.Number = textItem.Number - 1;
-
       if (!eventsById.hasOwnProperty(textItem.EventId)) {
         return;
       }

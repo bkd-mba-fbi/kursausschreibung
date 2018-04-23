@@ -1,4 +1,4 @@
-{{#link-to "list.category.event" "ausbildung" "bpa" 1234 classNames="event-list-item uk-link-reset"}}
+{{#link-to "list.category.event" event.areaKey event.categoryKey event.Id classNames="event-list-item uk-link-reset"}}
   <h3 class="uk-margin-small">
     {{status-lamp status=status}}{{get event.displayData title}}
   </h3>
