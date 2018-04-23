@@ -1,0 +1,22 @@
+<table class="uk-table uk-table-striped details-table">
+  <tbody>
+    {{#each fields as |field|}}
+      {{#if (get event.displayData field.key)}}
+        <tr>
+          <td>{{field.name}}</td>
+          <td>{{get event.displayData field.key}}</td>
+        </tr>
+      {{/if}}
+    {{/each}}
+    {{#each event.texts as |text|}}
+      <tr>
+        <td>{{text.label}}</td>
+        <td>{{text.memo}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+{{#each model.displayData.lessons as |lesson|}}
+  {{lesson.DateFrom}} - {{lesson.DateTo}}: {{lesson.Designation}}<br>
+{{/each}}

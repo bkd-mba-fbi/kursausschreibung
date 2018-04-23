@@ -25,6 +25,16 @@
     "Price"
   ],
 
+  // same as the above but for the details-route (required)
+  "eventDetailsTitle": "Designation",
+  "eventDetailsFields": [
+    "DateFrom",
+    "DateTo",
+    "Leadership",
+    "BuildingAddress",
+    "Price"
+  ],
+
   // set this to true to add a button to change the langauge (optional)
   "showLanguageButton": false,
 

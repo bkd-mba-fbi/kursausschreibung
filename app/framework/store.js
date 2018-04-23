@@ -156,6 +156,11 @@ export function init() {
 
     // add texts to events
     eventTexts.forEach(function(textItem) {
+      // 0-based counting instead of 1-based counting
+      // this prevents an empty line from appearing in the
+      // template when iterating over the texts
+      textItem.Number = textItem.Number - 1;
+
       if (!eventsById.hasOwnProperty(textItem.EventId)) {
         return;
       }

@@ -44,11 +44,12 @@ let isRed = createStatusCallback(settings.lampIsRed, function(event) {
 
 export default Component.extend({
   tagName: 'li',
+
+  title: settings.eventListTitle,
+
   fields: settings.eventListFields.map(key => ({
     name: getString(camelize(key)), key
   })),
-
-  title: settings.eventListTitle,
 
   status: computed('event', function () {
     let event = this.get('event');

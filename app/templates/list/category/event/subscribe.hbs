@@ -6,35 +6,9 @@
     <span>Bestätigung</span>
   </li>
 </ol>
-<h2>Anlassbezeichnung 1</h2>
-<table class="uk-table uk-table-striped details-table">
-  <tbody>
-    <tr>
-      <td>Datum von</td>
-      <td>12.02.2018</td>
-    </tr>
-    <tr>
-      <td>Datum bis</td>
-      <td>31.03.2018</td>
-    </tr>
-    <tr>
-      <td>Dauer</td>
-      <td>10 Tage à jeweils 3 Lektionen</td>
-    </tr>
-    <tr>
-      <td>Anlassleitung</td>
-      <td>Max Muster</td>
-    </tr>
-    <tr>
-      <td>Ort</td>
-      <td>Musterschule, Musterstrasse 1, 3000 Bern</td>
-    </tr>
-    <tr>
-      <td>Preis</td>
-      <td>80.00</td>
-    </tr>
-  </tbody>
-</table>
+
+<h2>{{model.displayData.Designation}}</h2>
+{{event-details-table event=model}}
 
 <!-- FORM -->
 <form class="uk-grid-small uk-form-horizontal" uk-grid>

@@ -1,51 +1,5 @@
 <h2>{{model.displayData.Designation}}</h2>
-<table class="uk-table uk-table-striped details-table">
-  <tbody>
-    <tr>
-      <td>Datum von</td>
-      <td>12.02.2018</td>
-    </tr>
-    <tr>
-      <td>Datum bis</td>
-      <td>31.03.2018</td>
-    </tr>
-    <tr>
-      <td>Dauer</td>
-      <td>10 Tage à jeweils 3 Lektionen</td>
-    </tr>
-    <tr>
-      <td>Anlassleitung</td>
-      <td>Max Muster</td>
-    </tr>
-    <tr>
-      <td>Ort</td>
-      <td>Musterschule, Musterstrasse 1, 3000 Bern</td>
-    </tr>
-    <tr>
-      <td>Preis</td>
-      <td>80.00</td>
-    </tr>
-    <tr>
-      <td>Lektionen</td>
-      <td>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
-        magna aliquyam erat, sed diam voluptua. At vero eos et accusam et.</td>
-    </tr>
-    <tr>
-      <td>Zielpublikum</td>
-      <td>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
-        magna aliquyam erat, sed diam voluptua. At vero eos et accusam et.</td>
-    </tr>
-    <tr>
-      <td>Kursinhalt</td>
-      <td>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
-        magna aliquyam erat, sed diam voluptua. At vero eos et accusam et.</td>
-    </tr>
-  </tbody>
-</table>
-
-{{#each model.displayData.lessons as |lesson|}}
-  {{lesson.DateFrom}} - {{lesson.DateTo}}: {{lesson.Designation}}<br>
-{{/each}}
+{{event-details-table event=model}}
 
 <div class="uk-margin">
   <a class="uk-link-reset">

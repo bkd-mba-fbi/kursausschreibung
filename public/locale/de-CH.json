@@ -20,5 +20,8 @@
   "location": "Ort",
   "price": "Preis",
   "buildingAddress": "Adresse",
-  "languageOfInstruction": "Unterrichtssprache"
+  "languageOfInstruction": "Unterrichtssprache",
+  "dateFrom": "Datum von",
+  "dateTo": "Datum bis",
+  "leadership": "Anlassleitung"
 }
