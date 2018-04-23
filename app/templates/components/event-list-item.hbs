@@ -1,4 +1,4 @@
-<a class="event-list-item uk-link-reset" href="details.html">
+{{#link-to "list.category.event" "ausbildung" "bpa" 1234 classNames="event-list-item uk-link-reset"}}
   <h3 class="uk-margin-small">
     {{status-lamp status=status}}{{get event.displayData title}}
   </h3>
@@ -14,4 +14,4 @@
       {{/each}}
     </tbody>
   </table>
-</a>
+{{/link-to}}

@@ -1,0 +1,135 @@
+<ol class="steps">
+  <li class="step1 current">
+    <span>Personendaten</span>
+  </li>
+  <li class="step2">
+    <span>Bestätigung</span>
+  </li>
+</ol>
+<h2>Anlassbezeichnung 1</h2>
+<table class="uk-table uk-table-striped details-table">
+  <tbody>
+    <tr>
+      <td>Datum von</td>
+      <td>12.02.2018</td>
+    </tr>
+    <tr>
+      <td>Datum bis</td>
+      <td>31.03.2018</td>
+    </tr>
+    <tr>
+      <td>Dauer</td>
+      <td>10 Tage à jeweils 3 Lektionen</td>
+    </tr>
+    <tr>
+      <td>Anlassleitung</td>
+      <td>Max Muster</td>
+    </tr>
+    <tr>
+      <td>Ort</td>
+      <td>Musterschule, Musterstrasse 1, 3000 Bern</td>
+    </tr>
+    <tr>
+      <td>Preis</td>
+      <td>80.00</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- FORM -->
+<form class="uk-grid-small uk-form-horizontal" uk-grid>
+
+  <div class="uk-width-1-1">
+    <select class="uk-select">
+      <option>Frau</option>
+      <option>Herr</option>
+    </select>
+  </div>
+
+  <div class="uk-width-1-1">
+    <input class="uk-input uk-form-danger" type="text" placeholder="Vorname*">
+  </div>
+  <div class="uk-width-1-1">
+    <input class="uk-input uk-form-success" type="text" value="Schmid" placeholder="Nachname*">
+  </div>
+  <div class="uk-width-1-1">
+    <input class="uk-input" type="text" value="Beispielweg 27" placeholder="Adresse*">
+
+  </div>
+  <div class="uk-width-1-2@s">
+    <input class="uk-input" type="text" placeholder="PLZ*">
+  </div>
+  <div class="uk-width-1-2@s">
+    <input class="uk-input" type="text" placeholder="Ort*">
+  </div>
+  <div class="uk-width-1-1">
+    <input class="uk-input" type="text" placeholder="Telefon P oder Mobil*">
+  </div>
+  <div class="uk-width-1-1">
+    <input class="uk-input" type="text" placeholder="Geburtsdatum*">
+  </div>
+  <div class="uk-width-1-1">
+    <input class="uk-input" type="text" placeholder="E-Mail-Adresse*">
+  </div>
+  <div class="uk-width-1-1">
+    <label>
+      <input class="uk-checkbox" type="checkbox"> Rechnungsadresse an Firma</label>
+  </div>
+  <div class="uk-width-1-1">
+    <input class="uk-input" type="text" placeholder="Firmenname*" disabled>
+  </div>
+  <div class="uk-width-1-1">
+    <input class="uk-input" type="text" placeholder="Adresse*" disabled>
+  </div>
+  <div class="uk-width-1-2@s">
+    <input class="uk-input" type="text" placeholder="PLZ*" disabled>
+  </div>
+  <div class="uk-width-1-2@s">
+    <input class="uk-input" type="text" placeholder="Ort*" disabled>
+  </div>
+  <div class="uk-width-1-1">
+    <input class="uk-input" type="text" placeholder="Telefon*" disabled>
+  </div>
+  <div class="uk-width-1-1">
+    <hr>
+  </div>
+  <div class="uk-width-1-1">
+    <div class="uk-form-label">Anmeldedetail 1</div>
+    <div class="uk-form-controls">
+      <input class="uk-checkbox" type="checkbox">
+    </div>
+  </div>
+  <div class="uk-width-1-1">
+    <div class="uk-form-label">Anmeldedetail 2</div>
+    <div class="uk-form-controls">
+      <input class="uk-checkbox" type="checkbox">
+    </div>
+  </div>
+  <div class="uk-width-1-1">
+    <div class="uk-form-label">Anmeldedetail 3</div>
+    <div class="uk-form-controls">
+      <input class="uk-checkbox" type="checkbox">
+    </div>
+  </div>
+  <div class="uk-width-1-1">
+    <div class="uk-form-label">Anmeldedetail 4 mit Textumbruch</div>
+    <div class="uk-form-controls">
+      <select class="uk-select">
+        <option>Option 01</option>
+        <option>Option 02</option>
+      </select>
+    </div>
+  </div>
+  <div class="uk-width-1-1">
+    <div class="uk-form-label">Ich akzeptiere die
+      <a href="#">AGB</a>
+    </div>
+    <div class="uk-form-controls">
+      <input class="uk-checkbox" type="checkbox">
+    </div>
+  </div>
+</form>
+<div class="uk-margin">
+  {{link-to "Anmelden" "list.category.event.confirmation" classNames="uk-button uk-button-primary uk-float-left"}}
+  {{link-to "Zurück" "list.category.event" classNames="uk-button uk-button-default uk-float-right"}}
+</div>
