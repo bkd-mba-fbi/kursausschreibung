@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { oneWay } from '@ember/object/computed';
+import { observer } from '@ember/object';
 
 // tests if a query matches a value
 function match(value, query) {
@@ -11,6 +12,12 @@ function match(value, query) {
 
 export default Component.extend({
   query: '',
+
+  // update the filtered events when the events change
+  eventsChanged: observer('events', function() {
+    this.send('queryChanged');
+  }),
+
   filteredEvents: oneWay('events'),
 
   actions: {
