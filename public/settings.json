@@ -35,6 +35,9 @@
     "Price"
   ],
 
+  // show breadcrumbs navigation (optional)
+  "showBreadcrumbs": true,
+
   // show event-text on the details-route (optional)
   "showEventText": true,
 

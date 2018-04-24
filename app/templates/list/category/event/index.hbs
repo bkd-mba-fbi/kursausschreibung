@@ -1,3 +1,14 @@
+{{#if showBreadcrumbs}}
+  <ul class="uk-breadcrumb">
+    <li>
+      {{link-to model.AreaOfEducation "list"}}{{foo}}
+    </li>
+    <li>
+        {{link-to model.EventCategory "list.category"}}
+    </li>
+  </ul>
+{{/if}}
+
 <h2>{{model.displayData.Designation}}</h2>
 {{event-details-table event=model}}
 
