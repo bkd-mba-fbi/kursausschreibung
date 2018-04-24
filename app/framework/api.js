@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import appConfig from '../framework/app-config';
+import appConfig from 'kursausschreibung/framework/app-config';
 
 // not using the framework-version for now
 // because it seems to be missing almost every call

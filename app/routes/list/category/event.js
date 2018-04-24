@@ -1,5 +1,5 @@
 import Route from '@ember/routing/route';
-import store from '../../../framework/store';
+import store from 'kursausschreibung/framework/store';
 
 export default Route.extend({
   model(params) {

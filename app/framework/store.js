@@ -5,11 +5,11 @@ import {
   getLessons,
   getEventLocations,
   getEventTexts
-} from '../framework/api';
+} from 'kursausschreibung/framework/api';
 import ObjectProxy from '@ember/object/proxy';
-import { combineDate } from '../framework/date-helpers';
+import { combineDate } from 'kursausschreibung/framework/date-helpers';
 import { all } from 'rsvp';
-import settings from '../framework/settings';
+import settings from 'kursausschreibung/framework/settings';
 
 // group events by areaOfEducation, EventCategory and Id
 let eventsByArea = {};

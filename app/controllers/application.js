@@ -1,6 +1,6 @@
 import Controller from '@ember/controller';
-import { setLanguage } from '../framework/translate';
-import settings from '../framework/settings';
+import { setLanguage } from 'kursausschreibung/framework/translate';
+import settings from 'kursausschreibung/framework/settings';
 
 export default Controller.extend({
   showLanguageButton: settings.showLanguageButton,

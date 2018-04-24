@@ -1,6 +1,6 @@
 import Component from '@ember/component';
-import settings from '../framework/settings';
-import { getString } from '../framework/translate';
+import settings from 'kursausschreibung/framework/settings';
+import { getString } from 'kursausschreibung/framework/translate';
 import { camelize } from "@ember/string";
 
 export default Component.extend({

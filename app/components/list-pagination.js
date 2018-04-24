@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import settings from '../framework/settings';
+import settings from 'kursausschreibung/framework/settings';
 
 // pages to show before and after the current page
 let n = 2;

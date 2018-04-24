@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { observer } from '@ember/object';
-import { getString } from '../framework/translate';
+import { getString } from 'kursausschreibung/framework/translate';
 
 const statuses = {
   green: { tooltip: getString('greenLamp'), className: 'lamp-green' },

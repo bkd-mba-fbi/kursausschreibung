@@ -1,5 +1,5 @@
 import { helper } from '@ember/component/helper';
-import { getString } from '../framework/translate';
+import { getString } from 'kursausschreibung/framework/translate';
 import { htmlSafe } from '@ember/string';
 
 export function translate([key]) {

@@ -1,8 +1,8 @@
 import Route from '@ember/routing/route';
-import { init as settingsInit } from '../framework/settings';
-import { init as appConfigInit } from '../framework/app-config';
-import { init as translateInit } from '../framework/translate';
-import { init as storeInit, getAllEvents } from '../framework/store';
+import { init as settingsInit } from 'kursausschreibung/framework/settings';
+import { init as appConfigInit } from 'kursausschreibung/framework/app-config';
+import { init as translateInit } from 'kursausschreibung/framework/translate';
+import { init as storeInit, getAllEvents } from 'kursausschreibung/framework/store';
 import { all } from 'rsvp';
 import uikit from 'uikit';
 import $ from 'jquery';
