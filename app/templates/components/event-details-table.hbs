@@ -8,12 +8,14 @@
         </tr>
       {{/if}}
     {{/each}}
-    {{#each event.texts as |text|}}
-      <tr>
-        <td>{{text.label}}</td>
-        <td>{{text.memo}}</td>
-      </tr>
-    {{/each}}
+    {{#if showEventText}}
+      {{#each event.texts as |text|}}
+        <tr>
+          <td>{{text.label}}</td>
+          <td>{{text.memo}}</td>
+        </tr>
+      {{/each}}
+    {{/if}}
   </tbody>
 </table>
 

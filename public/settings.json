@@ -35,6 +35,9 @@
     "Price"
   ],
 
+  // show event-text on the details-route (optional)
+  "showEventText": true,
+
   // set this to true to add a button to change the langauge (optional)
   "showLanguageButton": false,
 
