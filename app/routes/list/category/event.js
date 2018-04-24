@@ -2,7 +2,7 @@ import Route from '@ember/routing/route';
 import store from '../../../framework/store';
 
 export default Route.extend({
-  model(params, transition) {
+  model(params) {
     let event = store.getEventById(params.event_id);
 
     // check if event exists in area and category
