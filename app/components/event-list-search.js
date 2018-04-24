@@ -24,6 +24,11 @@ export default Component.extend({
     queryChanged() {
       let query = this.get('query').toLowerCase();
 
+      // don't filter the events when the query is empty
+      if (query === '') {
+        return;
+      }
+
       this.set('filteredEvents', this.get('events')
         // search the query string in event-properties and memo-texts
         .filter(event => (
