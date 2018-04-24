@@ -178,5 +178,13 @@ export function init() {
 
       text[textItem.Type.toLowerCase()] = textItem.Value;
     });
+
+    // remove texts with empty label or memo
+    events.forEach(
+      event =>
+        (event.texts = event.texts.filter(
+          text => text.label !== null && text.memo !== null
+        ))
+    );
   });
 }
