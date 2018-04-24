@@ -1,7 +1,7 @@
-{{#list-search queryChanged=(action "queryChanged") items=items as |filteredEvents|}}
+{{#event-list-search queryChanged=(action "queryChanged") events=events as |filteredEvents|}}
   {{#list-pagination page=page items=filteredEvents as |eventsOnCurrentPage|}}
     {{#each eventsOnCurrentPage as |event|}}
       {{event-list-item event=event}}
     {{/each}}
   {{/list-pagination}}
-{{/list-search}}
+{{/event-list-search}}

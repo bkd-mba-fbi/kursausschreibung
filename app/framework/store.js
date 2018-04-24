@@ -155,7 +155,7 @@ export function init() {
         return;
       }
 
-      // don't overwrite event-Id
+      // don't overwrite the event-Id
       delete location.Id;
 
       eventsById[eventId] = $.extend(eventsById[eventId], location);
