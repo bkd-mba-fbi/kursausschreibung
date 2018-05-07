@@ -8,7 +8,7 @@
         {{#if (get event.displayData field.key)}}
           <tr>
             <td>{{field.name}}</td>
-            <td>{{get event.displayData field.key}}</td>
+            <td>{{{get event.displayData field.key}}}</td>
           </tr>
         {{/if}}
       {{/each}}
