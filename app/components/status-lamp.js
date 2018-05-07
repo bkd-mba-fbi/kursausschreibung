@@ -26,5 +26,5 @@ export default Component.extend({
   }),
 
   tagName: 'span',
-  attributeBindings: ['tooltip:uk-tooltip']
+  attributeBindings: ['tooltip:data-uk-tooltip']
 });

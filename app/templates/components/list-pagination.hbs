@@ -1,8 +1,8 @@
 {{#if itemsOnCurrentPage}}
-<ul class="uk-pagination" uk-margin>
+<ul class="uk-pagination" data-uk-margin>
   <li>
     {{#link-to "list" (query-params page=previousPage) class=(if isFirstPage "uk-disabled")}}
-    <span uk-pagination-previous></span>
+    <span data-uk-pagination-previous></span>
     {{/link-to}}
   </li>
   {{#if showFirst}}
@@ -32,17 +32,17 @@
   {{/if}}
   <li>
     {{#link-to "list" (query-params page=nextPage) class=(if isLastPage "uk-disabled")}}
-    <span uk-pagination-next></span>
+    <span data-uk-pagination-next></span>
     {{/link-to}}
   </li>
 </ul>
 <ul class="uk-list uk-list-divider">
   {{yield itemsOnCurrentPage}}
 </ul>
-<ul class="uk-pagination" uk-margin>
+<ul class="uk-pagination" data-uk-margin>
   <li>
     {{#link-to "list" (query-params page=previousPage) class=(if isFirstPage "uk-disabled")}}
-    <span uk-pagination-previous></span>
+    <span data-uk-pagination-previous></span>
     {{/link-to}}
   </li>
   {{#if showFirst}}
@@ -72,7 +72,7 @@
   {{/if}}
   <li>
     {{#link-to "list" (query-params page=nextPage) class=(if isLastPage "uk-disabled")}}
-    <span uk-pagination-next></span>
+    <span data-uk-pagination-next></span>
     {{/link-to}}
   </li>
 </ul>
