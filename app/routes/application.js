@@ -1,11 +1,13 @@
 import Route from '@ember/routing/route';
+import { all } from 'rsvp';
+import uikit from 'uikit';
+import $ from 'jquery';
+
 import { init as settingsInit } from 'kursausschreibung/framework/settings';
 import { init as appConfigInit } from 'kursausschreibung/framework/app-config';
 import { init as translateInit } from 'kursausschreibung/framework/translate';
 import { init as storeInit, getAllEvents } from 'kursausschreibung/framework/store';
-import { all } from 'rsvp';
-import uikit from 'uikit';
-import $ from 'jquery';
+import { autoCheckForLogin } from 'kursausschreibung/framework/login-helpers';
 
 export default Route.extend({
   beforeModel() {
@@ -16,7 +18,10 @@ export default Route.extend({
     // this is loosely based on
     // https://github.com/emberjs/ember.js/issues/11247#issuecomment-118143934
     return all([
-      all([appConfigInit(), settingsInit()]).then(storeInit), // store relies on settings and appConfig
+      all([
+        settingsInit(),
+        appConfigInit().then(autoCheckForLogin)  // get a valid access_token if we don't have one
+      ]).then(storeInit), // store depends on settings, appConfig and access_token
       translateInit()
     ]);
   },

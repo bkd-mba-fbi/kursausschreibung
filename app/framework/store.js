@@ -1,15 +1,10 @@
 import $ from 'jquery';
 import moment from 'moment';
-import {
-  getEvents,
-  getLessons,
-  getEventLocations,
-  getEventTexts
-} from 'kursausschreibung/framework/api';
+import { getEvents, getLessons, getEventLocations, getEventTexts } from './api';
 import ObjectProxy from '@ember/object/proxy';
-import { combineDate } from 'kursausschreibung/framework/date-helpers';
+import { combineDate } from './date-helpers';
 import { all } from 'rsvp';
-import settings from 'kursausschreibung/framework/settings';
+import settings from './settings';
 
 // group events by areaOfEducation, EventCategory and Id
 let eventsByArea = {};

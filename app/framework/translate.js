@@ -1,60 +1,35 @@
 import $ from 'jquery';
 import { fetchJSON } from './ajax-helpers';
-import { storeItem, getItem } from './storage';
+import storage from './storage';
+import appConfig from './app-config';
 import moment from 'moment';
 
 let locale = {};
 let language;
 
+// TODO: consider renaming language to culture
+
 export function init() {
-  // detect language
-  // first priority: html lang attribute
-  let htmlLang = $('html').attr('lang');
-
-  if (htmlLang === 'de') {
-    language = 'de-CH';
-  } else if (htmlLang === 'fr') {
-    language = 'fr-CH';
-  }
-
-  // second priority: uiCulture in localStorage
-  if (language === undefined) {
-    language = getItem('uiCulture');
-  }
-
-  // third priority: browser-language
-  if (language === undefined) {
-    let navigatorLanguage = navigator.language;
-
-    if (navigatorLanguage === undefined) {
-      // for IE
-      navigatorLanguage = navigator.userLanguage;
-    }
-
-    if (navigatorLanguage.split('-')[0] === 'fr') {
-      language = 'fr-CH';
-    } else {
-      // default to de-CH
-      language = 'de-CH';
-    }
-  }
-
   // set locale for moment.js
-  moment.locale(language);
+  moment.locale(getLanguage());
 
   // fetch translations
-  return fetchJSON(`locale/${language}.json`, locale);
+  return fetchJSON(`locale/${getLanguage()}.json`, locale);
 }
 
 export function getLanguage() {
+  if (language === undefined) {
+    language = detectLanguage();
+  }
+
   return language;
 }
 
 export function setLanguage(newLanguage) {
-  storeItem('uiCulture', newLanguage);
+  storage.userSettings.uiCulture(newLanguage);
 
-  if (newLanguage !== language) {
-    window.location.assign('./');
+  if (newLanguage !== getLanguage()) {
+    window.location.assign(appConfig.webBaseUrl);
   }
 }
 
@@ -67,4 +42,36 @@ export function getString(key) {
   }
 
   return string;
+}
+
+function detectLanguage() {
+  // first priority: html lang attribute
+  let htmlLang = $('html').attr('lang');
+
+  if (htmlLang === 'de') {
+    return 'de-CH';
+  } else if (htmlLang === 'fr') {
+    return 'fr-CH';
+  }
+
+  // second priority: uiCulture in localStorage
+  let localStorageLanguage = storage.userSettings.uiCulture();
+
+  if (localStorageLanguage !== null) {
+    return localStorageLanguage;
+  }
+
+  // third priority: browser-language
+  let navigatorLanguage = navigator.language;
+
+  if (navigatorLanguage === undefined) {
+    // for IE
+    navigatorLanguage = navigator.userLanguage;
+  }
+
+  if (navigatorLanguage.split('-')[0] === 'fr') {
+    return 'fr-CH';
+  }
+  // default to de-CH
+  return 'de-CH';
 }
