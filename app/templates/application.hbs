@@ -4,8 +4,8 @@
 
   <div id="menu-modal" class="uk-modal-full" uk-modal="container: false;">
     <div class="uk-modal-dialog">
-      <button class="uk-modal-close-full uk-close-large" type="button" uk-close></button>
-      <div class="uk-padding-large" uk-height-viewport>
+      <button class="uk-modal-close-full uk-close-large" type="button" data-uk-close></button>
+      <div class="uk-padding-large" data-uk-height-viewport>
         <h2>{{translate "navigation"}}</h2>
         {{#each-in model as |area data|}}
           <div class="uk-margin">
@@ -45,7 +45,7 @@
     {{/each-in}}
   </ul>
 
-  <div class="uk-grid uk-margin" uk-grid>
+  <div class="uk-grid uk-margin" data-uk-grid>
     <!-- LEFT + CENTER -->
     {{outlet}}
 
