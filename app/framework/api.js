@@ -31,5 +31,6 @@ export function getEventLocations() {
 }
 
 export function getEventTexts(cultureInfo) {
+  cultureInfo = cultureInfo === 'fr-CH' ? 'en-US' : 'de-CH';
   return get('EventTexts/?cultureInfo=' + cultureInfo);
 }
