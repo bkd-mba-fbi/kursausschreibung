@@ -1,9 +1,9 @@
 <ol class="steps">
   <li class="step1 current">
-    <span>Personendaten</span>
+    <span>{{translate "personalData"}}</span>
   </li>
   <li class="step2">
-    <span>Bestätigung</span>
+    <span>{{translate "confirmation"}}</span>
   </li>
 </ol>
 
@@ -95,8 +95,8 @@
     </div>
   </div>
   <div class="uk-width-1-1">
-    <div class="uk-form-label">Ich akzeptiere die
-      <a href="#">AGB</a>
+    <div class="uk-form-label">{{translate "iAcceptThe"}}
+      <a href="#">{{translate "GTC"}}</a>
     </div>
     <div class="uk-form-controls">
       <input class="uk-checkbox" type="checkbox">
@@ -104,6 +104,6 @@
   </div>
 </form>
 <div class="uk-margin">
-  {{link-to "Anmelden" "list.category.event.confirmation" classNames="uk-button uk-button-primary uk-float-left"}}
-  {{link-to "Zurück" "list.category.event" classNames="uk-button uk-button-default uk-float-right"}}
+  {{link-to (translate "subscribe") "list.category.event.confirmation" classNames="uk-button uk-button-primary uk-float-left"}}
+  {{link-to (translate "back") "list.category.event" classNames="uk-button uk-button-default uk-float-right"}}
 </div>

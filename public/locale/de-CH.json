@@ -14,6 +14,16 @@
   "french": "Französisch",
   "menu": "Menu",
   "navigation": "Navigation",
+  "personalData": "Personendaten",
+  "confirmation": "Bestätigung",
+  "iAcceptThe": "Ich akzeptiere die",
+  "GTC": "AGB",
+  "subscribe": "Anmelden",
+  "back": "zurück",
+  "thankYou": "Besten Dank für Ihre Anmeldung",
+  "youWillReceiveAConfirmationEMail": "Sie erhalten eine Anmeldebestätigung per E-Mail.",
+  "officeAddress": "Kurssekretariat<br>Telefon 031 123 45 67<br>info@kurssekretariat.ch",
+  "yourDetails": "Ihre Angaben",
 
   // properties of an event
   "subscriptionFrom": "Start",
