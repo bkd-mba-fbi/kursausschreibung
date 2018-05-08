@@ -30,6 +30,6 @@ export function getEventLocations() {
   return get('EventLocations/');
 }
 
-export function getEventTexts() {
-  return get('EventTexts/');
+export function getEventTexts(cultureInfo) {
+  return get('EventTexts/?cultureInfo=' + cultureInfo);
 }

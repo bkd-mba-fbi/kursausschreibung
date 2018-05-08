@@ -22,7 +22,8 @@ export default Route.extend({
         settingsInit(),
         appConfigInit().then(autoCheckForLogin)  // get a valid access_token if we don't have one
       ]).then(storeInit), // store depends on settings, appConfig and access_token
-      translateInit()
+      translateInit() // translateInit loads the translations; the other init functions only need
+      // to know the culture and that doesn't need any initialization
     ]);
   },
 

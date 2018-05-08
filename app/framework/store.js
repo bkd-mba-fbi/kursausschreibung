@@ -5,6 +5,7 @@ import ObjectProxy from '@ember/object/proxy';
 import { combineDate } from './date-helpers';
 import { all } from 'rsvp';
 import settings from './settings';
+import { getLanguage } from './translate';
 
 // group events by areaOfEducation, EventCategory and Id
 let eventsByArea = {};
@@ -33,12 +34,14 @@ export function getEventById(id) {
 // * add lessons locations and texts to the appropriate event
 // * sort events by areaOfEducation, category and Id (for faster access)
 export function init() {
+  let language = getLanguage();
+
   // fetch all events
   return all([
     getEvents(),
     getLessons(),
     getEventLocations(),
-    getEventTexts()
+    getEventTexts(language)
   ]).then(function([events, lessons, eventLocations, eventTexts]) {
     // filter out events with wrong hostId
     if (settings.hostIds instanceof Array) {
@@ -159,6 +162,11 @@ export function init() {
     // add texts to events
     eventTexts.forEach(function(textItem) {
       if (!eventsById.hasOwnProperty(textItem.EventId)) {
+        return;
+      }
+
+      // only show texts with the correct cultureInfo
+      if (textItem.CultureInfo !== language) {
         return;
       }
 
