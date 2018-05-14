@@ -13,5 +13,7 @@ export function fetchJSON(url, object) {
     }
   }).then(function (response) {
     $.extend(object, response);
+  }).catch(function() {
+    throw new Error(`there was an error while loading and parsing ${url}.`); // human-readable error
   });
 }
