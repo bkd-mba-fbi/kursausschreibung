@@ -5,6 +5,10 @@
   https://getuikit.com/docs/sass
 */
 
+#kursausschreibung-root {
+  min-height: 300px;
+}
+
 .event-list-item:hover {
   display: block;
   background-color: #f7f2f1;
