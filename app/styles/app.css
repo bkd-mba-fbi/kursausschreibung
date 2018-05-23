@@ -9,6 +9,10 @@
   min-height: 300px;
 }
 
+.uk-scope h2 {
+  overflow-wrap: break-word;
+}
+
 .event-list-item:hover {
   display: block;
   background-color: #f7f2f1;
