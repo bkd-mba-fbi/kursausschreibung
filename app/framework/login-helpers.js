@@ -58,5 +58,9 @@ export function autoCheckForLogin() {
     }/Token?${params}`;
 
     location.replace(url);
+
+    return new Promise(() => {}); // never resolve so no error-message gets shown
   }
+
+  return Promise.resolve();
 }
