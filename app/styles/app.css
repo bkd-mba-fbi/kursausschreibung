@@ -56,3 +56,17 @@
     z-index: 200; /* always on top */
   }
 }
+
+/* small mobile */
+@media (max-width: 449px) {
+  .details-table.table-collapse td {
+    display: block;
+  }
+  .uk-scope .details-table.table-collapse td:first-child {
+    padding-bottom: 0;
+  }
+
+  .details-table.table-collapse td:last-child {
+    padding-top: 12px;
+  }
+}
