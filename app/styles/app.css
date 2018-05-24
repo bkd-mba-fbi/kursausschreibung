@@ -50,6 +50,10 @@
   font-weight: bolder;
 }
 
+.details-table td:last-child {
+  white-space: pre-wrap;
+}
+
 /* mobile */
 @media (max-width: 959px) {
   .subscribe-button {
