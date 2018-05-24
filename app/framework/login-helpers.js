@@ -4,29 +4,30 @@ import { getParameterByName } from './url-helpers';
 import { getLanguage } from './translate';
 
 // stripped down version of the CLX framework code
-// (not yet complete)
-// TODO: refresh (also save filled out forms)
 
 function isLoggedIn() {
-  let loggedToken = storage.access_token();
+  let accessToken = storage.access_token();
+  let tokenExpire = storage.token_expire();
 
-  if (loggedToken !== null) {
-    let expire = storage.token_expire();
-    if (expire) {
-      if (Date.now() >= expire) {
-        return false;
-      }
-    }
-    return true;
-  } else {
+  if (accessToken === null || (tokenExpire !== null && Date.now() >= tokenExpire)) {
     return false;
   }
+
+  let payload = parseJWT();
+
+  // only return true if instanceId and culture are correct
+  return appConfig.instanceId === payload.instance_id && payload.culture_info === getLanguage();
+}
+
+function parseJWT() {
+  // parse and return payload
+  return JSON.parse(atob(storage.access_token().split('.')[1]));
 }
 
 function checkToken() {
   let token = getParameterByName('access_token');
 
-  if (token) {
+  if (token !== null) {
     // redirect from OAuth Server -> store token, refresh token and expiration
     let refreshToken = getParameterByName('refresh_token');
     let expire = parseInt(getParameterByName('expires_in'));
@@ -36,7 +37,7 @@ function checkToken() {
     storage.refresh_token(refreshToken);
     storage.token_expire(date);
 
-    location.replace(location.href.split('?')[0]);
+    history.replaceState(null, null, location.href.split('?')[0]);
   }
 }
 
