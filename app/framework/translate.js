@@ -64,11 +64,6 @@ function detectLanguage() {
   // third priority: browser-language
   let navigatorLanguage = navigator.language;
 
-  if (navigatorLanguage === undefined) {
-    // for IE
-    navigatorLanguage = navigator.userLanguage;
-  }
-
   if (navigatorLanguage.split('-')[0] === 'fr') {
     return 'fr-CH';
   }
