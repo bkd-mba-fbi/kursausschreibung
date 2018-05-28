@@ -5,7 +5,9 @@
   https://getuikit.com/docs/sass
 */
 
-#kursausschreibung-root {
+.uk-scope {
+  display: inline-block;
+  width: 100%;
   min-height: 300px;
 }
 
@@ -15,7 +17,7 @@
 
 .event-list-item:hover {
   display: block;
-  background-color: #f7f2f1;
+  background: #f5f5f5;
 }
 
 .lamp-red,
