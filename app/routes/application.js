@@ -23,7 +23,7 @@ export default Route.extend({
         appConfigInit().then(autoCheckForLogin)  // get a valid access_token if we don't have one
       ]).then(storeInit), // store depends on settings, appConfig and access_token
       translateInit() // translateInit loads the translations; the other init functions only need
-      // to know the culture and that doesn't need any initialization
+      // to know the language and that doesn't need any initialization
     ]).catch(function (error) {
       // only log exceptions thrown here so the route still loads
       // uninitialised modules will throw an error later
