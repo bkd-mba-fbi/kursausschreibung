@@ -7,8 +7,6 @@ import moment from 'moment';
 let locale = {};
 let language;
 
-// TODO: consider renaming language to culture
-
 export function init() {
   // set locale for moment.js
   moment.locale(getLanguage());
