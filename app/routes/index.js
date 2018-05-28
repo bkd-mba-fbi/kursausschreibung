@@ -6,7 +6,7 @@ export default Route.extend({
     let firstKey = Object.keys(eventsByArea)[0];
 
     if (firstKey === undefined) {
-      throw new Error('failed to reroute to first areaOfEducation. no areaOfEducation was found.');
+      throw new Error('no events are available. there most likely is an issue with the config or the api server.');
     }
 
     this.replaceWith('list', firstKey);
