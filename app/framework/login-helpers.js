@@ -1,3 +1,4 @@
+import { Promise } from 'rsvp';
 import storage from './storage';
 import appConfig from './app-config';
 import { getParameterByName } from './url-helpers';
