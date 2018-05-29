@@ -48,7 +48,9 @@ function detectLanguage() {
 
   if (htmlLang === 'de') {
     return 'de-CH';
-  } else if (htmlLang === 'fr') {
+  }
+
+  if (htmlLang === 'fr') {
     return 'fr-CH';
   }
 
