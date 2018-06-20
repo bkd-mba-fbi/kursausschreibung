@@ -26,6 +26,7 @@ export default Component.extend({
 
       // don't filter the events when the query is empty
       if (query === '') {
+        this.set('filteredEvents', this.get('events'));
         return;
       }
 
