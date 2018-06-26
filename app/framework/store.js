@@ -6,7 +6,7 @@ import ObjectProxy from '@ember/object/proxy';
 import { combineDate } from './date-helpers';
 import { all } from 'rsvp';
 import settings from './settings';
-import { getLanguage } from './translate';
+import { getLanguage, getString } from './translate';
 
 // group events by areaOfEducation, EventCategory and Id
 let eventsByArea = {};
@@ -36,6 +36,9 @@ export function getEventById(id) {
 // * sort events by areaOfEducation, category and Id (for faster access)
 export function init() {
   let language = getLanguage();
+
+  // helper function to create human-readable dates
+  let formatDate = (date, format) => date === null ? getString('notAvailable') : moment(date).format(format);
 
   // fetch all events
   return all([
@@ -84,17 +87,17 @@ export function init() {
         content: event,
 
         // formatted overwritten properties
-        DateFrom: moment(event.SubscriptionDateFrom).format('LL'),
-        DateTo: moment(event.SubscriptionDateFrom).format('LL'),
+        DateFrom: formatDate(event.SubscriptionDateFrom, 'LL'),
+        DateTo: formatDate(event.SubscriptionDateFrom, 'LL'),
 
-        SubscriptionDateFrom: moment(event.SubscriptionDateFrom).format('LL'),
-        SubscriptionDateTo: moment(event.SubscriptionDateTo).format('LL'),
+        SubscriptionDateFrom: formatDate(event.SubscriptionDateFrom, 'LL'),
+        SubscriptionDateTo: formatDate(event.SubscriptionDateTo, 'LL'),
 
-        From: moment(event.From).format('LLL'),
-        To: moment(event.To).format('LLL'),
+        From: formatDate(event.From, 'LLL'),
+        To: formatDate(event.To, 'LLL'),
 
-        SubscriptionFrom: moment(event.SubscriptionFrom).format('LLL'),
-        SubscriptionTo: moment(event.SubscriptionTo).format('LLL'),
+        SubscriptionFrom: formatDate(event.SubscriptionFrom, 'LLL'),
+        SubscriptionTo: formatDate(event.SubscriptionTo, 'LLL'),
 
         Price: 'CHF ' + event.Price
       });

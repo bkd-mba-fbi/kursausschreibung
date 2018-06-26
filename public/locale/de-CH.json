@@ -24,6 +24,7 @@
   "yourDetails": "Ihre Angaben",
   "companyAddress": "Rechnungsadresse an Firma",
   "errorMessage": "Es ist zu einem unvorhergesehenen Fehler gekommen. Bitte versuchen Sie es nochmals.",
+  "notAvailable": "nicht verfügbar",
 
   // properties of an event
   "subscriptionFrom": "Start",

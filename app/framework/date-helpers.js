@@ -17,5 +17,8 @@ export function combineDate(dateString, timeString) {
 // SubscriptionDateFrom/SubscriptionTimeFrom and
 // SubscriptionDateTo/Subscription  TimeTo
 export function isInSubscriptionRange(event) {
+  if (event.SubscriptionFrom === null)
+    return moment().isBefore(event.SubscriptionTo);
+
   return moment().isBetween(event.SubscriptionFrom, event.SubscriptionTo);
 }
