@@ -11,7 +11,7 @@ const statuses = {
 
 export default Component.extend({
   init() {
-    this._super();
+    this._super(...arguments);
     // trigger observer
     this.statusChanged();
   },

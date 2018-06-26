@@ -1,5 +1,5 @@
 /* based on https://ericheikes.com/creating-a-progress-bar-with-css/ */
-ol.steps {
+.uk-scope ol.steps {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -9,7 +9,7 @@ ol.steps {
   font-weight: bold;
 }
 
-ol.steps li {
+.uk-scope ol.steps li {
   list-style-image: none;
   list-style-type: none;
   margin-left: 0;
@@ -19,7 +19,7 @@ ol.steps li {
   margin-left: 43px;
 }
 
-ol.steps li:after {
+.uk-scope ol.steps li:after {
   position: absolute;
   top: 50%;
   left: 100%;
@@ -33,24 +33,24 @@ ol.steps li:after {
   margin-top: -19px;
 }
 
-ol.steps li:first-child {
+.uk-scope ol.steps li:first-child {
   margin-left: 0;
 }
 
-ol.steps li:first-child span {
+.uk-scope ol.steps li:first-child span {
   padding: 9px;
 }
 
-ol.steps li:first-child span:after {
+.uk-scope ol.steps li:first-child span:after {
   border: none;
 }
 
-ol.steps li span {
+.uk-scope ol.steps li span {
   display: block;
   padding: 9px 28px 9px 9px;
 }
 
-ol.steps li span:after {
+.uk-scope ol.steps li span:after {
   position: absolute;
   top: 50%;
   right: 100%;
@@ -64,28 +64,29 @@ ol.steps li span:after {
   margin-top: -19px;
 }
 
-ol.steps>li {
+.uk-scope ol.steps>li {
   float: left;
+  color: black;
 }
 
-ol.steps li.current {
+.uk-scope ol.steps li.current {
   color: #fff;
   background: #1e87f0;
 }
 
-ol.steps li.current:after {
+.uk-scope ol.steps li.current:after {
   border-left-color: #1e87f0;
 }
 
-ol.steps li.current span:after {
+.uk-scope ol.steps li.current span:after {
   border-color: #1e87f0;
   border-left-color: transparent;
 }
 
-ol.steps li.step1 {
+.uk-scope ol.steps li.step1 {
   z-index: 1;
 }
 
-ol.steps li.step2 {
+.uk-scope ol.steps li.step2 {
   z-index: 0;
 }

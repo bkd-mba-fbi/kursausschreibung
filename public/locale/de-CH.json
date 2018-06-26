@@ -16,14 +16,13 @@
   "navigation": "Navigation",
   "personalData": "Personendaten",
   "confirmation": "Bestätigung",
-  "iAcceptThe": "Ich akzeptiere die",
-  "GTC": "AGB",
   "subscribe": "Anmelden",
   "back": "zurück",
   "thankYou": "Besten Dank für Ihre Anmeldung",
   "youWillReceiveAConfirmationEMail": "Sie erhalten eine Anmeldebestätigung per E-Mail.",
   "officeAddress": "Kurssekretariat<br>Telefon 031 123 45 67<br>info@kurssekretariat.ch",
   "yourDetails": "Ihre Angaben",
+  "companyAddress": "Rechnungsadresse an Firma",
   "errorMessage": "Es ist zu einem unvorhergesehenen Fehler gekommen. Bitte versuchen Sie es nochmals.",
 
   // properties of an event
@@ -34,5 +33,18 @@
   "languageOfInstruction": "Unterrichtssprache",
   "dateFrom": "Datum von",
   "dateTo": "Datum bis",
-  "leadership": "Anlassleitung"
+  "leadership": "Anlassleitung",
+
+  // translations for the form
+  "formFormOfAddress": "Anrede",
+  "formFirstName": "Vorname",
+  "formLastName": "Nachname",
+  "formEmail2": "E-Mail-Adresse",
+  "formBirthdate": "Geburtsdatum",
+  "formPhoneMobile": "Telefon P oder Mobil",
+  "formHomeCountry": "Heimatland",
+  "formCompany": "Firmenname",
+  "formAddressLine1": "Adresse",
+  "formZip": "PLZ",
+  "formLocation": "Ort"
 }

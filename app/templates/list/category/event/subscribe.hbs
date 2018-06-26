@@ -11,99 +11,31 @@
 {{event-details-table event=model}}
 
 <!-- FORM -->
-<form class="uk-grid-small uk-form-horizontal" data-uk-grid>
+<form autocomplete="on" onsubmit={{action "submit"}} class="uk-grid-small uk-form-horizontal" data-uk-grid>
+  {{#each fields as |field|}}
+    {{input-master field=field}}
+  {{/each}}
 
-  <div class="uk-width-1-1">
-    <select class="uk-select">
-      <option>Frau</option>
-      <option>Herr</option>
-    </select>
-  </div>
+  <label class="uk-width-1-1">
+    {{input type="checkbox" class="uk-checkbox" checked=useCompanyAddress}}
+    {{translate "companyAddress"}}
+  </label>
 
-  <div class="uk-width-1-1">
-    <input class="uk-input uk-form-danger" type="text" placeholder="Vorname*">
-  </div>
-  <div class="uk-width-1-1">
-    <input class="uk-input uk-form-success" type="text" value="Schmid" placeholder="Nachname*">
-  </div>
-  <div class="uk-width-1-1">
-    <input class="uk-input" type="text" value="Beispielweg 27" placeholder="Adresse*">
+  <fieldset disabled={{if useCompanyAddress false true}} class="uk-width-1-1">
+    {{#each companyFields as |field|}}
+      {{input-master field=field}}
+    {{/each}}
+  </fieldset>
 
-  </div>
-  <div class="uk-width-1-2@s">
-    <input class="uk-input" type="text" placeholder="PLZ*">
-  </div>
-  <div class="uk-width-1-2@s">
-    <input class="uk-input" type="text" placeholder="Ort*">
-  </div>
-  <div class="uk-width-1-1">
-    <input class="uk-input" type="text" placeholder="Telefon P oder Mobil*">
-  </div>
-  <div class="uk-width-1-1">
-    <input class="uk-input" type="text" placeholder="Geburtsdatum*">
-  </div>
-  <div class="uk-width-1-1">
-    <input class="uk-input" type="text" placeholder="E-Mail-Adresse*">
-  </div>
-  <div class="uk-width-1-1">
-    <label>
-      <input class="uk-checkbox" type="checkbox"> Rechnungsadresse an Firma</label>
-  </div>
-  <div class="uk-width-1-1">
-    <input class="uk-input" type="text" placeholder="Firmenname*" disabled>
-  </div>
-  <div class="uk-width-1-1">
-    <input class="uk-input" type="text" placeholder="Adresse*" disabled>
-  </div>
-  <div class="uk-width-1-2@s">
-    <input class="uk-input" type="text" placeholder="PLZ*" disabled>
-  </div>
-  <div class="uk-width-1-2@s">
-    <input class="uk-input" type="text" placeholder="Ort*" disabled>
-  </div>
-  <div class="uk-width-1-1">
-    <input class="uk-input" type="text" placeholder="Telefon*" disabled>
-  </div>
   <div class="uk-width-1-1">
     <hr>
   </div>
+
+  {{#each subscriptionDetailFields as |field|}}
+    {{input-master field=field}}
+  {{/each}}
+
   <div class="uk-width-1-1">
-    <div class="uk-form-label">Anmeldedetail 1</div>
-    <div class="uk-form-controls">
-      <input class="uk-checkbox" type="checkbox">
-    </div>
-  </div>
-  <div class="uk-width-1-1">
-    <div class="uk-form-label">Anmeldedetail 2</div>
-    <div class="uk-form-controls">
-      <input class="uk-checkbox" type="checkbox">
-    </div>
-  </div>
-  <div class="uk-width-1-1">
-    <div class="uk-form-label">Anmeldedetail 3</div>
-    <div class="uk-form-controls">
-      <input class="uk-checkbox" type="checkbox">
-    </div>
-  </div>
-  <div class="uk-width-1-1">
-    <div class="uk-form-label">Anmeldedetail 4 mit Textumbruch</div>
-    <div class="uk-form-controls">
-      <select class="uk-select">
-        <option>Option 01</option>
-        <option>Option 02</option>
-      </select>
-    </div>
-  </div>
-  <div class="uk-width-1-1">
-    <div class="uk-form-label">{{translate "iAcceptThe"}}
-      <a href="#">{{translate "GTC"}}</a>
-    </div>
-    <div class="uk-form-controls">
-      <input class="uk-checkbox" type="checkbox">
-    </div>
+    <input class="uk-button uk-button-primary uk-float-left" type="submit" value={{translate "subscribe"}}> {{link-to (translate "back") "list.category.event" classNames="uk-button uk-button-default uk-float-right"}}
   </div>
 </form>
-<div class="uk-margin">
-  {{link-to (translate "subscribe") "list.category.event.confirmation" classNames="uk-button uk-button-primary uk-float-left"}}
-  {{link-to (translate "back") "list.category.event" classNames="uk-button uk-button-default uk-float-right"}}
-</div>

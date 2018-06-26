@@ -56,6 +56,20 @@
   white-space: pre-wrap;
 }
 
+/* form */
+.uk-scope input:invalid {
+  border-color: red !important;
+}
+
+.uk-scope input[type="date"]::-webkit-inner-spin-button {
+  display: none; /* this doesn't display correctly in chrome+uikit so we hide it */
+}
+
+.uk-scope fieldset {
+  border: none;
+  padding: 0;
+}
+
 /* mobile */
 @media (max-width: 959px) {
   .subscribe-button {
