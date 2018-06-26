@@ -1,3 +1,4 @@
+import { A } from '@ember/array';
 import $ from 'jquery';
 import moment from 'moment';
 import { getEvents, getLessons, getEventLocations, getEventTexts } from './api';
@@ -49,6 +50,10 @@ export function init() {
         event => settings.hostIds.indexOf(event.HostId) !== -1
       );
     }
+
+    // sort events
+    if (settings.sortEventList !== null)
+      events = A(events).sortBy(settings.sortEventList);
 
     events.forEach(function(event) {
       // alter the event-object
@@ -175,7 +180,8 @@ export function init() {
       if (text === undefined) {
         text = eventsById[textItem.EventId].texts[textItem.Number] = {
           label: null,
-          memo: null
+          memo: null,
+          id: textItem.Number
         };
       }
 

@@ -167,5 +167,8 @@
   "showContact": true,
 
   // show a twitter-feed (optional)
-  "twitterHandle": null
+  "twitterHandle": null,
+
+  // property by which the event-list should be sorted (optional)
+  "sortEventList": "Designation"
 }
