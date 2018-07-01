@@ -3,9 +3,9 @@
   {{#link-to "list.index" area.key tagName="li" activeClass="uk-active"}}
     {{link-to (translate "overview") "list.index" area.key}}
   {{/link-to}}
-  {{#each-in area.categories as |category categoryData|}}
-    {{#link-to "list.category" area.key category tagName="li" activeClass="uk-active"}}
-      {{link-to categoryData.name "list.category" area.key category}}
-   {{/link-to}}
-  {{/each-in}}
+  {{#each area.categoryKeys as |categoryKey|}}
+    {{#link-to "list.category" area.key categoryKey tagName="li" activeClass="uk-active"}}
+      {{link-to (get (get area.categories categoryKey) "name") "list.category" area.key categoryKey}}
+    {{/link-to}}
+  {{/each}}
 </ul>

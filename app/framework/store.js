@@ -9,7 +9,7 @@ import settings from './settings';
 import { getLanguage, getString } from './translate';
 
 // group events by areaOfEducation, EventCategory and Id
-let eventsByArea = {};
+let eventsByArea = {areas: {}, areKeys: []};
 let eventsById = {};
 
 // get all events sorted by areaOfEducation
@@ -112,30 +112,31 @@ export function init() {
       let areaName = event.AreaOfEducation;
       let areaKey = (event.areaKey = areaName.toLowerCase());
 
-      if (!eventsByArea.hasOwnProperty(areaKey)) {
-        eventsByArea[areaKey] = {
+      if (!eventsByArea.areas.hasOwnProperty(areaKey)) {
+        eventsByArea.areas[areaKey] = {
           name: areaName,
           key: areaKey,
           events: [],
-          categories: {}
+          categories: {},
+          categoryKeys: []
         };
       }
 
-      eventsByArea[areaKey].events.push(event);
+      eventsByArea.areas[areaKey].events.push(event);
 
       // by category (in area)
       let categoryName = event.EventCategory;
       let categoryKey = (event.categoryKey = categoryName.toLowerCase());
 
-      if (!eventsByArea[areaKey].categories.hasOwnProperty(categoryKey)) {
-        eventsByArea[areaKey].categories[categoryKey] = {
+      if (!eventsByArea.areas[areaKey].categories.hasOwnProperty(categoryKey)) {
+        eventsByArea.areas[areaKey].categories[categoryKey] = {
           name: categoryName,
           key: categoryKey,
           events: []
         };
       }
 
-      eventsByArea[areaKey].categories[categoryKey].events.push(event);
+      eventsByArea.areas[areaKey].categories[categoryKey].events.push(event);
     });
 
     // add lessons to events
@@ -196,5 +197,12 @@ export function init() {
           text => text.label !== null && text.memo !== null
         ))
     );
+
+    // sorted keys for display in navigation component
+    eventsByArea.areaKeys = Object.keys(eventsByArea.areas).sort();
+
+    for (let area of eventsByArea.areaKeys) {
+      eventsByArea.areas[area].categoryKeys = Object.keys(eventsByArea.areas[area].categories).sort();
+    }
   });
 }

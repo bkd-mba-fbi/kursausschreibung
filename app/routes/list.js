@@ -6,12 +6,12 @@ export default Route.extend({
     let eventsByArea = this.modelFor('application');
 
     // check if area of education exists
-    if (!eventsByArea.hasOwnProperty(params.area_of_education)) {
+    if (!eventsByArea.areas.hasOwnProperty(params.area_of_education)) {
       this.replaceWith('/');
       return;
     }
 
-    return eventsByArea[params.area_of_education];
+    return eventsByArea.areas[params.area_of_education];
   },
 
   actions: {

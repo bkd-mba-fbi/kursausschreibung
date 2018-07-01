@@ -7,7 +7,7 @@
       <button class="uk-modal-close-full uk-close-large" type="button" data-uk-close></button>
       <div class="uk-padding-large" data-uk-height-viewport>
         <h2>{{translate "navigation"}}</h2>
-        {{#each-in model as |area data|}}
+        {{#each-in model.areas as |area data|}}
           <div class="uk-margin">
             {{area-navigation data}}
           </div>
@@ -38,11 +38,11 @@
   {{/if}}
 
   <ul uk-tab class="uk-width-1-1 uk-margin-top">
-    {{#each-in model as |area data|}}
-      {{#link-to "list" area tagName="li" activeClass="uk-active"}}
-        {{link-to data.name "list" area}}
+    {{#each model.areaKeys as |areaKey|}}
+      {{#link-to "list" areaKey tagName="li" activeClass="uk-active"}}
+        {{link-to (get (get model.areas areaKey) "name") "list" areaKey}}
       {{/link-to}}
-    {{/each-in}}
+    {{/each}}
   </ul>
 
   <div class="uk-grid uk-margin" data-uk-grid>
