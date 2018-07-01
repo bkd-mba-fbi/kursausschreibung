@@ -43,12 +43,12 @@ function getSubscriptionDetailFields(subscriptionDetails) {
 }
 
 function addTranslations(fields) {
-  return fields.map(detail => {
-    detail.label = detail.label !== undefined ?
-      detail.label = detail.label : getString('form' + detail.id);
-
-    return detail;
+  fields.forEach(detail => {
+    if (detail.label === undefined)
+      detail.label = getString('form' + detail.id);
   });
+
+  return fields;
 }
 
 export default Route.extend({
