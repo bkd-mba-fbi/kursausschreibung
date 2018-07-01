@@ -21,7 +21,7 @@
     {{translate "companyAddress"}}
   </label>
 
-  <fieldset disabled={{if useCompanyAddress false true}} class="uk-width-1-1">
+  <fieldset disabled={{if useCompanyAddress false true}} class="uk-width-1-1 uk-fieldset">
     {{#each companyFields as |field|}}
       {{input-master field=field}}
     {{/each}}
