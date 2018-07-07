@@ -66,10 +66,6 @@ export function loadDropDownItems(type) {
   );
 }
 
-export function getDropDownItems(type) {
-  return dropDownItems[type];
-}
-
 export function postPerson(data) {
   return post('Persons/', data);
 }

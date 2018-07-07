@@ -1,5 +1,5 @@
 <select class="uk-select" name={{field.id}} autocomplete={{field.options.autocomplete}}>
-  {{#each options as |option|}}
+  {{#each field.options.options as |option|}}
   <option value={{option.Key}}>{{option.Value}}</option>
   {{/each}}
 </select>

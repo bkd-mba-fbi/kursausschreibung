@@ -11,7 +11,9 @@ function preloadDropdownItems(config) {
   return Promise.all(
     config
       .filter(item => item.dataType === 'dropdown')
-      .map(item => loadDropDownItems(item.options.dropdownItems))
+      .map(item => loadDropDownItems(item.options.dropdownItems)
+        .then(options => item.options.options = options)
+      )
   );
 }
 
@@ -30,13 +32,17 @@ function getSubscriptionDetailFields(subscriptionDetails) {
     if (dataType === undefined)
       dataType = 'string';
 
+    if (detail.DropdownItems instanceof Object)
+      dataType = 'dropdown';
+
     return {
       id: detail.VssId,
       label: detail.VssDesignation,
       dataType: dataType,
       options: {
         required: detail.Required,
-        autocomplete: 'off'
+        autocomplete: 'off',
+        options: dataType === 'dropdown' ? detail.DropdownItems : undefined
       }
     };
   });
