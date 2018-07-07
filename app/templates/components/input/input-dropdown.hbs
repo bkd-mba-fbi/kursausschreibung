@@ -1,5 +1,13 @@
-<select class="uk-select" name={{field.id}} autocomplete={{field.options.autocomplete}}>
-  {{#each field.options.options as |option|}}
-  <option value={{option.Key}}>{{option.Value}}</option>
-  {{/each}}
-</select>
+{{#if field.options.showAsRadioButtons}}
+  <div class="uk-grid-small uk-child-width-auto uk-grid">
+    {{#each field.options.options as |option|}}
+      <label><input class="uk-radio" type="radio" name={{field.id}} value={{option.Key}}> {{option.Value}}</label>
+    {{/each}}
+  </div>
+{{else}}
+  <select class="uk-select" name={{field.id}} autocomplete={{field.options.autocomplete}}>
+    {{#each field.options.options as |option|}}
+    <option value={{option.Key}}>{{option.Value}}</option>
+    {{/each}}
+  </select>
+{{/if}}

@@ -42,7 +42,8 @@ function getSubscriptionDetailFields(subscriptionDetails) {
       options: {
         required: detail.Required,
         autocomplete: 'off',
-        options: dataType === 'dropdown' ? detail.DropdownItems : undefined
+        options: dataType === 'dropdown' ? detail.DropdownItems : undefined,
+        showAsRadioButtons: dataType === 'dropdown' ? detail.ShowAsRadioButtons : undefined
       }
     };
   });
