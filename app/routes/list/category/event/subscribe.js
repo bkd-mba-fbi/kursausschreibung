@@ -12,7 +12,10 @@ function preloadDropdownItems(fields) {
     fields
       .filter(item => item.dataType === 'dropdown')
       .map(item => loadDropDownItems(item.options.dropdownItems)
-        .then(options => item.options.options = options)
+        .then(options => {
+          if (item.options.options === undefined)
+            item.options.options = options;
+        })
       )
   );
 }
