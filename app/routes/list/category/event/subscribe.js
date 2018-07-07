@@ -7,9 +7,9 @@ import { get, set } from '@ember/object';
 
 // if these were loaded in the component an error
 // would just cause the template to stop rendering
-function preloadDropdownItems(config) {
+function preloadDropdownItems(fields) {
   return Promise.all(
-    config
+    fields
       .filter(item => item.dataType === 'dropdown')
       .map(item => loadDropDownItems(item.options.dropdownItems)
         .then(options => item.options.options = options)
@@ -57,17 +57,28 @@ function addTranslations(fields) {
   return fields;
 }
 
+function getAddressFields(settings, eventTypeId) {
+  if (eventTypeId in settings.formFields.addressFields)
+    return settings.formFields.addressFields[eventTypeId];
+
+
+  if (settings.formFields.addressFields.default === undefined)
+    throw new Error("config for eventTypeId " + eventTypeId + " not found and no default config is available");
+
+  return settings.formFields.addressFields.default;
+}
+
 export default Route.extend({
   model() {
     // TODO
     // assertConfigIsValid();
 
     let model = this.modelFor('list.category.event');
-    let config = settings.formFields[model.AreaOfEducationId];
+    let fields = getAddressFields(settings, model.EventTypeId);
 
     return Promise.all([
       getSubscriptionDetails(model.Id),
-      preloadDropdownItems(config),
+      preloadDropdownItems(fields),
     ]).then(results => {
       set(model, 'subscriptionDetailFields', getSubscriptionDetailFields(results[0]));
       return model;
@@ -78,8 +89,7 @@ export default Route.extend({
     this._super(...arguments);
 
     // person fields
-    let area = model.AreaOfEducationId;
-    controller.set('fields', addTranslations(settings.formFields[area]));
+    controller.set('fields', addTranslations(getAddressFields(settings, model.EventTypeId)));
 
     // company fields
     controller.set('companyFields', addTranslations(settings.formFields.companyFields));

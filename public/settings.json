@@ -43,84 +43,48 @@
 
   // fields for the form (required)
   "formFields": {
-    "85": [
-      {
-        "id": "FormOfAddress",
-        "dataType": "dropdown",
-        "options": { "dropdownItems": "FormsOfAddress" }
-      },
-      {
-        "id": "FirstName",
-        "dataType": "string",
-        "options": { "required": true, "autocomplete": "given-name" }
-      },
-      {
-        "id": "LastName",
-        "dataType": "string",
-        "options": { "required": true, "autocomplete": "family-name" }
-      },
-      {
-        "id": "AddressLine1",
-        "dataType": "string",
-        "options": { "required": true, "autocomplete": "address-line1" }
-      },
-      {
-        "id": "Zip",
-        "dataType": "number",
-        "options": { "required": true, "autocomplete": "postal-code" }
-      },
-      {
-        "id": "Location",
-        "dataType": "string",
-        "options": { "required": true, "autocomplete": "address-level2" }
-      },
-      {
-        "id": "PhoneMobile",
-        "dataType": "telephone",
-        "options": { "autocomplete": "tel-national", "required": "true" }
-      },
-      { "id": "Birthdate", "dataType": "date" },
-      { "id": "Email2", "dataType": "email" }
-    ],
-    "86": [
-      {
-        "id": "FormOfAddress",
-        "dataType": "dropdown",
-        "options": { "dropdownItems": "FormsOfAddress" }
-      },
-      {
-        "id": "FirstName",
-        "dataType": "string",
-        "options": { "required": true, "autocomplete": "given-name" }
-      },
-      {
-        "id": "LastName",
-        "dataType": "string",
-        "options": { "required": true, "autocomplete": "family-name" }
-      },
-      {
-        "id": "AddressLine1",
-        "dataType": "string",
-        "options": { "required": true, "autocomplete": "address-line1" }
-      },
-      {
-        "id": "Zip",
-        "dataType": "number",
-        "options": { "required": true, "autocomplete": "postal-code" }
-      },
-      {
-        "id": "Location",
-        "dataType": "string",
-        "options": { "required": true, "autocomplete": "address-level2" }
-      },
-      {
-        "id": "PhoneMobile",
-        "dataType": "telephone",
-        "options": { "autocomplete": "tel-national", "required": "true" }
-      },
-      { "id": "Birthdate", "dataType": "date" },
-      { "id": "Email2", "dataType": "email" }
-    ],
+    "addressFields": {
+      // can be specified per EventTypeId (fallback to default)
+      "default": [
+        {
+          "id": "FormOfAddress",
+          "dataType": "dropdown",
+          "options": { "dropdownItems": "FormsOfAddress" }
+        },
+        {
+          "id": "FirstName",
+          "dataType": "string",
+          "options": { "required": true, "autocomplete": "given-name" }
+        },
+        {
+          "id": "LastName",
+          "dataType": "string",
+          "options": { "required": true, "autocomplete": "family-name" }
+        },
+        {
+          "id": "AddressLine1",
+          "dataType": "string",
+          "options": { "required": true, "autocomplete": "address-line1" }
+        },
+        {
+          "id": "Zip",
+          "dataType": "number",
+          "options": { "required": true, "autocomplete": "postal-code" }
+        },
+        {
+          "id": "Location",
+          "dataType": "string",
+          "options": { "required": true, "autocomplete": "address-level2" }
+        },
+        {
+          "id": "PhoneMobile",
+          "dataType": "telephone",
+          "options": { "autocomplete": "tel-national", "required": "true" }
+        },
+        { "id": "Birthdate", "dataType": "date" },
+        { "id": "Email2", "dataType": "email" }
+      ]
+    },
     "companyFields": [
       {
         "id": "Company",
