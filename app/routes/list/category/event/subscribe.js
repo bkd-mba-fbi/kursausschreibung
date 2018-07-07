@@ -50,7 +50,8 @@ function getSubscriptionDetailFields(subscriptionDetails) {
         autocomplete: 'off',
         options: dataType === 'dropdown' ? detail.DropdownItems : undefined,
         showAsRadioButtons: dataType === 'dropdown' ? detail.ShowAsRadioButtons : undefined,
-        tooltip: detail.Tooltip
+        tooltip: detail.Tooltip,
+        disabled: detail.readOnly
       }
     };
   });
