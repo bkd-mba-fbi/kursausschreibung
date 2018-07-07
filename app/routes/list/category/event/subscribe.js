@@ -38,6 +38,9 @@ function getSubscriptionDetailFields(subscriptionDetails) {
     if (detail.DropdownItems instanceof Object)
       dataType = 'dropdown';
 
+    if (detail.VssStyle === 'HE')
+      return { isLegend: true, label: detail.VssDesignation };
+
     return {
       id: detail.VssId,
       label: detail.VssDesignation,
