@@ -16,9 +16,11 @@
         </tr>
       {{/each}}
     {{/if}}
+    {{#if event.displayData.lessons}}
+      <tr>
+        <td>{{translate "lessons"}}</td>
+        <td>{{#each event.displayData.lessons as |lesson|}}{{lesson.DateFrom}} - {{lesson.DateTo}}: {{lesson.Designation}}<br>{{/each}}</td>
+      </tr>
+    {{/if}}
   </tbody>
 </table>
-
-{{#each event.displayData.lessons as |lesson|}}
-  {{lesson.DateFrom}} - {{lesson.DateTo}}: {{lesson.Designation}}<br>
-{{/each}}
