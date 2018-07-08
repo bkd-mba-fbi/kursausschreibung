@@ -37,6 +37,10 @@ export function getEvents() {
   return get('Events/');
 }
 
+export function getEvent(eventId) {
+  return get('Events/' + eventId);
+}
+
 export function getLessons() {
   return get('Lessons/');
 }

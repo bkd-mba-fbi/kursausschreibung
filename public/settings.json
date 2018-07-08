@@ -41,6 +41,12 @@
   // show event-text on the details-route (optional)
   "showEventText": true,
 
+  // enable freeSeats badge and set polling interval (optional)
+  "badgeFreeSeats": {
+    "enabled": true,
+    "intervalSec": 5
+  },
+
   // fields for the form (required)
   "formFields": {
     "addressFields": {

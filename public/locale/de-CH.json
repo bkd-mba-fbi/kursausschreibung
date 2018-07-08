@@ -26,6 +26,8 @@
   "errorMessage": "Es ist zu einem unvorhergesehenen Fehler gekommen. Bitte versuchen Sie es nochmals.",
   "notAvailable": "nicht verfügbar",
   "lessons": "Lektionen",
+  "seatAvailable": "Platz übrig",
+  "seatsAvailable": "Plätze übrig",
 
   // properties of an event
   "subscriptionFrom": "Start",
