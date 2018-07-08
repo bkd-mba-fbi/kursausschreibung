@@ -2,12 +2,12 @@ import Route from '@ember/routing/route';
 
 export default Route.extend({
   beforeModel() {
-    let firstKey = this.modelFor('application').areaKeys[0];
+    let applicationModel = this.modelFor('application');
 
-    if (firstKey === undefined) {
+    if (applicationModel.areaKeys === undefined || applicationModel.areaKeys.length === 0) {
       throw new Error('no events are available. there most likely is an issue with the config or the api server.');
     }
 
-    this.replaceWith('list', firstKey);
+    this.replaceWith('list', applicationModel.areaKeys[0]);
   }
 });
