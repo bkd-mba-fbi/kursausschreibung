@@ -1,4 +1,5 @@
 import Route from '@ember/routing/route';
+import { A } from '@ember/array';
 import settings from 'kursausschreibung/framework/settings';
 import { getString } from 'kursausschreibung/framework/translate';
 import { getDropDownItems, getSubscriptionDetails } from 'kursausschreibung/framework/api';
@@ -89,7 +90,7 @@ export default Route.extend({
       getSubscriptionDetails(model.Id),
       loadDropdownItems(fields),
     ]).then(results => {
-      set(model, 'subscriptionDetailFields', getSubscriptionDetailFields(results[0]));
+      set(model, 'subscriptionDetailFields', getSubscriptionDetailFields(A(results[0]).sortBy('Sort')));
       return model;
     });
   },
