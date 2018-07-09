@@ -60,7 +60,7 @@ export function getEventTexts(cultureInfo) {
 
 let dropDownItems = {};
 
-export function loadDropDownItems(type) {
+export function getDropDownItems(type) {
   if (dropDownItems.hasOwnProperty(type)) {
     return Promise.resolve(dropDownItems[type]);
   }

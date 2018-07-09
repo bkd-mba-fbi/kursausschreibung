@@ -1,17 +1,17 @@
 import Route from '@ember/routing/route';
 import settings from 'kursausschreibung/framework/settings';
 import { getString } from 'kursausschreibung/framework/translate';
-import { loadDropDownItems, getSubscriptionDetails } from 'kursausschreibung/framework/api';
+import { getDropDownItems, getSubscriptionDetails } from 'kursausschreibung/framework/api';
 import { Promise } from 'rsvp';
 import { get, set } from '@ember/object';
 
 // if these were loaded in the component an error
 // would just cause the template to stop rendering
-function preloadDropdownItems(fields) {
+function loadDropdownItems(fields) {
   return Promise.all(
     fields
       .filter(item => item.dataType === 'dropdown')
-      .map(item => loadDropDownItems(item.options.dropdownItems)
+      .map(item => getDropDownItems(item.options.dropdownItems)
         .then(options => {
           if (item.options.options === undefined)
             item.options.options = options;
@@ -87,7 +87,7 @@ export default Route.extend({
 
     return Promise.all([
       getSubscriptionDetails(model.Id),
-      preloadDropdownItems(fields),
+      loadDropdownItems(fields),
     ]).then(results => {
       set(model, 'subscriptionDetailFields', getSubscriptionDetailFields(results[0]));
       return model;
