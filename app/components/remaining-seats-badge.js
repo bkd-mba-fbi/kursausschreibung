@@ -1,6 +1,5 @@
 import Component from '@ember/component';
 import { computed } from "@ember/object";
-import { getEvent } from 'kursausschreibung/framework/api';
 import settings from 'kursausschreibung/framework/settings';
 
 export default Component.extend({
@@ -8,32 +7,8 @@ export default Component.extend({
     this._super(...arguments);
 
     let event = this.get('event');
-    let eventId = event.Id;
 
-    // set the initial value
-    if (event.FreeSeats === null)
-      return;
-    this.set('remainingSeats', event.FreeSeats);
-
-    // frequently update remaining seats
-    let updateFreeSeats = () => {
-      getEvent(eventId).then(event => {
-
-        this.set('remainingSeats', event.FreeSeats);
-
-        if (event.FreeSeats === null)
-          throw new Error('FreeSeats not available');
-
-      }).catch(() => {
-
-        clearInterval(this.get('interval'));
-
-        this.set('interval', undefined);
-        this.set('remainingSeats', null);
-
-      });
-    };
-    updateFreeSeats();
+    event.update();
 
     let interval = typeof settings.badgeFreeSeats === 'object' ?
       settings.badgeFreeSeats.intervalSec : null;
@@ -43,7 +18,8 @@ export default Component.extend({
       interval = 30;
     }
 
-    this.set('interval', setInterval(updateFreeSeats, interval * 1000));
+    // update freeSeats every <interval> seconds
+    this.set('interval', setInterval(() => event.update(), interval * 1000));
 
   },
 
@@ -54,17 +30,15 @@ export default Component.extend({
       clearInterval(interval);
   },
 
-  remainingSeats: null,
-
-  hidden: computed('remainingSeats', function () {
-    return this.get('remainingSeats') === null;
+  hidden: computed('event.FreeSeats', function () {
+    return this.get('event.FreeSeats') === null;
   }),
 
-  labelType: computed('remainingSeats', function () {
-    return this.get('remainingSeats') > 5 ? 'warning' : 'danger';
+  labelType: computed('event.FreeSeats', function () {
+    return this.get('event.FreeSeats') > 5 ? 'warning' : 'danger';
   }),
 
-  plural: computed('remainingSeats', function () {
-    return this.get('remainingSeats') > 1;
+  plural: computed('event.FreeSeats', function () {
+    return this.get('event.FreeSeats') > 1;
   })
 });

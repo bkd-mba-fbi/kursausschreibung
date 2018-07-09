@@ -1,16 +1,18 @@
 import { A } from '@ember/array';
+import EmberObject, { computed } from '@ember/object';
 import $ from 'jquery';
 import moment from 'moment';
-import { getEvents, getLessons, getEventLocations, getEventTexts } from './api';
+import { getEvents, getEvent, getLessons, getEventLocations, getEventTexts } from './api';
+import { isGreen, isYellow, isRed } from './status';
 import ObjectProxy from '@ember/object/proxy';
-import { combineDate } from './date-helpers';
+import { combineDate, isInSubscriptionRange  } from './date-helpers';
 import { all } from 'rsvp';
 import settings from './settings';
 import { getLanguage, getString } from './translate';
 
 // group events by areaOfEducation, EventCategory and Id
-let eventsByArea = {areas: {}, areKeys: []};
-let eventsById = {};
+let eventsByArea = { areas: {}, areKeys: [] };
+let eventsById = [];
 
 // get all events sorted by areaOfEducation
 export function getAllEvents() {
@@ -46,7 +48,7 @@ export function init() {
     getLessons(),
     getEventLocations(),
     getEventTexts(language)
-  ]).then(function([events, lessons, eventLocations, eventTexts]) {
+  ]).then(function ([events, lessons, eventLocations, eventTexts]) {
     // filter out events with wrong hostId
     if (settings.hostIds instanceof Array) {
       events = events.filter(
@@ -58,7 +60,7 @@ export function init() {
     if (settings.sortEventList !== null)
       events = A(events).sortBy(settings.sortEventList);
 
-    events.forEach(function(event) {
+    events.forEach(function (event) {
       // alter the event-object
       // ======================
 
@@ -102,6 +104,35 @@ export function init() {
         Price: 'CHF ' + event.Price
       });
 
+      // create an ember object for the event
+      event = EmberObject.extend({
+        status: computed('FreeSeats', function () {
+
+          if (isGreen(this, isInSubscriptionRange)) {
+            return 'green';
+          }
+
+          if (isYellow(this, isInSubscriptionRange)) {
+            return 'yellow';
+          }
+
+          if (isRed(this, isInSubscriptionRange)) {
+            return 'red';
+          }
+
+          return 'orange';
+        }),
+
+        update() {
+          // only update FreeSeats for now
+          let that = this;
+          return getEvent(this.get('Id')).then(function(updatedEvent) {
+            that.set('FreeSeats', updatedEvent.FreeSeats);
+          });
+
+        }
+      }).create(event);
+
       // put event into assoc arrays so no searching is required
       // =======================================================
 
@@ -140,7 +171,7 @@ export function init() {
     });
 
     // add lessons to events
-    lessons.forEach(function(lesson) {
+    lessons.forEach(function (lesson) {
       if (!eventsById.hasOwnProperty(lesson.EventId)) {
         return;
       }
@@ -153,7 +184,7 @@ export function init() {
     });
 
     // add eventLocations to events
-    eventLocations.forEach(function(location) {
+    eventLocations.forEach(function (location) {
       let eventId = location.EventId;
 
       if (!eventsById.hasOwnProperty(eventId)) {
@@ -167,7 +198,7 @@ export function init() {
     });
 
     // add texts to events
-    eventTexts.forEach(function(textItem) {
+    eventTexts.forEach(function (textItem) {
       if (!eventsById.hasOwnProperty(textItem.EventId)) {
         return;
       }
@@ -191,11 +222,11 @@ export function init() {
     });
 
     // remove texts with empty label or memo
-    events.forEach(
+    eventsById.forEach(
       event =>
-        (event.texts = event.texts.filter(
+        event.texts = event.texts.filter(
           text => text.label !== null && text.memo !== null
-        ))
+        )
     );
 
     // sorted keys for display in navigation component

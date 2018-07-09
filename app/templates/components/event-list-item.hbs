@@ -1,6 +1,6 @@
 {{#link-to "list.category.event" event.areaKey event.categoryKey event.Id classNames="event-list-item uk-link-reset"}}
   <h3 class="uk-margin-small">
-    {{status-lamp status=status}}{{get event.displayData title}}
+    {{status-lamp status=event.status}}{{get event.displayData title}}
   </h3>
   <table class="details-table">
     <tbody>
