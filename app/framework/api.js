@@ -21,7 +21,7 @@ function ajax(options, relativeUrl) {
       })
     )
     .catch(() => {
-      throw new Error(`failed ${options.method}-request to ${relativeUrl}`); // human-readable error
+      throw new Error(`${options.method}-request to ${relativeUrl} failed`); // human-readable error
     });
 }
 
