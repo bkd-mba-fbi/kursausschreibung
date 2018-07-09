@@ -123,6 +123,13 @@ export function init() {
           return 'orange';
         }),
 
+        canDoSubscription: computed('status', function() {
+          let status = this.get('status');
+
+          return (typeof settings.canDoSubscription === 'object' &&
+                  settings.canDoSubscription[status] === true);
+        }),
+
         update() {
           // only update FreeSeats for now
           let that = this;

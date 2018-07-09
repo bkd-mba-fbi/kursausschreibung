@@ -18,6 +18,6 @@
 
 <div class="uk-margin">
   {{link-to (translate "subscribe") "list.category.event.subscribe" classNames="uk-button uk-button-primary uk-float-left subscribe-button"
-      data-uk-tooltip=(translate (concat model.status "Lamp"))}}
+      data-uk-tooltip=(translate (concat model.status "Lamp")) tagName="button" disabled=(if model.canDoSubscription false true)}}
   {{link-to (translate "back") "list.category" classNames="uk-button uk-button-default uk-float-right"}}
 </div>

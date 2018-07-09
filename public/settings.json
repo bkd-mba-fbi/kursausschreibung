@@ -47,6 +47,14 @@
     "intervalSec": 5
   },
 
+  // enable/disable subscription (required)
+  "canDoSubscription": {
+    "green": true,
+    "yellow": false,
+    "red": false,
+    "orange": false
+  },
+
   // fields for the form (required)
   "formFields": {
     "addressFields": {

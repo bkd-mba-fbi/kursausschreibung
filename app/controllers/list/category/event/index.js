@@ -7,7 +7,7 @@ export default Controller.extend({
   badgeFreeSeatsEnabled: typeof settings.badgeFreeSeats === 'object' && settings.badgeFreeSeats.enabled === true
 });
 
-// this allows the tooltip to be set
+// bindings for tooltip and disabled attributes
 LinkComponent.reopen({
-  attributeBindings: ['data-uk-tooltip']
+  attributeBindings: ['data-uk-tooltip', 'disabled']
 });
