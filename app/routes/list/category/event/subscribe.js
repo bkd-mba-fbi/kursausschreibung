@@ -29,6 +29,8 @@ let dataTypeMappings = {
   Date: 'date'
 };
 
+// convert subscriptionDetails to an array of input-components
+// as they are used in the settings.json file
 function getSubscriptionDetailFields(subscriptionDetails) {
   return subscriptionDetails.map(detail => {
     let dataType = dataTypeMappings[detail.VssType];
