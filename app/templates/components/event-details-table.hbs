@@ -19,7 +19,7 @@
     {{#if event.displayData.lessons}}
       <tr>
         <td>{{translate "lessons"}}</td>
-        <td>{{#each event.displayData.lessons as |lesson|}}{{lesson.DateFrom}} - {{lesson.DateTo}}{{#if lesson.Designation}}: {{lesson.Designation}}{{/if}}<br>{{/each}}</td>
+        <td>{{#each event.displayData.lessons as |lesson|}}{{lesson.DateFrom}} - {{lesson.TimeTo}}{{#if lesson.Designation}}: {{lesson.Designation}}{{/if}}<br>{{/each}}</td>
       </tr>
     {{/if}}
   </tbody>

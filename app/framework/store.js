@@ -185,7 +185,7 @@ export function init() {
 
       // make DateFrom and DateTo human-readable
       lesson.DateFrom = moment(lesson.DateFrom, 'YYYY-MM-DD HH:mm').format('LLL');
-      lesson.DateTo = moment(lesson.DateTo, 'YYYY-MM-DD HH:mm').format('LLL');
+      lesson.TimeTo = moment(lesson.DateTo, 'YYYY-MM-DD HH:mm').format('LT');
 
       eventsById[lesson.EventId].lessons.push(lesson);
     });
