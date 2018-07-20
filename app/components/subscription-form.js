@@ -1,19 +1,13 @@
 import Component from '@ember/component';
-import { postPerson, postAddress, postSubscription } from 'kursausschreibung/framework/api';
-import { getString } from 'kursausschreibung/framework/translate';
 import storage from 'kursausschreibung/framework/storage';
-import uikit from 'uikit';
 
 export default Component.extend({
   actions: {
     submit(event) {
       event.preventDefault();
 
-      subscribe(this.$('form'), this).then((...params) => this.get('subscriptionFinished')).fail(() =>
-        uikit.notification(getString('subscriptionFailed'), {
-          status: 'danger'
-        })
-      );
+      subscribe(this.$('form'), this);
+      this.get('subscribe')();
     }
   }
 });
@@ -54,8 +48,6 @@ function subscribe(form, self) {
 
   let assocSubscriptionData = getFieldSetData(form, [], '.subscription-detail-fields'); // for confirmation values
 
-  let personId = null;
-
   form.find('.subscription-detail-fields').find('input, select').each((_, element) => {
     let vssId = parseInt(element.name);
     let value = null;
@@ -69,7 +61,7 @@ function subscribe(form, self) {
       subscriptionData.SubscriptionDetails.push({ VssId: vssId, Value: value });
   });
 
-  // save values for the confirmation table
+  // get the values for the confirmation table
   let tableData = {
     fields: getTableData(self.get('fields'), addressData),
     subscriptionDetailFields: getTableData(self.get('subscriptionDetailFields'), assocSubscriptionData)
@@ -78,27 +70,12 @@ function subscribe(form, self) {
   if (useCompanyAddress)
     tableData.companyFields = getTableData(self.get('companyFields'), companyAddressData);
 
-  storage.localStoreItem('kursausschreibung.tableData.' + eventId, tableData);
+  // save the data to submit
+  let dataToSubmit = {
+    eventId, useCompanyAddress, addressData, companyAddressData, subscriptionData, tableData
+  };
 
-  // do the api calls
-  return postPerson(addressData).then((data, status, xhr) => {
-    // TODO: refactor
-    if (xhr.getResponseHeader('x-duplicate') !== null)
-      personId = xhr.getResponseHeader('x-duplicate').split('/').slice(-1)[0];
-    else
-      personId = xhr.getResponseHeader('location').split('/').slice(-1)[0];
-
-    companyAddressData.PersonId = personId;
-    companyAddressData.Country = companyAddressData.Country === null ? 'Schweiz' : companyAddressData.Country;
-    companyAddressData.CountryId = companyAddressData.CountryId === null ? 'CH' : companyAddressData.CountryId;
-
-    if (useCompanyAddress)
-      return postAddress(companyAddressData);
-  }).then(() => {
-    subscriptionData.PersonId = personId;
-
-    return postSubscription(subscriptionData);
-  });
+  storage.localStoreItem('kursausschreibung.dataToSubmit', dataToSubmit);
 }
 
 // get data from a field set which is ready to get posted to Persons/Addresses

@@ -28,10 +28,10 @@
   "lessons": "Lektionen",
   "seatAvailable": "Platz übrig",
   "seatsAvailable": "Plätze übrig",
-  "subscriptionFailed": "Unerwarterter Fehler. Anmeldung Fehlgeschlagen",
   "addressFields": "Adresse",
   "companyFields": "Firmenadresse",
   "subscriptionDetailFields": "Anmeldedetails",
+  "sendingData": "Daten senden",
 
   // properties of an event
   "subscriptionFrom": "Start",

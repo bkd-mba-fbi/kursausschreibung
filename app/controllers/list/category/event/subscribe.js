@@ -2,7 +2,7 @@ import Controller from '@ember/controller';
 
 export default Controller.extend({
   actions: {
-    subscriptionFinished() {
+    subscribe() {
       this.transitionToRoute('list.category.event.confirmation');
     }
   }

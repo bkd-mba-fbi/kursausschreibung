@@ -29,6 +29,10 @@ function post(relativeUrl, data) {
   return ajax({ method: 'POST', processData: false, data: JSON.stringify(data, null, '\t') }, relativeUrl);
 }
 
+function put(relativeUrl, data) {
+  return ajax({ method: 'PUT', processData: false, data: JSON.stringify(data, null, '\t') }, relativeUrl);
+}
+
 function get(relativeUrl) {
   return ajax({ method: 'GET' }, relativeUrl);
 }
@@ -72,6 +76,10 @@ export function getDropDownItems(type) {
 
 export function postPerson(data) {
   return post('Persons/', data);
+}
+
+export function putPerson(data, personId) {
+  return put('Persons/' + personId, data);
 }
 
 export function postAddress(data) {

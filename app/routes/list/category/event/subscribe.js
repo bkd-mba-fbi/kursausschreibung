@@ -81,8 +81,15 @@ function getAddressFields(settings, eventTypeId) {
 }
 
 export default Route.extend({
-  model() {
+  model(params, transition) {
     let model = this.modelFor('list.category.event');
+
+    if (model.get('canDoSubscription') === false) {
+      this.replaceWith('list.category.event');
+      transition.abort();
+      return;
+    }
+
     let fields = getAddressFields(settings, model.EventTypeId);
 
     return Promise.all([
