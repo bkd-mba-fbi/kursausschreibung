@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import storage from 'kursausschreibung/framework/storage';
+import { getString } from 'kursausschreibung/framework/translate';
 
 export default Component.extend({
   actions: {
@@ -119,6 +120,6 @@ function setProperties(data, element) {
 // return a list of key-value pairs for the confirmation table
 function getTableData(fields, data) {
   return fields
-    .map(field => ({ label: field.label, value: data[field.id] }))
+    .map(field => ({ label: field.label, value: data[field.id] === true ? getString('yes') : data[field.id] === false ? getString('no') : data[field.id] }))
     .filter(field => field.value !== null && field.value !== '' && field.value !== undefined);
 }
