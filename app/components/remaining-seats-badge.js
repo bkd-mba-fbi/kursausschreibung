@@ -39,6 +39,6 @@ export default Component.extend({
   }),
 
   plural: computed('event.FreeSeats', function () {
-    return this.get('event.FreeSeats') > 1;
+    return this.get('event.FreeSeats') !== 1;
   })
 });
