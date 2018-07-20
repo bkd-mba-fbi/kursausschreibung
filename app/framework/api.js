@@ -16,7 +16,7 @@ function ajax(options, relativeUrl) {
         headers: {
           'CLX-Authorization': `token_type=${
             appConfig.tokenType
-          }, access_token=${storage.access_token()}`
+            }, access_token=${storage.access_token()}`
         }
       })
     )
@@ -26,7 +26,7 @@ function ajax(options, relativeUrl) {
 }
 
 function post(relativeUrl, data) {
-  return ajax({ method: 'POST', processData: false, data }, relativeUrl);
+  return ajax({ method: 'POST', processData: false, data: JSON.stringify(data, null, '\t') }, relativeUrl);
 }
 
 function get(relativeUrl) {
@@ -72,4 +72,12 @@ export function getDropDownItems(type) {
 
 export function postPerson(data) {
   return post('Persons/', data);
+}
+
+export function postAddress(data) {
+  return post('Addresses/', data);
+}
+
+export function postSubscription(data) {
+  return post('Subscriptions/', data);
 }

@@ -28,6 +28,7 @@
   "lessons": "Lektionen",
   "seatAvailable": "Platz übrig",
   "seatsAvailable": "Plätze übrig",
+  "subscriptionFailed": "Unerwarterter Fehler. Anmeldung Fehlgeschlagen",
 
   // properties of an event
   "subscriptionFrom": "Start",

@@ -63,7 +63,7 @@
         {
           "id": "FormOfAddress",
           "dataType": "dropdown",
-          "options": { "dropdownItems": "FormsOfAddress" }
+          "options": { "dropdownItems": "FormsOfAddress", "showAsRadioButtons": true }
         },
         {
           "id": "FirstName",
@@ -95,7 +95,7 @@
           "dataType": "telephone",
           "options": { "autocomplete": "tel-national", "required": "true" }
         },
-        { "id": "Birthdate", "dataType": "date" },
+        { "id": "Birthdate", "dataType": "date", "options": {"required": "true"} },
         { "id": "Email2", "dataType": "email" }
       ]
     },

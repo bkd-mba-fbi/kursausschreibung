@@ -11,31 +11,6 @@
 {{event-details-table event=model}}
 
 <!-- FORM -->
-<form autocomplete="on" onsubmit={{action "submit"}} class="uk-grid-small uk-form-horizontal" data-uk-grid>
-  {{#each fields as |field|}}
-    {{input-master field=field}}
-  {{/each}}
-
-  <label class="uk-width-1-1">
-    {{input type="checkbox" class="uk-checkbox" checked=useCompanyAddress}}
-    {{translate "companyAddress"}}
-  </label>
-
-  <fieldset disabled={{if useCompanyAddress false true}} class="uk-width-1-1 uk-fieldset">
-    {{#each companyFields as |field|}}
-      {{input-master field=field}}
-    {{/each}}
-  </fieldset>
-
-  <div class="uk-width-1-1">
-    <hr>
-  </div>
-
-  {{#each subscriptionDetailFields as |field|}}
-    {{input-master field=field}}
-  {{/each}}
-
-  <div class="uk-width-1-1">
-    <input class="uk-button uk-button-primary uk-float-left" type="submit" value={{translate "subscribe"}}> {{link-to (translate "back") "list.category.event" classNames="uk-button uk-button-default uk-float-right"}}
-  </div>
-</form>
+{{subscription-form fields=fields companyFields=companyFields
+  subscriptionDetailFields=subscriptionDetailFields eventId=model.Id
+  subscriptionFinished=(action "subscriptionFinished")}}

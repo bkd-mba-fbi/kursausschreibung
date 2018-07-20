@@ -82,9 +82,6 @@ function getAddressFields(settings, eventTypeId) {
 
 export default Route.extend({
   model() {
-    // TODO
-    // assertConfigIsValid();
-
     let model = this.modelFor('list.category.event');
     let fields = getAddressFields(settings, model.EventTypeId);
 

@@ -1,0 +1,32 @@
+<form autocomplete="on" onsubmit={{action "submit"}} class="uk-grid-small uk-form-horizontal" data-uk-grid>
+  <fieldset class="address-fields uk-width-1-1 uk-fieldset">
+    {{#each fields as |field|}}
+      {{input-master field=field}}
+    {{/each}}
+  </fieldset>
+
+  <label class="uk-width-1-1">
+    {{input type="checkbox" class="uk-checkbox" checked=useCompanyAddress}}
+    {{translate "companyAddress"}}
+  </label>
+
+  <fieldset disabled={{if useCompanyAddress false true}} class="company-address-fields uk-width-1-1 uk-fieldset">
+    {{#each companyFields as |field|}}
+      {{input-master field=field}}
+    {{/each}}
+  </fieldset>
+
+  <div class="uk-width-1-1">
+    <hr>
+  </div>
+
+  <fieldset class="subscription-detail-fields uk-width-1-1 uk-fieldset">
+    {{#each subscriptionDetailFields as |field|}}
+      {{input-master field=field}}
+    {{/each}}
+  </fieldset>
+
+  <div class="uk-width-1-1">
+    <input class="uk-button uk-button-primary uk-float-left" type="submit" value={{translate "subscribe"}}> {{link-to (translate "back") "list.category.event" classNames="uk-button uk-button-default uk-float-right"}}
+  </div>
+</form>
