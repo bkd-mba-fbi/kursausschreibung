@@ -13,7 +13,42 @@
 <p>{{translate "officeAddress"}}</p>
 
 <h2>{{translate "yourDetails"}}</h2>
-<p>...</p>
+
+{{#if model.fields}}
+  <h3 class="uk-h3">{{translate "addressFields"}}</h3>
+  <table class="uk-table uk-table-striped uk-margin">
+    {{#each model.fields as |field|}}
+      <tr>
+          <td>{{field.label}}</td>
+          <td>{{field.value}}</td>
+      </tr>
+    {{/each}}
+  </table>
+{{/if}}
+
+{{#if model.companyFields}}
+  <h3 class="uk-h3">{{translate "companyFields"}}</h3>
+  <table class="uk-table uk-table-striped uk-margin">
+    {{#each model.companyFields as |companyField|}}
+      <tr>
+          <td>{{companyField.label}}</td>
+          <td>{{companyField.value}}</td>
+      </tr>
+    {{/each}}
+  </table>
+{{/if}}
+
+{{#if model.subscriptionDetailFields}}
+  <h3 class="uk-h3">{{translate "subscriptionDetailFields"}}</h3>
+  <table class="uk-table uk-table-striped uk-margin">
+    {{#each model.subscriptionDetailFields as |subscriptionDetailField|}}
+      <tr>
+          <td>{{subscriptionDetailField.label}}</td>
+          <td>{{subscriptionDetailField.value}}</td>
+      </tr>
+    {{/each}}
+  </table>
+{{/if}}
 
 <div class="uk-margin">
   {{link-to "Zurück zur Kursübersicht" "list.category" classNames="uk-button uk-button-default uk-float-left"}}

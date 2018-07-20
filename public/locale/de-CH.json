@@ -29,6 +29,9 @@
   "seatAvailable": "Platz übrig",
   "seatsAvailable": "Plätze übrig",
   "subscriptionFailed": "Unerwarterter Fehler. Anmeldung Fehlgeschlagen",
+  "addressFields": "Adresse",
+  "companyFields": "Firmenadresse",
+  "subscriptionDetailFields": "Anmeldedetails",
 
   // properties of an event
   "subscriptionFrom": "Start",

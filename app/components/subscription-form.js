@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { postPerson, postAddress, postSubscription } from 'kursausschreibung/framework/api';
 import { getString } from 'kursausschreibung/framework/translate';
+import storage from 'kursausschreibung/framework/storage';
 import uikit from 'uikit';
 
 export default Component.extend({
@@ -8,10 +9,7 @@ export default Component.extend({
     submit(event) {
       event.preventDefault();
 
-      let useCompanyAddress = this.get('useCompanyAddress') === true;
-      let eventId = this.get('eventId');
-
-      subscribe(this.$('form'), useCompanyAddress, eventId).then((...params) => this.get('subscriptionFinished')).fail(() =>
+      subscribe(this.$('form'), this).then((...params) => this.get('subscriptionFinished')).fail(() =>
         uikit.notification(getString('subscriptionFailed'), {
           status: 'danger'
         })
@@ -23,7 +21,9 @@ export default Component.extend({
 // this function subscribes a person to an event using the information
 // provided in the form
 // TODO: consider moving this into api.js or a new framework file
-function subscribe(form, useCompanyAddress, eventId) {
+function subscribe(form, self) {
+  let useCompanyAddress = self.get('useCompanyAddress') === true;
+  let eventId = self.get('eventId');
 
   // main address
   let addressProperties = [
@@ -52,6 +52,8 @@ function subscribe(form, useCompanyAddress, eventId) {
     SubscriptionDetails: []
   };
 
+  let assocSubscriptionData = getFieldSetData(form, [], '.subscription-detail-fields'); // for confirmation values
+
   let personId = null;
 
   form.find('.subscription-detail-fields').find('input, select').each((_, element) => {
@@ -67,6 +69,18 @@ function subscribe(form, useCompanyAddress, eventId) {
       subscriptionData.SubscriptionDetails.push({ VssId: vssId, Value: value });
   });
 
+  // save values for the confirmation table
+  let tableData = {
+    fields: getTableData(self.get('fields'), addressData),
+    subscriptionDetailFields: getTableData(self.get('subscriptionDetailFields'), assocSubscriptionData)
+  };
+
+  if (useCompanyAddress)
+    tableData.companyFields = getTableData(self.get('companyFields'), companyAddressData);
+
+  storage.localStoreItem('kursausschreibung.tableData.' + eventId, tableData);
+
+  // do the api calls
   return postPerson(addressData).then((data, status, xhr) => {
     // TODO: refactor
     if (xhr.getResponseHeader('x-duplicate') !== null)
@@ -109,9 +123,11 @@ function setProperties(data, element) {
     return;
   }
 
-  if (element.type === 'radio' && element.checked) {
-    data[element.name] = element.dataset.humanReadable;
-    data[element.name + 'Id'] = parseInt(element.value);
+  if (element.type === 'radio') {
+    if (element.checked) {
+      data[element.name] = element.dataset.humanReadable;
+      data[element.name + 'Id'] = parseInt(element.value);
+    }
     return;
   }
 
@@ -121,4 +137,11 @@ function setProperties(data, element) {
   }
 
   data[element.name] = element.value === '' ? null : element.value;
+}
+
+// return a list of key-value pairs for the confirmation table
+function getTableData(fields, data) {
+  return fields
+    .map(field => ({ label: field.label, value: data[field.id] }))
+    .filter(field => field.value !== null && field.value !== '' && field.value !== undefined);
 }
