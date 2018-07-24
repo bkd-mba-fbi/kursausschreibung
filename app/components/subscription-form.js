@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import storage from 'kursausschreibung/framework/storage';
 import { getString } from 'kursausschreibung/framework/translate';
+import moment from 'moment';
 
 export default Component.extend({
   actions: {
@@ -55,6 +56,8 @@ function subscribe(form, self) {
 
     if (element.type === 'checkbox')
       value = element.checked ? 'Ja' : 'Nein';
+    else if (element.value !== '' && element.type === 'date')
+      value = moment(element.value).format('DD.MM.YYYY');
     else if ((element.value !== '' && element.type !== 'radio') || element.checked)
       value = element.value;
 
