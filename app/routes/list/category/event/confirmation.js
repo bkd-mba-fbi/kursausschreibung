@@ -6,7 +6,6 @@ import { autoCheckForLogin } from 'kursausschreibung/framework/login-helpers';
 
 export default Route.extend({
   model(params, transition) {
-
     let dataToSubmit = storage.localStoreItem('kursausschreibung.dataToSubmit');
     let personId = null;
     let event = this.modelFor('list.category.event');
@@ -62,6 +61,14 @@ export default Route.extend({
       return postSubscription(subscriptionData);
     }).then(() => {
       return tableData;
+    }).catch(error => {
+      let message = '';
+
+      try {
+        console.log(error);
+        message = error.responseJSON.Issues[0].Message;
+      } catch (ignored) { }
+      throw {message: message};
     });
   }
 });

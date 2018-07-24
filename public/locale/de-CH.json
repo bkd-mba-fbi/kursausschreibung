@@ -34,6 +34,7 @@
   "companyFields": "Firmenadresse",
   "subscriptionDetailFields": "Anmeldedetails",
   "sendingData": "Daten senden",
+  "subscriptionFailed": "Anmeldung fehlgeschlagen.",
 
   // properties of an event
   "subscriptionFrom": "Start",

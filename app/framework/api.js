@@ -6,35 +6,38 @@ import storage from './storage';
 // because it seems to be missing almost every call
 // this modules needs
 
-function ajax(options, relativeUrl) {
-  return $
-    .ajax(
-      $.extend(options, {
-        dataType: 'json',
-        url: appConfig.apiUrl + '/' + relativeUrl,
+function ajax(options, relativeUrl, readableError = true) {
+  let promise = $.ajax(
+    $.extend(options, {
+      dataType: 'json',
+      url: appConfig.apiUrl + '/' + relativeUrl,
 
-        headers: {
-          'CLX-Authorization': `token_type=${
-            appConfig.tokenType
-            }, access_token=${storage.access_token()}`
-        }
-      })
-    )
-    .catch(() => {
+      headers: {
+        'CLX-Authorization': `token_type=${
+          appConfig.tokenType
+          }, access_token=${storage.access_token()}`
+      }
+    })
+  );
+
+  if (readableError)
+    promise = promise.catch(() => {
       throw new Error(`${options.method}-request to ${relativeUrl} failed`); // human-readable error
     });
+
+  return promise;
 }
 
-function post(relativeUrl, data) {
-  return ajax({ method: 'POST', processData: false, data: JSON.stringify(data, null, '\t') }, relativeUrl);
+function post(relativeUrl, data, readableError) {
+  return ajax({ method: 'POST', processData: false, data: JSON.stringify(data, null, '\t') }, relativeUrl, readableError);
 }
 
-function put(relativeUrl, data) {
-  return ajax({ method: 'PUT', processData: false, data: JSON.stringify(data, null, '\t') }, relativeUrl);
+function put(relativeUrl, data, readableError) {
+  return ajax({ method: 'PUT', processData: false, data: JSON.stringify(data, null, '\t') }, relativeUrl, readableError);
 }
 
-function get(relativeUrl) {
-  return ajax({ method: 'GET' }, relativeUrl);
+function get(relativeUrl, readableError) {
+  return ajax({ method: 'GET' }, relativeUrl, readableError);
 }
 
 export function getEvents() {
@@ -75,17 +78,17 @@ export function getDropDownItems(type) {
 }
 
 export function postPerson(data) {
-  return post('Persons/', data);
+  return post('Persons/', data, false);
 }
 
 export function putPerson(data, personId) {
-  return put('Persons/' + personId, data);
+  return put('Persons/' + personId, data, false);
 }
 
 export function postAddress(data) {
-  return post('Addresses/', data);
+  return post('Addresses/', data, false);
 }
 
 export function postSubscription(data) {
-  return post('Subscriptions/', data);
+  return post('Subscriptions/', data, false);
 }

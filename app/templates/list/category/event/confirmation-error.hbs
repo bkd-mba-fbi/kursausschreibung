@@ -1,0 +1,12 @@
+<ol class="steps">
+  <li class="step1">
+    <span>{{translate "personalData"}}</span>
+  </li>
+  <li class="step2 current">
+    <span>{{translate "confirmation"}}</span>
+  </li>
+</ol>
+<span class="uk-text-large uk-text-danger">{{translate "subscriptionFailed"}} {{model.message}}</span>
+<div class="uk-margin">
+  {{link-to "Zurück zur Kursübersicht" "list.category" classNames="uk-button uk-button-default uk-float-left"}}
+</div>
