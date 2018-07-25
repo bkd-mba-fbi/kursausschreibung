@@ -123,6 +123,22 @@ function setProperties(data, element) {
 // return a list of key-value pairs for the confirmation table
 function getTableData(fields, data) {
   return fields
-    .map(field => ({ label: field.label, value: data[field.id] === true ? getString('yes') : data[field.id] === false ? getString('no') : data[field.id] }))
-    .filter(field => field.value !== null && field.value !== '' && field.value !== undefined);
+    .map(field => {
+      let label = field.label;
+      let value = data[field.id];
+
+      // skip empty values
+      if (value === null || value === '' || value === undefined)
+        return null;
+
+      // localize true/false
+      if (field.dataType === 'checkbox')
+        value = getString(value ? 'yes' : 'no');
+
+      // localize dates
+      if (field.dataType === 'date')
+        value = moment(value).format('LL');
+
+      return { label, value };
+    }).filter(field => field !== null);
 }
