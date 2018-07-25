@@ -37,7 +37,7 @@ export function getEventById(id) {
 // * add lessons locations and texts to the appropriate event
 // * sort events by areaOfEducation, category and Id (for faster access)
 export function init() {
-  let language = getLanguage();
+  let language = getLanguage() === 'fr-CH' ? 'en-US' : 'de-CH';
 
   // helper function to create human-readable dates
   let formatDate = (date, format) => date === null ? getString('notAvailable') : moment(date).format(format);
