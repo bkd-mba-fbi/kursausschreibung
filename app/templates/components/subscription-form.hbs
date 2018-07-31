@@ -5,16 +5,18 @@
     {{/each}}
   </fieldset>
 
-  <label class="uk-width-1-1">
-    {{input type="checkbox" class="uk-checkbox" checked=useCompanyAddress}}
-    {{translate "companyAddress"}}
-  </label>
+  {{#if companyFields}}
+    <label class="uk-width-1-1">
+      {{input type="checkbox" class="uk-checkbox" checked=useCompanyAddress}}
+      {{translate "companyAddress"}}
+    </label>
 
-  <fieldset hidden={{if useCompanyAddress false true}} disabled={{if useCompanyAddress false true}} class="company-address-fields uk-width-1-1 uk-fieldset">
-    {{#each companyFields as |field|}}
-      {{input-master field=field}}
-    {{/each}}
-  </fieldset>
+    <fieldset hidden={{if useCompanyAddress false true}} disabled={{if useCompanyAddress false true}} class="company-address-fields uk-width-1-1 uk-fieldset">
+      {{#each companyFields as |field|}}
+        {{input-master field=field}}
+      {{/each}}
+    </fieldset>
+  {{/if}}
 
   <div class="uk-width-1-1">
     <hr>

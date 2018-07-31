@@ -69,15 +69,15 @@ function addTranslations(fields) {
   return fields;
 }
 
-function getAddressFields(settings, eventTypeId) {
-  if (eventTypeId in settings.formFields.addressFields)
-    return settings.formFields.addressFields[eventTypeId];
+function getFormFields(settings, eventTypeId) {
+  if (eventTypeId in settings.formFields)
+    return settings.formFields[eventTypeId];
 
 
-  if (settings.formFields.addressFields.default === undefined)
+  if (settings.formFields.default === undefined)
     throw new Error("config for eventTypeId " + eventTypeId + " not found and no default config is available");
 
-  return settings.formFields.addressFields.default;
+  return settings.formFields.default;
 }
 
 export default Route.extend({
@@ -90,7 +90,7 @@ export default Route.extend({
       return;
     }
 
-    let fields = getAddressFields(settings, model.EventTypeId);
+    let fields = getFormFields(settings, model.EventTypeId).addressFields;
 
     return Promise.all([
       getSubscriptionDetails(model.Id),
@@ -104,11 +104,13 @@ export default Route.extend({
   setupController(controller, model) {
     this._super(...arguments);
 
+    let formFields = getFormFields(settings, model.EventTypeId);
+
     // person fields
-    controller.set('fields', addTranslations(getAddressFields(settings, model.EventTypeId)));
+    controller.set('fields', addTranslations(formFields.addressFields));
 
     // company fields
-    controller.set('companyFields', addTranslations(settings.formFields.companyFields));
+    controller.set('companyFields', typeof formFields.companyFields === 'object' ? addTranslations(formFields.companyFields) : null);
 
     // subscriptionDetails
     controller.set('subscriptionDetailFields', get(model, 'subscriptionDetailFields'));

@@ -4,6 +4,7 @@ import { getString } from 'kursausschreibung/framework/translate';
 import moment from 'moment';
 
 export default Component.extend({
+  useCompanyAddress: false,
   actions: {
     submit(event) {
       event.preventDefault();
