@@ -65,7 +65,6 @@ export default Route.extend({
       let message = '';
 
       try {
-        console.log(error);
         message = error.responseJSON.Issues[0].Message;
       } catch (ignored) { }
       throw {message: message};
