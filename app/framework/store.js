@@ -5,7 +5,7 @@ import moment from 'moment';
 import { getEvents, getEvent, getLessons, getEventLocations, getEventTexts } from './api';
 import { isGreen, isYellow, isRed } from './status';
 import ObjectProxy from '@ember/object/proxy';
-import { combineDate, isInSubscriptionRange  } from './date-helpers';
+import { combineDate, isInSubscriptionRange } from './date-helpers';
 import { all } from 'rsvp';
 import settings from './settings';
 import { getLanguage, getString } from './translate';
@@ -123,17 +123,17 @@ export function init() {
           return 'orange';
         }),
 
-        canDoSubscription: computed('status', function() {
+        canDoSubscription: computed('status', function () {
           let status = this.get('status');
 
           return (typeof settings.canDoSubscription === 'object' &&
-                  settings.canDoSubscription[status] === true);
+            settings.canDoSubscription[status] === true);
         }),
 
         update() {
           // only update FreeSeats for now
           let that = this;
-          return getEvent(this.get('Id')).then(function(updatedEvent) {
+          return getEvent(this.get('Id')).then(function (updatedEvent) {
             that.set('FreeSeats', updatedEvent.FreeSeats);
           });
 
@@ -239,8 +239,8 @@ export function init() {
     // sorted keys for display in navigation component
     eventsByArea.areaKeys = Object.keys(eventsByArea.areas).sort();
 
-    for (let area of eventsByArea.areaKeys) {
-      eventsByArea.areas[area].categoryKeys = Object.keys(eventsByArea.areas[area].categories).sort();
-    }
+    eventsByArea.areaKeys.forEach(area =>
+      eventsByArea.areas[area].categoryKeys = Object.keys(eventsByArea.areas[area].categories).sort()
+    );
   });
 }

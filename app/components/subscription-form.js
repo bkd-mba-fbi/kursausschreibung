@@ -87,9 +87,7 @@ function subscribe(form, self) {
 function getFieldSetData(form, properties, selector) {
   let data = {};
 
-  for (let property of properties) {
-    data[property] = null;
-  }
+  properties.forEach(property => data[property] = null);
 
   form.find(selector).find('input, select').each((_, element) => setProperties(data, element));
 
@@ -103,7 +101,7 @@ function setProperties(data, element) {
     let text = element.options[element.selectedIndex].text;
 
     // skip if there is no selection
-    if (text === '')  return;
+    if (text === '') return;
 
     data[element.name] = text;
     data[element.name + 'Id'] = parseInt(element.value);
