@@ -1,5 +1,5 @@
 {{#event-list-search queryChanged=(action "queryChanged") events=events as |filteredEvents|}}
-  {{#list-pagination page=page items=filteredEvents as |eventsOnCurrentPage|}}
+  {{#list-pagination page=page items=filteredEvents route=route as |eventsOnCurrentPage|}}
     {{#each eventsOnCurrentPage as |event|}}
       {{event-list-item event=event}}
     {{/each}}
