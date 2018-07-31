@@ -63,7 +63,7 @@
         {
           "id": "FormOfAddress",
           "dataType": "dropdown",
-          "options": { "dropdownItems": "FormsOfAddress" }
+          "options": { "dropdownItems": "FormsOfAddress", "required": true }
         },
         {
           "id": "FirstName",

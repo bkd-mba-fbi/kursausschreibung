@@ -99,7 +99,12 @@ function getFieldSetData(form, properties, selector) {
 // on wethere element is a select-node
 function setProperties(data, element) {
   if (element.nodeName === 'SELECT') {
-    data[element.name] = element.options[element.selectedIndex].text;
+    let text = element.options[element.selectedIndex].text;
+
+    // skip if there is no selection
+    if (text === '')  return;
+
+    data[element.name] = text;
     data[element.name + 'Id'] = parseInt(element.value);
     return;
   }
