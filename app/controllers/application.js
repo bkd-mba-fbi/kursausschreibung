@@ -10,6 +10,8 @@ export default Controller.extend({
   twitterHandle: settings.twitterHandle,
   eventCategoryDropdown: settings.eventCategoryDropdown,
 
+  rightWidth: settings.displayRightSide ? 'uk-width-1-4@l' : 'uk-width-1-1',
+
   actions: {
     setLanguage(language) {
       setLanguage(language);

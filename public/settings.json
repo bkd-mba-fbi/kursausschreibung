@@ -148,7 +148,10 @@
   // show a twitter-feed (optional)
   "twitterHandle": null,
 
-  // put event-categories in a dropdown menu
+  // show the elements on the right side (required)
+  "displayRightSide": false,
+
+  // put event-categories in a dropdown menu (required)
   "eventCategoryDropdown": true,
 
   // property by which the event-list should be sorted (optional)

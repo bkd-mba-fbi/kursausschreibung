@@ -1,6 +1,6 @@
 <div class="uk-width-1-1">
 
-  <a href="#menu-modal" class="uk-icon-link uk-float-right uk-margin-top uk-margin-right uk-hidden@m" uk-icon="menu" uk-toggle>{{translate "menu"}} </a>
+  <a href="#menu-modal" class="uk-icon-link uk-float-right uk-margin-top uk-margin-right {{if eventCategoryDropdown "uk-hidden" "uk-hidden@m"}}" uk-icon="menu" uk-toggle>{{translate "menu"}} </a>
 
   <div id="menu-modal" class="uk-modal-full" uk-modal="container: false;">
     <div class="uk-modal-dialog">
@@ -26,7 +26,7 @@
   </div>
 
   {{#if showLanguageButton}}
-    <div class="uk-float-right uk-margin-top uk-margin-right uk-visible@m">
+    <div class="uk-float-right uk-margin-top uk-margin-right {{unless eventCategoryDropdown "uk-visible@m"}}">
       <a href="#" class="uk-icon-link uk-margin-small-right" uk-icon="world">{{translate "language"}} </a>
       <div data-uk-dropdown="mode: click">
         <ul class="uk-list uk-link-text uk-margin-remove">
@@ -55,7 +55,7 @@
     {{outlet}}
 
     <!-- RIGHT -->
-    <div class="uk-width-1-4@l">
+    <div class={{rightWidth}}>
 
       <!-- LOGO -->
       {{#if logoImage}}
