@@ -35,7 +35,6 @@
   "subscriptionDetailFields": "Anmeldedetails",
   "sendingData": "Daten senden",
   "subscriptionFailed": "Anmeldung fehlgeschlagen.",
-  "categories": "Kategorien",
 
   // properties of an event
   "subscriptionFrom": "Start",

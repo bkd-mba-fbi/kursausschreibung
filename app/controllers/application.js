@@ -8,6 +8,7 @@ export default Controller.extend({
   logoLink: settings.logoLink,
   showContact: settings.showContact,
   twitterHandle: settings.twitterHandle,
+  eventCategoryDropdown: settings.eventCategoryDropdown,
 
   actions: {
     setLanguage(language) {

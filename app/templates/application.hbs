@@ -28,7 +28,7 @@
   {{#if showLanguageButton}}
     <div class="uk-float-right uk-margin-top uk-margin-right uk-visible@m">
       <a href="#" class="uk-icon-link uk-margin-small-right" uk-icon="world">{{translate "language"}} </a>
-      <div uk-dropdown="mode: click">
+      <div data-uk-dropdown="mode: click">
         <ul class="uk-list uk-link-text uk-margin-remove">
           <li><a href="#" {{action "setLanguage" "de-CH"}}>{{translate "german"}}</a></li>
           <li><a href="#" {{action "setLanguage" "fr-CH"}}>{{translate "french"}}</a></li>
@@ -37,11 +37,16 @@
     </div>
   {{/if}}
 
-  <ul uk-tab class="uk-width-1-1 uk-margin-top">
+  <ul data-uk-tab class="uk-width-1-1 uk-margin-top">
     {{#each model.areaKeys as |areaKey|}}
       {{#link-to "list" areaKey tagName="li" activeClass="uk-active"}}
         {{link-to (get (get model.areas areaKey) "name") "list" areaKey}}
       {{/link-to}}
+      {{#if eventCategoryDropdown}}
+        <div data-uk-dropdown>
+          {{area-navigation (get model.areas areaKey)}}
+        </div>
+      {{/if}}
     {{/each}}
   </ul>
 
