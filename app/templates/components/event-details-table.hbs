@@ -3,7 +3,7 @@
     {{#each fields as |field|}}
       {{#if (get event.displayData field.key)}}
         <tr>
-          <td>{{field.name}}</td>
+          <td>{{{field.name}}}</td>
           <td>{{{get event.displayData field.key}}}</td>
         </tr>
       {{/if}}
@@ -11,7 +11,7 @@
     {{#if showEventText}}
       {{#each event.texts as |text|}}
         <tr>
-          <td>{{text.label}}</td>
+          <td>{{{text.label}}}</td>
           <td>{{{text.memo}}}</td>
         </tr>
       {{/each}}
@@ -19,7 +19,7 @@
     {{#if event.displayData.lessons}}
       <tr>
         <td>{{translate "lessons"}}</td>
-        <td>{{#each event.displayData.lessons as |lesson|}}{{lesson.DateFrom}} - {{lesson.TimeTo}}{{#if lesson.Designation}}: {{lesson.Designation}}{{/if}}<br>{{/each}}</td>
+        <td>{{#each event.displayData.lessons as |lesson|}}{{lesson.DateFrom}} - {{lesson.TimeTo}}{{#if lesson.Designation}}: {{{lesson.Designation}}}{{/if}}<br>{{/each}}</td>
       </tr>
     {{/if}}
   </tbody>
