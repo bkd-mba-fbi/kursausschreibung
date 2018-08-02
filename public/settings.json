@@ -148,6 +148,9 @@
   // show a twitter-feed (optional)
   "twitterHandle": null,
 
+  // put event-categories in a dropdown menu
+  "eventCategoryDropdown": true,
+
   // property by which the event-list should be sorted (optional)
   "sortEventList": "Designation"
 }

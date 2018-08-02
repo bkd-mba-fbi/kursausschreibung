@@ -2,9 +2,16 @@
 
 <!-- LEFT -->
 <div class="uk-visible@m uk-width-1-4@m">
-  <div class="uk-card uk-card-default uk-card-small uk-card-body">
-    {{area-navigation model}}
-  </div>
+  {{#if eventCategoryDropdown}}
+    <button class="uk-button uk-button-default" type="button">{{translate "categories"}}</button>
+    <div class="uk-card uk-card-default uk-card-small uk-card-body" data-uk-dropdown>
+      {{area-navigation model}}
+    </div>
+  {{else}}
+    <div class="uk-card uk-card-default uk-card-small uk-card-body">
+      {{area-navigation model}}
+    </div>
+  {{/if}}
 </div>
 
 <!-- CENTER -->
