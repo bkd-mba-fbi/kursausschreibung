@@ -57,8 +57,8 @@ function subscribe(form, self) {
 
     if (element.type === 'checkbox')
       value = element.checked ? 'Ja' : 'Nein';
-    else if (element.value !== '' && element.type === 'date')
-      value = moment(element.value).format('DD.MM.YYYY');
+    else if (element.value !== '' && element.dataset.type === 'date')
+      value = moment(parseDate(element.value)).format('DD.MM.YYYY');
     else if ((element.value !== '' && element.type !== 'radio') || element.checked)
       value = element.value;
 
@@ -95,7 +95,7 @@ function getFieldSetData(form, properties, selector) {
 }
 
 // sets one or two properties on data depending
-// on wethere element is a select-node
+// on whether element is a select-node
 function setProperties(data, element) {
   if (element.nodeName === 'SELECT') {
     let text = element.options[element.selectedIndex].text;
@@ -118,6 +118,11 @@ function setProperties(data, element) {
 
   if (element.type === 'checkbox') {
     data[element.name] = element.checked;
+    return;
+  }
+
+  if (element.dataset.type === 'date') {
+    data[element.name] = element.value === '' ? null : parseDate(element.value);
     return;
   }
 
@@ -145,4 +150,9 @@ function getTableData(fields, data) {
 
       return { label, value };
     }).filter(field => field !== null);
+}
+
+// converts dd.mm.yyyy to yyyy-mm-dd if format is dd.mm.yyyy
+function parseDate(date) {
+  return /^[0-9]{2}.[0-9]{2}.[0-9]{4}$/.test(date) ? date.split('.').reverse().join('-') : date;
 }
