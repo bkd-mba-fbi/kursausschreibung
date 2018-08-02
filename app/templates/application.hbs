@@ -1,54 +1,66 @@
 <div class="uk-width-1-1">
 
-  <a href="#menu-modal" class="uk-icon-link uk-float-right uk-margin-top uk-margin-right {{if eventCategoryDropdown "uk-hidden" "uk-hidden@m"}}" uk-icon="menu" uk-toggle>{{translate "menu"}} </a>
-
-  <div id="menu-modal" class="uk-modal-full" uk-modal="container: false;">
-    <div class="uk-modal-dialog">
-      <button class="uk-modal-close-full uk-close-large" type="button" data-uk-close></button>
-      <div class="uk-padding-large" data-uk-height-viewport>
-        <h2>{{translate "navigation"}}</h2>
-        {{#each-in model.areas as |area data|}}
-          <div class="uk-margin">
-            {{area-navigation data}}
-          </div>
-        {{/each-in}}
-        {{#if showLanguageButton}}
-          <div class="uk-margin">
-            <h2>{{translate "language"}}</h2>
-              <ul class="uk-nav uk-nav-default">
-                <li><a {{action "setLanguage" "de-CH"}}>{{translate "german"}}</a></li>
-                <li><a {{action "setLanguage" "fr-CH"}}>{{translate "french"}}</a></li>
-              </ul>
-          </div>
-        {{/if}}
-      </div>
+  <!-- NAVIGATION -->
+  <nav class="uk-navbar-container uk-margin-top" data-uk-navbar>
+    <div class="uk-navbar-left">
+      <ul class="uk-navbar-nav">
+        {{#each model.areaKeys as |areaKey|}}
+          {{#link-to "list" areaKey tagName="li" activeClass="uk-active"}}
+            {{link-to (get (get model.areas areaKey) "name") "list" areaKey}}
+          {{/link-to}}
+          {{#if eventCategoryDropdown}}
+            <div data-uk-dropdown>
+              {{area-navigation (get model.areas areaKey) hideHeading=true}}
+            </div>
+          {{/if}}
+        {{/each}}
+      </ul>
     </div>
-  </div>
+    <div class="uk-navbar-right">
+      <ul class="uk-navbar-nav">
+        <li>
+          <!-- MENU MODAL -->
+          <a href="#menu-modal" class="uk-icon-link uk-margin-right {{if eventCategoryDropdown "uk-hidden" "uk-hidden@m"}}" data-uk-icon="menu" data-uk-toggle></a>
 
-  {{#if showLanguageButton}}
-    <div class="uk-float-right uk-margin-top uk-margin-right {{unless eventCategoryDropdown "uk-visible@m"}}">
-      <a href="#" class="uk-icon-link uk-margin-small-right" uk-icon="world">{{translate "language"}} </a>
-      <div data-uk-dropdown="mode: click">
-        <ul class="uk-list uk-link-text uk-margin-remove">
-          <li><a href="#" {{action "setLanguage" "de-CH"}}>{{translate "german"}}</a></li>
-          <li><a href="#" {{action "setLanguage" "fr-CH"}}>{{translate "french"}}</a></li>
-        </ul>
-      </div>
+          <div id="menu-modal" class="uk-modal-full" uk-modal="container: false;">
+            <div class="uk-modal-dialog">
+              <button class="uk-modal-close-full uk-close-large" type="button" data-uk-close></button>
+              <div class="uk-padding-large" data-uk-height-viewport>
+                <h2>{{translate "navigation"}}</h2>
+                {{#each-in model.areas as |area data|}}
+                  <div class="uk-margin">
+                    {{area-navigation data}}
+                  </div>
+                {{/each-in}}
+                {{#if showLanguageButton}}
+                  <div class="uk-margin">
+                    <h2>{{translate "language"}}</h2>
+                      <ul class="uk-nav uk-nav-default">
+                        <li><a {{action "setLanguage" "de-CH"}}>{{translate "german"}}</a></li>
+                        <li><a {{action "setLanguage" "fr-CH"}}>{{translate "french"}}</a></li>
+                      </ul>
+                  </div>
+                {{/if}}
+              </div>
+            </div>
+          </div>
+
+          <!-- LANGUAGE BUTTON -->
+          {{#if showLanguageButton}}
+            <div class="uk-margin-right {{unless eventCategoryDropdown "uk-visible@m"}}">
+              <a href="#" class="uk-icon-link" data-uk-icon="world">{{translate "language"}} </a>
+              <div data-uk-dropdown="mode: click">
+                <ul class="uk-list uk-link-text uk-margin-remove">
+                  <li><a href="#" {{action "setLanguage" "de-CH"}}>{{translate "german"}}</a></li>
+                  <li><a href="#" {{action "setLanguage" "fr-CH"}}>{{translate "french"}}</a></li>
+                </ul>
+              </div>
+            </div>
+          {{/if}}
+        </li>
+      </ul>
     </div>
-  {{/if}}
-
-  <ul data-uk-tab class="uk-width-1-1 uk-margin-top">
-    {{#each model.areaKeys as |areaKey|}}
-      {{#link-to "list" areaKey tagName="li" activeClass="uk-active"}}
-        {{link-to (get (get model.areas areaKey) "name") "list" areaKey}}
-      {{/link-to}}
-      {{#if eventCategoryDropdown}}
-        <div data-uk-dropdown>
-          {{area-navigation (get model.areas areaKey) hideHeading=true}}
-        </div>
-      {{/if}}
-    {{/each}}
-  </ul>
+  </nav>
 
   <div class="uk-grid uk-margin" data-uk-grid>
     <!-- LEFT + CENTER -->
