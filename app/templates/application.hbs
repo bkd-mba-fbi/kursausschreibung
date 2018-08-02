@@ -44,7 +44,7 @@
       {{/link-to}}
       {{#if eventCategoryDropdown}}
         <div data-uk-dropdown>
-          {{area-navigation (get model.areas areaKey)}}
+          {{area-navigation (get model.areas areaKey) hideHeading=true}}
         </div>
       {{/if}}
     {{/each}}
