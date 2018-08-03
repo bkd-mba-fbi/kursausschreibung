@@ -59,7 +59,7 @@ Make use of the many generators for code, try `ember help generate` for more det
 
 ## Last build
 
-In the lastbuild folder is the last build of the module. You can use it directly, after you did according to configuration section.
+In the `lastbuild` folder is the last build of the module. You can use it directly, after you did according to configuration section.
 
 ## Integration
 
