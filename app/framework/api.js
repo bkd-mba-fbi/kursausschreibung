@@ -5,8 +5,12 @@ import storage from './storage';
 // not using the framework-version for now
 // because it seems to be missing almost every call
 // this modules needs
+let accessToken = null;
 
 function ajax(options, relativeUrl, readableError = true) {
+  if (accessToken === null)
+    accessToken = storage.access_token();
+
   let promise = $.ajax(
     $.extend(options, {
       dataType: 'json',
@@ -15,7 +19,7 @@ function ajax(options, relativeUrl, readableError = true) {
       headers: {
         'CLX-Authorization': `token_type=${
           appConfig.tokenType
-          }, access_token=${storage.access_token()}`
+          }, access_token=${accessToken}`
       }
     })
   );
