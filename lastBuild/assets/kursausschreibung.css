@@ -1,0 +1,91 @@
+@import 'progress-bar.css';
+/*
+  TODO (maybe) use scss
+  https://ember-cli.com/asset-compilation
+  https://getuikit.com/docs/sass
+*/
+
+.uk-scope {
+  display: inline-block;
+  width: 100%;
+  min-height: 300px;
+}
+
+.uk-scope h2 {
+  overflow-wrap: break-word;
+}
+
+.event-list-item:hover {
+  display: block;
+  background: #f5f5f5;
+}
+
+.lamp-red,
+.lamp-green,
+.lamp-orange,
+.lamp-yellow {
+  display: inline-block;
+  height: 16px;
+  width: 16px;
+  border-radius: 8px;
+  margin-right: 8px;
+}
+
+.lamp-red {
+  background-color: red;
+}
+
+.lamp-green {
+  background-color: green;
+}
+
+.lamp-orange {
+  background-color: orange;
+}
+
+.lamp-yellow {
+  background-color: yellow;
+}
+
+.details-table > tbody > tr > td:first-child {
+  padding-right: 15px;
+  font-weight: bolder;
+}
+
+.details-table td:last-child {
+  white-space: pre-wrap;
+}
+
+/* form */
+.uk-scope input:invalid {
+  border-color: red !important;
+}
+
+.uk-scope input[type="date"]::-webkit-inner-spin-button {
+  display: none; /* this doesn't display correctly in chrome+uikit so we hide it */
+}
+
+/* mobile */
+@media (max-width: 959px) {
+  .subscribe-button {
+    position: fixed;
+    bottom: 0px;
+    min-width: 200px;
+    left: calc((100vw - 200px) / 2);
+    z-index: 200; /* always on top */
+  }
+}
+
+/* small mobile */
+@media (max-width: 449px) {
+  .details-table.table-collapse td {
+    display: block;
+  }
+  .uk-scope .details-table.table-collapse td:first-child {
+    padding-bottom: 0;
+  }
+
+  .details-table.table-collapse td:last-child {
+    padding-top: 12px;
+  }
+}
