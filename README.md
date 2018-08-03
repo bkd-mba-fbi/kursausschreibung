@@ -15,6 +15,7 @@ You will need the following things properly installed on your computer.
 * `cd kursausschreibung`
 * `npm install`
 * `cd node_modules/uikit`
+* `npm install`
 * `npm run scope` (make sure node is up to date)
 
 ## Running / Development
