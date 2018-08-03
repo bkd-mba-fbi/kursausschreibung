@@ -13,10 +13,6 @@ module.exports = function (defaults) {
           comments: /^!/
         }
       }
-    },
-
-    minifyCSS: {
-      enabled: false
     }
   });
 
