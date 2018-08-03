@@ -63,4 +63,4 @@ In the `lastbuild` folder is the last build of the module. You can use it direct
 
 ## Integration
 
-For the integration into the html page you need a simple html configuration in the header and body of the page in which you want to publish the module. See the section `MODUL head configuration` and `MODUL MAIN APPLICATION` in `lastBuild/index.html`.
+For the integration into an html page you need a simple html configuration in header and body of the page in which you want to publish the module. Please see section `MODUL head configuration` and `MODUL MAIN APPLICATION` in `lastBuild/index.html`.
