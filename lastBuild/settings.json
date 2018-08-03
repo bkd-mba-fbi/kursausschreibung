@@ -1,9 +1,9 @@
 {
   // only show hosts with one of these hostIds (optional)
-   "hostIds": null,
+  "hostIds": null,
 
   // items per page on the event-list (required)
-  "itemsPerPage": 6,
+  "itemsPerPage": 10,
 
   // title and fields to show on the event-list (required)
   // possible values in this array can be
@@ -18,136 +18,112 @@
   // (the key of the translation has to be in camelCase)
   "eventListTitle": "Designation",
   "eventListFields": [
-    "DateString",
-    "Leadership",
+    "SubscriptionFrom",
     "LanguageOfInstruction",
     "BuildingAddress",
-    "Location"
+    "Location",
+    "Price"
   ],
 
   // same as the above but for the details-route (required)
   "eventDetailsTitle": "Designation",
   "eventDetailsFields": [
-    "DateString",
+    "DateFrom",
+    "DateTo",
     "Leadership",
-    "Location",
-    "BuildingAddress"
+    "BuildingAddress",
+    "Price"
   ],
 
   // show breadcrumbs navigation (optional)
-  "showBreadcrumbs": true,
+  "showBreadcrumbs": false,
 
   // show event-text on the details-route (optional)
   "showEventText": true,
 
- // enable freeSeats badge and set polling interval (optional)
- "badgeFreeSeats": {
-  "enabled": true,
-  "intervalSec": 5
-},
+  // enable freeSeats badge and set polling interval (optional)
+  "badgeFreeSeats": {
+    "enabled": true,
+    "intervalSec": 5
+  },
 
-// enable/disable subscription (required)
-"canDoSubscription": {
-  "green": true,
-  "yellow": false,
-  "red": false,
-  "orange": false
-},
+  // enable/disable subscription (required)
+  "canDoSubscription": {
+    "green": true,
+    "yellow": false,
+    "red": false,
+    "orange": false
+  },
 
   // fields for the form (required)
   "formFields": {
     // can be specified per EventTypeId (fallback to default)
-  "15": {
-    "addressFields":[
-      {
-        "id": "FormOfAddress",
-        "dataType": "dropdown",
-        "options": { "dropdownItems": "FormsOfAddress" }
-      },
-      {
-        "id": "FirstName",
-        "dataType": "string",
-        "options": { "required": true, "autocomplete": "given-name" }
-      },
-      {
-        "id": "LastName",
-        "dataType": "string",
-        "options": { "required": true, "autocomplete": "family-name" }
-      },
-      { "id": "Birthdate", "dataType": "date", "options": {"required": "true"} },
-      { "id": "Email2", "dataType": "email" }
-
-    ],
-    //Optional (Invoice address)
-    "companyFields": [
-      {
-        "id": "Company",
-        "dataType": "string",
-        "options": { "required": true }
-      },
-      {
-        "id": "AddressLine1",
-        "dataType": "string",
-        "options": { "required": true }
-      },
-      {
-        "id": "Zip",
-        "dataType": "number",
-        "options": { "required": true }
-      },
-      {
-        "id": "Location",
-        "dataType": "string",
-        "options": { "required": true }
-      }
-    ]
+    "default": {
+      "addressFields": [
+        {
+          "id": "FormOfAddress",
+          "dataType": "dropdown",
+          "options": { "dropdownItems": "FormsOfAddress", "required": true }
+        },
+        {
+          "id": "FirstName",
+          "dataType": "string",
+          "options": { "required": true, "autocomplete": "given-name" }
+        },
+        {
+          "id": "LastName",
+          "dataType": "string",
+          "options": { "required": true, "autocomplete": "family-name" }
+        },
+        {
+          "id": "AddressLine1",
+          "dataType": "string",
+          "options": { "required": true, "autocomplete": "address-line1" }
+        },
+        {
+          "id": "Zip",
+          "dataType": "number",
+          "options": { "required": true, "autocomplete": "postal-code" }
+        },
+        {
+          "id": "Location",
+          "dataType": "string",
+          "options": { "required": true, "autocomplete": "address-level2" }
+        },
+        {
+          "id": "PhoneMobile",
+          "dataType": "telephone",
+          "options": { "autocomplete": "tel-national", "required": "true" }
+        },
+        { "id": "Birthdate", "dataType": "date", "options": {"required": "true"} },
+        { "id": "Email2", "dataType": "email" }
+      ],
+      // optional
+      "companyFields": [
+        {
+          "id": "Company",
+          "dataType": "string",
+          "options": { "required": true }
+        },
+        {
+          "id": "AddressLine1",
+          "dataType": "string",
+          "options": { "required": true }
+        },
+        {
+          "id": "Zip",
+          "dataType": "number",
+          "options": { "required": true }
+        },
+        {
+          "id": "Location",
+          "dataType": "string",
+          "options": { "required": true }
+        }
+      ]
+    }
   },
 
-  "default": {
-    "addressFields": [
-      {
-        "id": "FormOfAddress",
-        "dataType": "dropdown",
-        "options": { "dropdownItems": "FormsOfAddress" }
-      },
-      {
-        "id": "FirstName",
-        "dataType": "string",
-        "options": { "required": true, "autocomplete": "given-name" }
-      },
-      {
-        "id": "LastName",
-        "dataType": "string",
-        "options": { "required": true, "autocomplete": "family-name" }
-      },
-      {
-        "id": "AddressLine1",
-        "dataType": "string",
-        "options": { "required": true, "autocomplete": "address-line1" }
-      },
-      {
-        "id": "Zip",
-        "dataType": "number",
-        "options": { "required": true, "autocomplete": "postal-code" }
-      },
-      {
-        "id": "Location",
-        "dataType": "string",
-        "options": { "required": true, "autocomplete": "address-level2" }
-      },
-      {
-        "id": "PhoneMobile",
-        "dataType": "telephone",
-        "options": { "autocomplete": "tel-national", "required": "true" }
-      },
-      { "id": "Birthdate", "dataType": "date", "options": {"required": "true"} },
-      { "id": "Email2", "dataType": "email" }
-    ]
-  }  
-
-  },
-
-  
   // set this to true to add a button to change the langauge (optional)
   "showLanguageButton": true,
 
@@ -170,14 +146,14 @@
   "showContact": true,
 
   // show a twitter-feed (optional)
-  "twitterHandle": "https://twitter.com/SfGBB_Foto",
+  "twitterHandle": null,
 
   // show the elements on the right side (required)
   "displayRightSide": true,
 
   // put event-categories in a dropdown menu (required)
   "eventCategoryDropdown": false,
-  
+
   // property by which the event-list should be sorted (optional)
   "sortEventList": "Designation"
 }
