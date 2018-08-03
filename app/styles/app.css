@@ -56,6 +56,10 @@
   white-space: pre-wrap;
 }
 
+.details-table td {
+  vertical-align: top;
+}
+
 /* form */
 .uk-scope input:invalid {
   border-color: red !important;
