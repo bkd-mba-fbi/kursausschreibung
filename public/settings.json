@@ -149,10 +149,10 @@
   "twitterHandle": null,
 
   // show the elements on the right side (required)
-  "displayRightSide": false,
+  "displayRightSide": true,
 
   // put event-categories in a dropdown menu (required)
-  "eventCategoryDropdown": true,
+  "eventCategoryDropdown": false,
 
   // property by which the event-list should be sorted (optional)
   "sortEventList": "Designation"
