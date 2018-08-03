@@ -7,7 +7,12 @@ module.exports = function (defaults) {
 
     // see: https://github.com/ember-cli/ember-cli-uglify
     'ember-cli-uglify': {
-      exclude: ['appConfig.js']
+      exclude: ['appConfig.js'],
+      uglify: {
+        output: {
+          comments: /^!/
+        }
+      }
     },
 
     minifyCSS: {
