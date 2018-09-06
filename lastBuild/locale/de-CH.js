@@ -1,4 +1,6 @@
-{
+window.kursausschreibung = window.kursausschreibung || {};
+window.kursausschreibung.locale = window.kursausschreibung.locale || {};
+window.kursausschreibung.locale["de-CH"] = {
   "yes": "Ja",
   "no": "Nein",
   "overview": "Kursübersicht",
@@ -58,4 +60,4 @@
   "formAddressLine1": "Adresse",
   "formZip": "PLZ",
   "formLocation": "Ort"
-}
+};

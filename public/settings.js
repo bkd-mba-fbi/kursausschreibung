@@ -1,4 +1,5 @@
-{
+window.kursausschreibung = window.kursausschreibung || {};
+window.kursausschreibung.settings = {
   // only show hosts with one of these hostIds (optional)
   "hostIds": null,
 
@@ -95,7 +96,7 @@
           "dataType": "telephone",
           "options": { "autocomplete": "tel-national", "required": "true" }
         },
-        { "id": "Birthdate", "dataType": "date", "options": {"required": "true"} },
+        { "id": "Birthdate", "dataType": "date", "options": { "required": "true" } },
         { "id": "Email2", "dataType": "email" }
       ],
       // optional
@@ -142,7 +143,7 @@
   "logoLink": null,
 
   // set this to true to show contact information (optional)
-  // (key "contactContent" in de-CH.json and fr-CH.json)
+  // (key "contactContent" in de-CH.js and fr-CH.js)
   "showContact": true,
 
   // show a twitter-feed (optional)
@@ -156,4 +157,4 @@
 
   // property by which the event-list should be sorted (optional)
   "sortEventList": "Designation"
-}
+};

@@ -7,7 +7,7 @@ module.exports = function (defaults) {
 
     // see: https://github.com/ember-cli/ember-cli-uglify
     'ember-cli-uglify': {
-      exclude: ['appConfig.js'],
+      exclude: ['appConfig.js', 'settings.js', 'locale/de-CH.js', 'locale/fr-CH.js'],
       uglify: {
         output: {
           comments: /^!/

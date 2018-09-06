@@ -1,4 +1,6 @@
-{
+window.kursausschreibung = window.kursausschreibung || {};
+window.kursausschreibung.locale = window.kursausschreibung.locale || {};
+window.kursausschreibung.locale["fr-CH"] = {
   "overview": "Aperçu du cours",
   "contact": "Contact",
   "contactContent": "Kasernenstrasse 27<br>Postfach<br>3000 Bern 22<br>Telefon: <a href=\"tel:0316338700\"> 031 633 87 00</a><br><br>",
@@ -33,4 +35,4 @@
   "dateFrom": "Date du.",
   "dateTo": "Date au.",
   "leadership": "Anlassleitung"
-}
+};

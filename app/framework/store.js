@@ -30,7 +30,7 @@ export function getEventById(id) {
 
 // this function does a few things:
 // * fetch and store events, lessons locations and texts
-// * filter events by hostId specified in settings.json
+// * filter events by hostId specified in settings.js
 // * add properties SubscriptionFrom, SubscriptionTo, From, To
 //   to every event
 // * add property displayData to every event for human-readable strings

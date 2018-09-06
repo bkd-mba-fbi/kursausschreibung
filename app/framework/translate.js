@@ -1,5 +1,4 @@
 import $ from 'jquery';
-import { fetchJSON } from './ajax-helpers';
 import storage from './storage';
 import appConfig from './app-config';
 import moment from 'moment';
@@ -11,8 +10,8 @@ export function init() {
   // set locale for moment.js
   moment.locale(getLanguage());
 
-  // fetch translations
-  return fetchJSON(`locale/${getLanguage()}.json`, locale);
+  // set locale
+  locale = window.kursausschreibung.locale[getLanguage()];
 }
 
 export function getLanguage() {

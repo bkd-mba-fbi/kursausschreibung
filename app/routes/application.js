@@ -1,15 +1,8 @@
 import Route from '@ember/routing/route';
-import { all } from 'rsvp';
 import uikit from 'uikit';
 import $ from 'jquery';
-
-import { init as settingsInit } from 'kursausschreibung/framework/settings';
-import { init as appConfigInit } from 'kursausschreibung/framework/app-config';
 import { init as translateInit } from 'kursausschreibung/framework/translate';
-import {
-  init as storeInit,
-  getAllEvents, getEventById
-} from 'kursausschreibung/framework/store';
+import { init as storeInit, getAllEvents, getEventById } from 'kursausschreibung/framework/store';
 import storage from 'kursausschreibung/framework/storage';
 import { autoCheckForLogin } from 'kursausschreibung/framework/login-helpers';
 
@@ -18,15 +11,10 @@ export default Route.extend({
     // set uikit scope
     uikit.container = '.uk-scope';
 
-    // initialize appconfig, config and translation
-    // this is loosely based on
-    // https://github.com/emberjs/ember.js/issues/11247#issuecomment-118143934
-    return all([
-      settingsInit(),
-      translateInit(),
-      appConfigInit().then(autoCheckForLogin) // get a valid access_token if we don't have one
-    ])
-      .then(storeInit) // store depends on translation, settings, appConfig and access_token
+    // initialization
+    translateInit();
+    return autoCheckForLogin() // get a valid access_token if we don't have one
+      .then(storeInit)
       .then(() => {
         // reroute to the confirmation page if there is data that has to be submitted
         let dataToSubmit = storage.localStoreItem('kursausschreibung.dataToSubmit');
