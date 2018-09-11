@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import appConfig from './app-config';
 import storage from './storage';
+import { Promise } from 'rsvp';
 
 // not using the framework-version for now
 // because it seems to be missing almost every call
