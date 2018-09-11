@@ -1,84 +1,97 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Kursausschreibung</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    {{content-for "head"}}
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.2/css/uikit.min.css">
-    <link rel="stylesheet" href="{{rootURL}}assets/vendor.css">
-    <link rel="stylesheet" href="{{rootURL}}assets/kursausschreibung.css">
+<head>
+  <title>Kursausschreibung</title>
+  <meta charset="utf-8">
 
-    <style>
-      /* this is not part of the module itself */
-      body {
-        font-size: 0; /* remove unwanted padding */
-      }
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" id="viewport" />
+  <meta name="mobile-ready" content="yes" id="mobile-indicator" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.2/css/uikit.min.css">
 
-      #kursausschreibung-root {
-        font-size: 16px;
-      }
+  <!-- MODUL head configuration -->
+  {{content-for "head"}}
 
-      .dummy-header {
-        height: 70px;
-        background: linear-gradient(90deg, rgba(253,126,29,1) 50%, rgba(252,192,69,1) 100%);
-      }
+  <!-- CSS -->
+  <link rel="stylesheet" href="{{rootURL}}assets/vendor.css">
+  <link rel="stylesheet" href="{{rootURL}}assets/kursausschreibung.css">
 
-      .dummy-header > h1 {
-        color: white;
-        margin-bottom: 0px;
-      }
+  <!-- configuration -->
+  <script src="{{rootURL}}settings.js"></script>
+  <script src="{{rootURL}}appConfig.js"></script>
 
-      .dummy-footer {
-        height: 70px;
-        background: linear-gradient(90deg, rgba(9,30,121,1) 6%, rgba(0,212,255,1) 100%);
-      }
+  <!-- locale -->
+  <script src="{{rootURL}}locale/de-CH.js"></script>
+  <script src="{{rootURL}}locale/fr-CH.js"></script>
 
-      .dummy-footer > h1 {
-        color: white;
-        margin-bottom: 0px;
-      }
+  <!-- JS -->
+  <script src="{{rootURL}}assets/vendor.js"></script>
+  <script src="{{rootURL}}assets/kursausschreibung.js"></script>
+  <!-- MODULE head configuration -->
 
-      .uk-scope {
-        min-height: calc(100vh - 2 * 70px);
-      }
-    </style>
+  <style>
+    /* this is not part of the module itself */
 
-    {{content-for "head-footer"}}
-  </head>
-  <body>
-    {{content-for "body"}}
+    body {
+      font-size: 0;
+      /* remove unwanted padding */
+    }
 
-    <!-- HEADER -->
-    <div class="uk-padding-small uk-width-1-1 dummy-header">
-      <h1 class="uk-h3">Header</h1>
-    </div>
+    #kursausschreibung-root {
+      font-size: 16px;
+    }
 
-    <!-- MAIN APPLICATION -->
+    .dummy-header {
+      height: 70px;
+      background: linear-gradient(90deg, rgba(253, 126, 29, 1) 50%, rgba(252, 192, 69, 1) 100%);
+    }
+
+    .dummy-header>h1 {
+      color: white;
+      margin-bottom: 0px;
+    }
+
+    .dummy-footer {
+      height: 70px;
+      background: linear-gradient(90deg, rgba(9, 30, 121, 1) 6%, rgba(0, 212, 255, 1) 100%);
+    }
+
+    .dummy-footer>h1 {
+      color: white;
+      margin-bottom: 0px;
+    }
+
+    .uk-scope {
+      min-height: calc(100vh - 2 * 70px);
+    }
+  </style>
+
+  {{content-for "head-footer"}}
+</head>
+
+<body>
+  {{content-for "body"}}
+
+  <!-- HEADER -->
+  <div class="uk-padding-small uk-width-1-1 dummy-header">
+    <h1 class="uk-h3">Dummy Header</h1>
+  </div>
+
+  <!-- MODUL MAIN APPLICATION -->
+  <div class="uk-container uk-width-1-1">
     <div class="uk-scope">
       <div id="kursausschreibung-root" class="uk-container uk-width-1-1"></div>
       <span id="kursausschreibung-loading" class="uk-position-center" data-uk-spinner="ratio: 2.5"></span>
     </div>
+  </div>
+  <!-- MODUL MAIN APPLICATION -->
 
+  <!-- FOOTER -->
+  <div class="uk-padding-small uk-width-1-1 dummy-footer">
+    <h1 class="uk-h3">Dummy Footer</h1>
+  </div>
+  {{content-for "body-footer"}}
+</body>
 
-    <!-- FOOTER -->
-    <div class="uk-padding-small uk-width-1-1 dummy-footer">
-      <h1 class="uk-h3">Footer</h1>
-    </div>
-
-    <!-- MODULE -->
-    <script src="{{rootURL}}assets/vendor.js"></script>
-
-    <script src="{{rootURL}}settings.js"></script>
-    <script src="{{rootURL}}appConfig.js"></script>
-
-    <script src="{{rootURL}}locale/de-CH.js"></script>
-    <script src="{{rootURL}}locale/fr-CH.js"></script>
-
-    <script src="{{rootURL}}assets/kursausschreibung.js"></script>
-    {{content-for "body-footer"}}
-  </body>
 </html>
