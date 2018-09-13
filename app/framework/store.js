@@ -56,13 +56,13 @@ export function init() {
       );
     }
 
-    // filter out events with non-matching languageOfInstruction
+    // filter out events with non-matching LanguageOfInstruction
     if (settings.languageOfInstructionFilter) {
       events = events.filter(
         event =>
-          event.languageOfInstruction === 'Bilingue' ||
-          (event.languageOfInstruction === 'Deutsch' && language === 'de-CH') ||
-          (event.languageOfInstruction === 'Französisch' && language === 'en-US')
+          event.LanguageOfInstruction === 'Bilingue' ||
+          (event.LanguageOfInstruction === 'Deutsch' && language === 'de-CH') ||
+          (event.LanguageOfInstruction === 'Französisch' && language === 'en-US')
       );
     }
 
