@@ -56,6 +56,16 @@ export function init() {
       );
     }
 
+    // filter out events with non-matching languageOfInstruction
+    if (settings.languageOfInstructionFilter) {
+      events = events.filter(
+        event =>
+          event.languageOfInstruction === 'Bilingue' ||
+          (event.languageOfInstruction === 'Deutsch' && language === 'de-CH') ||
+          (event.languageOfInstruction === 'Französisch' && language === 'en-US')
+      );
+    }
+
     // sort events
     if (settings.sortEventList !== null)
       events = A(events).sortBy(settings.sortEventList);

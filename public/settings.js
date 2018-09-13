@@ -156,5 +156,8 @@ window.kursausschreibung.settings = {
   "eventCategoryDropdown": false,
 
   // property by which the event-list should be sorted (optional)
-  "sortEventList": "Designation"
+  "sortEventList": "Designation",
+
+  // set this to true to only show events with matching language (optional)
+  "languageOfInstructionFilter": false
 };
