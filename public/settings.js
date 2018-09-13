@@ -128,8 +128,7 @@ window.kursausschreibung.settings = {
   // set this to true to add a button to change the langauge (optional)
   "showLanguageButton": true,
 
-  // callback methods for status-lamps (optional)
-  // every string gets evaluated using Function()
+  // callback functions for status-lamps (optional)
   // these get executed in order to determine the status of an event
   // the parameters of the callback are isInSubscriptionRange and event
   "lampIsGreen": null,

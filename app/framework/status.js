@@ -1,17 +1,11 @@
 import { isInSubscriptionRange } from './date-helpers';
 import settings from './settings';
 
-// either eval a callback specified in the settings or
-// return the default implementation
+// return the callback specified in the settings or the
+// default implementation
 function createStatusCallback(settingsValue, defaultImplementation) {
-  if (typeof settingsValue === 'string') {
-    try {
-      // black magic
-      return new Function('event', 'isInSubscriptionRange', `return ${settingsValue};`); // jshint ignore:line
-    } catch (exception) {
-      console.warn('failed to parse statusCallback:', exception);
-    }
-  }
+  if (typeof settingsValue === 'function')
+    return settingsValue;
 
   return defaultImplementation;
 }
