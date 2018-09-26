@@ -13,6 +13,10 @@
   background: #f5f5f5;
 }
 
+.uk-scope .uk-navbar-container {
+  min-height: 80px;
+}
+
 .uk-scope .lamp-red,
 .uk-scope .lamp-green,
 .uk-scope .lamp-orange,

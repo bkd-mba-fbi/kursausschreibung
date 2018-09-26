@@ -10,6 +10,8 @@ import { all } from 'rsvp';
 import settings from './settings';
 import { getLanguage, getString } from './translate';
 
+let initialized = false;
+
 // group events by areaOfEducation, EventCategory and Id
 let eventsByArea = { areas: {}, areKeys: [] };
 let eventsById = [];
@@ -252,5 +254,12 @@ export function init() {
     eventsByArea.areaKeys.forEach(area =>
       eventsByArea.areas[area].categoryKeys = Object.keys(eventsByArea.areas[area].categories).sort()
     );
+
+    initialized = true;
   });
+}
+
+// this is used to check if init completed successfully
+export function isInitialized() {
+  return initialized;
 }
