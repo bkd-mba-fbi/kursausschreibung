@@ -95,6 +95,8 @@ export function init() {
       event.From = combineDate(event.DateFrom, event.TimeFrom);
       event.To = combineDate(event.DateTo, event.TimeTo);
 
+      event.Time = `${event.TimeFrom} - ${event.TimeTo}`;
+
       // proxy for string-representations
       // ================================
       event.displayData = ObjectProxy.create({

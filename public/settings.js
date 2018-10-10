@@ -13,8 +13,9 @@ window.kursausschreibung.settings = {
   // * one of the following constructed values:
   //  + "SubscriptionFrom" (combination of SubscriptionDateFrom and SubscriptionTimeFrom)
   //  + "SubscriptionTo" (combination of SubscriptionDateTo and SubscriptionTimeTo)
-  //  + "From" (combination of dateFrom and timeFrom)
-  //  + "To" (combination of dateTo and timeTo)
+  //  + "From" (combination of DateFrom and TimeFrom)
+  //  + "To" (combination of DateTo and TimeTo)
+  //  + "Time" (combination of TimeFrom and TimeTo)
   // a translation has to be provided for each of the values
   // (the key of the translation has to be in camelCase)
   "eventListTitle": "Designation",
