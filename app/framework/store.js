@@ -103,8 +103,8 @@ export function init() {
         content: event,
 
         // formatted overwritten properties
-        DateFrom: formatDate(event.SubscriptionDateFrom, 'LL'),
-        DateTo: formatDate(event.SubscriptionDateFrom, 'LL'),
+        DateFrom: formatDate(event.DateFrom, 'LL'),
+        DateTo: formatDate(event.DateTo, 'LL'),
 
         SubscriptionDateFrom: formatDate(event.SubscriptionDateFrom, 'LL'),
         SubscriptionDateTo: formatDate(event.SubscriptionDateTo, 'LL'),
