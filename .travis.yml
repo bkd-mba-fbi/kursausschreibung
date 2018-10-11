@@ -1,26 +1,29 @@
 ---
 language: node_js
 node_js:
-  - "6"
+  - "10"
 
 sudo: false
 dist: trusty
-
-addons:
-  chrome: stable
 
 cache:
   directories:
     - $HOME/.npm
 
-env:
-  global:
-    # See https://git.io/vdao3 for details.
-    - JOBS=1
-
 before_install:
   - npm config set spin false
 
 script:
-  - npm run lint:js
-  - npm test
+  - (cd node_modules/uikit; npm install; npm run scope)
+  - npm run build
+  - mv LICENSE README.md dist
+  - (cd dist; zip --move --recurse-paths kursausschreibung.zip *)
+
+deploy:
+  provider: pages
+  local-dir: dist
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN
+  keep-history: true
+  on:
+    branch: master

@@ -1,5 +1,7 @@
 # kursausschreibung
 
+[![Build Status](https://travis-ci.org/erz-mba-fbi/kursausschreibung.svg?branch=master)](https://travis-ci.org/erz-mba-fbi/kursausschreibung)
+
 ## Prerequisites
 
 You will need the following things properly installed on your computer.
@@ -51,16 +53,16 @@ Make use of the many generators for code, try `ember help generate` for more det
   * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
   * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
 
-## Configuration (appconfig, settings, local)
+## Configuration (appconfig, settings, locale)
 
 * **appconfig:** The basic configuration for the module must be stored in appconfig. Example: apiUrl, webBaseUrl, oauthUrl, instanceId, clientId, applicationScope
-* **seetings:** In this file you will find all seetings for the module.
-* **local:** In the 'local' folder you will find every translation for the module that does not come from Evento (e.g. labels, status, process...).
+* **settings:** In this file you will find all settings for the module.
+* **locale:** In the 'locale' folder you will find every translation for the module that does not come from Evento (e.g. labels, status, process...).
 
-## Last build
+## Latest build
 
-In the `lastbuild` folder is the last build of the module. You can use it directly, after you did according to configuration section.
+You can download the latest build of the module here: [kursausschreibung.zip](https://erz-mba-fbi.github.io/kursausschreibung/kursausschreibung.zip). To use the module you first have to configure it.
 
 ## Integration
 
-For the integration into an html page you need a simple html configuration in header and body of the page in which you want to publish the module. Please see section `MODUL head configuration` and `MODUL MAIN APPLICATION` in [`lastBuild/index.html`](https://github.com/erz-mba-fbi/kursausschreibung/blob/master/lastBuild/index.html).
+For the integration into an html page you need a simple html configuration in header and body of the page in which you want to publish the module. Please see section `MODULE head configuration` and `MODULE MAIN APPLICATION` in `index.html`.
