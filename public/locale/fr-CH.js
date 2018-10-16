@@ -25,6 +25,7 @@ window.kursausschreibung.locale["fr-CH"] = {
   "officeAddress": "Secrétariat du cours<br>Phone 031 123 45 67 67<br>info@kurssekretariat.ch",
   "yourDetails": "Vos coordonnées.",
   "errorMessage": "Une erreur imprévue s'est produite. Essayez encore une fois.",
+  "noEvents": "aucun événement disponible",
 
   // properties of an event
   "subscriptionFrom": "Lancement",

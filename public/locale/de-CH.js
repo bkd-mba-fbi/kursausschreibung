@@ -37,6 +37,7 @@ window.kursausschreibung.locale["de-CH"] = {
   "subscriptionDetailFields": "Anmeldedetails",
   "sendingData": "Daten senden",
   "subscriptionFailed": "Anmeldung fehlgeschlagen.",
+  "noEvents": "keine Anlässe verfügbar",
 
   // properties of an event
   "subscriptionFrom": "Start",
