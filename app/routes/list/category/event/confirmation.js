@@ -32,16 +32,21 @@ export default Route.extend({
       return new Promise(resolve => postPerson(addressData).then((data, status, xhr) => { resolve([xhr]); }));
 
     }).then(([xhr]) => {
+      let duplicateHeader = xhr.getResponseHeader('x-duplicate');
+      let locationHeader = xhr.getResponseHeader('location');
 
-      let isDuplicate = xhr.getResponseHeader('x-duplicate') !== null;
+      if (duplicateHeader === null && locationHeader === null) {
+        console.error('failed to read personId. neither x-duplicate nor location header could be read.');
+        throw new Error();
+      }
 
-      if (isDuplicate)
-        personId = xhr.getResponseHeader('x-duplicate').split('/').slice(-1)[0];
-      else
-        personId = xhr.getResponseHeader('location').split('/').slice(-1)[0];
-
-      if (isDuplicate)
+      if (duplicateHeader !== null) {
+        // the person already exists and must get updated
+        personId = duplicateHeader.split('/').slice(-1)[0];
         return putPerson(addressData, personId);
+      }
+
+      personId = locationHeader.split('/').slice(-1)[0];
     }).then(() => {
       if (!useCompanyAddress)
         return;
@@ -67,7 +72,7 @@ export default Route.extend({
       try {
         message = error.responseJSON.Issues[0].Message;
       } catch (ignored) { }
-      throw {message: message};
+      throw { message: message };
     });
   }
 });
