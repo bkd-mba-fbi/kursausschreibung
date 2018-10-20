@@ -37,11 +37,14 @@ module.exports = function (defaults) {
   app.import('node_modules/uikit/dist/js/uikit-icons.js');
   app.import('vendor/shims/uikit.js');
 
-  // moment
-  app.import('node_modules/moment/moment.js');
-  app.import('node_modules/moment/locale/de-ch.js');
-  app.import('node_modules/moment/locale/fr-ch.js');
-  app.import('vendor/shims/moment.js');
+  // date-fns
+  ['parse', 'format', 'locale/de', 'locale/fr'].forEach(module =>
+    app.import(`node_modules/date-fns/${module}/index.js`, {
+      using: [
+        { transformation: 'cjs', as: `date-fns/${module}` }
+      ]
+    })
+  );
 
   return app.toTree();
 };

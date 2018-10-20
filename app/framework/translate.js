@@ -1,15 +1,11 @@
 import $ from 'jquery';
 import storage from './storage';
 import appConfig from './app-config';
-import moment from 'moment';
 
 let locale = {};
 let language;
 
 export function init() {
-  // set locale for moment.js
-  moment.locale(getLanguage());
-
   // set locale
   locale = window.kursausschreibung.locale[getLanguage()];
 }

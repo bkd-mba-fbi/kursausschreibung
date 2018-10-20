@@ -1,14 +1,13 @@
 import { A } from '@ember/array';
 import EmberObject, { computed } from '@ember/object';
 import $ from 'jquery';
-import moment from 'moment';
 import { getEvents, getEvent, getLessons, getEventLocations, getEventTexts } from './api';
 import { isGreen, isYellow, isRed } from './status';
 import ObjectProxy from '@ember/object/proxy';
-import { combineDate, isInSubscriptionRange } from './date-helpers';
+import { formatDate, combineDate, isInSubscriptionRange, removeMinutes } from './date-helpers';
 import { all } from 'rsvp';
 import settings from './settings';
-import { getLanguage, getString } from './translate';
+import { getLanguage } from './translate';
 
 let initialized = false;
 
@@ -40,9 +39,6 @@ export function getEventById(id) {
 // * sort events by areaOfEducation, category and Id (for faster access)
 export function init() {
   let language = getLanguage() === 'fr-CH' ? 'en-US' : 'de-CH';
-
-  // helper function to create human-readable dates
-  let formatDate = (date, format) => date === null ? getString('notAvailable') : moment(date).format(format);
 
   // fetch all events
   return all([
@@ -95,7 +91,7 @@ export function init() {
       event.From = combineDate(event.DateFrom, event.TimeFrom);
       event.To = combineDate(event.DateTo, event.TimeTo);
 
-      event.Time = `${event.TimeFrom} - ${event.TimeTo}`;
+      event.Time = `${removeMinutes(event.TimeFrom)} - ${removeMinutes(event.TimeTo)}`;
 
       // proxy for string-representations
       // ================================
@@ -198,8 +194,8 @@ export function init() {
       }
 
       // make DateFrom and DateTo human-readable
-      lesson.DateFrom = moment(lesson.DateFrom, 'YYYY-MM-DD HH:mm').format('LLL');
-      lesson.TimeTo = moment(lesson.DateTo, 'YYYY-MM-DD HH:mm').format('LT');
+      lesson.DateFrom = formatDate(lesson.DateFrom, 'LLL');
+      lesson.TimeTo = formatDate(lesson.DateTo, 'LT');
 
       eventsById[lesson.EventId].lessons.push(lesson);
     });

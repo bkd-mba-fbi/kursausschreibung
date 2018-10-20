@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import storage from 'kursausschreibung/framework/storage';
 import { getString } from 'kursausschreibung/framework/translate';
-import moment from 'moment';
+import { getDMY, getYMD, formatDate } from 'kursausschreibung/framework/date-helpers';
 
 export default Component.extend({
   useCompanyAddress: false,
@@ -58,7 +58,7 @@ function subscribe(form, self) {
     if (element.type === 'checkbox')
       value = element.checked ? 'Ja' : 'Nein';
     else if (element.value !== '' && element.dataset.type === 'date')
-      value = moment(parseDate(element.value)).format('DD.MM.YYYY');
+      value = getDMY(element.value); // this is the required format for subscriptionDetails
     else if ((element.value !== '' && element.type !== 'radio') || element.checked)
       value = element.value;
 
@@ -122,7 +122,7 @@ function setProperties(data, element) {
   }
 
   if (element.dataset.type === 'date') {
-    data[element.name] = element.value === '' ? null : parseDate(element.value);
+    data[element.name] = element.value === '' ? null : getYMD(element.value);
     return;
   }
 
@@ -146,13 +146,8 @@ function getTableData(fields, data) {
 
       // localize dates
       if (field.dataType === 'date')
-        value = moment(value).format('LL');
+        value = formatDate(value, 'LL');
 
       return { label, value };
     }).filter(field => field !== null);
-}
-
-// converts dd.mm.yyyy to yyyy-mm-dd if format is dd.mm.yyyy
-function parseDate(date) {
-  return /^[0-9]{2}.[0-9]{2}.[0-9]{4}$/.test(date) ? date.split('.').reverse().join('-') : date;
 }
