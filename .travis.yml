@@ -6,6 +6,11 @@ node_js:
 sudo: false
 dist: trusty
 
+addons:
+  apt:
+    packages:
+    - markdown
+
 cache:
   directories:
     - $HOME/.npm
@@ -16,8 +21,10 @@ before_install:
 script:
   - (cd node_modules/uikit; npm install; npm run scope)
   - npm run build
+  - markdown README.md > index.html
   - mv LICENSE README.md dist
   - (cd dist; zip --move --recurse-paths kursausschreibung.zip *)
+  - mv index.html dist
 
 deploy:
   provider: pages
