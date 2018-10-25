@@ -46,7 +46,7 @@ export default Route.extend({
         
         // delete keys with null-values
         Object.keys(addressData).forEach(key => {
-          if (addressData[key] == null)
+          if (addressData[key] === null)
             delete addressData[key];
         });
         
