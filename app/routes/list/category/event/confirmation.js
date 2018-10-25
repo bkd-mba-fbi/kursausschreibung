@@ -43,6 +43,13 @@ export default Route.extend({
       if (duplicateHeader !== null) {
         // the person already exists and must get updated
         personId = duplicateHeader.split('/').slice(-1)[0];
+        
+        // delete keys with null-values
+        Object.keys(addressData).forEach(key => {
+          if (addressData[key] == null)
+            delete addressData[key];
+        });
+        
         return putPerson(addressData, personId);
       }
 
