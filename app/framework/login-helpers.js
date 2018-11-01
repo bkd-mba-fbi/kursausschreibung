@@ -67,13 +67,5 @@ export function autoCheckForLogin() {
     return new Promise(() => {}); // never resolve so no error-message gets shown
   }
 
-  // go back to initialURL if there is one
-  let initialURL = storage.localStoreItem('kursausschreibung.initialURL');
-
-  if (initialURL !== null) {
-    storage.localStoreItem('kursausschreibung.initialURL', null);
-    location.replace(initialURL);
-  }
-
   return Promise.resolve();
 }

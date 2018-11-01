@@ -12,7 +12,7 @@ import { getLanguage } from './translate';
 let initialized = false;
 
 // group events by areaOfEducation, EventCategory and Id
-let eventsByArea = { areas: {}, areKeys: [] };
+let eventsByArea = { areas: {}, areaKeys: [] };
 let eventsById = [];
 
 // get all events sorted by areaOfEducation
