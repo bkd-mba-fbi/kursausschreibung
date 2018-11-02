@@ -91,7 +91,9 @@ export function init() {
       event.From = combineDate(event.DateFrom, event.TimeFrom);
       event.To = combineDate(event.DateTo, event.TimeTo);
 
-      event.Time = `${removeMinutes(event.TimeFrom)} - ${removeMinutes(event.TimeTo)}`;
+      if (typeof event.TimeFrom === 'string' && typeof event.TimeTo === 'string') {
+        event.Time = `${removeMinutes(event.TimeFrom)} - ${removeMinutes(event.TimeTo)}`;
+      }
 
       // proxy for string-representations
       // ================================
