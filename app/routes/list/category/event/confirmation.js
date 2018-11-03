@@ -36,20 +36,19 @@ export default Route.extend({
       let locationHeader = xhr.getResponseHeader('location');
 
       if (duplicateHeader === null && locationHeader === null) {
-        console.error('failed to read personId. neither x-duplicate nor location header could be read.');
-        throw new Error();
+        throw new Error('failed to read personId. neither x-duplicate nor location header could be read.');
       }
 
       if (duplicateHeader !== null) {
         // the person already exists and must get updated
         personId = duplicateHeader.split('/').slice(-1)[0];
-        
+
         // delete keys with null-values
         Object.keys(addressData).forEach(key => {
           if (addressData[key] === null)
             delete addressData[key];
         });
-        
+
         return putPerson(addressData, personId);
       }
 
@@ -74,11 +73,16 @@ export default Route.extend({
     }).then(() => {
       return tableData;
     }).catch(error => {
+      if (error instanceof Error) {
+        console.error(error);
+      }
+
       let message = '';
 
       try {
         message = error.responseJSON.Issues[0].Message;
       } catch (ignored) { }
+
       throw { message: message };
     });
   }
