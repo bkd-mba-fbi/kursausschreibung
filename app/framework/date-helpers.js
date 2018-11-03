@@ -34,7 +34,7 @@ export { parse as parseDate };
 // format a date
 export function formatDate(date, formatString = '') {
   if (date === null)
-    return getString('notAvailable');
+    return null;
 
   formatString = formatString in formats[language] ?
     formats[language][formatString] : formatString;

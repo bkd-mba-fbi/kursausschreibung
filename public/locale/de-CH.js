@@ -28,7 +28,6 @@ window.kursausschreibung.locale["de-CH"] = {
   "yourDetails": "Ihre Angaben",
   "companyAddress": "Rechnungsadresse an Firma",
   "errorMessage": "Es ist zu einem unvorhergesehenen Fehler gekommen. Bitte versuchen Sie es nochmals.",
-  "notAvailable": "nicht verfügbar",
   "lessons": "Lektionen",
   "seatAvailable": "Platz übrig",
   "seatsAvailable": "Plätze übrig",
