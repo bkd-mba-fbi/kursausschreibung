@@ -2,19 +2,10 @@ import $ from 'jquery';
 import storage from './storage';
 import appConfig from './app-config';
 
-let locale = {};
-let language;
-
-export function init() {
-  // set locale
-  locale = window.kursausschreibung.locale[getLanguage()];
-}
+let language = detectLanguage();
+let locale = window.kursausschreibung.locale[language];
 
 export function getLanguage() {
-  if (language === undefined) {
-    language = detectLanguage();
-  }
-
   return language;
 }
 

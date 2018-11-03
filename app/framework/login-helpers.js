@@ -6,6 +6,7 @@ import { getLanguage } from './translate';
 
 // stripped down version of the CLX framework code
 
+// return true if there is a valid token in the localStorage
 function isLoggedIn() {
   let accessToken = storage.access_token();
   let tokenExpire = storage.token_expire();
@@ -14,18 +15,19 @@ function isLoggedIn() {
     return false;
   }
 
-  let payload = parseJWT();
+  let payload = parseJWT(accessToken);
 
   // only return true if instanceId and culture are correct
   return appConfig.instanceId === payload.instance_id && payload.culture_info === getLanguage();
 }
 
-function parseJWT() {
-  // parse and return payload
-  return JSON.parse(atob(storage.access_token().split('.')[1]));
+// parse and return the JWT payload
+function parseJWT(accessToken) {
+  return JSON.parse(atob(accessToken.split('.')[1]));
 }
 
-function checkToken() {
+// save the OAuth token if there is one in the URL
+export function checkToken() {
   let token = getParameterByName('access_token');
 
   if (token !== null) {
@@ -42,30 +44,30 @@ function checkToken() {
   }
 }
 
+// return resolved promise if there is a valid token
+// redirect to OAuth server otherwise
 export function autoCheckForLogin() {
-  checkToken();
-
-  if (!isLoggedIn()) {
-    // save URL to set it again when the module reloads
-    storage.localStoreItem('kursausschreibung.initialURL', location.href);
-
-    let params = [
-      { name: 'clientId', value: appConfig.clientId },
-      { name: 'redirectUrl', value: encodeURIComponent(appConfig.webBaseUrl) },
-      { name: 'culture_info', value: getLanguage() },
-      { name: 'application_scope', value: appConfig.applicationScope }
-    ]
-      .map(item => `${item.name}=${item.value}`)
-      .join('&');
-
-    let url = `${appConfig.oauthUrl}/Authorization/${
-      appConfig.instanceId
-    }/Token?${params}`;
-
-    location.replace(url);
-
-    return new Promise(() => {}); // never resolve so no error-message gets shown
+  if (isLoggedIn()) {
+    return Promise.resolve();
   }
 
-  return Promise.resolve();
+  // save URL to set it again when the module reloads
+  storage.localStoreItem('kursausschreibung.initialURL', location.href);
+
+  let params = [
+    { name: 'clientId', value: appConfig.clientId },
+    { name: 'redirectUrl', value: encodeURIComponent(appConfig.webBaseUrl) },
+    { name: 'culture_info', value: getLanguage() },
+    { name: 'application_scope', value: appConfig.applicationScope }
+  ]
+    .map(item => `${item.name}=${item.value}`)
+    .join('&');
+
+  let url = `${appConfig.oauthUrl}/Authorization/${
+    appConfig.instanceId
+    }/Token?${params}`;
+
+  location.replace(url);
+
+  return new Promise(() => { }); // never resolve so no error-message gets shown
 }
