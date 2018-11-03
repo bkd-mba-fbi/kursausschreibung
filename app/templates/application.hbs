@@ -1,6 +1,6 @@
 <div class="uk-width-1-1">
 
-  <!-- NAVIGATION -->
+  {{! NAVIGATION }}
   <nav class="uk-navbar-container uk-margin-top" data-uk-navbar>
     <div class="uk-navbar-left">
       <ul class="uk-navbar-nav">
@@ -19,7 +19,7 @@
     <div class="uk-navbar-right">
       <ul class="uk-navbar-nav">
         <li>
-          <!-- MENU MODAL -->
+          {{! MENU MODAL }}
           <a href="#menu-modal" class="uk-icon-link uk-margin-right {{if eventCategoryDropdown "uk-hidden" "uk-hidden@m"}}" data-uk-icon="more" data-uk-toggle></a>
 
           <div id="menu-modal" class="uk-modal-full" uk-modal="container: false;">
@@ -45,7 +45,7 @@
             </div>
           </div>
 
-          <!-- LANGUAGE BUTTON -->
+          {{! LANGUAGE BUTTON }}
           {{#if showLanguageButton}}
             <div class="uk-margin-right {{unless eventCategoryDropdown "uk-visible@m"}}">
               <a href="#" class="uk-icon-link" data-uk-icon="world">{{translate "language"}} </a>
@@ -63,13 +63,13 @@
   </nav>
 
   <div class="uk-grid uk-margin" data-uk-grid>
-    <!-- LEFT + CENTER -->
+    {{! LEFT + CENTER }}
     {{outlet}}
 
-    <!-- RIGHT -->
+    {{! RIGHT }}
     <div class={{rightWidth}}>
 
-      <!-- LOGO -->
+      {{! LOGO }}
       {{#if logoImage}}
         {{#if logoLink}}
           <a target="_blank" href={{logoLink}}>
@@ -80,7 +80,7 @@
         {{/if}}
       {{/if}}
 
-      <!-- LEGEND -->
+      {{! LEGEND }}
       <div class="uk-margin uk-card uk-card-default uk-card-small uk-card-body">
         <h2 class="uk-h3 uk-card-title">{{translate "legend"}}</h2>
 
@@ -96,7 +96,7 @@
         </ul>
       </div>
 
-      <!-- CONTACT -->
+      {{! CONTACT }}
       {{#if showContact}}
         <div class="uk-margin uk-card uk-card-default uk-card-small uk-card-body">
           <h2 class="uk-h3 uk-card-title">{{translate "contact"}}</h2>
@@ -104,7 +104,7 @@
         </div>
       {{/if}}
 
-      <!-- TWEETS -->
+      {{! TWEETS }}
       {{#if twitterHandle}}
         <div class="uk-margin uk-card uk-card-default uk-card-small uk-card-body uk-visible@l">
           {{twitter-feed twitterHandle}}

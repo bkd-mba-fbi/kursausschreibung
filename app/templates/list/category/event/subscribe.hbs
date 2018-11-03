@@ -10,7 +10,7 @@
 <h2>{{status-lamp status=model.status}}{{model.displayData.Designation}}</h2>
 {{event-details-table event=model}}
 
-<!-- FORM -->
+{{! FORM }}
 {{subscription-form fields=fields companyFields=companyFields
   subscriptionDetailFields=subscriptionDetailFields eventId=model.Id
   subscribe=(action "subscribe")}}
