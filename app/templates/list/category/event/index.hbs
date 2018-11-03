@@ -9,7 +9,7 @@
   </ul>
 {{/if}}
 
-<h2>{{model.displayData.Designation}}</h2>
+<h2>{{status-lamp status=model.status}}{{model.displayData.Designation}}</h2>
 {{event-details-table event=model}}
 
 {{#if badgeFreeSeatsEnabled}}

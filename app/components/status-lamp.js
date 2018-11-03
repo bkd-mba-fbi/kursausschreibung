@@ -21,10 +21,11 @@ export default Component.extend({
 
     if (status !== undefined) {
       this.set('tooltip', status.tooltip);
-      this.set('classNames', [status.className]);
+      this.set('color', status.className);
     }
   }),
 
   tagName: 'span',
-  attributeBindings: ['tooltip:data-uk-tooltip']
+  attributeBindings: ['tooltip:data-uk-tooltip'],
+  classNameBindings: ['color']
 });
