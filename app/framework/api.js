@@ -18,9 +18,7 @@ function ajax(options, relativeUrl, readableError = true) {
       url: appConfig.apiUrl + '/' + relativeUrl,
 
       headers: {
-        'CLX-Authorization': `token_type=${
-          appConfig.tokenType
-          }, access_token=${accessToken}`
+        'CLX-Authorization': `token_type=${appConfig.tokenType}, access_token=${accessToken}`
       }
     })
   );
