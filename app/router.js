@@ -1,5 +1,8 @@
 import EmberRouter from '@ember/routing/router';
 import config from './config/environment';
+import $ from 'jquery';
+
+let rootElement = $(config.APP.rootElement).get(0);
 
 const Router = EmberRouter.extend({
   location: config.locationType,
@@ -7,14 +10,14 @@ const Router = EmberRouter.extend({
 
   didTransition() {
     this._super(...arguments);
-    window.scrollTo(0, 0);
+    rootElement.scrollIntoView();
   }
 });
 
-Router.map(function() {
-  this.route('list', { path: '/:area_of_education' }, function() {
-    this.route('category', { path: '/:category' }, function() {
-      this.route('event', { path: '/:event_id' }, function() {
+Router.map(function () {
+  this.route('list', { path: '/:area_of_education' }, function () {
+    this.route('category', { path: '/:category' }, function () {
+      this.route('event', { path: '/:event_id' }, function () {
         this.route('subscribe');
         this.route('confirmation');
       });
