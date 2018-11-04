@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import storage from 'kursausschreibung/framework/storage';
+import { setDataToSubmit } from 'kursausschreibung/framework/storage';
 import { getString } from 'kursausschreibung/framework/translate';
 import { getDMY, getYMD, formatDate } from 'kursausschreibung/framework/date-helpers';
 
@@ -17,7 +17,6 @@ export default Component.extend({
 
 // this function subscribes a person to an event using the information
 // provided in the form
-// TODO: consider moving this into api.js or a new framework file
 function subscribe(form, self) {
   let useCompanyAddress = self.get('useCompanyAddress') === true;
   let eventId = self.get('eventId');
@@ -76,11 +75,9 @@ function subscribe(form, self) {
     tableData.companyFields = getTableData(self.get('companyFields'), companyAddressData);
 
   // save the data to submit
-  let dataToSubmit = {
+  setDataToSubmit({
     eventId, useCompanyAddress, addressData, companyAddressData, subscriptionData, tableData
-  };
-
-  storage.localStoreItem('kursausschreibung.dataToSubmit', dataToSubmit);
+  });
 }
 
 // get data from a field set which is ready to get posted to Persons/Addresses

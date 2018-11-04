@@ -1,8 +1,12 @@
 import { isInSubscriptionRange } from './date-helpers';
 import settings from './settings';
 
-// return the callback specified in the settings or the
-// default implementation
+/**
+ * return the callback specified in the settings or the
+ * default implementation
+ * @param {function?} settingsValue a custom implementation
+ * @param {function} defaultImplementation the default implementation
+ */
 function createStatusCallback(settingsValue, defaultImplementation) {
   if (typeof settingsValue === 'function')
     return settingsValue;

@@ -97,8 +97,15 @@ window.kursausschreibung.settings = {
           "dataType": "telephone",
           "options": { "autocomplete": "tel-national", "required": "true" }
         },
-        { "id": "Birthdate", "dataType": "date", "options": { "required": "true" } },
-        { "id": "Email2", "dataType": "email" }
+        {
+          "id": "Birthdate",
+          "dataType": "date",
+          "options": { "required": "true" }
+        },
+        {
+          "id": "Email2",
+          "dataType": "email"
+        }
       ],
       // optional
       "companyFields": [

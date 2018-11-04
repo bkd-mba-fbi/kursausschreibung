@@ -1,63 +1,43 @@
-// stripped down version of framework storage module
+/* loosely based on the CLX framework */
 
-let storage = {
-  access_token: function(value) {
-    return storage.localStoreItem('CLX.LoginToken', value);
-  },
-  refresh_token: function(value) {
-    return storage.localStoreItem('CLX.RefreshToken', value);
-  },
-  token_expire: function(value) {
-    return storage.localStoreItem('CLX.TokenExpire', value);
-  },
-  clearTokenInformation: function() {
-    localStorage.removeItem('CLX.LoginToken');
-    localStorage.removeItem('CLX.RefreshToken');
-    localStorage.removeItem('CLX.TokenExpire');
-  },
+/**
+ * stores an object serialized as JSON
+ * @param {string} key key used to store the object
+ * @param {object} value the value to store
+ */
+function setItem(key, value) {
+  localStorage.setItem(key, JSON.stringify(value));
+}
 
-  userSettings: {
-    userId: function(value) {
-      return storage.localStoreItem('userId', value);
-    },
-    uiCulture: function(value) {
-      return storage.localStoreItem('uiCulture', value);
-    },
-    applicationScope: function(value) {
-      return storage.localStoreItem('applicationScope', value);
-    },
-    personId: function(value) {
-      return storage.localStoreItem('personId', value);
-    }
-  },
+/**
+ * reads and deserializes an object from the localStorage
+ * @param {string} key key used to store the object
+ */
+function getItem(key) {
+  let item = localStorage.getItem(key);
 
-  localStoreItem: function(key, value) {
-    if (value !== undefined) {
-      localStorage.setItem(key, JSON.stringify(value));
-      return value;
-    } else {
-      let item = localStorage.getItem(key);
-      if (item !== undefined) return JSON.parse(item);
-      else return null;
-    }
-  },
+  return item !== undefined ? JSON.parse(item) : null;
+}
 
-  sessionStoreItem: function(key, value) {
-    if (value !== undefined) {
-      sessionStorage.setItem(key, JSON.stringify(value));
-      return value;
-    } else {
-      let item = sessionStorage.getItem(key);
-      if (item !== undefined) {
-        return JSON.parse(item);
-      }
-      return null;
-    }
-  },
+// export getters and setters for all the values
+let [
+  [getCulture, setCulture],
+  [getAccessToken, setAccessToken],
+  [getRefreshToken, setRefreshToken],
+  [getTokenExpire, setTokenExpire],
+  [getDataToSubmit, setDataToSubmit]
+] = [
+  'uiCulture',
+  'CLX.LoginToken',
+  'CLX.RefreshToken',
+  'CLX.TokenExpire',
+  'kursausschreibung.dataToSubmit'
+].map(key => [getItem.bind(null, key), setItem.bind(null, key)]);
 
-  removeSessionStoreItem: function(key) {
-    sessionStorage.removeItem(key);
-  }
+export {
+  getCulture, setCulture,
+  getAccessToken, setAccessToken,
+  getRefreshToken, setRefreshToken,
+  getTokenExpire, setTokenExpire,
+  getDataToSubmit, setDataToSubmit
 };
-
-export default storage;

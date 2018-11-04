@@ -1,8 +1,10 @@
+/* loosely based on the CLX framework */
+
 import parse from 'date-fns/parse';
 import format from 'date-fns/format';
 import de from 'date-fns/locale/de';
 import fr from 'date-fns/locale/fr';
-import { getLanguage, getString } from './translate';
+import { getLanguage } from './translate';
 
 // longDateFormats from moment.js
 const formats = {
@@ -28,10 +30,18 @@ const formats = {
 const language = getLanguage();
 const locale = language === 'de-CH' ? de : fr;
 
-// parse a date
+/**
+ * parse a date
+ * @param {date|string|number} argument the date to parse
+ * @param {object?} options the object with options
+ */
 export { parse as parseDate };
 
-// format a date
+/**
+ * format a date
+ * @param {date|string|number|null} date the date to format
+ * @param {string} formatString format or longDateFormat from moment.js
+ */
 export function formatDate(date, formatString = '') {
   if (date === null)
     return null;
@@ -42,9 +52,12 @@ export function formatDate(date, formatString = '') {
   return format(date, formatString, { locale });
 }
 
-// returns true when the current Date is between
-// SubscriptionDateFrom/SubscriptionTimeFrom and
-// SubscriptionDateTo/Subscription  TimeTo
+/**
+ * returns true when the current Date is between
+ * SubscriptionDateFrom/SubscriptionTimeFrom and
+ * SubscriptionDateTo/SubscriptionTimeTo
+ * @param {object} event the event to check
+ */
 export function isInSubscriptionRange(event) {
   let now = new Date();
 
@@ -55,7 +68,12 @@ export function isInSubscriptionRange(event) {
     now.getTime() < parse(event.SubscriptionTo).getTime();
 }
 
-// combine date and time
+/**
+ * combine a date and a time to a single date object
+ * this returns null when it fails
+ * @param {string} dateString a string containing the date
+ * @param {string} timeString a string containing the time in the format hh:mm
+ */
 export function combineDate(dateString, timeString) {
   try {
     let [hours, minutes] = timeString.split(':').map(str => parseInt(str));
@@ -67,23 +85,34 @@ export function combineDate(dateString, timeString) {
   }
 }
 
-// return timeString in format 00:00 if it has the
-// format 00:00:00
+/**
+ * return timeString in format 00:00 if it has the format hh:mm:ss
+ * @param {string} timeString the string to remove the time from
+ */
 export function removeMinutes(timeString) {
   return timeString.replace(/^(\d\d:\d\d):\d\d$/g, '$1');
 }
 
-// returns true if the format is DD.MM.YYYY
+/**
+ * returns true if the format is DD.MM.YYYY
+ * @param {string} dateString the date to check
+ */
 function isDMY(dateString) {
   return /^[0-9]{2}.[0-9]{2}.[0-9]{4}$/.test(dateString);
 }
 
-// returns dateString in the format DD.MM.YYYY
+/**
+ * returns dateString in the format DD.MM.YYYY
+ * @param {string} dateString the date to convert
+ */
 export function getDMY(dateString) {
   return isDMY(dateString) ? dateString : format(dateString, 'L');
 }
 
-// returns dateString in the format YYYY-MM-DD
+/**
+ * returns dateString in the format YYYY-MM-DD
+ * @param {string} dateString the date to convert
+ */
 export function getYMD(dateString) {
   return isDMY(dateString) ? dateString.split('.').reverse().join('-') : format(dateString, 'YYYY-MM-DD');
 }

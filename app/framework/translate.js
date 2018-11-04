@@ -1,23 +1,36 @@
+/* loosely based on the CLX framework */
+
 import $ from 'jquery';
-import storage from './storage';
+import { getCulture, setCulture } from './storage';
 import appConfig from './app-config';
 
 let language = detectLanguage();
 let locale = window.kursausschreibung.locale[language];
 
+/**
+ * get the current language
+ */
 export function getLanguage() {
   return language;
 }
 
+/**
+ * set a new language
+ * this reloads the module
+ * @param {string} newLanguage the new language
+ */
 export function setLanguage(newLanguage) {
-  storage.userSettings.uiCulture(newLanguage);
+  setCulture(newLanguage);
 
   if (newLanguage !== getLanguage()) {
     window.location.assign(appConfig.webBaseUrl);
   }
 }
 
-// returns a localized sring
+/**
+ * returns a localized sring
+ * @param {string} key the key to localize
+ */
 export function getString(key) {
   let string = locale[key];
 
@@ -28,6 +41,9 @@ export function getString(key) {
   return string;
 }
 
+/**
+ * detect the language the module should have
+ */
 function detectLanguage() {
   // first priority: html lang attribute
   let htmlLang = $('html').attr('lang');
@@ -41,10 +57,10 @@ function detectLanguage() {
   }
 
   // second priority: uiCulture in localStorage
-  let localStorageLanguage = storage.userSettings.uiCulture();
+  let culture = getCulture();
 
-  if (localStorageLanguage !== null) {
-    return localStorageLanguage;
+  if (culture !== null) {
+    return culture;
   }
 
   // third priority: browser-language

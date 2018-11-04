@@ -2,7 +2,7 @@ import Route from '@ember/routing/route';
 import uikit from 'uikit';
 import $ from 'jquery';
 import { init as initStore, getAllEvents, getEventById } from 'kursausschreibung/framework/store';
-import storage from 'kursausschreibung/framework/storage';
+import { getDataToSubmit } from 'kursausschreibung/framework/storage';
 import { autoCheckForLogin } from 'kursausschreibung/framework/login-helpers';
 
 export default Route.extend({
@@ -15,7 +15,7 @@ export default Route.extend({
       .then(initStore)
       .then(() => {
         // reroute to the confirmation page if there is data that has to be submitted
-        let dataToSubmit = storage.localStoreItem('kursausschreibung.dataToSubmit');
+        let dataToSubmit = getDataToSubmit();
 
         if (dataToSubmit !== null) {
           let event = getEventById(dataToSubmit.eventId);
@@ -26,7 +26,7 @@ export default Route.extend({
       .catch(function (error) {
         // only log exceptions thrown here so the route still loads
         // uninitialised modules will throw an error later
-        console.error('FATAL error while initializing the module: ', error);
+        console.error('FATAL error while initializing the module: ', error); // eslint-disable-line no-console
       });
   },
 

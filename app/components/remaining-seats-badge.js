@@ -14,7 +14,7 @@ export default Component.extend({
       settings.badgeFreeSeats.intervalSec : null;
 
     if (typeof interval !== 'number') {
-      console.warn('settings.badgeFreeSeats.intervalSec not found. falling back to 30 seconds');
+      console.warn('settings.badgeFreeSeats.intervalSec not found. falling back to 30 seconds'); // eslint-disable-line no-console
       interval = 30;
     }
 

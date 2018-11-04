@@ -1,16 +1,21 @@
+/* loosely based on the CLX framework */
+
 import { Promise } from 'rsvp';
-import storage from './storage';
+import {
+  getAccessToken, setAccessToken, getTokenExpire,
+  setTokenExpire, setRefreshToken
+} from './storage';
 import appConfig from './app-config';
 import { getParameterByName } from './url-helpers';
 import { getLanguage } from './translate';
 import $ from 'jquery';
 
-// stripped down version of the CLX framework code
-
-// return true if there is a valid token in the localStorage
+/**
+ * return true if there is a valid token in the localStorage
+ */
 function isLoggedIn() {
-  let accessToken = storage.access_token();
-  let tokenExpire = storage.token_expire();
+  let accessToken = getAccessToken();
+  let tokenExpire = getTokenExpire();
 
   if (accessToken === null || (tokenExpire !== null && Date.now() >= tokenExpire)) {
     return false;
@@ -22,32 +27,37 @@ function isLoggedIn() {
   return appConfig.instanceId === payload.instance_id && payload.culture_info === getLanguage();
 }
 
-// parse and return the JWT payload
+/**
+ * parse accessToken and return the JWT payload
+ * @param {string} accessToken the accessToken
+ */
 function parseJWT(accessToken) {
   return JSON.parse(atob(accessToken.split('.')[1]));
 }
 
 // save the OAuth token if there is one in the URL
 export function checkToken() {
-  let token = getParameterByName('access_token');
+  let accessToken = getParameterByName('access_token');
 
-  if (token !== null) {
+  if (accessToken !== null) {
     // store token, refresh token and expiration
     let refreshToken = getParameterByName('refresh_token');
     let expire = parseInt(getParameterByName('expires_in'));
-    let date = Date.now() + expire * 1000;
+    let tokenExpire = Date.now() + expire * 1000;
 
-    storage.access_token(token);
-    storage.refresh_token(refreshToken);
-    storage.token_expire(date);
+    setAccessToken(accessToken);
+    setRefreshToken(refreshToken);
+    setTokenExpire(tokenExpire);
 
     // navigate back to initial url
     history.replaceState(null, null, getParameterByName('moduleRedirectUrl'));
   }
 }
 
-// return resolved promise if there is a valid token
-// get a new accesToken otherwise
+/**
+ * return resolved promise if there is a valid token
+ * get a new accesToken otherwise
+ */
 export function autoCheckForLogin() {
   if (isLoggedIn()) {
     return Promise.resolve();

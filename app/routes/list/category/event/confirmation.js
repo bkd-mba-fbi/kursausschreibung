@@ -1,12 +1,12 @@
 import Route from '@ember/routing/route';
 import { Promise } from 'rsvp';
-import storage from 'kursausschreibung/framework/storage';
+import { getDataToSubmit, setDataToSubmit } from 'kursausschreibung/framework/storage';
 import { postPerson, putPerson, postAddress, postSubscription } from 'kursausschreibung/framework/api';
 import { autoCheckForLogin } from 'kursausschreibung/framework/login-helpers';
 
 export default Route.extend({
-  model(params, transition) {
-    let dataToSubmit = storage.localStoreItem('kursausschreibung.dataToSubmit');
+  model() {
+    let dataToSubmit = getDataToSubmit();
     let personId = null;
     let event = this.modelFor('list.category.event');
 
@@ -15,12 +15,13 @@ export default Route.extend({
       return;
     }
 
-    let { eventId, useCompanyAddress, addressData, companyAddressData, subscriptionData, tableData } = dataToSubmit;
+    let { useCompanyAddress, addressData, companyAddressData, subscriptionData, tableData } = dataToSubmit;
 
     // make sure the session is still active
     return Promise.resolve().then(() => autoCheckForLogin()).then(() => {
 
-      storage.localStoreItem('kursausschreibung.dataToSubmit', null); // clear the data
+      // clear the data
+      setDataToSubmit(null);
 
       // get the current data of the event
       return event.update();
@@ -74,15 +75,16 @@ export default Route.extend({
       return tableData;
     }).catch(error => {
       if (error instanceof Error) {
-        console.error(error);
+        console.error(error); // eslint-disable-line no-console
       }
 
       let message = '';
 
       try {
         message = error.responseJSON.Issues[0].Message;
-      } catch (ignored) { }
-
+      } catch (exception) {
+        // ignore exception
+      }
       throw { message: message };
     });
   }
