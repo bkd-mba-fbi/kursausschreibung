@@ -250,7 +250,7 @@ function putIntoAssocArrays(event) {
  * @param {object} event event returned by the API
  */
 function createEmberObject(event) {
-  event = EmberObject.extend({
+  return EmberObject.extend({
 
     status: computed('FreeSeats', function () {
       if (isGreen(this, isInSubscriptionRange)) {
@@ -275,7 +275,6 @@ function createEmberObject(event) {
     }),
 
     update() {
-
       // only update FreeSeats for now
       let that = this;
       return getEvent(this.get('Id')).then(function (updatedEvent) {
@@ -283,8 +282,6 @@ function createEmberObject(event) {
       });
     }
   }).create(event);
-
-  return event;
 }
 
 /**

@@ -1,8 +1,41 @@
 'use strict';
 
+const homedir = require('os').homedir();
+const { existsSync, readFileSync, mkdirSync, copyFileSync } = require('fs');
+const { execSync } = require('child_process');
+const { join } = require('path');
+
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = function (defaults) {
+
+  // build scoped uikit
+  if ('TRAVIS' in process.env) {
+    const packageLockFile = JSON.parse(readFileSync('package-lock.json'));
+    const uikitVersion = packageLockFile.dependencies.uikit.version;
+    const uikitCacheDir = join(homedir, 'uikit-build-cache');
+    const uikitCacheFile = join(uikitCacheDir, 'uikit' + uikitVersion + '.css');
+    const uikitUsedFile = './node_modules/uikit/dist/css/uikit.css';
+
+    if (!existsSync(uikitCacheFile)) {
+      // the file is not yet in the cache so we have to create it
+      console.log('scoped uikit.css not found in cache, let\'s build it'); // eslint-disable-line no-console
+      execSync('npm install && npm run scope', {
+        cwd: './node_modules/uikit'
+      });
+
+      if (!existsSync(uikitCacheDir)) {
+        mkdirSync(uikitCacheDir);
+      }
+      copyFileSync(uikitUsedFile, uikitCacheFile);
+    } else {
+      // copy the file from the cache
+      console.log('scoped uikit.css found in cache'); // eslint-disable-line no-console
+      copyFileSync(uikitCacheFile, uikitUsedFile);
+    }
+  }
+
+  // create app
   let app = new EmberApp(defaults, {
 
     // see: https://github.com/ember-cli/ember-cli-uglify

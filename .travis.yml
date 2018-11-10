@@ -14,12 +14,12 @@ addons:
 cache:
   directories:
     - $HOME/.npm
+    - $HOME/uikit-build-cache
 
 before_install:
   - npm config set spin false
 
 script:
-  - (cd node_modules/uikit; npm install; npm run scope)
   - npm run build
   - markdown README.md > index.html
   - mv LICENSE README.md dist
