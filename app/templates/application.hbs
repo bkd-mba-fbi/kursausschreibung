@@ -20,30 +20,32 @@
       <ul class="uk-navbar-nav">
         <li>
           {{! MENU MODAL }}
-          <a href="#menu-modal" class="uk-icon-link uk-margin-right {{if eventCategoryDropdown "uk-hidden" "uk-hidden@m"}}" data-uk-icon="more" data-uk-toggle></a>
+          {{#unless eventCategoryDropdown}}
+            <a href="#menu-modal" class="uk-icon-link uk-margin-right uk-hidden@m" data-uk-icon="more" data-uk-toggle></a>
 
-          <div id="menu-modal" class="uk-modal-full" uk-modal="container: false;">
-            <div class="uk-modal-dialog">
-              <button class="uk-modal-close-full uk-close-large" type="button" data-uk-close></button>
-              <div class="uk-padding-large" data-uk-height-viewport>
-                <h2>{{translate "navigation"}}</h2>
-                {{#each-in model.areas as |area data|}}
-                  <div class="uk-margin">
-                    {{area-navigation data}}
-                  </div>
-                {{/each-in}}
-                {{#if showLanguageButton}}
-                  <div class="uk-margin">
-                    <h2>{{translate "language"}}</h2>
-                      <ul class="uk-nav uk-nav-default">
-                        <li><a {{action "setLanguage" "de-CH"}}>{{translate "german"}}</a></li>
-                        <li><a {{action "setLanguage" "fr-CH"}}>{{translate "french"}}</a></li>
-                      </ul>
-                  </div>
-                {{/if}}
+            <div id="menu-modal" class="uk-modal-full" uk-modal="container: false;">
+              <div class="uk-modal-dialog">
+                <button class="uk-modal-close-full uk-close-large" type="button" data-uk-close></button>
+                <div class="uk-padding-large" data-uk-height-viewport>
+                  <h2>{{translate "navigation"}}</h2>
+                  {{#each-in model.areas as |area data|}}
+                    <div class="uk-margin">
+                      {{area-navigation data}}
+                    </div>
+                  {{/each-in}}
+                  {{#if showLanguageButton}}
+                    <div class="uk-margin">
+                      <h2>{{translate "language"}}</h2>
+                        <ul class="uk-nav uk-nav-default">
+                          <li><a {{action "setLanguage" "de-CH"}}>{{translate "german"}}</a></li>
+                          <li><a {{action "setLanguage" "fr-CH"}}>{{translate "french"}}</a></li>
+                        </ul>
+                    </div>
+                  {{/if}}
+                </div>
               </div>
             </div>
-          </div>
+          {{/unless}}
 
           {{! LANGUAGE BUTTON }}
           {{#if showLanguageButton}}
