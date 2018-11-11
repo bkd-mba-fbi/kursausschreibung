@@ -15,7 +15,7 @@
   "scripts": {
     "build": "ember build --environment=production",
     "lint:js": "eslint ./*.js app config lib server tests",
-    "start": "ember serve",
+    "start": "ember serve --port 80",
     "test": "ember test"
   },
   "devDependencies": {
