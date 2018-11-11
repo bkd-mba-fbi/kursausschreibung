@@ -21,6 +21,11 @@ function isLoggedIn() {
     return false;
   }
 
+  if (appConfig.useAutoLogin !== true) {
+    // we can assume that instance and culture are correct
+    return true;
+  }
+
   let payload = parseJWT(accessToken);
 
   // only return true if instanceId and culture are correct
@@ -63,7 +68,7 @@ export function autoCheckForLogin() {
     return Promise.resolve();
   }
 
-  if (appConfig.useAutoLogin) {
+  if (appConfig.useAutoLogin === true) {
     // get a new token from the OAuth server
     let params = $.param({
       clientId: appConfig.clientId,
