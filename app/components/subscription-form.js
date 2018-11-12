@@ -20,26 +20,7 @@ export default Component.extend({
 function subscribe(form, self) {
   let useCompanyAddress = self.get('useCompanyAddress') === true;
   let eventId = self.get('eventId');
-
-  // main address
-  let addressProperties = [
-    'Country', 'CountryId', 'FormOfAddress', 'FormOfAddressId', 'HomeCountry', 'HomeCountryId',
-    'Nationality', 'NationalityId', 'AddressLine1', 'AddressLine2', 'BillingAddress',
-    'Birthdate', 'CorrespondenceAddress', 'Email', 'Email2', 'FirstName', 'Gender', 'HomeTown',
-    'IsEmployee', 'LastName', 'Location', 'MiddleName', 'NativeLanguage', 'PhoneMobile', 'PhonePrivate',
-    'Profession', 'SocialSecurityNumber', 'StayPermit', 'StayPermitExpiry', 'Zip'
-  ];
-
-  let addressData = getFieldSetData(form, addressProperties, '.address-fields');
-
-  let companyAddressProperties = [
-    'PersonId', 'AddressType', 'AddressTypeId', 'Country', 'CountryId', 'FormOfAddress', 'FormOfAddressId',
-    'AddressLine1', 'AddressLine2', 'Company', 'Department', 'FirstName', 'IsBilling', 'IsCorrespondence',
-    'LastName', 'Location', 'Remark', 'ValidFrom', 'ValidTo', 'Zip'
-  ];
-
-  // company address
-  let companyAddressData = getFieldSetData(form, companyAddressProperties, '.company-address-fields');
+  let userSettings = self.get('userSettings');
 
   // subscription
   let subscriptionData = {
@@ -65,18 +46,45 @@ function subscribe(form, self) {
       subscriptionData.SubscriptionDetails.push({ VssId: vssId, Value: value });
   });
 
-  // get the values for the confirmation table
-  let tableData = {
-    fields: getTableData(self.get('fields'), addressData),
-    subscriptionDetailFields: getTableData(self.get('subscriptionDetailFields'), assocSubscriptionData)
-  };
+  // values for dataToSubmit
+  let personId = userSettings.IdPerson, tableData, addressData, companyAddressData;
 
-  if (useCompanyAddress)
-    tableData.companyFields = getTableData(self.get('companyFields'), companyAddressData);
+  // read address and companyAdress if we don't know the personId yet
+  if (userSettings.isLoggedIn !== true) {
+
+    // main address
+    let addressProperties = [
+      'Country', 'CountryId', 'FormOfAddress', 'FormOfAddressId', 'HomeCountry', 'HomeCountryId',
+      'Nationality', 'NationalityId', 'AddressLine1', 'AddressLine2', 'BillingAddress',
+      'Birthdate', 'CorrespondenceAddress', 'Email', 'Email2', 'FirstName', 'Gender', 'HomeTown',
+      'IsEmployee', 'LastName', 'Location', 'MiddleName', 'NativeLanguage', 'PhoneMobile', 'PhonePrivate',
+      'Profession', 'SocialSecurityNumber', 'StayPermit', 'StayPermitExpiry', 'Zip'
+    ];
+
+    addressData = getFieldSetData(form, addressProperties, '.address-fields');
+
+    let companyAddressProperties = [
+      'PersonId', 'AddressType', 'AddressTypeId', 'Country', 'CountryId', 'FormOfAddress', 'FormOfAddressId',
+      'AddressLine1', 'AddressLine2', 'Company', 'Department', 'FirstName', 'IsBilling', 'IsCorrespondence',
+      'LastName', 'Location', 'Remark', 'ValidFrom', 'ValidTo', 'Zip'
+    ];
+
+    // company address
+    companyAddressData = getFieldSetData(form, companyAddressProperties, '.company-address-fields');
+
+    // get the values for the confirmation table
+    tableData = {
+      fields: getTableData(self.get('fields'), addressData),
+      subscriptionDetailFields: getTableData(self.get('subscriptionDetailFields'), assocSubscriptionData)
+    };
+
+    if (useCompanyAddress)
+      tableData.companyFields = getTableData(self.get('companyFields'), companyAddressData);
+  }
 
   // save the data to submit
   setDataToSubmit({
-    eventId, useCompanyAddress, addressData, companyAddressData, subscriptionData, tableData
+    personId, eventId, useCompanyAddress, addressData, companyAddressData, subscriptionData, tableData
   });
 }
 

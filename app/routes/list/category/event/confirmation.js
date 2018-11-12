@@ -7,7 +7,6 @@ import { autoCheckForLogin } from 'kursausschreibung/framework/login-helpers';
 export default Route.extend({
   model() {
     let dataToSubmit = getDataToSubmit();
-    let personId = null;
     let event = this.modelFor('list.category.event');
 
     if (dataToSubmit === null) {
@@ -15,7 +14,7 @@ export default Route.extend({
       return;
     }
 
-    let { useCompanyAddress, addressData, companyAddressData, subscriptionData, tableData } = dataToSubmit;
+    let { personId, useCompanyAddress, addressData, companyAddressData, subscriptionData, tableData } = dataToSubmit;
 
     // make sure the session is still active
     return Promise.resolve().then(() => autoCheckForLogin()).then(() => {
@@ -27,12 +26,46 @@ export default Route.extend({
       return event.update();
     }).then(() => {
       // make sure it's still possible to subscribe to the event
-      if (event.get('canDoSubscription') === false)
+      if (event.get('canDoSubscription') === false) {
         throw new Error('it\'s no longer possible to subscribe to this event');
+      }
 
-      return new Promise(resolve => postPerson(addressData).then((data, status, xhr) => { resolve([xhr]); }));
+      if (personId === 0) {
+        // no user is logged in, let's create a new one
+        return createAddresses(useCompanyAddress, addressData, companyAddressData)
+          .then(id => personId = id);
+      }
 
-    }).then(([xhr]) => {
+    }).then(() => {
+      subscriptionData.PersonId = personId;
+
+      return postSubscription(subscriptionData);
+    }).then(() => {
+      return tableData;
+    }).catch(error => {
+      if (error instanceof Error) {
+        console.error(error); // eslint-disable-line no-console
+      }
+
+      let message = '';
+
+      try {
+        message = error.responseJSON.Issues[0].Message;
+      } catch (exception) {
+        // ignore exception
+      }
+      throw { message: message };
+    });
+  }
+});
+
+// this function creates an address, a company adress (if requested) and returns a
+// Promise returning a personId
+function createAddresses(useCompanyAddress, addressData, companyAddressData) {
+  let personId;
+
+  return new Promise(resolve => postPerson(addressData).then((data, status, xhr) => { resolve([xhr]); }))
+    .then(([xhr]) => {
       let duplicateHeader = xhr.getResponseHeader('x-duplicate');
       let locationHeader = xhr.getResponseHeader('location');
 
@@ -66,26 +99,5 @@ export default Route.extend({
       companyAddressData.CountryId = companyAddressData.CountryId === null ? 'CH' : companyAddressData.CountryId;
 
       return postAddress(companyAddressData);
-
-    }).then(() => {
-      subscriptionData.PersonId = personId;
-
-      return postSubscription(subscriptionData);
-    }).then(() => {
-      return tableData;
-    }).catch(error => {
-      if (error instanceof Error) {
-        console.error(error); // eslint-disable-line no-console
-      }
-
-      let message = '';
-
-      try {
-        message = error.responseJSON.Issues[0].Message;
-      } catch (exception) {
-        // ignore exception
-      }
-      throw { message: message };
-    });
-  }
-});
+    }).then(() => personId);
+}

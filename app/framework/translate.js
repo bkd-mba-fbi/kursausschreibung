@@ -30,15 +30,26 @@ export function setLanguage(newLanguage) {
 /**
  * returns a localized sring
  * @param {string} key the key to localize
+ * @param {string[]?} placeholderValues these values replace {0}, {1}, ...
  */
-export function getString(key) {
-  let string = locale[key];
+export function getString(key, placeholderValues = []) {
+  try {
+    let string = locale[key];
 
-  if (string === undefined) {
-    return `<span style="color:red;">key not found: ${key}</span>`;
+    if (string === undefined) {
+      return '<span style="color:red;">Key not found: ' + key + '</span>';
+    }
+
+    placeholderValues.forEach((placeholderValue, i) => {
+      string = string.replace('{' + i + '}', placeholderValue);
+    });
+
+    return string;
+
+  } catch (ex) {
+    console.error('translate ERROR:', ex); // eslint-disable-line no-console
+    return '<span style="color:red;">error in translation.</span>';
   }
-
-  return string;
 }
 
 /**

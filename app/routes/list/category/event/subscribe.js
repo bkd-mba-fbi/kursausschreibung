@@ -2,7 +2,7 @@ import Route from '@ember/routing/route';
 import { A } from '@ember/array';
 import settings from 'kursausschreibung/framework/settings';
 import { getString } from 'kursausschreibung/framework/translate';
-import { getDropDownItems, getSubscriptionDetails } from 'kursausschreibung/framework/api';
+import { getDropDownItems, getSubscriptionDetails, getUserSettings } from 'kursausschreibung/framework/api';
 import { Promise } from 'rsvp';
 import { get, set } from '@ember/object';
 
@@ -73,7 +73,6 @@ function getFormFields(settings, eventTypeId) {
   if (eventTypeId in settings.formFields)
     return settings.formFields[eventTypeId];
 
-
   if (settings.formFields.default === undefined)
     throw new Error("config for eventTypeId " + eventTypeId + " not found and no default config is available");
 
@@ -90,15 +89,23 @@ export default Route.extend({
       return;
     }
 
-    let fields = getFormFields(settings, model.EventTypeId).addressFields;
+    // get the UserSettings
+    // if userSettings.IdPerson is not 0 we can use it for the subscription
+    return Promise.all([getUserSettings(), getSubscriptionDetails(model.Id)])
+      .then(([userSettings, subscriptionDetails]) => {
+        userSettings.isLoggedIn = userSettings.IdPerson !== 0;
 
-    return Promise.all([
-      getSubscriptionDetails(model.Id),
-      loadDropdownItems(fields),
-    ]).then(results => {
-      set(model, 'subscriptionDetailFields', getSubscriptionDetailFields(A(results[0]).sortBy('Sort')));
-      return model;
-    });
+        set(model, 'userSettings', userSettings);
+        set(model, 'subscriptionDetailFields', getSubscriptionDetailFields(A(subscriptionDetails).sortBy('Sort')));
+
+        if (userSettings.isLoggedIn === false) {
+          let fields = getFormFields(settings, model.EventTypeId).addressFields;
+
+          return loadDropdownItems(fields);
+        }
+      }).then(
+        () => model
+      );
   },
 
   setupController(controller, model) {

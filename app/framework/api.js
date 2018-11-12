@@ -52,6 +52,13 @@ function get(relativeUrl, readableError) {
 }
 
 /**
+ * get UserSettings
+ */
+export function getUserSettings() {
+  return get('UserSettings/');
+}
+
+/**
  * get all events
  */
 export function getEvents() {
