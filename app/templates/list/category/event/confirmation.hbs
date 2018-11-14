@@ -12,9 +12,9 @@
 
 <p>{{translate "officeAddress"}}</p>
 
+{{#if model.fields}}
 <h2>{{translate "yourDetails"}}</h2>
 
-{{#if model.fields}}
   <h3 class="uk-h3">{{translate "addressFields"}}</h3>
   <table class="uk-table uk-table-striped uk-margin">
     {{#each model.fields as |field|}}
