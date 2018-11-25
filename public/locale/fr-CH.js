@@ -20,6 +20,7 @@ window.kursausschreibung.locale["fr-CH"] = {
   "confirmation": "Confirmation.",
   "subscribe": "Connectez-vous",
   "back": "Retour",
+  "backToCourses": "Retour",
   "thankYou": "Merci pour votre inscription",
   "youWillReceiveAConfirmationEMail": "Vous recevrez une confirmation d'inscription par e-mail.",
   "officeAddress": "Secrétariat du cours<br>Phone 031 123 45 67 67<br>info@kurssekretariat.ch",
