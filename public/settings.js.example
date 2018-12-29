@@ -1,6 +1,6 @@
 window.kursausschreibung = window.kursausschreibung || {};
 window.kursausschreibung.settings = {
-  // only show hosts with one of these hostIds (optional)
+  // only show events with one of these hostIds (optional)
   "hostIds": null,
 
   // items per page on the event-list (required)
