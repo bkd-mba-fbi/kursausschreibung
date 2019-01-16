@@ -25,6 +25,9 @@ function ajax(method, relativeUrl, readableError = true, data = null) {
     data: data !== null ? JSON.stringify(data, null, '\t') : undefined,
     url: appConfig.apiUrl + '/' + relativeUrl,
 
+    // convert empty response to valid JSON
+    dataFilter: data => data === '' ? 'null' : data,
+
     headers: {
       'CLX-Authorization': `token_type=${appConfig.tokenType}, access_token=${accessToken}`
     }
