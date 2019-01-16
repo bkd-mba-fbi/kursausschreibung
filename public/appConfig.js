@@ -5,7 +5,7 @@ window.kursausschreibung.appConfig = {
     // API base URL without trailing slash
     "apiUrl": "https://eventoapp-test.erz.be.ch/restApi", // "https://b17eb32d-b72d-4238-a677-74639b5dbf20.mock.pstmn.io"
     // base Url of the web application without trailing slash (also the redirect url for public clients)
-    "webBaseUrl": "http://localhost",
+    "webBaseUrl": "https://evento.stubr-dev.ch",
     // url to a page that handles login without trailing slash. If there is no login page on the website, this
     // must be the url of the login form in CLX.Evento OAuth Server: https://{BaseUriOAuth}/Authorization/{InstanceId}/Login
     "loginUrl": null,
@@ -15,7 +15,7 @@ window.kursausschreibung.appConfig = {
     // the instance id for this application. This value is mandatory when authenticate with CLX.Evento OAuth Server
     "instanceId": "BsBFF",
     // the client id for this application. This value is mandatory when authenticate with CLX.Evento OAuth Server
-    "clientId": "dev",
+    "clientId": "stubrDev",
     // url to a page that can refresh the session (website and modules)
     "refreshSessionUrl": "",
     // the interval to refresh the session on website and modules (in minutes)
@@ -26,3 +26,14 @@ window.kursausschreibung.appConfig = {
     "useLanguageDetection": true,
     "applicationScope": "Public"
 };
+
+/*
+"webBaseUrl": "https://evento.stubr-dev.ch",
+"clientId": "stubrDev",
+
+"webBaseUrl": "https://www.stubr-test-1.ch",
+"clientId": "stubrTest",
+
+"webBaseUrl": "http://localhost:4200",
+"clientId": "dev4200"
+*/
