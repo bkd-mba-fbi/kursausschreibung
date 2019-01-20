@@ -176,8 +176,8 @@ function filterEvents(events, language) {
   // - will this work when multiple values (eventcategories?) are assigned to an event?
   // - probably, the array settings.initialListFilters should be looped?
 
-  if (settings.initialListFilters.hostIds instanceof Array) {
-    events = events.filter(event => settings.initialListFilters.hostIds.indexOf(event.HostId) !== -1);
+  if (settings.initialListFilters.HostIds instanceof Array) {
+    events = events.filter(event => settings.initialListFilters.HostIds.indexOf(event.HostId) !== -1);
   }
 
   if (settings.initialListFilters.EventCategoryIds instanceof Array) {
