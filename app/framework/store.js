@@ -170,9 +170,33 @@ function addLessonsToEvents(lessons) {
  * @param {string} language the active language
  */
 function filterEvents(events, language) {
-  // filter out events with wrong hostId
+  // filter out events with undesired parameters
+
+  // backwards compatibility fallback for single hostId filter 
   if (settings.hostIds instanceof Array) {
     events = events.filter(event => settings.hostIds.indexOf(event.HostId) !== -1);
+  }
+  // or use initialListFilters array
+  else if (settings.initialListFilters instanceof Object) {
+    if (settings.initialListFilters.hostIds instanceof Array) {
+      events = events.filter(event => settings.initialListFilters.hostIds.indexOf(event.HostId) !== -1);
+    }
+  
+    if (settings.initialListFilters.eventCategoryIds instanceof Array) {
+      events = events.filter(event => settings.initialListFilters.eventCategoryIds.indexOf(event.EventCategoryId) !== -1);
+    }
+  
+    if (settings.initialListFilters.eventLevelIds instanceof Array) {
+      events = events.filter(event => settings.initialListFilters.eventLevelIds.indexOf(event.EventLevelId) !== -1);
+    }
+  
+    if (settings.initialListFilters.eventTypeIds instanceof Array) {
+      events = events.filter(event => settings.initialListFilters.eventTypeIds.indexOf(event.EventTypeId) !== -1);
+    }
+  
+    if (settings.initialListFilters.statusIds instanceof Array) {
+      events = events.filter(event => settings.initialListFilters.statusIds.indexOf(event.StatusId) !== -1);
+    }
   }
 
   // filter out events with non-matching LanguageOfInstruction
