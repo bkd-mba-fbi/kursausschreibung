@@ -157,8 +157,8 @@ function addLessonsToEvents(lessons) {
     }
 
     // make DateFrom and DateTo human-readable
-    lesson.DateFrom = formatDate(lesson.DateFrom, 'LLL');
-    lesson.TimeTo = formatDate(lesson.DateTo, 'LT');
+    lesson.DateFrom = formatDate(lesson.DateTimeFrom, 'LLL');
+    lesson.TimeTo = formatDate(lesson.DateTimeTo, 'LT');
 
     eventsById[lesson.EventId].lessons.push(lesson);
   });

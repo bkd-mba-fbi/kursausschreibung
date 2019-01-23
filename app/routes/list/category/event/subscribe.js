@@ -3,6 +3,7 @@ import { A } from '@ember/array';
 import settings from 'kursausschreibung/framework/settings';
 import { getString } from 'kursausschreibung/framework/translate';
 import { getDropDownItems, getSubscriptionDetails, getUserSettings } from 'kursausschreibung/framework/api';
+import { autoCheckForLogin } from 'kursausschreibung/framework/login-helpers';
 import { Promise } from 'rsvp';
 import { get, set } from '@ember/object';
 
@@ -89,10 +90,13 @@ export default Route.extend({
       return;
     }
 
-    // get the UserSettings
-    // if userSettings.IdPerson is not 0 we can use it for the subscription
-    return Promise.all([getUserSettings(), getSubscriptionDetails(model.Id)])
+    // make sure the session is still active
+    return Promise.resolve()
+      .then(() => autoCheckForLogin())
+      .then(() => Promise.all([getUserSettings(), getSubscriptionDetails(model.Id)]))
       .then(([userSettings, subscriptionDetails]) => {
+
+        // if userSettings.IdPerson is not 0 we can use it for the subscription
         userSettings.isLoggedIn = userSettings.IdPerson !== 0;
 
         set(model, 'userSettings', userSettings);
