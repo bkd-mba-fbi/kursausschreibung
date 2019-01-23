@@ -172,28 +172,31 @@ function addLessonsToEvents(lessons) {
 function filterEvents(events, language) {
   // filter out events with undesired parameters
 
-  // Remarks: 
-  // - will this work when multiple values (eventcategories?) are assigned to an event?
-  // - probably, the array settings.initialListFilters should be looped?
-
-  if (settings.initialListFilters.HostIds instanceof Array) {
-    events = events.filter(event => settings.initialListFilters.HostIds.indexOf(event.HostId) !== -1);
+  // backwards compatibility fallback for single hostId filter 
+  if (settings.hostIds instanceof Array) {
+    events = events.filter(event => settings.hostIds.indexOf(event.HostId) !== -1);
   }
-
-  if (settings.initialListFilters.EventCategoryIds instanceof Array) {
-    events = events.filter(event => settings.initialListFilters.EventCategoryIds.indexOf(event.EventCategoryId) !== -1);
-  }
-
-  if (settings.initialListFilters.EventLevelIds instanceof Array) {
-    events = events.filter(event => settings.initialListFilters.EventLevelIds.indexOf(event.EventLevelId) !== -1);
-  }
-
-  if (settings.initialListFilters.EventTypeIds instanceof Array) {
-    events = events.filter(event => settings.initialListFilters.EventTypeIds.indexOf(event.EventTypeId) !== -1);
-  }
-
-  if (settings.initialListFilters.StatusIds instanceof Array) {
-    events = events.filter(event => settings.initialListFilters.StatusIds.indexOf(event.StatusId) !== -1);
+  // or use initialListFilters array
+  else {
+    if (settings.initialListFilters.hostIds instanceof Array) {
+      events = events.filter(event => settings.initialListFilters.hostIds.indexOf(event.HostId) !== -1);
+    }
+  
+    if (settings.initialListFilters.eventCategoryIds instanceof Array) {
+      events = events.filter(event => settings.initialListFilters.eventCategoryIds.indexOf(event.EventCategoryId) !== -1);
+    }
+  
+    if (settings.initialListFilters.eventLevelIds instanceof Array) {
+      events = events.filter(event => settings.initialListFilters.eventLevelIds.indexOf(event.EventLevelId) !== -1);
+    }
+  
+    if (settings.initialListFilters.eventTypeIds instanceof Array) {
+      events = events.filter(event => settings.initialListFilters.eventTypeIds.indexOf(event.EventTypeId) !== -1);
+    }
+  
+    if (settings.initialListFilters.statusIds instanceof Array) {
+      events = events.filter(event => settings.initialListFilters.statusIds.indexOf(event.StatusId) !== -1);
+    }
   }
 
   // filter out events with non-matching LanguageOfInstruction
