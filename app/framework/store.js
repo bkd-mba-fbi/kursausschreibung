@@ -177,7 +177,7 @@ function filterEvents(events, language) {
     events = events.filter(event => settings.hostIds.indexOf(event.HostId) !== -1);
   }
   // or use initialListFilters array
-  else {
+  else if (settings.initialListFilters instanceof Object) {
     if (settings.initialListFilters.hostIds instanceof Array) {
       events = events.filter(event => settings.initialListFilters.hostIds.indexOf(event.HostId) !== -1);
     }
