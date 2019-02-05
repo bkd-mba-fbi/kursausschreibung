@@ -83,6 +83,9 @@ function createAddresses(useCompanyAddress, addressData, companyAddressData) {
             delete addressData[key];
         });
 
+        // add id
+        addressData.Id = parseInt(personId);
+
         return putPerson(addressData, personId);
       }
 
