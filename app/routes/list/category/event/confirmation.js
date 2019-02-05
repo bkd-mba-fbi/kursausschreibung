@@ -41,7 +41,7 @@ export default Route.extend({
 
       return postSubscription(subscriptionData);
     }).then(() => {
-      return tableData;
+      return { tableData: tableData, statusIsRed: event.get('status') === 'red' };
     }).catch(error => {
       if (error instanceof Error) {
         console.error(error); // eslint-disable-line no-console

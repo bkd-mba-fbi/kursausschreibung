@@ -6,18 +6,24 @@
     <span>{{translate "confirmation"}}</span>
   </li>
 </ol>
-<h2>{{translate "thankYou"}}</h2>
+<h2>
+  {{#if model.statusIsRed}}
+    {{translate "thankYouWaitingList"}}
+  {{else}}
+    {{translate "thankYou"}}
+  {{/if}}
+</h2>
 
 <p>{{translate "youWillReceiveAConfirmationEMail"}}</p>
 
 <p>{{translate "officeAddress"}}</p>
 
-{{#if model.fields}}
+{{#if model.tableData.fields}}
   <h2>{{translate "yourDetails"}}</h2>
 
   <h3 class="uk-h3">{{translate "addressFields"}}</h3>
   <table class="uk-table uk-table-striped uk-margin">
-    {{#each model.fields as |field|}}
+    {{#each model.tableData.fields as |field|}}
       <tr>
         <td>{{{field.label}}}</td>
         <td>{{field.value}}</td>
@@ -26,10 +32,10 @@
   </table>
 {{/if}}
 
-{{#if model.companyFields}}
+{{#if model.tableData.companyFields}}
   <h3 class="uk-h3">{{translate "companyFields"}}</h3>
   <table class="uk-table uk-table-striped uk-margin">
-    {{#each model.companyFields as |companyField|}}
+    {{#each model.tableData.companyFields as |companyField|}}
       <tr>
         <td>{{{companyField.label}}}</td>
         <td>{{companyField.value}}</td>
@@ -38,10 +44,10 @@
   </table>
 {{/if}}
 
-{{#if model.subscriptionDetailFields}}
+{{#if model.tableData.subscriptionDetailFields}}
   <h3 class="uk-h3">{{translate "subscriptionDetailFields"}}</h3>
   <table class="uk-table uk-table-striped uk-margin">
-    {{#each model.subscriptionDetailFields as |subscriptionDetailField|}}
+    {{#each model.tableData.subscriptionDetailFields as |subscriptionDetailField|}}
       <tr>
         <td>{{{subscriptionDetailField.label}}}</td>
         <td>{{subscriptionDetailField.value}}</td>
