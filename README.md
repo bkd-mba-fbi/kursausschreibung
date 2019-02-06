@@ -53,9 +53,12 @@ Make use of the many generators for code, try `ember help generate` for more det
   * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
   * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
 
+## Documentation
+Go to [Wiki](https://github.com/erz-mba-fbi/kursausschreibung/wiki)
+
 ## Configuration (appconfig, settings, locale)
 
-* **appconfig:** The basic configuration for the module must be stored in appconfig. Example: apiUrl, webBaseUrl, oauthUrl, instanceId, clientId, applicationScope
+* **appconfig:** The basic configuration for the module must be stored in appconfig. Example: `apiUrl, webBaseUrl, oauthUrl, instanceId, clientId, applicationScope`
 * **settings:** In this file you will find all settings for the module.
 * **locale:** In the 'locale' folder you will find every translation for the module that does not come from Evento (e.g. labels, status, process...).
 
