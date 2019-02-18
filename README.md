@@ -54,7 +54,7 @@ Make use of the many generators for code, try `ember help generate` for more det
   * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
 
 ## Documentation
-Go to [Wiki](https://github.com/erz-mba-fbi/kursausschreibung/wiki)
+Go to the [Wiki](https://github.com/erz-mba-fbi/kursausschreibung/wiki)
 
 ## Configuration (appconfig, settings, locale)
 
@@ -62,9 +62,9 @@ Go to [Wiki](https://github.com/erz-mba-fbi/kursausschreibung/wiki)
 * **settings:** In this file you will find all settings for the module.
 * **locale:** In the 'locale' folder you will find every translation for the module that does not come from Evento (e.g. labels, status, process...).
 
-## Latest build
+## Builds
 
-You can download the latest build of the module here: [kursausschreibung.zip](https://erz-mba-fbi.github.io/kursausschreibung/kursausschreibung.zip). To use the module you first have to configure it.
+You can download releases on the [releases page](https://github.com/erz-mba-fbi/kursausschreibung/releases) and the latest build of the module here: [kursausschreibung.zip](https://erz-mba-fbi.github.io/kursausschreibung/kursausschreibung.zip). To use the module you first have to configure it.
 
 ## Integration
 
