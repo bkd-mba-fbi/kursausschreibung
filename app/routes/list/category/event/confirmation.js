@@ -1,8 +1,10 @@
 import Route from '@ember/routing/route';
+import { isEmpty } from '@ember/utils';
 import { Promise } from 'rsvp';
 import { getDataToSubmit, setDataToSubmit } from 'kursausschreibung/framework/storage';
 import { postPerson, putPerson, postAddress, postSubscription } from 'kursausschreibung/framework/api';
 import { autoCheckForLogin } from 'kursausschreibung/framework/login-helpers';
+import settings from 'kursausschreibung/framework/settings';
 
 export default Route.extend({
   model() {
@@ -64,6 +66,17 @@ export default Route.extend({
 function createAddresses(useCompanyAddress, addressData, companyAddressData) {
   let personId;
 
+  // add default values to person
+  if (settings.personDefaultValue instanceof Object) {
+    Object.keys(settings.personDefaultValue).forEach(
+      key => {
+        if (isEmpty(addressData[key])) {
+          addressData[key] = settings.personDefaultValue[key];
+        }
+      }
+    );
+  }
+
   return new Promise(resolve => postPerson(addressData).then((data, status, xhr) => { resolve([xhr]); }))
     .then(([xhr]) => {
       let duplicateHeader = xhr.getResponseHeader('x-duplicate');
@@ -94,7 +107,7 @@ function createAddresses(useCompanyAddress, addressData, companyAddressData) {
       if (!useCompanyAddress)
         return;
 
-      // add default values
+      // add default values to company-address
       companyAddressData.PersonId = parseInt(personId);
       companyAddressData.AddressType = 'Arbeitgeber';
       companyAddressData.AddressTypeId = 501;

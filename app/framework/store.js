@@ -172,7 +172,7 @@ function addLessonsToEvents(lessons) {
 function filterEvents(events, language) {
   // filter out events with undesired parameters
 
-  // backwards compatibility fallback for single hostId filter 
+  // backwards compatibility fallback for single hostId filter
   if (settings.hostIds instanceof Array) {
     events = events.filter(event => settings.hostIds.indexOf(event.HostId) !== -1);
   }
@@ -181,19 +181,19 @@ function filterEvents(events, language) {
     if (settings.initialListFilters.hostIds instanceof Array) {
       events = events.filter(event => settings.initialListFilters.hostIds.indexOf(event.HostId) !== -1);
     }
-  
+
     if (settings.initialListFilters.eventCategoryIds instanceof Array) {
       events = events.filter(event => settings.initialListFilters.eventCategoryIds.indexOf(event.EventCategoryId) !== -1);
     }
-  
+
     if (settings.initialListFilters.eventLevelIds instanceof Array) {
       events = events.filter(event => settings.initialListFilters.eventLevelIds.indexOf(event.EventLevelId) !== -1);
     }
-  
+
     if (settings.initialListFilters.eventTypeIds instanceof Array) {
       events = events.filter(event => settings.initialListFilters.eventTypeIds.indexOf(event.EventTypeId) !== -1);
     }
-  
+
     if (settings.initialListFilters.statusIds instanceof Array) {
       events = events.filter(event => settings.initialListFilters.statusIds.indexOf(event.StatusId) !== -1);
     }

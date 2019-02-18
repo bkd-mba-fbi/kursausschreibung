@@ -1,6 +1,6 @@
 window.kursausschreibung = window.kursausschreibung || {};
 window.kursausschreibung.settings = {
-  // only show matching events (excepts array also if one value, [123])
+  // only show matching events (expects array also if one value, [123]) (optional)
   "initialListFilters": {
     "hostIds": null,
     "eventCategoryIds": null,
@@ -61,6 +61,12 @@ window.kursausschreibung.settings = {
     "yellow": false,
     "red": false,
     "orange": false
+  },
+
+  // when a field is optional or not in the form you can set a default value.
+  // it will overwrite null values in the post to the person endpoint (optional)
+  "personDefaultValue": {
+    "CountryId": "CH",
   },
 
   // fields for the form (required)
