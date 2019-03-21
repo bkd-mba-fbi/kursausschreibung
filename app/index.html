@@ -103,4 +103,49 @@
     </div>
     {{content-for "body-footer"}}
   </body>
+  <!-- OPTION REDIRECT -->
+  <script>
+  /**
+  * if you use "useAutoLogin": true (appconfig.js setting) it will in case of Authorization every time redirect to Parameter "moduleRedirectUrl". 
+  * The redirect will execute only if no html element with id "kursausschreibung-root" on site available is.
+  */
+  var url = window.location.href;
+  if (url.indexOf('?') > 0) {
+
+  var urlParameters = url.split('?');
+  var redirectURL = getParameterByName('moduleRedirectUrl')
+      if (urlParameters[1].indexOf("access_token") > -1 && !document.getElementById('kursausschreibung-root')) {
+      window.location = redirectURL + '?' + urlParameters[1];
+      } 
+  }
+
+  /**
+  * get an URL-parameter
+  * taken from https://stackoverflow.com/q/901115#answer-901144
+  * @param {string} name the name of the parameter
+  * @param {string} url the URL (defaults to current URL)
+  */
+  function getParameterByName(name, url) {
+
+  if (typeof url !== 'string') {
+    url = window.location.href;
+  }
+
+  name = name.replace(/[[\]]/g, '\\url');
+
+  var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+  var results = regex.exec(url);
+
+  if (!results) {
+    return null;
+  }
+
+  if (!results[2]) {
+    return '';
+  }
+
+  return decodeURIComponent(results[2].replace(/\+/g, ' '));
+  }
+  </script>
+    <!-- OPTION REDIRECT -->
 </html>
