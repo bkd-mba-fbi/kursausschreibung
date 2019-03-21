@@ -99,7 +99,10 @@ function createAddresses(useCompanyAddress, addressData, companyAddressData) {
         // add id
         addressData.Id = parseInt(personId);
 
-        return putPerson(addressData, personId);
+        return putPerson(addressData, personId).catch(error => {
+           // fail silently (see https://github.com/erz-mba-fbi/kursausschreibung/issues/26)
+          console.error('ignoring error while trying to update person', error);
+        });
       }
 
       personId = locationHeader.split('/').slice(-1)[0];
