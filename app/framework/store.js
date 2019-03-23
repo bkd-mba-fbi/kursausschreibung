@@ -1,4 +1,5 @@
 import { A } from '@ember/array';
+import { underscore } from '@ember/string';
 import EmberObject, { computed } from '@ember/object';
 import $ from 'jquery';
 import { getEvents, getEvent, getLessons, getEventLocations, getEventTexts } from './api';
@@ -241,7 +242,7 @@ function putIntoAssocArrays(event) {
 
   // area
   let areaName = event.AreaOfEducation;
-  let areaKey = (event.areaKey = areaName.toLowerCase());
+  let areaKey = event.areaKey = underscore(areaName);
 
   if (!eventsByArea.areas.hasOwnProperty(areaKey)) {
     eventsByArea.areas[areaKey] = {
@@ -256,7 +257,7 @@ function putIntoAssocArrays(event) {
 
   // category (in area)
   let categoryName = event.EventCategory;
-  let categoryKey = (event.categoryKey = categoryName.toLowerCase());
+  let categoryKey = event.categoryKey = underscore(categoryName);
 
   if (!eventsByArea.areas[areaKey].categories.hasOwnProperty(categoryKey)) {
     eventsByArea.areas[areaKey].categories[categoryKey] = {
