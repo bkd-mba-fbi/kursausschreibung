@@ -4,6 +4,19 @@
   min-height: 300px;
 }
 
+/*Navigation stylen*/
+.uk-scope .uk-navbar-container:not(.uk-navbar-transparent) {
+  background: transparent;
+}
+
+.uk-scope .uk-navbar-container {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.uk-scope .uk-navbar-nav>li.uk-active>a {
+  border-bottom: 2px solid #1e87f0;
+}
+
 .uk-scope h2 {
   overflow-wrap: break-word;
 }
