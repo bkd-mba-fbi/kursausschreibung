@@ -103,7 +103,7 @@ export function getSubscriptionDetails(eventId) {
  * @param {string} cultureInfo 'de-CH' for german and 'en-US' for french
  */
 export function getEventTexts(cultureInfo) {
-  return get('EventTexts/?cultureInfo=' + cultureInfo);
+  return get('EventTexts/?CultureInfo=' + cultureInfo);
 }
 
 let dropDownItems = {};
