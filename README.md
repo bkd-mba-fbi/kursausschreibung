@@ -69,3 +69,5 @@ You can download releases on the [releases page](https://github.com/erz-mba-fbi/
 ## Integration
 
 For the integration into an html page you need a simple html configuration in header and body of the page in which you want to publish the module. Please see section `MODULE head configuration` and `MODULE MAIN APPLICATION` in `index.html`.
+
+If you want to be sure that after authentication by the module the correct address is always used use `OPTION REDIRECT` in the `index.html`.
