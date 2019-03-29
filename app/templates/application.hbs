@@ -87,14 +87,14 @@
         <h2 class="uk-h3 uk-card-title">{{translate "legend"}}</h2>
 
         <ul class="uk-list uk-list-divider">
-          <li>
-            {{status-lamp status="green"}}{{translate "greenLamp"}}</li>
-          <li>
-            {{status-lamp status="yellow"}}{{translate "yellowLamp"}}</li>
-          <li>
-            {{status-lamp status="red"}}{{translate "redLamp"}}</li>
-          <li>
-            {{status-lamp status="orange"}}{{translate "orangeLamp"}}</li>
+          <li class="uk-flex">
+            <span>{{status-lamp status="green"}}</span><span>{{translate "greenLamp"}}</span></li>
+          <li class="uk-flex">
+            <span>{{status-lamp status="yellow"}}</span><span>{{translate "yellowLamp"}}</span></li>
+          <li class="uk-flex">
+            <span>{{status-lamp status="red"}}</span><span>{{translate "redLamp"}}</span></li>
+          <li class="uk-flex">
+            <span>{{status-lamp status="orange"}}</span><span>{{translate "orangeLamp"}}</span></li>
         </ul>
       </div>
 
