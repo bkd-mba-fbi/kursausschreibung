@@ -15,6 +15,7 @@ const Router = EmberRouter.extend({
 });
 
 Router.map(function () {
+  this.route('permalink', { path: '/uid/:event_id' });
   this.route('list', { path: '/:area_of_education' }, function () {
     this.route('category', { path: '/:category' }, function () {
       this.route('event', { path: '/:event_id' }, function () {
