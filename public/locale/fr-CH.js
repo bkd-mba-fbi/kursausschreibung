@@ -8,6 +8,7 @@ window.kursausschreibung.locale["fr-CH"] = {
   "legend": "Légende",
   "noResults": "Pas de résultats.",
   "greenLamp": "Places libres disponibles",
+  "chartreuseLamp": "exécution garantie",
   "yellowLamp": "La date limite d'inscription a expiré.",
   "redLamp": "Toutes les places sont réservées.",
   "orangeLamp": "L'enregistrement sur Internet n'est pas possible",

@@ -3,7 +3,7 @@ import { underscore } from '@ember/string';
 import EmberObject, { computed } from '@ember/object';
 import $ from 'jquery';
 import { getEvents, getEvent, getLessons, getEventLocations, getEventTexts } from './api';
-import { isGreen, isYellow, isRed } from './status';
+import { isGreen, isChartreuse, isYellow, isRed } from './status';
 import ObjectProxy from '@ember/object/proxy';
 import { formatDate, combineDate, isInSubscriptionRange, removeMinutes } from './date-helpers';
 import { all } from 'rsvp';
@@ -280,6 +280,10 @@ function createEmberObject(event) {
     status: computed('FreeSeats', function () {
       if (isGreen(this, isInSubscriptionRange)) {
         return 'green';
+      }
+
+      if (isChartreuse(this, isInSubscriptionRange)) {
+        return 'chartreuse';
       }
 
       if (isYellow(this, isInSubscriptionRange)) {

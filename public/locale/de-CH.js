@@ -10,6 +10,7 @@ window.kursausschreibung.locale["de-CH"] = {
   "legend": "Legende",
   "noResults": "Keine Ergebnisse",
   "greenLamp": "Freie Plätze vorhanden",
+  "chartreuseLamp": "Garantierte Durchführung",
   "yellowLamp": "Anmeldefrist abgelaufen",
   "redLamp": "Alle Plätze belegt",
   "orangeLamp": "Anmeldung im Internet nicht möglich",

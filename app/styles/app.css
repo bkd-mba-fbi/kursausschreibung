@@ -30,10 +30,7 @@
   min-height: 80px;
 }
 
-.uk-scope .lamp-red,
-.uk-scope .lamp-green,
-.uk-scope .lamp-orange,
-.uk-scope .lamp-yellow {
+.uk-scope .status-lamp {
   display: inline-block;
   height: 16px;
   width: 16px;
@@ -47,6 +44,10 @@
 
 .uk-scope .lamp-green {
   background-color: green;
+}
+
+.uk-scope .lamp-chartreuse {
+  background-color: chartreuse;
 }
 
 .uk-scope .lamp-orange {

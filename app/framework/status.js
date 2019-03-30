@@ -16,10 +16,23 @@ function createStatusCallback(settingsValue, defaultImplementation) {
 
 // see "Event Status Definition" in documentation
 let isGreen = createStatusCallback(settings.lampIsGreen, function (event) {
-  return (event.AllowSubscriptionInternetByStatus &&
+  return (
+    event.AllowSubscriptionInternetByStatus &&
     event.TypeOfSubscription !== 1 &&
     isInSubscriptionRange(event) &&
-    event.FreeSeats > 0);
+    event.FreeSeats > 0 &&
+    (event.MaxParticipants - event.FreeSeats) < event.MinParticipants
+  );
+});
+
+let isChartreuse = createStatusCallback(settings.lampIsChartreuse, function (event) {
+  return (
+    event.AllowSubscriptionInternetByStatus &&
+    event.TypeOfSubscription !== 1 &&
+    isInSubscriptionRange(event) &&
+    event.FreeSeats > 0 &&
+    (event.MaxParticipants - event.FreeSeats) >= event.MinParticipants
+  );
 });
 
 let isYellow = createStatusCallback(settings.lampIsYellow, function (event) {
@@ -38,4 +51,4 @@ let isRed = createStatusCallback(settings.lampIsRed, function (event) {
   );
 });
 
-export { isGreen, isYellow, isRed };
+export { isGreen, isChartreuse, isYellow, isRed };
