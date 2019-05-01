@@ -7,7 +7,12 @@
   </li>
 </ol>
 
-<h2>{{status-lamp status=model.status}}{{model.displayData.Designation}}</h2>
+<h2>
+  <span class="uk-flex">
+    <span>{{status-lamp status=model.status}}</span>
+    <span>{{model.displayData.Designation}}</span>
+  </span>
+</h2>
 {{event-details-table event=model}}
 
 {{! FORM }}
