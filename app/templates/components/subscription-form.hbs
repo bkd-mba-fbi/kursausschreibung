@@ -1,4 +1,4 @@
-<form autocomplete="on" onsubmit={{action "submit"}} class="uk-grid-small uk-form-horizontal" data-uk-grid>
+<form id="subscriptionForm" autocomplete="on" onsubmit={{action "submit"}} class="uk-grid-small uk-form-horizontal" data-uk-grid>
   {{#if userSettings.isLoggedIn}}
     <span class="uk-text-muted">{{translate "useLogin" userSettings.FullName}}</span>
   {{else}}
@@ -36,3 +36,6 @@
     <input class="uk-button uk-button-primary uk-float-left" type="submit" value={{translate "subscribe"}}> {{link-to (translate "back") "list.category.event" classNames="uk-button uk-button-default uk-float-right"}}
   </div>
 </form>
+<script>
+      document.getElementById('subscriptionForm').scrollIntoView({behavior:'smooth'});
+</script>

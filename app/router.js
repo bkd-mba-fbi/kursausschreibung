@@ -10,7 +10,7 @@ const Router = EmberRouter.extend({
 
   didTransition() {
     this._super(...arguments);
-    rootElement.scrollIntoView();
+    rootElement.scrollIntoView({behavior:'smooth'});    
   }
 });
 
