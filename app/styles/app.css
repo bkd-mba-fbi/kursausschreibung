@@ -95,7 +95,7 @@
 }
 
 /* small mobile */
-@media (max-width: 449px) {
+@media (max-width: 499px) {
   .uk-scope .details-table.table-collapse td {
     display: block;
   }
