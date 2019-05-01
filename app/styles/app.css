@@ -89,6 +89,9 @@
     left: calc((100vw - 200px) / 2);
     z-index: 200; /* always on top */
   }
+  .uk-scope ol.steps {
+    font-size: 14px;
+  }
 }
 
 /* small mobile */
@@ -103,37 +106,25 @@
   .uk-scope .details-table.table-collapse td:last-child {
     padding-top: 12px;
   }
+  .uk-scope ol.steps span.stepText {
+    display: none;
+  }
+
 }
 
-/*!
- * progress bar
- * based on https://ericheikes.com/creating-a-progress-bar-with-css/
- */
+/*Process Steps */
 .uk-scope ol.steps {
   list-style: none;
   margin: 0;
   padding: 0;
   overflow: hidden;
-  font-size: 13px;
-  line-height: 20px;
-  font-weight: bold;
-}
-
-.uk-scope ol.steps li {
-  list-style-image: none;
-  list-style-type: none;
-  margin-left: 0;
-  text-align: center;
-  background: #E0ECFF;
-  position: relative;
-  margin-left: 43px;
+  background-color: white;
 }
 
 .uk-scope ol.steps li:after {
   position: absolute;
   top: 50%;
   left: 100%;
-  content: " ";
   height: 0;
   width: 0;
   pointer-events: none;
@@ -156,15 +147,13 @@
 }
 
 .uk-scope ol.steps li span {
-  display: block;
-  padding: 9px 28px 9px 9px;
+  padding: 9px 9px 9px 9px;
 }
 
 .uk-scope ol.steps li span:after {
   position: absolute;
   top: 50%;
   right: 100%;
-  content: " ";
   height: 0;
   width: 0;
   pointer-events: none;
@@ -176,27 +165,11 @@
 
 .uk-scope ol.steps>li {
   float: left;
-  color: black;
+  color: #666;
 }
 
 .uk-scope ol.steps li.current {
-  color: #fff;
-  background: #1e87f0;
+  color: black;
 }
 
-.uk-scope ol.steps li.current:after {
-  border-left-color: #1e87f0;
-}
 
-.uk-scope ol.steps li.current span:after {
-  border-color: #1e87f0;
-  border-left-color: transparent;
-}
-
-.uk-scope ol.steps li.step1 {
-  z-index: 1;
-}
-
-.uk-scope ol.steps li.step2 {
-  z-index: 0;
-}
