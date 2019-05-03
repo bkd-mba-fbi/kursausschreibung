@@ -1,16 +1,34 @@
-<ol class="steps">
+<h2>
+  <span class="uk-flex">
+    <span>{{status-lamp status=model.status}}</span>
+    <span>{{model.displayData.Designation}}</span>
+  </span>
+</h2>
+{{event-details-table event=model}}
+<hr>
+<ol id="subscriptionProcess" class="steps uk-margin-bottom" style="z-index: 980;" uk-sticky="offset: 0; bottom: #top">
   <li class="step1 current">
-    <span>{{translate "personalData"}}</span>
+    <span>
+      <span class="stepIcon" uk-icon="icon: file-edit; ratio: 1.5"></span>
+      <span class="stepText">{{translate "personalData"}}</span>
+    </span>
   </li>
+
+  <li class="stepConnector">
+      <span uk-icon="icon: chevron-right; ratio: 1.5"></span>
+  </li>
+
   <li class="step2">
-    <span>{{translate "confirmation"}}</span>
+    <span>
+      <span class="stepIcon" uk-icon="icon: file-text; ratio: 1.5"></span>
+      <span  class="stepText">{{translate "confirmation"}}</span>
+    </span>
   </li>
 </ol>
-
-<h2>{{status-lamp status=model.status}}{{model.displayData.Designation}}</h2>
-{{event-details-table event=model}}
-
 {{! FORM }}
 {{subscription-form fields=fields companyFields=companyFields
   subscriptionDetailFields=subscriptionDetailFields eventId=model.Id
   userSettings=model.userSettings subscribe=(action "subscribe")}}
+<script>
+      document.getElementById('subscriptionProcess').scrollIntoView({behavior:'smooth'});
+</script>

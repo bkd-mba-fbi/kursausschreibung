@@ -1,8 +1,9 @@
 import { A } from '@ember/array';
+import { underscore } from '@ember/string';
 import EmberObject, { computed } from '@ember/object';
 import $ from 'jquery';
 import { getEvents, getEvent, getLessons, getEventLocations, getEventTexts } from './api';
-import { isGreen, isYellow, isRed } from './status';
+import { isGreen, isChartreuse, isYellow, isRed } from './status';
 import ObjectProxy from '@ember/object/proxy';
 import { formatDate, combineDate, isInSubscriptionRange, removeMinutes } from './date-helpers';
 import { all } from 'rsvp';
@@ -172,7 +173,7 @@ function addLessonsToEvents(lessons) {
 function filterEvents(events, language) {
   // filter out events with undesired parameters
 
-  // backwards compatibility fallback for single hostId filter 
+  // backwards compatibility fallback for single hostId filter
   if (settings.hostIds instanceof Array) {
     events = events.filter(event => settings.hostIds.indexOf(event.HostId) !== -1);
   }
@@ -181,19 +182,19 @@ function filterEvents(events, language) {
     if (settings.initialListFilters.hostIds instanceof Array) {
       events = events.filter(event => settings.initialListFilters.hostIds.indexOf(event.HostId) !== -1);
     }
-  
+
     if (settings.initialListFilters.eventCategoryIds instanceof Array) {
       events = events.filter(event => settings.initialListFilters.eventCategoryIds.indexOf(event.EventCategoryId) !== -1);
     }
-  
+
     if (settings.initialListFilters.eventLevelIds instanceof Array) {
       events = events.filter(event => settings.initialListFilters.eventLevelIds.indexOf(event.EventLevelId) !== -1);
     }
-  
+
     if (settings.initialListFilters.eventTypeIds instanceof Array) {
       events = events.filter(event => settings.initialListFilters.eventTypeIds.indexOf(event.EventTypeId) !== -1);
     }
-  
+
     if (settings.initialListFilters.statusIds instanceof Array) {
       events = events.filter(event => settings.initialListFilters.statusIds.indexOf(event.StatusId) !== -1);
     }
@@ -241,7 +242,7 @@ function putIntoAssocArrays(event) {
 
   // area
   let areaName = event.AreaOfEducation;
-  let areaKey = (event.areaKey = areaName.toLowerCase());
+  let areaKey = event.areaKey = underscore(areaName);
 
   if (!eventsByArea.areas.hasOwnProperty(areaKey)) {
     eventsByArea.areas[areaKey] = {
@@ -256,7 +257,7 @@ function putIntoAssocArrays(event) {
 
   // category (in area)
   let categoryName = event.EventCategory;
-  let categoryKey = (event.categoryKey = categoryName.toLowerCase());
+  let categoryKey = event.categoryKey = underscore(categoryName);
 
   if (!eventsByArea.areas[areaKey].categories.hasOwnProperty(categoryKey)) {
     eventsByArea.areas[areaKey].categories[categoryKey] = {
@@ -279,6 +280,10 @@ function createEmberObject(event) {
     status: computed('FreeSeats', function () {
       if (isGreen(this, isInSubscriptionRange)) {
         return 'green';
+      }
+
+      if (isChartreuse(this, isInSubscriptionRange)) {
+        return 'chartreuse';
       }
 
       if (isYellow(this, isInSubscriptionRange)) {

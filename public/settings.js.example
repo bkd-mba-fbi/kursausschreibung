@@ -1,6 +1,6 @@
 window.kursausschreibung = window.kursausschreibung || {};
 window.kursausschreibung.settings = {
-  // only show matching events (excepts array also if one value, [123])
+  // only show matching events (expects array also if one value, [123]) (optional)
   "initialListFilters": {
     "hostIds": null,
     "eventCategoryIds": null,
@@ -58,9 +58,16 @@ window.kursausschreibung.settings = {
   // enable/disable subscription (required)
   "canDoSubscription": {
     "green": true,
+    "chartreuse": true,
     "yellow": false,
     "red": false,
     "orange": false
+  },
+
+  // when a field is optional or not in the form you can set a default value.
+  // it will overwrite null values in the post to the person endpoint (optional)
+  "personDefaultValue": {
+    "CountryId": "CH",
   },
 
   // fields for the form (required)
@@ -146,6 +153,7 @@ window.kursausschreibung.settings = {
   // these get executed in order to determine the status of an event
   // the parameters of the callback are isInSubscriptionRange and event
   "lampIsGreen": null,
+  "lampIsChartreuse": null,
   "lampIsYellow": null,
   "lampIsRed": null,
 
@@ -170,6 +178,11 @@ window.kursausschreibung.settings = {
 
   // property by which the event-list should be sorted (optional)
   "sortEventList": "Designation",
+
+	// when a field is optional or not in the form you can set a default value.
+	// it will overwrite null values in the post to the person endpoint (optional)
+	"personDefaultValue": {"CountryId": "CH"
+  }
 
   // set this to true to only show events with matching language (optional)
   "languageOfInstructionFilter": false

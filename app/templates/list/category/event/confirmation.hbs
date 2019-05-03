@@ -1,9 +1,20 @@
-<ol class="steps">
+<ol class="steps" style="z-index: 980;" uk-sticky="offset: 0; bottom: #top">
   <li class="step1">
-    <span>{{translate "personalData"}}</span>
+    <span>
+      <span class="stepIcon" uk-icon="icon: file-edit; ratio: 1.5"></span>
+      <span class="stepText">{{translate "personalData"}}</span>
+    </span>
   </li>
+
+  <li class="stepConnector">
+      <span uk-icon="icon: chevron-right; ratio: 1.5"></span>
+  </li>
+
   <li class="step2 current">
-    <span>{{translate "confirmation"}}</span>
+    <span>
+      <span class="stepIcon" uk-icon="icon: file-text; ratio: 1.5"></span>
+      <span  class="stepText">{{translate "confirmation"}}</span>
+    </span>
   </li>
 </ol>
 <h2>

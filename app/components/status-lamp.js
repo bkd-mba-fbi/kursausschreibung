@@ -4,6 +4,7 @@ import { getString } from 'kursausschreibung/framework/translate';
 
 const statuses = {
   green: { tooltip: getString('greenLamp'), className: 'lamp-green' },
+  chartreuse: { tooltip: getString('chartreuseLamp'), className: 'lamp-chartreuse' },
   yellow: { tooltip: getString('yellowLamp'), className: 'lamp-yellow' },
   red: { tooltip: getString('redLamp'), className: 'lamp-red' },
   orange: { tooltip: getString('orangeLamp'), className: 'lamp-orange' }
@@ -27,5 +28,6 @@ export default Component.extend({
 
   tagName: 'span',
   attributeBindings: ['tooltip:data-uk-tooltip'],
+  classNames: ['status-lamp'],
   classNameBindings: ['color']
 });
