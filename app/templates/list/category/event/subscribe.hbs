@@ -1,4 +1,12 @@
-<ol class="steps" style="z-index: 980;" uk-sticky="offset: 0; bottom: #top">
+<h2>
+  <span class="uk-flex">
+    <span>{{status-lamp status=model.status}}</span>
+    <span>{{model.displayData.Designation}}</span>
+  </span>
+</h2>
+{{event-details-table event=model}}
+<hr>
+<ol class="steps uk-margin-bottom" style="z-index: 980;" uk-sticky="offset: 0; bottom: #top">
   <li class="step1 current">
     <span>
       <span class="stepIcon" uk-icon="icon: file-edit; ratio: 1.5"></span>
@@ -17,15 +25,6 @@
     </span>
   </li>
 </ol>
-
-<h2>
-  <span class="uk-flex">
-    <span>{{status-lamp status=model.status}}</span>
-    <span>{{model.displayData.Designation}}</span>
-  </span>
-</h2>
-{{event-details-table event=model}}
-
 {{! FORM }}
 {{subscription-form fields=fields companyFields=companyFields
   subscriptionDetailFields=subscriptionDetailFields eventId=model.Id
