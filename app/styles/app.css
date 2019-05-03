@@ -138,16 +138,12 @@
   margin-left: 0;
 }
 
-.uk-scope ol.steps li:first-child span {
-  padding: 9px;
-}
-
 .uk-scope ol.steps li:first-child span:after {
   border: none;
 }
 
-.uk-scope ol.steps li span {
-  padding: 9px 9px 9px 9px;
+.uk-scope ol.steps li.stepConnector {
+  padding: 0px 20px 0px 20px;
 }
 
 .uk-scope ol.steps li span:after {
