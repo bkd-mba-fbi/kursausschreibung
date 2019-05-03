@@ -6,7 +6,7 @@
 </h2>
 {{event-details-table event=model}}
 <hr>
-<ol class="steps uk-margin-bottom" style="z-index: 980;" uk-sticky="offset: 0; bottom: #top">
+<ol id="subscriptionProcess" class="steps uk-margin-bottom" style="z-index: 980;" uk-sticky="offset: 0; bottom: #top">
   <li class="step1 current">
     <span>
       <span class="stepIcon" uk-icon="icon: file-edit; ratio: 1.5"></span>
@@ -29,3 +29,6 @@
 {{subscription-form fields=fields companyFields=companyFields
   subscriptionDetailFields=subscriptionDetailFields eventId=model.Id
   userSettings=model.userSettings subscribe=(action "subscribe")}}
+<script>
+      document.getElementById('subscriptionProcess').scrollIntoView({behavior:'smooth'});
+</script>
