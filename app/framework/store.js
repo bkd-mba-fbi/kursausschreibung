@@ -203,7 +203,9 @@ function filterEvents(events, language) {
   // filter out events with non-matching LanguageOfInstruction
   if (settings.languageOfInstructionFilter) {
     events = events.filter(event => event.LanguageOfInstruction === 'Bilingue' ||
+      (event.LanguageOfInstruction === "1" && language === 'de-CH') ||
       (event.LanguageOfInstruction === 'Deutsch' && language === 'de-CH') ||
+      (event.LanguageOfInstruction === "2" && language === 'en-US') ||
       (event.LanguageOfInstruction === 'Französisch' && language === 'en-US'));
   }
 
