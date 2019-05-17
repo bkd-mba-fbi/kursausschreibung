@@ -1,3 +1,5 @@
+import { getDateTimeForIcs } from './date-helpers';
+
 export function getIcsFileFromEvent(event) {
 
 /*! ics.js Wed Aug 20 2014 17:23:02 
@@ -32,7 +34,7 @@ var ics=function(e,t){"use strict";{if(!(navigator.userAgent.indexOf("MSIE")>-1&
     event.lessons.forEach(lesson => {
         let leadership = !event.Leadership ? '': ' ('+event.Leadership+')';
         let lessonDesignation = !lesson.Designation ? '': lesson.Designation;
-        cal.addEvent(event.Designation + leadership.replace(/(\r\n|\n|\r)/gm,""), lessonDesignation, eventlocation.replace(/(\r\n|\n|\r)/gm,""), lesson.DateTimeFrom, lesson.DateTimeTo);
+        cal.addEvent(event.Designation + leadership.replace(/(\r\n|\n|\r)/gm,""), lessonDesignation, eventlocation.replace(/(\r\n|\n|\r)/gm,""), getDateTimeForIcs(lesson.DateTimeFrom), getDateTimeForIcs(lesson.DateTimeTo));
     });
     
     //makelogs(cal);

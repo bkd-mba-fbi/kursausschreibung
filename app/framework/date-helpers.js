@@ -116,3 +116,11 @@ export function getDMY(dateString) {
 export function getYMD(dateString) {
   return isDMY(dateString) ? dateString.split('.').reverse().join('-') : format(dateString, 'YYYY-MM-DD');
 }
+
+/**
+ * returns dateString in from format yyyy-mm-ddThh:mm:ss to yyyy\mm\dd hh:mm:ss
+ * @param {string} dateString the date to convert
+ */
+export function getDateTimeForIcs(dateString) {
+  return dateString.replace(new RegExp('-', 'g'), '/').replace(new RegExp('T', 'g'), ' ');
+}
