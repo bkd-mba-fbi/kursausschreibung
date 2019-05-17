@@ -1,4 +1,4 @@
-# kursausschreibung 3.0.0
+# kursausschreibung 3.0.1
 
 [![Build Status](https://travis-ci.org/erz-mba-fbi/kursausschreibung.svg?branch=master)](https://travis-ci.org/erz-mba-fbi/kursausschreibung)
 
