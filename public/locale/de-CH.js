@@ -45,6 +45,7 @@ window.kursausschreibung.locale["de-CH"] = {
 
   // properties of an event
   "subscriptionFrom": "Start",
+  "subscriptionDateTo":"Anmeldefrist",
   "location": "Ort",
   "price": "Preis",
   "buildingAddress": "Adresse",

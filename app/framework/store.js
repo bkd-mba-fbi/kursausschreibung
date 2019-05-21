@@ -8,7 +8,7 @@ import ObjectProxy from '@ember/object/proxy';
 import { formatDate, combineDate, isInSubscriptionRange, removeMinutes } from './date-helpers';
 import { all } from 'rsvp';
 import settings from './settings';
-import { getLanguage } from './translate';
+import { getLanguage, getString } from './translate';
 
 let initialized = false;
 
@@ -223,6 +223,9 @@ function prepareEvent(event) {
   // add properties to the events
   addPropertiesToEvent(event);
 
+  // set LanguageOfInstruction, if int to string translate value
+  setLanguageEventFromIntToString(event);
+
   // create proxy for human-readable values
   addDisplayData(event);
 
@@ -364,3 +367,22 @@ function addPropertiesToEvent(event) {
   }
 }
 
+/**
+ * if LanguageOfInstruction is number translate it
+ * @param {object} event event returned by the API
+ */
+function setLanguageEventFromIntToString(event){
+
+  if (event.LanguageOfInstruction === '2') {
+    event.LanguageOfInstruction = getString('french');
+  } else if (event.LanguageOfInstruction === '1') {
+    event.LanguageOfInstruction = getString('german');
+  } else if (event.LanguageOfInstruction === '133') {
+    event.LanguageOfInstruction = getString('english');
+  } else if (event.LanguageOfInstruction === '284') {
+  event.LanguageOfInstruction = getString('italian');
+  } else if (event.LanguageOfInstruction === '285') {
+  event.LanguageOfInstruction = getString('spain');
+  }
+
+}
