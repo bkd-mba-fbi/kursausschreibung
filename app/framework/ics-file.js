@@ -1,5 +1,6 @@
 import { getDateTimeForIcs } from './date-helpers';
 
+/* eslint-disable */
 export function getIcsFileFromEvent(event) {
 
 /*! ics.js Wed Aug 20 2014 17:23:02 
