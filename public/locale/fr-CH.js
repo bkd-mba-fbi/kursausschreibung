@@ -30,6 +30,7 @@ window.kursausschreibung.locale["fr-CH"] = {
   "errorMessage": "Une erreur imprévue s'est produite. Essayez encore une fois.",
   "noEvents": "aucun événement disponible",
   "lessonExportToIcs": "Exporter pour le calendrier", 
+  "backToSubscripton": "Formulaire d'inscription",
 
   // properties of an event
   "subscriptionFrom": "Lancement",

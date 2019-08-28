@@ -42,6 +42,7 @@ window.kursausschreibung.locale["de-CH"] = {
   "subscriptionFailed": "Anmeldung fehlgeschlagen.",
   "noEvents": "keine Anlässe verfügbar",
   "useLogin": "Ihre Anmeldung wird gemäss Ihrem Login erstellt {0}.",
+  "backToSubscripton": "Anmeldeformular",
 
   // properties of an event
   "subscriptionFrom": "Start",
