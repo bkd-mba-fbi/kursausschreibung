@@ -69,6 +69,20 @@ export function isInSubscriptionRange(event) {
 }
 
 /**
+ * return true when the DateFrom greater or equal
+ * to current date is. If DateFrom null then current date
+ * @param {object} event event to check
+ */
+export function eventStarted(event) {
+  let now = new Date();
+  if (event.DateFrom === null) {
+    return now.getTime() === now.getTime();
+  } 
+  return parse(event.DateFrom).getTime() >= now.getTime();
+}
+
+
+/**
  * combine a date and a time to a single date object
  * this returns null when it fails
  * @param {string} dateString a string containing the date
