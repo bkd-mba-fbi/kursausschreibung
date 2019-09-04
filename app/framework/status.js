@@ -20,8 +20,7 @@ let isGreen = createStatusCallback(settings.lampIsGreen, function (event) {
     event.AllowSubscriptionInternetByStatus &&
     event.TypeOfSubscription !== 1 &&
     isInSubscriptionRange(event) &&
-    event.FreeSeats > 0 &&
-    (event.MaxParticipants - event.FreeSeats) < event.MinParticipants
+    ((event.FreeSeats > 0) && ((event.MaxParticipants - event.FreeSeats) < event.MinParticipants) || event.EventTypeId === 1)
   );
 });
 
