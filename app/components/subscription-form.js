@@ -2,12 +2,12 @@ import Component from '@ember/component';
 import { setDataToSubmit } from 'kursausschreibung/framework/storage';
 import { getString } from 'kursausschreibung/framework/translate';
 import { getDMY, getYMD, formatDate } from 'kursausschreibung/framework/date-helpers';
-import { getZipLocation } from 'kursausschreibung/helpers/zipLocation';
+import { getLocationFromZip } from 'kursausschreibung/helpers/zipLocation';
 
 export default Component.extend({
   useCompanyAddress: false,
   focusIn() {
-    getZipLocation();
+    getLocationFromZip();
   },
   actions: {
     submit(event) {
