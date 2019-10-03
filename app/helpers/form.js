@@ -1,5 +1,56 @@
-export function getLocationFromZip(){
+export function formValidierung() {
+    var birthdate = document.getElementsByName('Birthdate');
+    formDanger(birthdate[0], dateNotGreaterNow(birthdate[0].value));
 
+}
+  
+function formDanger(element,valid) {
+    if (valid) {
+        element.classList.remove("uk-form-danger");
+      } else {
+        element.classList.add("uk-form-danger");
+      }
+}
+
+function dateNotGreaterNow(date){
+    return Date.parse(date) > Date.now() ? false : true;
+}
+
+
+export function helperSocialSecurityNumber(){
+    var that = document.getElementsByName('SocialSecurityNumber');
+    that = that[0];
+    formDanger(that,false);
+    var number = that.value;
+
+    //set delimiter "."
+    if(number.length === 3) {
+      that.value = number + '.';
+    } else if (number.length === 8) {
+      that.value = number + '.';
+    } else if (number.length === 13) {
+      that.value = number + '.';
+    } 
+    
+    //Check is digit 0-9
+    var lastCharacter = number.slice(-1);
+    if(number.length === 4 || number.length === 9 || number.length === 14) {
+     lastCharacter = '.'; 
+     that.value = number.substr(0,number.length-1) + lastCharacter;
+    }
+    else if(lastCharacter.match(/[0-9]/) === null) 
+    {
+      that.value = number.substr(0,number.length-1);
+    }
+    
+    //final Check format correct nnn.nnnn.nnnn.nn
+    if (number.length >= 16) {
+        that.value = number.substr(0,16);
+        that.value.match(/[0-9]{3}\.[0-9]{4}\.[0-9]{4}\.[0-9]{2}/) ? formDanger(that,true) : formDanger(that,false);
+    } 
+}
+
+export function getLocationFromZip(){
 
     let locationCodes = 'locationCodes';
     if(document.getElementById(locationCodes) !== null) {
@@ -12,8 +63,6 @@ export function getLocationFromZip(){
 
     let zips = document.getElementsByName('Zip');
     zips.forEach(function(zip) { 
-
-    //var zip = document.getElementsByName('Zip')[0].value;
 
         let locations = zipLocation();
         locations.forEach(function(element){    
