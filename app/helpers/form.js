@@ -1,26 +1,28 @@
-export function formValidierung() {
-    var birthdate = document.getElementsByName('Birthdate');
-    formDanger(birthdate[0], dateNotGreaterNow(birthdate[0].value));
-
-}
-  
-function formDanger(element,valid) {
+/**
+ * if valid add class "uk-form-danger" else remove
+ * @param {object} element 
+ * @param {boolean} valid 
+ */
+export function formDanger(element,valid) {
+    var formClass = 'uk-form-danger';
     if (valid) {
-        element.classList.remove("uk-form-danger");
+        element.classList.add(formClass);
       } else {
-        element.classList.add("uk-form-danger");
+        element.classList.remove(formClass);
       }
 }
 
-function dateNotGreaterNow(date){
-    return Date.parse(date) > Date.now() ? false : true;
-}
-
-
-export function helperSocialSecurityNumber(){
-    var that = document.getElementsByName('SocialSecurityNumber');
-    that = that[0];
-    formDanger(that,false);
+/**
+ * input helper 
+ * set delimiter "."
+ * check is digit 0-9
+ * 
+ * validation
+ * check format correct nnn.nnnn.nnnn.nn
+ * @param {object} element 
+ */
+export function helperSocialSecurityNumber(that){
+    formDanger(that,true);
     var number = that.value;
 
     //set delimiter "."
@@ -46,10 +48,41 @@ export function helperSocialSecurityNumber(){
     //final Check format correct nnn.nnnn.nnnn.nn
     if (number.length >= 16) {
         that.value = number.substr(0,16);
-        that.value.match(/[0-9]{3}\.[0-9]{4}\.[0-9]{4}\.[0-9]{2}/) ? formDanger(that,true) : formDanger(that,false);
+        if (that.value.match(/[0-9]{3}\.[0-9]{4}\.[0-9]{4}\.[0-9]{2}/)) {
+                if ('000.0000.0000.00' !== number) {
+                    var numberString = number.replace(/\./g,'');
+                    var valid = ean13checkNumber(numberString);
+                    valid ? formDanger(that,false) : formDanger(that,true);
+                }
+        } else { 
+            formDanger(that,true);
+        }
+            
     } 
+
+
 }
 
+
+function ean13checkNumber(number) {
+    if(number.length === 13) {
+        var numberReverse = number.substr(0,12);
+        numberReverse = numberReverse.split('').join('');
+        var sum = 0;
+        for (var i = 0; i < numberReverse.length; i++) {
+          var int = numberReverse.charAt(i); 
+          sum = (int * (i & 1 === 1  ? 3 : 1)) + sum;
+        }
+        var checkNummer = 10-(sum % 10);
+        checkNummer = checkNummer === 10 ? 0 : checkNummer;
+        return Number(number.slice(-1)) === checkNummer ? true : false;
+    }
+    return false;
+}
+
+/**
+ * creates a datalist for the location considering the zip code 
+ */
 export function getLocationFromZip(){
 
     let locationCodes = 'locationCodes';
@@ -79,7 +112,9 @@ export function getLocationFromZip(){
     
     }
 
-
+/**
+ * returns every zip and location for CH
+ */
 export function zipLocation () {
 
     let zipLocation = [

@@ -138,3 +138,11 @@ export function getYMD(dateString) {
 export function getDateTimeForIcs(dateString) {
   return dateString.replace(new RegExp('-', 'g'), '/').replace(new RegExp('T', 'g'), ' ');
 }
+
+/**
+ * returns true if date > now
+ * @param {string} dateString YYYY-MM-DD
+ */
+export function dateGreaterNow(date){
+    return Date.parse(date) > Date.now() ? true : false;
+}

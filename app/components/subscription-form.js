@@ -2,20 +2,9 @@ import Component from '@ember/component';
 import { setDataToSubmit } from 'kursausschreibung/framework/storage';
 import { getString } from 'kursausschreibung/framework/translate';
 import { getDMY, getYMD, formatDate } from 'kursausschreibung/framework/date-helpers';
-import { getLocationFromZip, formValidierung, helperSocialSecurityNumber } from 'kursausschreibung/helpers/form';
 
 export default Component.extend({
   useCompanyAddress: false,
-  focusIn() {
-    getLocationFromZip();
-  },
-  change() {
-    formValidierung();
-    helperSocialSecurityNumber();
-  },
-  keyUp(){
-    helperSocialSecurityNumber();
-  },
   actions: {
     submit(event) {
       event.preventDefault();
