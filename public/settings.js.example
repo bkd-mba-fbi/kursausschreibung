@@ -185,5 +185,8 @@ window.kursausschreibung.settings = {
   }
 
   // set this to true to only show events with matching language (optional)
-  "languageOfInstructionFilter": false
+  "languageOfInstructionFilter": false,
+
+  // Header Offset for scrolling
+  "headerOffset": 10
 };
