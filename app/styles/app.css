@@ -80,6 +80,11 @@
   display: none; /* this doesn't display correctly in chrome+uikit so we hide it */
 }
 
+.uk-scope #subscriptionProcess {
+  padding: 20px 0 20px 0;
+  border-bottom: 1px solid #e5e5e5; 
+}
+
 /* mobile */
 @media (max-width: 959px) {
   .uk-scope .subscribe-button {

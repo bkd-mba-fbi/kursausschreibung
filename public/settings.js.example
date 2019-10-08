@@ -103,7 +103,7 @@ window.kursausschreibung.settings = {
         {
           "id": "Location",
           "dataType": "string",
-          "options": { "required": true, "autocomplete": "address-level2" }
+          "options": { "required": true, "autocomplete": "address-level2", "datalist": "locationCodes"}
         },
         {
           "id": "PhoneMobile",
@@ -140,7 +140,7 @@ window.kursausschreibung.settings = {
         {
           "id": "Location",
           "dataType": "string",
-          "options": { "required": true }
+          "options": { "required": true, "datalist": "locationCodes" }
         }
       ]
     }
@@ -185,5 +185,8 @@ window.kursausschreibung.settings = {
   }
 
   // set this to true to only show events with matching language (optional)
-  "languageOfInstructionFilter": false
+  "languageOfInstructionFilter": false,
+
+  // Header Offset for scrolling
+  "headerOffset": 10
 };

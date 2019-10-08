@@ -11,7 +11,7 @@ export default Component.extend({
 
       subscribe(this.$('form'), this);
       this.get('subscribe')();
-    }
+    }  
   }
 });
 

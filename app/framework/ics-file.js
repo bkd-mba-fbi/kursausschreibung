@@ -1,5 +1,6 @@
 import { getDateTimeForIcs } from './date-helpers';
 
+/* eslint-disable */
 export function getIcsFileFromEvent(event) {
 
 /*! ics.js Wed Aug 20 2014 17:23:02 
@@ -25,7 +26,7 @@ var ics=function(e,t){"use strict";{if(!(navigator.userAgent.indexOf("MSIE")>-1&
       }
 
     */
-    let eventlocation = event.ResourceDesignation + ', ' + event.BuildingName + ', ' + event.BuildingAddress + ' ' + event.BuildingZip +' '+ event.BuildingLocation;
+    let eventlocation = event.ResourceDesignation + ', ' + event.BuildingName + ', ' + event.BuildingAddress + ', ' + event.BuildingZip +' '+ event.BuildingLocation;
     if(event.ResourceDesignation === undefined) {
         eventlocation = !event.Location ? '' : event.Location;
     }

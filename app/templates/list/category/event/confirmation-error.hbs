@@ -1,4 +1,4 @@
-<ol class="steps" style="z-index: 980;" uk-sticky="offset: 0; bottom: #top">
+<ol id="subscriptionProcess" class="steps uk-margin-bottom" style="z-index: 980;" uk-sticky="offset: 0; bottom: #top">
   <li class="step1">
     <span>
       <span class="stepIcon" uk-icon="icon: file-edit; ratio: 1.5"></span>
@@ -17,8 +17,8 @@
     </span>
   </li>
 </ol>
-<span class="uk-text-large uk-text-danger uk-display-block uk-margin-top">{{translate "subscriptionFailed"}}
+<span class="uk-text-danger uk-display-block uk-margin-top">{{translate "subscriptionFailed"}}
   {{model.message}}</span>
 <div class="uk-margin">
-  {{link-to (translate "backToCourses") "list.category" classNames="uk-button uk-button-default uk-float-left"}}
+  {{link-to (translate "backToSubscripton") "list.category.event.subscribe" classNames="uk-button uk-button-default uk-float-left"}}
 </div>

@@ -5,7 +5,7 @@ import $ from 'jquery';
 import { getEvents, getEvent, getLessons, getEventLocations, getEventTexts } from './api';
 import { isGreen, isChartreuse, isYellow, isRed } from './status';
 import ObjectProxy from '@ember/object/proxy';
-import { formatDate, combineDate, isInSubscriptionRange, removeMinutes } from './date-helpers';
+import { formatDate, combineDate, isInSubscriptionRange, removeMinutes, eventStarted } from './date-helpers';
 import { all } from 'rsvp';
 import settings from './settings';
 import { getLanguage, getString } from './translate';
@@ -59,6 +59,14 @@ export function init() {
     getEventTexts(language)
   ]).then(function ([events, lessons, eventLocations, eventTexts]) {
 
+    // remove null-values (temporary fix, see #50)
+    /*let removeNull = array => array.filter(element => element !== null);
+        
+    events = removeNull(events);
+    lessons = removeNull(lessons);
+    eventLocations = removeNull(eventLocations);
+    eventTexts = removeNull(eventTexts);
+    */
     // filter events
     events = filterEvents(events, language);
 
@@ -209,6 +217,7 @@ function filterEvents(events, language) {
       (event.LanguageOfInstruction === 'Französisch' && language === 'en-US'));
   }
 
+  events = events.filter(event => eventStarted(event));
   return events;
 }
 

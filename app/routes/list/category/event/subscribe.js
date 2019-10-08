@@ -100,7 +100,7 @@ export default Route.extend({
         userSettings.isLoggedIn = userSettings.IdPerson !== 0;
 
         set(model, 'userSettings', userSettings);
-        set(model, 'subscriptionDetailFields', getSubscriptionDetailFields(A(subscriptionDetails).sortBy('Sort')));
+        set(model, 'subscriptionDetailFields', getSubscriptionDetailFields(A(subscriptionDetails).sortBy('Sort')));    
 
         if (userSettings.isLoggedIn === false) {
           let fields = getFormFields(settings, model.EventTypeId).addressFields;
