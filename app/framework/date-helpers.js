@@ -116,7 +116,7 @@ function isDMY(dateString) {
  * @param {string} dateString the date to convert
  */
 export function getDMY(dateString) {
-  return isDMY(dateString) ? dateString : format(dateString, 'L');
+  return isDMY(dateString) ? dateString : formatDate(dateString, 'L');
 }
 
 /**
@@ -124,7 +124,7 @@ export function getDMY(dateString) {
  * @param {string} dateString the date to convert
  */
 export function getYMD(dateString) {
-  return isDMY(dateString) ? dateString.split('.').reverse().join('-') : format(dateString, 'yyyy-MM-dd');
+  return isDMY(dateString) ? dateString.split('.').reverse().join('-') : formatDate(dateString, 'yyyy-MM-dd');
 }
 
 /**
