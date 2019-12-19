@@ -5,7 +5,7 @@ import $ from 'jquery';
 import { getEvents, getEvent, getLessons, getEventLocations, getEventTexts } from './api';
 import { isGreen, isChartreuse, isYellow, isRed } from './status';
 import ObjectProxy from '@ember/object/proxy';
-import { formatDate, combineDate, isInSubscriptionRange, removeMinutes, eventStarted } from './date-helpers';
+import { formatDate, combineDate, isInSubscriptionRange, removeMinutes, eventStarted, eventEnded } from './date-helpers';
 import { all } from 'rsvp';
 import settings from './settings';
 import { getLanguage, getString } from './translate';
@@ -217,7 +217,14 @@ function filterEvents(events, language) {
       (event.LanguageOfInstruction === 'Französisch' && language === 'en-US'));
   }
 
-  events = events.filter(event => eventStarted(event));
+  if (settings.showStartedEvents) {
+    // Filter out events which have not ended yet
+    events = events.filter(event => !eventEnded(event));
+  } else {
+    // Default behaviour, filter out events which have started
+    events = events.filter(event => eventStarted(event));
+  }
+
   return events;
 }
 
