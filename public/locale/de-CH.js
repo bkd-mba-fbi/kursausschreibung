@@ -43,7 +43,6 @@ window.kursausschreibung.locale["de-CH"] = {
   "noEvents": "keine Anlässe verfügbar",
   "useLogin": "Ihre Anmeldung wird gemäss Ihrem Login erstellt {0}.",
   "backToSubscripton": "Anmeldeformular",
-  "subscriptionNotice": "Wir melden uns bei Ihnen, um die Rechnungsadresse bestätigen zu können.",
 
   // properties of an event
   "subscriptionFrom": "Start",
