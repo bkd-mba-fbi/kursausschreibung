@@ -9,6 +9,9 @@ window.kursausschreibung.settings = {
     "statusIds": null,
   },
 
+  // show events which have already started, but not yet ended
+  "showStartedEvents": false,
+
   // items per page on the event-list (required)
   "itemsPerPage": 10,
 
