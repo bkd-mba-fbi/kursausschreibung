@@ -58,6 +58,7 @@ window.kursausschreibung.locale["de-CH"] = {
   // translations for the form
   "formFormOfAddress": "Anrede",
   "formFirstName": "Vorname",
+  "formFirstNameHint": "Geben Sie hier Ihren Vornamen ein",
   "formLastName": "Nachname",
   "formEmail2": "E-Mail-Adresse",
   "formBirthdate": "Geburtsdatum",

@@ -86,7 +86,7 @@ window.kursausschreibung.settings = {
         {
           "id": "FirstName",
           "dataType": "string",
-          "options": { "required": true, "autocomplete": "given-name" }
+          "options": { "required": true, "autocomplete": "given-name", "showHint": true, "hintKey": "optionalTranslationKey", "hintClassNames": "uk-text-meta" }
         },
         {
           "id": "LastName",
