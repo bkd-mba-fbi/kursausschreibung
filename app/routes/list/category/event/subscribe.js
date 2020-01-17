@@ -65,6 +65,12 @@ function addTranslations(fields) {
   fields.forEach(detail => {
     if (detail.label === undefined)
       detail.label = getString('form' + detail.id);
+      if (detail.options !== undefined) {
+        if (detail.options.showHint === true) {
+          let key = detail.options.hintKey ? detail.options.hintKey : 'form' + detail.id + 'Hint';
+          detail.hint = getString(key);
+        }
+      }
   });
 
   return fields;
