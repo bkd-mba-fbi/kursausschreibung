@@ -11,6 +11,9 @@ import settings from './settings';
 import { getLanguage, getString } from './translate';
 import format from 'date-fns/format';
 
+// temp
+import parse from 'date-fns/parse';
+
 let initialized = false;
 
 /**
