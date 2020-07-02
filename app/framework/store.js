@@ -5,10 +5,13 @@ import $ from 'jquery';
 import { getEvents, getEvent, getLessons, getEventLocations, getEventTexts } from './api';
 import { isGreen, isChartreuse, isYellow, isRed } from './status';
 import ObjectProxy from '@ember/object/proxy';
-import { formatDate, combineDate, isInSubscriptionRange, removeMinutes, eventStarted } from './date-helpers';
+import { formatDate, combineDate, isInSubscriptionRange, removeMinutes, eventStarted, eventEnded } from './date-helpers';
 import { all } from 'rsvp';
 import settings from './settings';
 import { getLanguage, getString } from './translate';
+
+// temp
+import parse from 'date-fns/parse';
 
 let initialized = false;
 
@@ -61,7 +64,7 @@ export function init() {
 
     // remove null-values (temporary fix, see #50)
     /*let removeNull = array => array.filter(element => element !== null);
-        
+
     events = removeNull(events);
     lessons = removeNull(lessons);
     eventLocations = removeNull(eventLocations);
@@ -217,7 +220,15 @@ function filterEvents(events, language) {
       (event.LanguageOfInstruction === 'Französisch' && language === 'en-US'));
   }
 
-  events = events.filter(event => eventStarted(event));
+
+  if (settings.showStartedEvents) {
+    // Filter out events which have not ended yet
+    events = events.filter(event => !eventEnded(event));
+  } else {
+    // Default behaviour, filter out events which have started
+    events = events.filter(event => eventStarted(event));
+  }
+
   return events;
 }
 
@@ -380,7 +391,7 @@ function addPropertiesToEvent(event) {
  * if LanguageOfInstruction is number translate it
  * @param {object} event event returned by the API
  */
-function setLanguageEventFromIntToString(event){
+function setLanguageEventFromIntToString(event) {
 
   if (event.LanguageOfInstruction === '2') {
     event.LanguageOfInstruction = getString('french');
@@ -389,9 +400,9 @@ function setLanguageEventFromIntToString(event){
   } else if (event.LanguageOfInstruction === '133') {
     event.LanguageOfInstruction = getString('english');
   } else if (event.LanguageOfInstruction === '284') {
-  event.LanguageOfInstruction = getString('italian');
+    event.LanguageOfInstruction = getString('italian');
   } else if (event.LanguageOfInstruction === '285') {
-  event.LanguageOfInstruction = getString('spain');
+    event.LanguageOfInstruction = getString('spain');
   }
 
 }
