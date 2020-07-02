@@ -220,7 +220,6 @@ function filterEvents(events, language) {
       (event.LanguageOfInstruction === 'Französisch' && language === 'en-US'));
   }
 
-
   if (settings.showStartedEvents) {
     // Filter out events which have not ended yet
     events = events.filter(event => !eventEnded(event));

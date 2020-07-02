@@ -77,7 +77,7 @@ export function eventStarted(event) {
   let now = new Date();
   if (event.DateFrom === null) {
     return now.getTime() === now.getTime();
-  } 
+  }
   return parse(event.DateFrom).getTime() < now.getTime();
 }
 
@@ -90,7 +90,7 @@ export function eventEnded(event) {
   let now = new Date();
   if (event.DateTo === null) {
     return now.getTime() === now.getTime();
-  } 
+  }
   return parse(event.DateTo).getTime() <= now.getTime();
 }
 
