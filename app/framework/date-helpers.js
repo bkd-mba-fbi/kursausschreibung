@@ -74,7 +74,7 @@ export function eventStarted(event) {
   if (event.DateFrom === null) {
     return now.getTime() === now.getTime();
   }
-  return parse(event.DateFrom).getTime() < now.getTime();
+  return parse(event.DateFrom).getTime() >= now.getTime();
 }
 
 /**
