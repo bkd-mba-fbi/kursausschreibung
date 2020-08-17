@@ -11,7 +11,7 @@ export default Route.extend({
         return;
       }
 
-      throw new Error( 'there most likely is an issue with the config or the api server.');
+      throw new Error('failed to load.');
     }
 
     this.replaceWith('list', applicationModel.areaKeys[0]);

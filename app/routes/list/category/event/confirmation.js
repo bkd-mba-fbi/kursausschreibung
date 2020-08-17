@@ -19,7 +19,7 @@ export default Route.extend({
     let { personId, useCompanyAddress, addressData, companyAddressData, subscriptionData, tableData } = dataToSubmit;
 
     // make sure the session is still active
-    return Promise.resolve().then(() => autoCheckForLogin()).then(() => {
+    return autoCheckForLogin().then(() => {
 
       // clear the data
       setDataToSubmit(null);
@@ -61,7 +61,7 @@ export default Route.extend({
   }
 });
 
-// this function creates an address, a company adress (if requested) and returns a
+// this function creates an address, a company address (if requested) and returns a
 // Promise returning a personId
 function createAddresses(useCompanyAddress, addressData, companyAddressData) {
   let personId;
@@ -100,7 +100,7 @@ function createAddresses(useCompanyAddress, addressData, companyAddressData) {
         addressData.Id = parseInt(personId);
 
         return putPerson(addressData, personId).catch(error => {
-           // fail silently (see https://github.com/bkd-mba-fbi/kursausschreibung/issues/26)
+          // fail silently (see https://github.com/bkd-mba-fbi/kursausschreibung/issues/26)
           console.error('ignoring error while trying to update person', error); // eslint-disable-line no-console
         });
       }

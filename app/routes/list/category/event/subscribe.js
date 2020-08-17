@@ -91,8 +91,7 @@ export default Route.extend({
     }
 
     // make sure the session is still active
-    return Promise.resolve()
-      .then(() => autoCheckForLogin())
+    return autoCheckForLogin()
       .then(() => Promise.all([getUserSettings(), getSubscriptionDetails(model.Id)]))
       .then(([userSettings, subscriptionDetails]) => {
 
@@ -100,7 +99,7 @@ export default Route.extend({
         userSettings.isLoggedIn = userSettings.IdPerson !== 0;
 
         set(model, 'userSettings', userSettings);
-        set(model, 'subscriptionDetailFields', getSubscriptionDetailFields(A(subscriptionDetails).sortBy('Sort')));    
+        set(model, 'subscriptionDetailFields', getSubscriptionDetailFields(A(subscriptionDetails).sortBy('Sort')));
 
         if (userSettings.isLoggedIn === false) {
           let fields = getFormFields(settings, model.EventTypeId).addressFields;

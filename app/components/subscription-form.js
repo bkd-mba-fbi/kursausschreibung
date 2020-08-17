@@ -49,7 +49,7 @@ function subscribe(form, self) {
   // values for dataToSubmit
   let personId = userSettings.IdPerson, tableData, addressData, companyAddressData;
 
-  // read address and companyAdress if we don't know the personId yet
+  // read address and companyAddress if we don't know the personId yet
   if (userSettings.isLoggedIn !== true) {
 
     // main address
