@@ -100,7 +100,7 @@ function createAddresses(useCompanyAddress, addressData, companyAddressData) {
         addressData.Id = parseInt(personId);
 
         return putPerson(addressData, personId).catch(error => {
-           // fail silently (see https://github.com/erz-mba-fbi/kursausschreibung/issues/26)
+           // fail silently (see https://github.com/bkd-mba-fbi/kursausschreibung/issues/26)
           console.error('ignoring error while trying to update person', error); // eslint-disable-line no-console
         });
       }
