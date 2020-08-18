@@ -92,7 +92,7 @@ window.kursausschreibung.settings = {
         {
           "id": "LastName",
           "dataType": "string",
-          "options": { "required": true, "autocomplete": "family-name" }
+          "options": { "required": true, "autocomplete": "family-name", "showPlaceholder": true, "placeholderKey": "formLastName" }
         },
         {
           "id": "AddressLine1",
