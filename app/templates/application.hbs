@@ -6,7 +6,12 @@
       <ul class="uk-navbar-nav">
         {{#each model.areaKeys as |areaKey|}}
           {{#link-to "list" areaKey tagName="li" activeClass="uk-active"}}
-            {{link-to (get (get model.areas areaKey) "name") "list" areaKey}}
+            {{#link-to "list" areaKey}}
+              {{get (get model.areas areaKey) "name"}}
+              {{#if eventCategoryDropdown}}
+                <span uk-icon="icon: chevron-down"></span>
+              {{/if}}
+            {{/link-to}}
           {{/link-to}}
           {{#if eventCategoryDropdown}}
             <div data-uk-dropdown>
@@ -21,7 +26,8 @@
         <li>
           {{! MENU MODAL }}
           {{#unless eventCategoryDropdown}}
-            <a href="#menu-modal" class="uk-icon-link uk-margin-right uk-hidden@m" data-uk-icon="more" data-uk-toggle></a>
+            <a href="#menu-modal" class="uk-icon-link uk-margin-right uk-hidden@m" data-uk-icon="more"
+              data-uk-toggle></a>
 
             <div id="menu-modal" class="uk-modal-full" uk-modal="container: false;">
               <div class="uk-modal-dialog">
