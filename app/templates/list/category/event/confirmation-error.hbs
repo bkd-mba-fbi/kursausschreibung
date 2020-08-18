@@ -7,17 +7,19 @@
   </li>
 
   <li class="stepConnector">
-      <span uk-icon="icon: chevron-right; ratio: 1.5"></span>
+    <span uk-icon="icon: chevron-right; ratio: 1.5"></span>
   </li>
 
   <li class="step2 current">
     <span>
       <span class="stepIcon" uk-icon="icon: file-text; ratio: 1.5"></span>
-      <span  class="stepText">{{translate "confirmation"}}</span>
+      <span class="stepText">{{translate "confirmation"}}</span>
     </span>
   </li>
 </ol>
-<span class="uk-text-danger uk-display-block uk-margin-top">{{translate "subscriptionFailed"}}
+<span class="uk-text-danger uk-display-block uk-margin-top">{{translate "errorMessage"}}
+  {{model.message}}</span>
+<span class="uk-text-danger uk-display-block uk-margin-top technical-reason">{{translate "subscriptionFailed"}}
   {{model.message}}</span>
 <div class="uk-margin">
   {{link-to (translate "backToSubscripton") "list.category.event.subscribe" classNames="uk-button uk-button-default uk-float-left"}}
