@@ -91,20 +91,6 @@ export function eventEnded(event) {
 }
 
 /**
- * return true when the DateTo earlier or equal
- * to current date is. If DateTo null then current date
- * @param {object} event event to check
- */
-export function eventEnded(event) {
-  let now = new Date();
-  if (event.DateTo === null) {
-    return now.getTime() === now.getTime();
-  } 
-  return parse(event.DateTo).getTime() <= now.getTime();
-}
-
-
-/**
  * combine a date and a time to a single date object
  * this returns null when it fails
  * @param {string} dateString a string containing the date
