@@ -55,7 +55,8 @@ window.kursausschreibung.settings = {
   // enable freeSeats badge and set polling interval (optional)
   "badgeFreeSeats": {
     "enabled": true,
-    "intervalSec": 5
+    "intervalSec": 5,
+    "subscriptionYellowDisable": false
   },
 
   // enable/disable subscription (required)

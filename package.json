@@ -4,13 +4,13 @@
   "private": true,
   "description": "Evento JS Module for online course announcement",
   "license": "MIT",
-  "author": "erz-mba-fbi",
+  "author": "bkd-mba-fbi",
   "directories": {
     "test": "tests"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/erz-mba-fbi/kursausschreibung.git"
+    "url": "https://github.com/bkd-mba-fbi/kursausschreibung.git"
   },
   "scripts": {
     "build": "ember build --environment=production",
@@ -19,6 +19,7 @@
     "test": "ember test"
   },
   "devDependencies": {
+    "@ember/jquery": "^1.1.0",
     "date-fns": "^2.15.0",
     "ember-ajax": "^3.0.0",
     "ember-cli": "^3.19.0",

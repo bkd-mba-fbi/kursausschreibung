@@ -1,5 +1,5 @@
 # kursausschreibung 3.1.0
-[![Build Status](https://travis-ci.org/erz-mba-fbi/kursausschreibung.svg?branch=master)](https://travis-ci.org/erz-mba-fbi/kursausschreibung)
+[![Build Status](https://travis-ci.org/bkd-mba-fbi/kursausschreibung.svg?branch=master)](https://travis-ci.org/bkd-mba-fbi/kursausschreibung)
 
 ## Prerequisites
 
@@ -12,7 +12,7 @@ You will need the following things properly installed on your computer.
 
 ## Installation
 
-* `git clone https://github.com/erz-mba-fbi/kursausschreibung.git`
+* `git clone https://github.com/bkd-mba-fbi/kursausschreibung.git`
 * `cd kursausschreibung`
 * `npm install`
 * `cd node_modules/uikit`
@@ -53,7 +53,7 @@ Make use of the many generators for code, try `ember help generate` for more det
   * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
 
 ## Documentation
-Go to the [Wiki](https://github.com/erz-mba-fbi/kursausschreibung/wiki)
+Go to the [Wiki](https://github.com/bkd-mba-fbi/kursausschreibung/wiki)
 
 ## Configuration (appconfig, settings, locale)
 
@@ -63,7 +63,7 @@ Go to the [Wiki](https://github.com/erz-mba-fbi/kursausschreibung/wiki)
 
 ## Builds
 
-You can download releases on the [releases page](https://github.com/erz-mba-fbi/kursausschreibung/releases) and the latest build of the module here: [kursausschreibung.zip](https://erz-mba-fbi.github.io/kursausschreibung/kursausschreibung.zip). To use the module you first have to configure it.
+You can download releases on the [releases page](https://github.com/bkd-mba-fbi/kursausschreibung/releases) and the latest build of the module here: [kursausschreibung.zip](https://bkd-mba-fbi.github.io/kursausschreibung/kursausschreibung.zip). To use the module you first have to configure it.
 
 ## Integration
 

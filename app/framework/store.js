@@ -58,15 +58,6 @@ export function init() {
     getEventLocations(),
     getEventTexts(language)
   ]).then(function ([events, lessons, eventLocations, eventTexts]) {
-
-    // remove null-values (temporary fix, see #50)
-    /*let removeNull = array => array.filter(element => element !== null);
-        
-    events = removeNull(events);
-    lessons = removeNull(lessons);
-    eventLocations = removeNull(eventLocations);
-    eventTexts = removeNull(eventTexts);
-    */
     // filter events
     events = filterEvents(events, language);
 
@@ -384,10 +375,10 @@ function addPropertiesToEvent(event) {
 }
 
 /**
- * if LanguageOfInstruction is number translate it
+ * if LanguageOfInstruction is a number translate it
  * @param {object} event event returned by the API
  */
-function setLanguageEventFromIntToString(event){
+function setLanguageEventFromIntToString(event) {
 
   if (event.LanguageOfInstruction === '2') {
     event.LanguageOfInstruction = getString('french');
@@ -396,9 +387,8 @@ function setLanguageEventFromIntToString(event){
   } else if (event.LanguageOfInstruction === '133') {
     event.LanguageOfInstruction = getString('english');
   } else if (event.LanguageOfInstruction === '284') {
-  event.LanguageOfInstruction = getString('italian');
+    event.LanguageOfInstruction = getString('italian');
   } else if (event.LanguageOfInstruction === '285') {
-  event.LanguageOfInstruction = getString('spain');
+    event.LanguageOfInstruction = getString('spain');
   }
-
 }
