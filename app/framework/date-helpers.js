@@ -12,8 +12,8 @@ const formats = {
     LT: 'HH:mm',
     LTS: 'HH:mm:ss',
     L: 'dd.MM.yyyy',
-    LL: 'd. MMMM yyyy',
-    LLL: 'd. MMMM yyyy HH:mm',
+    LL: 'EEEEEE, d. MMMM yyyy',
+    LLL: 'EEEEEE, d. MMMM yyyy HH:mm',
     LLLL: 'EEEE, d. MMMM yyyy HH:mm'
   },
 
@@ -21,8 +21,8 @@ const formats = {
     LT: 'HH:mm',
     LTS: 'HH:mm:ss',
     L: 'dd.MM.yyyy',
-    LL: 'd MMMM yyyy',
-    LLL: 'd MMMM yyyy HH:mm',
+    LL: 'EEEEEE, d MMMM yyyy',
+    LLL: 'EEEEEE, d MMMM yyyy HH:mm',
     LLLL: 'EEEE d MMMM yyyy HH:mm'
   }
 };
@@ -72,7 +72,7 @@ export function isInSubscriptionRange(event) {
 export function eventStarted(event) {
   let now = new Date();
   if (event.DateFrom === null) {
-    return true
+    return true;
   }
   return parseISO(event.DateFrom).getTime() >= now.getTime();
 }
