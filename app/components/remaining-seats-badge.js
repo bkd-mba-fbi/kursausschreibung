@@ -36,7 +36,7 @@ export default Component.extend({
     let subscriptionYellowDisable = typeof settings.badgeFreeSeats === 'object' ?
       settings.badgeFreeSeats.subscriptionYellowDisable : false;
 
-    return freeSeats === null || (subscriptionYellowDisable && status === "yellow");
+    return freeSeats === null || (subscriptionYellowDisable && status === 'yellow');
   }),
 
   labelType: computed('event.FreeSeats', function () {
