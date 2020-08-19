@@ -58,10 +58,10 @@ export function isInSubscriptionRange(event) {
   let now = new Date();
 
   if (event.SubscriptionFrom === null)
-    return now.getTime() < parseISO(event.SubscriptionTo).getTime();
+    return now.getTime() < event.SubscriptionTo.getTime();
 
-  return parseISO(event.SubscriptionFrom).getTime() < now.getTime() &&
-    now.getTime() < parseISO(event.SubscriptionTo).getTime();
+  return event.SubscriptionFrom.getTime() < now.getTime() &&
+    now.getTime() < event.SubscriptionTo.getTime();
 }
 
 /**
