@@ -50,7 +50,7 @@ function getSubscriptionDetailFields(subscriptionDetails) {
       label: detail.VssDesignation,
       dataType: dataType,
       options: {
-        required: detail.Required,
+        required: detail.Required || detail.VssInternet === 'M',
         autocomplete: 'off',
         options: dataType === 'dropdown' ? detail.DropdownItems : undefined,
         showAsRadioButtons: dataType === 'dropdown' ? detail.ShowAsRadioButtons : undefined,
