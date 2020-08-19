@@ -4,7 +4,7 @@
   min-height: 300px;
 }
 
-/*Navigation stylen*/
+/* navigation */
 .uk-scope .uk-navbar-container:not(.uk-navbar-transparent) {
   background: transparent;
 }
@@ -13,7 +13,7 @@
   border-bottom: 1px solid #e5e5e5;
 }
 
-.uk-scope .uk-navbar-nav>li.uk-active>a {
+.uk-scope .uk-navbar-nav > li.uk-active > a {
   border-bottom: 2px solid #1e87f0;
 }
 
@@ -63,7 +63,8 @@
   font-weight: lighter;
 }
 
-.uk-scope .details-table td:last-child {
+.uk-scope .details-table td:last-child,
+.uk-scope .confirmation-table td:last-child {
   white-space: pre-wrap;
 }
 
@@ -80,9 +81,13 @@
   display: none; /* this doesn't display correctly in chrome+uikit so we hide it */
 }
 
+.uk-scope textarea {
+  resize: vertical;
+}
+
 .uk-scope #subscriptionProcess {
   padding: 20px 0 20px 0;
-  border-bottom: 1px solid #e5e5e5; 
+  border-bottom: 1px solid #e5e5e5;
 }
 
 /* mobile */
@@ -114,10 +119,9 @@
   .uk-scope ol.steps span.stepText {
     display: none;
   }
-
 }
 
-/*Process Steps */
+/* process steps */
 .uk-scope ol.steps {
   list-style: none;
   margin: 0;
@@ -134,7 +138,7 @@
   width: 0;
   pointer-events: none;
   border: solid transparent;
-  border-left-color: #E0ECFF;
+  border-left-color: #e0ecff;
   border-width: 19px;
   margin-top: -19px;
 }
@@ -158,13 +162,13 @@
   height: 0;
   width: 0;
   pointer-events: none;
-  border: solid #E0ECFF;
+  border: solid #e0ecff;
   border-left-color: transparent;
   border-width: 19px;
   margin-top: -19px;
 }
 
-.uk-scope ol.steps>li {
+.uk-scope ol.steps > li {
   float: left;
   color: #666;
 }
@@ -172,5 +176,3 @@
 .uk-scope ol.steps li.current {
   color: black;
 }
-
-

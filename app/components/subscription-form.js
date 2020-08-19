@@ -31,7 +31,7 @@ function subscribe(form, self) {
 
   let assocSubscriptionData = getFieldSetData(form, [], '.subscription-detail-fields'); // for confirmation values
 
-  form.find('.subscription-detail-fields').find('input, select').each((_, element) => {
+  form.find('.subscription-detail-fields').find('input, select, textarea').each((_, element) => {
     let vssId = parseInt(element.name);
     let value = null;
 
@@ -94,13 +94,12 @@ function getFieldSetData(form, properties, selector) {
 
   properties.forEach(property => data[property] = null);
 
-  form.find(selector).find('input, select').each((_, element) => setProperties(data, element));
+  form.find(selector).find('input, select, textarea').each((_, element) => setProperties(data, element));
 
   return data;
 }
 
-// sets one or two properties on data depending
-// on whether element is a select-node
+// add input data of element to data object
 function setProperties(data, element) {
   if (element.nodeName === 'SELECT') {
     let text = element.options[element.selectedIndex].text;

@@ -3,13 +3,13 @@
  * @param {object} element 
  * @param {boolean} valid 
  */
-export function formDanger(element,valid) {
+export function formDanger(element, valid) {
     var formClass = 'uk-form-danger';
     if (valid) {
         element.classList.add(formClass);
-      } else {
+    } else {
         element.classList.remove(formClass);
-      }
+    }
 }
 
 /**
@@ -21,59 +21,55 @@ export function formDanger(element,valid) {
  * check format correct nnn.nnnn.nnnn.nn
  * @param {object} element 
  */
-export function helperSocialSecurityNumber(that){
-    formDanger(that,true);
+export function helperSocialSecurityNumber(that) {
+    formDanger(that, true);
     var number = that.value;
 
     //set delimiter "."
-    if(number.length === 3) {
-      that.value = number + '.';
+    if (number.length === 3) {
+        that.value = number + '.';
     } else if (number.length === 8) {
-      that.value = number + '.';
+        that.value = number + '.';
     } else if (number.length === 13) {
-      that.value = number + '.';
-    } 
-    
+        that.value = number + '.';
+    }
+
     //Check is digit 0-9
     var lastCharacter = number.slice(-1);
-    if(number.length === 4 || number.length === 9 || number.length === 14) {
-     lastCharacter = '.'; 
-     that.value = number.substr(0,number.length-1) + lastCharacter;
+    if (number.length === 4 || number.length === 9 || number.length === 14) {
+        lastCharacter = '.';
+        that.value = number.substr(0, number.length - 1) + lastCharacter;
     }
-    else if(lastCharacter.match(/[0-9]/) === null) 
-    {
-      that.value = number.substr(0,number.length-1);
+    else if (lastCharacter.match(/[0-9]/) === null) {
+        that.value = number.substr(0, number.length - 1);
     }
-    
+
     //final Check format correct nnn.nnnn.nnnn.nn
     if (number.length >= 16) {
-        that.value = number.substr(0,16);
+        that.value = number.substr(0, 16);
         if (that.value.match(/[0-9]{3}\.[0-9]{4}\.[0-9]{4}\.[0-9]{2}/)) {
-                if ('000.0000.0000.00' !== number) {
-                    var numberString = number.replace(/\./g,'');
-                    var valid = ean13checkNumber(numberString);
-                    valid ? formDanger(that,false) : formDanger(that,true);
-                }
-        } else { 
-            formDanger(that,true);
+            if ('000.0000.0000.00' !== number) {
+                var numberString = number.replace(/\./g, '');
+                var valid = ean13checkNumber(numberString);
+                valid ? formDanger(that, false) : formDanger(that, true);
+            }
+        } else {
+            formDanger(that, true);
         }
-            
-    } 
-
-
+    }
 }
 
 
 function ean13checkNumber(number) {
-    if(number.length === 13) {
-        var numberReverse = number.substr(0,12);
+    if (number.length === 13) {
+        var numberReverse = number.substr(0, 12);
         numberReverse = numberReverse.split('').join('');
         var sum = 0;
         for (var i = 0; i < numberReverse.length; i++) {
-          var int = numberReverse.charAt(i); 
-          sum = (int * (i & 1 === 1  ? 3 : 1)) + sum;
+            var int = numberReverse.charAt(i);
+            sum = (int * (i & 1 === 1 ? 3 : 1)) + sum;
         }
-        var checkNummer = 10-(sum % 10);
+        var checkNummer = 10 - (sum % 10);
         checkNummer = checkNummer === 10 ? 0 : checkNummer;
         return Number(number.slice(-1)) === checkNummer ? true : false;
     }
@@ -83,10 +79,10 @@ function ean13checkNumber(number) {
 /**
  * creates a datalist for the location considering the zip code 
  */
-export function getLocationFromZip(){
+export function getLocationFromZip() {
 
     let locationCodes = 'locationCodes';
-    if(document.getElementById(locationCodes) !== null) {
+    if (document.getElementById(locationCodes) !== null) {
         document.getElementById(locationCodes).remove();
     }
     var y = document.createElement("datalist");
@@ -95,27 +91,26 @@ export function getLocationFromZip(){
 
 
     let zips = document.getElementsByName('Zip');
-    zips.forEach(function(zip) { 
+    zips.forEach(function (zip) {
 
         let locations = zipLocation();
-        locations.forEach(function(element){    
+        locations.forEach(function (element) {
 
-            if (element.Zip === parseInt(zip.value)){
-        
-                    var z = document.createElement('option');
-                    z.setAttribute('value', element.Location);
-                    z.setAttribute('label',element.Zip +' '+ element.Location);
-                    document.getElementById(locationCodes).appendChild(z);
+            if (element.Zip === parseInt(zip.value)) {
+
+                var z = document.createElement('option');
+                z.setAttribute('value', element.Location);
+                z.setAttribute('label', element.Zip + ' ' + element.Location);
+                document.getElementById(locationCodes).appendChild(z);
             }
         });
-    }); 
-    
-    }
+    });
+}
 
 /**
  * returns every zip and location for CH
  */
-export function zipLocation () {
+export function zipLocation() {
 
     let zipLocation = [
         {
@@ -21044,5 +21039,5 @@ export function zipLocation () {
         }
     ];
 
-return zipLocation;
+    return zipLocation;
 } 

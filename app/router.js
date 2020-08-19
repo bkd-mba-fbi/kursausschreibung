@@ -11,15 +11,15 @@ const Router = EmberRouter.extend({
 
   didTransition() {
     this._super(...arguments);
-    
+
     var subscriptionProcessId = 'subscriptionProcess';
 
-    setInterval(function(){
+    setInterval(function () {
       if (document.getElementById(subscriptionProcessId) !== null) {
         setOffsetStickyHeader(subscriptionProcessId);
       }
-    },1000);
-    
+    }, 1000);
+
     if (this.currentPath === 'list.category.event.subscribe') {
       scrollToTimeout(subscriptionProcessId);
     } else {

@@ -24,6 +24,7 @@ function loadDropdownItems(fields) {
 
 let dataTypeMappings = {
   ShortText: 'string',
+  Text: 'textarea',
   Int: 'number',
   YesNo: 'checkbox',
   Currency: 'number',
@@ -67,7 +68,7 @@ function addTranslations(fields) {
       detail.label = getString('form' + detail.id);
 
     if (detail.options !== undefined) {
-      if( detail.options.showPlaceholder === true ) {
+      if (detail.options.showPlaceholder === true) {
         let key = detail.options.placeholderKey ? detail.options.placeholderKey : 'form' + detail.id + 'Placeholder';
         detail.placeholder = getString(key);
       }
