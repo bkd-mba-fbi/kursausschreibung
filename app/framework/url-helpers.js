@@ -12,8 +12,8 @@ export function getParameterByName(name, url) {
 
   name = name.replace(/[[\]]/g, '\\$&');
 
-  var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
-  var results = regex.exec(url);
+  let regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+  let results = regex.exec(url);
 
   if (!results) {
     return null;

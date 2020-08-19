@@ -1,10 +1,11 @@
-<form id="subscriptionForm" autocomplete="on" onsubmit={{action "submit"}} class="uk-grid-small uk-form-horizontal" data-uk-grid>
+<form id="subscriptionForm" autocomplete="on" onsubmit={{action "submit"}} class="uk-grid-small uk-form-horizontal"
+  data-uk-grid>
   {{#if userSettings.isLoggedIn}}
     <span class="uk-text-muted">{{translate "useLogin" userSettings.FullName}}</span>
   {{else}}
     <fieldset class="address-fields uk-width-1-1 uk-fieldset">
       {{#each fields as |field|}}
-        {{input-master field=field}}
+        {{input-base field=field}}
       {{/each}}
     </fieldset>
 
@@ -14,9 +15,10 @@
         {{translate "companyAddress"}}
       </label>
 
-      <fieldset hidden={{if useCompanyAddress false true}} disabled={{if useCompanyAddress false true}} class="company-address-fields uk-width-1-1 uk-fieldset">
+      <fieldset hidden={{if useCompanyAddress false true}} disabled={{if useCompanyAddress false true}}
+        class="company-address-fields uk-width-1-1 uk-fieldset">
         {{#each companyFields as |field|}}
-          {{input-master field=field}}
+          {{input-base field=field}}
         {{/each}}
       </fieldset>
     {{/if}}
@@ -28,13 +30,12 @@
 
   <fieldset class="subscription-detail-fields uk-width-1-1 uk-fieldset">
     {{#each subscriptionDetailFields as |field|}}
-      {{input-master field=field}}
+      {{input-base field=field}}
     {{/each}}
   </fieldset>
 
   <div class="uk-width-1-1">
-    <input class="uk-button uk-button-primary uk-float-left" type="submit" value={{translate "subscribe"}}> {{link-to (translate "back") "list.category.event" classNames="uk-button uk-button-default uk-float-right"}}
-  </div>
-  <div id="datalists">
+    <input class="uk-button uk-button-primary uk-float-left" type="submit" value={{translate "subscribe"}}>
+    {{link-to (translate "back") "list.category.event" classNames="uk-button uk-button-default uk-float-right"}}
   </div>
 </form>

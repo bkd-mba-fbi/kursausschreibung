@@ -1,4 +1,4 @@
-(function() {
+(function () {
   function vendorModule() {
     'use strict';
 

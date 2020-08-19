@@ -14,7 +14,7 @@ export default Component.extend({
   query: '',
 
   // update the filtered events when the events change
-  eventsChanged: observer('events', function() {
+  eventsChanged: observer('events', function () {
     this.send('queryChanged');
   }),
 
@@ -33,8 +33,8 @@ export default Component.extend({
       this.set('filteredEvents', this.get('events')
         // search the query string in event-properties and memo-texts
         .filter(event => (
-            Object.keys(event).some(key => match(event[key], query)) ||
-            event.texts.some(text => match(text.memo, query))
+          Object.keys(event).some(key => match(event[key], query)) ||
+          event.texts.some(text => match(text.memo, query))
         ))
       );
 

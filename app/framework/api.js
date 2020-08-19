@@ -123,6 +123,14 @@ export function getDropDownItems(type) {
 }
 
 /**
+ * search postal codes
+ * @param {number} code postal code
+ */
+export function getPostalCodes(code) {
+  return get(`PostalCodes/?filter.Code=~${code}*`);
+}
+
+/**
  * post a new person
  * @param {object} data data of the person
  */

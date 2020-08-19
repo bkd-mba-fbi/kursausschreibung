@@ -79,5 +79,8 @@ module.exports = function (defaults) {
     })
   );
 
+  // typeahead.js
+  app.import("node_modules/corejs-typeahead/dist/typeahead.jquery.js");
+
   return app.toTree();
 };

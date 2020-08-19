@@ -107,7 +107,7 @@ window.kursausschreibung.settings = {
         {
           "id": "Location",
           "dataType": "string",
-          "options": { "required": true, "autocomplete": "address-level2", "datalist": "locationCodes"}
+          "options": { "required": true, "autocomplete": "address-level2" }
         },
         {
           "id": "PhoneMobile",
@@ -144,7 +144,7 @@ window.kursausschreibung.settings = {
         {
           "id": "Location",
           "dataType": "string",
-          "options": { "required": true, "datalist": "locationCodes" }
+          "options": { "required": true }
         }
       ]
     }
