@@ -1,7 +1,7 @@
 import EmberRouter from '@ember/routing/router';
 import config from './config/environment';
 import $ from 'jquery';
-import { scrollToTimeout, setOffsetStickyHeader } from 'kursausschreibung/helpers/scroll';
+import { scrollToTimeout, setOffsetStickyHeader } from 'kursausschreibung/framework/scroll-helpers';
 
 let rootElement = $(config.APP.rootElement).get(0);
 
@@ -25,7 +25,7 @@ const Router = EmberRouter.extend({
     } else {
       scrollToTimeout(rootElement.id);
     }
-    //rootElement.scrollIntoView({behavior:'smooth'});    
+    //rootElement.scrollIntoView({behavior:'smooth'});
   }
 });
 

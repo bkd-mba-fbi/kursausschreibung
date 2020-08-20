@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { helperSocialSecurityNumber } from 'kursausschreibung/helpers/form';
+import { helperSocialSecurityNumber } from 'kursausschreibung/framework/form-helpers';
 
 export default Component.extend({
   change() {
