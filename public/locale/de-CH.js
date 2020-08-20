@@ -32,7 +32,7 @@ window.kursausschreibung.locale["de-CH"] = {
   "companyAddress": "Rechnungsadresse an Firma",
   "errorMessage": "Es ist zu einem unvorhergesehenen Fehler gekommen. Bitte versuchen Sie es nochmals.",
   "lessons": "Lektionen ",
-  "lessonExportToIcs": "Für Kalender exportieren", 
+  "lessonExportToIcs": "Für Kalender exportieren",
   "seatAvailable": "Platz übrig",
   "seatsAvailable": "Plätze übrig",
   "addressFields": "Adresse",
@@ -43,6 +43,7 @@ window.kursausschreibung.locale["de-CH"] = {
   "noEvents": "keine Anlässe verfügbar",
   "useLogin": "Ihre Anmeldung wird gemäss Ihrem Login erstellt {0}.",
   "backToSubscripton": "Anmeldeformular",
+  "invalidInput": "Ungültige Eingabe",
 
   // properties of an event
   "subscriptionFrom": "Start",

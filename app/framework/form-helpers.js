@@ -1,14 +1,15 @@
+import { getString } from 'kursausschreibung/framework/translate';
+
 /**
  * if valid add class "uk-form-danger" else remove
  * @param {object} element
  * @param {boolean} valid
  */
 export function formDanger(element, valid) {
-  let formClass = 'uk-form-danger';
   if (valid) {
-    element.classList.add(formClass);
+    element.setCustomValidity(getString('invalidInput'));
   } else {
-    element.classList.remove(formClass);
+    element.setCustomValidity('');
   }
 }
 
