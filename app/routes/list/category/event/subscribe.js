@@ -40,8 +40,12 @@ function getSubscriptionDetailFields(subscriptionDetails) {
     if (dataType === undefined)
       dataType = 'string';
 
-    if (detail.DropdownItems instanceof Object)
+    if (detail.DropdownItems instanceof Object) {
       dataType = 'dropdown';
+
+      if (detail.VssStyleDescription === 'DropDownWithText')
+        dataType = 'freeform-dropdown';
+    }
 
     if (detail.VssStyle === 'HE')
       return { isLegend: true, label: detail.VssDesignation };
@@ -53,7 +57,7 @@ function getSubscriptionDetailFields(subscriptionDetails) {
       options: {
         required: detail.Required || detail.VssInternet === 'M',
         autocomplete: 'off',
-        options: dataType === 'dropdown' ? detail.DropdownItems : undefined,
+        options: detail.DropdownItems,
         showAsRadioButtons: dataType === 'dropdown' ? detail.ShowAsRadioButtons : undefined,
         tooltip: detail.Tooltip,
         disabled: detail.readOnly
