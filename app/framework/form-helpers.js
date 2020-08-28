@@ -1,7 +1,7 @@
 import { getString } from 'kursausschreibung/framework/translate';
 
 /**
- * if valid add class "uk-form-danger" else remove
+ * set custom validity of a form element
  * @param {object} element
  * @param {boolean} valid
  */
