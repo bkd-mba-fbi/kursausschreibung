@@ -381,8 +381,6 @@ function addPropertiesToEvent(event) {
  * 
  * dateFrom = from || to || '2999-01-01T00:00:00'
  * dateTo = to || from || '2999-01-01T00:00:00'
- * timeFrom = from || to || '00:00:00'
- * timeTo = to || from || '00:00:00'
  * @param {object} event event returned by the API
  */
 function fillEmptyDates(event) {
@@ -393,12 +391,6 @@ function fillEmptyDates(event) {
   event.SubscriptionDateTo = event.SubscriptionDateTo || event.SubscriptionDateFrom || date;
   event.DateFrom = event.DateFrom || event.DateTo || date;
   event.DateTo = event.DateTo || event.DateFrom || date;
-
-  let time = '00:00:00';
-  event.SubscriptionTimeFrom = event.SubscriptionTimeFrom || event.SubscriptionTimeTo || time;
-  event.SubscriptionTimeTo = event.SubscriptionTimeTo || event.SubscriptionTimeFrom || time;
-  event.TimeFrom = event.TimeFrom || event.TimeTo || time;
-  event.TimeTo = event.TimeTo || event.TimeFrom || time;
 }
 
 /**
