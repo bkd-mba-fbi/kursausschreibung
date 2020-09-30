@@ -76,6 +76,10 @@ function addTranslations(fields) {
         let key = detail.options.placeholderKey ? detail.options.placeholderKey : 'form' + detail.id + 'Placeholder';
         detail.placeholder = getString(key);
       }
+      if (detail.options.showHint === true) {
+        let key = detail.options.hintKey ? detail.options.hintKey : 'form' + detail.id + 'Hint';
+        detail.hint = getString(key);
+      }
     }
   });
 
