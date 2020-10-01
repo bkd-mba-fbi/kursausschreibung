@@ -112,13 +112,16 @@
   .uk-scope .details-table.table-collapse td:first-child {
     padding-bottom: 0;
   }
-
   .uk-scope .details-table.table-collapse td:last-child {
     padding-top: 12px;
   }
   .uk-scope ol.steps span.stepText {
     display: none;
   }
+  .uk-scope .uk-navbar-nav > li > a {
+    padding: 0 10px;
+  }
+
 }
 
 /* process steps */
