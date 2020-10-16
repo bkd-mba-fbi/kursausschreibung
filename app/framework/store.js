@@ -9,6 +9,7 @@ import { formatDate, combineDate, isInSubscriptionRange, removeMinutes, eventSta
 import { all } from 'rsvp';
 import settings from './settings';
 import { getLanguage, getString } from './translate';
+import format from 'date-fns/format';
 
 let initialized = false;
 
@@ -362,6 +363,9 @@ function addPropertiesToEvent(event) {
   // add texts-array
   event.texts = [];
 
+  // fill empty Date propertys in event object
+  fillEmptyDates(event);
+
   // combine date and time
   event.SubscriptionFrom = combineDate(event.SubscriptionDateFrom, event.SubscriptionTimeFrom);
   event.SubscriptionTo = combineDate(event.SubscriptionDateTo, event.SubscriptionTimeTo);
@@ -372,6 +376,33 @@ function addPropertiesToEvent(event) {
   if (typeof event.TimeFrom === 'string' && typeof event.TimeTo === 'string') {
     event.Time = `${removeMinutes(event.TimeFrom)} - ${removeMinutes(event.TimeTo)}`;
   }
+}
+/**
+ * if one of the Date or Time property is null get default value
+ * 
+ * SubscriptionDateFrom is null => now - 1 day
+ * SubscriptionDateTo is null => now + 7 day
+ * DateFrom is null => now + 7 day
+ * DateTo is null => now + 7 day
+ * SubscriptionTimeFrom is null => '00:00:01'
+ * SubscriptionTimeTo is null => '23:59:59'
+ * @param {object} event event returned by the API
+ */
+function fillEmptyDates(event) {
+
+  let now = new Date();
+  let yesterday = new Date().setDate(now.getDate()-1);
+  let datePast = format(yesterday,'yyyy-MM-dd'); 
+  now.setDate(now.getDate()+7);
+  let dateNow  = format(now,'yyyy-MM-dd');
+
+  event.SubscriptionDateFrom = event.SubscriptionDateFrom || datePast;
+  event.SubscriptionDateTo = event.SubscriptionDateTo || dateNow;
+  event.DateFrom = event.DateFrom || event.DateTo || dateNow;
+  event.DateTo = event.DateTo || event.DateFrom || dateNow;
+  event.SubscriptionTimeFrom = event.SubscriptionTimeFrom || '00:00:01';
+  event.SubscriptionTimeTo = event.SubscriptionTimeTo || '23:59:59';
+
 }
 
 /**

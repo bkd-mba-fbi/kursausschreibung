@@ -6,6 +6,9 @@
       data-uk-tooltip={{field.options.tooltip}}>{{{field.label}}}</label>
     <div class="uk-form-controls">
       {{component componentType field=field}}
+      {{#if field.options.showHint }}
+        <div class="{{field.options.hintClassNames}}">{{{field.hint}}}</div>
+      {{/if}}
     </div>
   </div>
 {{/if}}
