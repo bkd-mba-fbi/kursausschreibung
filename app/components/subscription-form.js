@@ -1,17 +1,55 @@
 import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { formatDate, getDMY, getYMD } from 'kursausschreibung/framework/date-helpers';
 import { setDataToSubmit } from 'kursausschreibung/framework/storage';
 import { getString } from 'kursausschreibung/framework/translate';
-import { getDMY, getYMD, formatDate } from 'kursausschreibung/framework/date-helpers';
+import uikit from 'uikit';
 
 export default Component.extend({
   useCompanyAddress: false,
+
+  additionalPeopleCount: 0,
+
+  additionalPeople: computed('additionalPeopleCount', function () {
+    // create an array so handlebars can iterate over it
+    let count = this.get('additionalPeopleCount');
+    let array = [];
+    for (let i = 0; i < count; i++) {
+      array.push(null);
+    }
+
+    return array;
+  }),
+
+  thereAreAdditionalPeople: computed('additionalPeopleCount', function () {
+    return this.get('additionalPeopleCount') > 0;
+  }),
+
   actions: {
     submit(event) {
       event.preventDefault();
 
       subscribe(this.$('form'), this);
       this.get('subscribe')();
-    }  
+    },
+
+    addPerson() {
+      this.set('additionalPeopleCount', this.get('additionalPeopleCount') + 1);
+    },
+
+    removePerson() {
+      const additionalPeopleCount = this.get('additionalPeopleCount');
+
+      if (additionalPeopleCount < 1) {
+        return;
+      }
+
+      const that = this;
+
+      uikit.modal.confirm('Möchten Sie die unterste Person wirklich entfernen?', { labels: { ok: 'OK', cancel: 'Abbrechen' } }).then(function () {
+        that.set('additionalPeopleCount', additionalPeopleCount - 1);
+      });
+    }
   }
 });
 
