@@ -82,7 +82,7 @@ export function init() {
     // sort areaKeys
     eventsByArea.areaKeys = Object.keys(eventsByArea.areas).sort();
 
-    // sort categoreKeys
+    // sort categoryKeys
     eventsByArea.areaKeys.forEach(area =>
       eventsByArea.areas[area].categoryKeys = Object.keys(eventsByArea.areas[area].categories).sort()
     );
@@ -120,6 +120,17 @@ function addTextsToEvents(eventTexts, language) {
     text[textItem.Type.toLowerCase()] = textItem.Value;
   });
 
+  // if the 13th event text is an url it is used to subscribe to the event
+  // see: https://github.com/bkd-mba-fbi/kursausschreibung/issues/67
+  eventsById.forEach(event => {
+    if (/^https?:\/\/[^ ]+$/.test(event.texts[13].memo)) {
+      event.externalSubscriptionURL = event.texts[13].memo;
+      event.texts[13].memo = null;
+    } else {
+      event.externalSubscriptionURL = null;
+    }
+  });
+
   // remove texts with empty label or memo
   eventsById.forEach(
     event =>
@@ -130,7 +141,7 @@ function addTextsToEvents(eventTexts, language) {
 }
 
 /**
- * add loactions to events
+ * add locations to events
  * @param {object[]} eventLocations eventLocations returned by the API
  */
 function addLocationsToEvents(eventLocations) {
@@ -363,7 +374,7 @@ function addPropertiesToEvent(event) {
   // add texts-array
   event.texts = [];
 
-  // fill empty Date propertys in event object
+  // fill empty Date properties in event object
   fillEmptyDates(event);
 
   // combine date and time
@@ -379,7 +390,7 @@ function addPropertiesToEvent(event) {
 }
 /**
  * if one of the Date or Time property is null get default value
- * 
+ *
  * SubscriptionDateFrom is null => now - 1 day
  * SubscriptionDateTo is null => now + 7 day
  * DateFrom is null => now + 7 day
@@ -391,10 +402,10 @@ function addPropertiesToEvent(event) {
 function fillEmptyDates(event) {
 
   let now = new Date();
-  let yesterday = new Date().setDate(now.getDate()-1);
-  let datePast = format(yesterday,'yyyy-MM-dd'); 
-  now.setDate(now.getDate()+7);
-  let dateNow  = format(now,'yyyy-MM-dd');
+  let yesterday = new Date().setDate(now.getDate() - 1);
+  let datePast = format(yesterday, 'yyyy-MM-dd');
+  now.setDate(now.getDate() + 7);
+  let dateNow = format(now, 'yyyy-MM-dd');
 
   event.SubscriptionDateFrom = event.SubscriptionDateFrom || datePast;
   event.SubscriptionDateTo = event.SubscriptionDateTo || dateNow;
