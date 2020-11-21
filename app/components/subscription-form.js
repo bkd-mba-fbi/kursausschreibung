@@ -15,7 +15,7 @@ export default Component.extend({
     let count = this.get('additionalPeopleCount');
     let array = [];
     for (let i = 0; i < count; i++) {
-      array.push(null);
+      array.push(i + 1);
     }
 
     return array;
