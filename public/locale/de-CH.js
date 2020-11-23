@@ -67,5 +67,6 @@ window.kursausschreibung.locale["de-CH"] = {
   "formCompany": "Firmenname",
   "formAddressLine1": "Adresse",
   "formZip": "PLZ",
-  "formLocation": "Ort"
+  "formLocation": "Ort",
+  "duplicateEmailError": "Die E-Mail-Adresse muss unterschiedlich sein, ansonsten kann das Formular nicht übermittelt werden."
 };
