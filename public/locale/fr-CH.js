@@ -72,5 +72,6 @@ window.kursausschreibung.locale["fr-CH"] = {
   "addPerson": null,
   "removePerson": null,
   "person": null,
-  "confirmDeletion": null
+  "confirmDeletion": null,
+  "noSeatsAvailable": null
 };

@@ -72,5 +72,6 @@ window.kursausschreibung.locale["de-CH"] = {
   "addPerson": "Weitere Person anmelden",
   "removePerson": "Unterste Person entfernen",
   "person": "Person",
-  "confirmDeletion": "Möchten Sie die unterste Person wirklich entfernen?"
+  "confirmDeletion": "Möchten Sie die unterste Person wirklich entfernen?",
+  "noSeatsAvailable": "Dazu sind nicht genügend freie Plätze verfügbar.",
 };

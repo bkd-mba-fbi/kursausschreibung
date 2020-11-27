@@ -31,12 +31,12 @@
 
 {{! FORM }}
 {{subscription-form
+  event=model
   fields=fields
   companyFields=companyFields
   subscriptionDetailFields=subscriptionDetailFields
   allowMultiplePeople=allowMultiplePeople
   additionalPeopleFields=additionalPeopleFields
-  eventId=model.Id
   userSettings=model.userSettings
   subscribe=(action "subscribe")
 }}

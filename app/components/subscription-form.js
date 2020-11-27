@@ -35,6 +35,11 @@ export default Component.extend({
     },
 
     addPerson() {
+      if (this.get('event.FreeSeats') - 1 - this.get('additionalPeopleCount') <= 0) {
+        uikit.modal.alert(getString('noSeatsAvailable'));
+        return;
+      }
+
       this.set('additionalPeopleCount', this.get('additionalPeopleCount') + 1);
     },
 
@@ -62,7 +67,7 @@ export default Component.extend({
 // provided in the form
 function subscribe($form, self) {
   let useCompanyAddress = self.get('useCompanyAddress') === true;
-  let eventId = self.get('eventId');
+  let eventId = self.get('event.Id');
   let userSettings = self.get('userSettings');
 
   // subscription
