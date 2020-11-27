@@ -100,7 +100,7 @@ function getFormFields(settings, eventTypeId) {
 }
 
 export default Route.extend({
-  model(params, transition) {
+  model(_params, transition) {
     let model = this.modelFor('list.category.event');
 
     if (model.get('canDoSubscription') === false) {
@@ -157,7 +157,7 @@ export default Route.extend({
 
     // additional people
     controller.set('allowMultiplePeople', get(model, 'allowMultiplePeople'));
-    controller.set('additionalPeopleFields', formFields.addressFields);
-
+    controller.set('additionalPeopleFields', formFields.additionalPeopleFields !== undefined
+      ? formFields.additionalPeopleFields : formFields.addressFields);
   }
 });
