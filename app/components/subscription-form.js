@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import $ from 'jquery';
 import { formatDate, getDMY, getYMD } from 'kursausschreibung/framework/date-helpers';
 import { setDataToSubmit } from 'kursausschreibung/framework/storage';
 import { getString } from 'kursausschreibung/framework/translate';
@@ -59,7 +60,7 @@ export default Component.extend({
 
 // this function subscribes a person to an event using the information
 // provided in the form
-function subscribe(form, self) {
+function subscribe($form, self) {
   let useCompanyAddress = self.get('useCompanyAddress') === true;
   let eventId = self.get('eventId');
   let userSettings = self.get('userSettings');
@@ -71,9 +72,9 @@ function subscribe(form, self) {
     SubscriptionDetails: []
   };
 
-  let assocSubscriptionData = getFieldSetData(form, [], '.subscription-detail-fields'); // for confirmation values
+  let assocSubscriptionData = getFieldSetData([], $form.find('.subscription-detail-fields')); // for confirmation values
 
-  form.find('.subscription-detail-fields').find('input, select, textarea').each((_, element) => {
+  $form.find('.subscription-detail-fields').find('input, select, textarea').each((_, element) => {
     let vssId = parseInt(element.name);
     let value = null;
 
@@ -89,54 +90,67 @@ function subscribe(form, self) {
   });
 
   // values for dataToSubmit
-  let personId = userSettings.IdPerson, tableData, addressData, companyAddressData;
+  let personId = userSettings.IdPerson, tableData = {}, addressData, companyAddressData, additionalPeople;
+
+  const addressProperties = [
+    'Country', 'CountryId', 'FormOfAddress', 'FormOfAddressId', 'HomeCountry', 'HomeCountryId',
+    'Nationality', 'NationalityId', 'AddressLine1', 'AddressLine2', 'BillingAddress',
+    'Birthdate', 'CorrespondenceAddress', 'Email', 'Email2', 'FirstName', 'Gender', 'HomeTown',
+    'IsEmployee', 'LastName', 'Location', 'MiddleName', 'NativeLanguage', 'PhoneMobile', 'PhonePrivate',
+    'Profession', 'SocialSecurityNumber', 'StayPermit', 'StayPermitExpiry', 'Zip'
+  ];
+
+  const companyAddressProperties = [
+    'PersonId', 'AddressType', 'AddressTypeId', 'Country', 'CountryId', 'FormOfAddress', 'FormOfAddressId',
+    'AddressLine1', 'AddressLine2', 'Company', 'Department', 'FirstName', 'IsBilling', 'IsCorrespondence',
+    'LastName', 'Location', 'Remark', 'ValidFrom', 'ValidTo', 'Zip'
+  ];
 
   // read address and companyAddress if we don't know the personId yet
   if (userSettings.isLoggedIn !== true) {
 
     // main address
-    let addressProperties = [
-      'Country', 'CountryId', 'FormOfAddress', 'FormOfAddressId', 'HomeCountry', 'HomeCountryId',
-      'Nationality', 'NationalityId', 'AddressLine1', 'AddressLine2', 'BillingAddress',
-      'Birthdate', 'CorrespondenceAddress', 'Email', 'Email2', 'FirstName', 'Gender', 'HomeTown',
-      'IsEmployee', 'LastName', 'Location', 'MiddleName', 'NativeLanguage', 'PhoneMobile', 'PhonePrivate',
-      'Profession', 'SocialSecurityNumber', 'StayPermit', 'StayPermitExpiry', 'Zip'
-    ];
-
-    addressData = getFieldSetData(form, addressProperties, '.address-fields');
-
-    let companyAddressProperties = [
-      'PersonId', 'AddressType', 'AddressTypeId', 'Country', 'CountryId', 'FormOfAddress', 'FormOfAddressId',
-      'AddressLine1', 'AddressLine2', 'Company', 'Department', 'FirstName', 'IsBilling', 'IsCorrespondence',
-      'LastName', 'Location', 'Remark', 'ValidFrom', 'ValidTo', 'Zip'
-    ];
+    addressData = getFieldSetData(addressProperties, $form.find('.address-fields'));
 
     // company address
-    companyAddressData = getFieldSetData(form, companyAddressProperties, '.company-address-fields');
+    companyAddressData = getFieldSetData(companyAddressProperties, $form.find('.company-address-fields'));
 
-    // get the values for the confirmation table
-    tableData = {
-      fields: getTableData(self.get('fields'), addressData),
-      subscriptionDetailFields: getTableData(self.get('subscriptionDetailFields'), assocSubscriptionData)
-    };
+    // set tableData for the main person
+    tableData.fields = getTableData(self.get('fields'), addressData);
 
-    if (useCompanyAddress)
+    // set tableData for the company address
+    if (useCompanyAddress) {
       tableData.companyFields = getTableData(self.get('companyFields'), companyAddressData);
+    }
   }
+
+  // set tableData for subscriptionDetails
+  tableData.subscriptionDetailFields = getTableData(self.get('subscriptionDetailFields'), assocSubscriptionData);
+
+  // read addresses for additional people
+  additionalPeople = $form.find('.additional-person-fields').toArray().map(fieldset =>
+    getFieldSetData(addressProperties, $(fieldset))
+  );
+
+  // set tableData for additional people
+  tableData.additionalPeopleFields = additionalPeople.map((data, index) =>
+    ({ index: index + 1, data: getTableData(self.get('additionalPeopleFields'), data) })
+  );
 
   // save the data to submit
   setDataToSubmit({
-    personId, eventId, useCompanyAddress, addressData, companyAddressData, subscriptionData, tableData
+    personId, eventId, useCompanyAddress, addressData, companyAddressData, subscriptionData,
+    additionalPeople, tableData
   });
 }
 
-// get data from a field set which is ready to get posted to Persons/Addresses
-function getFieldSetData(form, properties, selector) {
+// get data from a fieldset in the format expected by the REST-API
+function getFieldSetData(properties, $fieldset) {
   let data = {};
 
   properties.forEach(property => data[property] = null);
 
-  form.find(selector).find('input, select, textarea').each((_, element) => setProperties(data, element));
+  $fieldset.find('input, select, textarea').each((_, element) => setProperties(data, element));
 
   return data;
 }
