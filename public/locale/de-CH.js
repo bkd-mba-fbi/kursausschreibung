@@ -42,12 +42,12 @@ window.kursausschreibung.locale["de-CH"] = {
   "subscriptionFailed": "Anmeldung fehlgeschlagen.",
   "noEvents": "keine Anlässe verfügbar",
   "useLogin": "Ihre Anmeldung wird gemäss Ihrem Login erstellt {0}.",
-  "backToSubscripton": "Anmeldeformular",
+  "backToSubscripton": "Zurück zum Anmeldeformular",
   "invalidInput": "Ungültige Eingabe",
 
   // properties of an event
   "subscriptionFrom": "Start",
-  "subscriptionDateTo":"Anmeldefrist",
+  "subscriptionDateTo": "Anmeldefrist",
   "location": "Ort",
   "price": "Preis",
   "buildingAddress": "Adresse",
@@ -68,5 +68,9 @@ window.kursausschreibung.locale["de-CH"] = {
   "formAddressLine1": "Adresse",
   "formZip": "PLZ",
   "formLocation": "Ort",
-  "duplicateEmailError": "Die E-Mail-Adresse muss unterschiedlich sein, ansonsten kann das Formular nicht übermittelt werden."
+  "duplicateEmailError": "Die E-Mail-Adresse muss unterschiedlich sein, ansonsten kann das Formular nicht übermittelt werden.",
+  "addPerson": "Weitere Person anmelden",
+  "removePerson": "Unterste Person entfernen",
+  "person": "Person",
+  "confirmDeletion": "Möchten Sie die unterste Person wirklich entfernen?"
 };

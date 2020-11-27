@@ -46,9 +46,13 @@ export default Component.extend({
 
       const that = this;
 
-      uikit.modal.confirm('Möchten Sie die unterste Person wirklich entfernen?', { labels: { ok: 'OK', cancel: 'Abbrechen' } }).then(function () {
-        that.set('additionalPeopleCount', additionalPeopleCount - 1);
-      });
+      uikit.modal.confirm(getString('confirmDeletion'),
+        {
+          labels:
+            { ok: getString('yes'), cancel: getString('no') }
+        }).then(function () {
+          that.set('additionalPeopleCount', additionalPeopleCount - 1);
+        });
     }
   }
 });

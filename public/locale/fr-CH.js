@@ -68,5 +68,9 @@ window.kursausschreibung.locale["fr-CH"] = {
   "formAddressLine1": null,
   "formZip": null,
   "formLocation": null,
-  "duplicateEmailError": null
+  "duplicateEmailError": null,
+  "addPerson": null,
+  "removePerson": null,
+  "person": null,
+  "confirmDeletion": null
 };
