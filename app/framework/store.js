@@ -123,7 +123,7 @@ function addTextsToEvents(eventTexts, language) {
   // if the 13th event text is an url it is used to subscribe to the event
   // see: https://github.com/bkd-mba-fbi/kursausschreibung/issues/67
   eventsById.forEach(event => {
-    if (/^https?:\/\/[^ ]+$/.test(event.texts[13].memo)) {
+    if (event.texts.length >= 14 && /^https?:\/\/[^ ]+$/.test(event.texts[13].memo)) {
       event.externalSubscriptionURL = event.texts[13].memo;
       event.texts[13].memo = null;
     } else {
