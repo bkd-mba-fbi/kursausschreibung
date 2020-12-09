@@ -103,6 +103,10 @@ export default Route.extend({
   model(_params, transition) {
     let model = this.modelFor('list.category.event');
 
+    if (model.externalSubscriptionURL !== null) {
+      this.replaceWith('list.category.event.index');
+    }
+
     if (model.get('canDoSubscription') === false) {
       this.replaceWith('list.category.event');
       transition.abort();
