@@ -214,5 +214,5 @@ window.kursausschreibung.settings = {
   "languageOfInstructionFilter": false,
 
   // Header Offset for scrolling
-  "headerOffset": 90
+  "headerOffset": 133
 };
