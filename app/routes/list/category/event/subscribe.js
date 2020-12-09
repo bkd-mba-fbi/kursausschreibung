@@ -137,6 +137,8 @@ export default Route.extend({
 
         if (userSettings.isLoggedIn === false) {
           let fields = getFormFields(settings, model.EventTypeId).addressFields;
+          let additionalPeopleFields = getFormFields(settings, model.EventTypeId).additionalPeopleFields;
+          loadDropdownItems(additionalPeopleFields);
 
           return loadDropdownItems(fields);
         }
