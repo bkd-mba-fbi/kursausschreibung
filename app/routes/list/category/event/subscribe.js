@@ -156,6 +156,7 @@ export default Route.extend({
     // company fields
     controller.set('companyFields', typeof formFields.companyFields === 'object' ? addTranslations(formFields.companyFields) : null);
 
+
     // subscriptionDetails
     controller.set('subscriptionDetailFields', get(model, 'subscriptionDetailFields'));
 
@@ -163,5 +164,6 @@ export default Route.extend({
     controller.set('allowMultiplePeople', get(model, 'allowMultiplePeople'));
     controller.set('additionalPeopleFields', formFields.additionalPeopleFields !== undefined
       ? formFields.additionalPeopleFields : formFields.addressFields);
+    controller.set('additionalPeopleFields', addTranslations(formFields.additionalPeopleFields));
   }
 });
