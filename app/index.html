@@ -36,7 +36,6 @@
       margin: 0;
       padding: 0;
       font-size: 0;
-      font-family: 'Neue Helvetica Light', sans-serif;
     }
 
     #Kanton_Bern {
@@ -51,15 +50,18 @@
       height: 90px;
     }
 
-    .header h1,
-    .footer h1 {
+    .header h3,
+    .footer h3 {
+      font-family: 'Neue Helvetica Light', sans-serif;
       color: white;
-      font-size: 30px;
       font-weight: lighter;
       margin: 0;
-      padding: 10px;
+      padding: 20px 0 10px 10px;
     }
 
+    .uk-scope .uk-navbar-nav > li.uk-active > a {
+      border-bottom: 2px solid #EA161F;
+    }
     .header a,
     .footer a {
       text-decoration: none;
@@ -382,8 +384,8 @@ c0.314575-0.275208,0.658569-0.57843,0.958801-0.843872C38.155884,18.890965,37.983
         </g>
       </svg>
 
-    <a href="https://github.com/bkd-mba-fbi/kursausschreibung" target="_blank" style="margin-top: 5px;">
-      <h1>Kursausschreibung Evento</h1>
+    <a href="https://github.com/bkd-mba-fbi/kursausschreibung" target="_blank">
+      <h3>Kursausschreibung Evento</h3>
     </a>
   </div>
 
@@ -399,7 +401,7 @@ c0.314575-0.275208,0.658569-0.57843,0.958801-0.843872C38.155884,18.890965,37.983
   <!-- FOOTER -->
   <div class="footer">
     <a href="https://github.com/bkd-mba-fbi" target="_blank">
-      <h1>by bkd-mba-fbi</h1>
+      <h3>by bkd-mba-fbi</h3>
     </a>
   </div>
   {{content-for "body-footer"}}

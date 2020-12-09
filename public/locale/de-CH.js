@@ -55,6 +55,8 @@ window.kursausschreibung.locale["de-CH"] = {
   "dateFrom": "Datum von",
   "dateTo": "Datum bis",
   "leadership": "Anlassleitung",
+  "dateString": "Datum",
+  "number": "Nummer",
 
   // translations for the form
   "formFormOfAddress": "Anrede",
@@ -70,8 +72,8 @@ window.kursausschreibung.locale["de-CH"] = {
   "formLocation": "Ort",
   "duplicateEmailError": "Die E-Mail-Adresse muss unterschiedlich sein, ansonsten kann das Formular nicht übermittelt werden.",
   "addPerson": "Weitere Person anmelden",
-  "removePerson": "Unterste Person entfernen",
+  "removePerson": "Letzte Person entfernen",
   "person": "Person",
-  "confirmDeletion": "Möchten Sie die unterste Person wirklich entfernen?",
+  "confirmDeletion": "Möchten Sie die letzte Person wirklich entfernen?",
   "noSeatsAvailable": "Dazu sind nicht genügend freie Plätze verfügbar.",
 };
