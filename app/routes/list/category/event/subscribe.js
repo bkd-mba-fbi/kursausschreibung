@@ -138,7 +138,11 @@ export default Route.extend({
         if (userSettings.isLoggedIn === false) {
           let fields = getFormFields(settings, model.EventTypeId).addressFields;
           let additionalPeopleFields = getFormFields(settings, model.EventTypeId).additionalPeopleFields;
-          loadDropdownItems(additionalPeopleFields);
+          if (get(model, 'allowMultiplePeople')){
+            loadDropdownItems(additionalPeopleFields);
+          } 
+
+          
 
           return loadDropdownItems(fields);
         }
@@ -166,6 +170,9 @@ export default Route.extend({
     controller.set('allowMultiplePeople', get(model, 'allowMultiplePeople'));
     controller.set('additionalPeopleFields', formFields.additionalPeopleFields !== undefined
       ? formFields.additionalPeopleFields : formFields.addressFields);
-    controller.set('additionalPeopleFields', addTranslations(formFields.additionalPeopleFields));
+      if (get(model, 'allowMultiplePeople')){
+        controller.set('additionalPeopleFields', addTranslations(formFields.additionalPeopleFields));
+      }
+    
   }
 });
