@@ -16,7 +16,10 @@ export default Route.extend({
       return;
     }
 
-    let { personId, useCompanyAddress, addressData, companyAddressData, subscriptionData, tableData } = dataToSubmit;
+    let {
+      personId, useCompanyAddress, addressData, companyAddressData,
+      subscriptionData, additionalPeople, tableData
+    } = dataToSubmit;
 
     // make sure the session is still active
     return autoCheckForLogin().then(() => {
@@ -32,19 +35,37 @@ export default Route.extend({
         throw new Error('it\'s no longer possible to subscribe to this event');
       }
 
+      // Create people and subscriptions
+      let promises = [];
+
+      // handle main person
       if (personId === 0) {
-        // no user is logged in, let's create a new one
-        return createAddresses(useCompanyAddress, addressData, companyAddressData)
-          .then(id => personId = id);
+        promises.push(createAddresses(useCompanyAddress, addressData, companyAddressData));
+      } else {
+        promises.push(Promise.resolve(personId));
       }
 
-    }).then(() => {
-      subscriptionData.PersonId = personId;
+      // handle other people
+      additionalPeople.forEach(person => {
+        promises.push(createPerson(person));
+      });
 
-      return postSubscription(subscriptionData);
+      // subscribe everyone
+      promises = promises.map(promise => {
+        return promise.then(id => {
+          subscriptionData.PersonId = id;
+
+          return postSubscription(subscriptionData);
+        });
+      });
+
+      return Promise.all(promises);
+
     }).then(() => {
       return { tableData: tableData, statusIsRed: event.get('status') === 'red' };
+
     }).catch(error => {
+
       if (error instanceof Error) {
         console.error(error); // eslint-disable-line no-console
       }
@@ -62,9 +83,29 @@ export default Route.extend({
 });
 
 // this function creates an address, a company address (if requested) and returns a
-// Promise returning a personId
+// promise for a personId
 function createAddresses(useCompanyAddress, addressData, companyAddressData) {
   let personId;
+
+  return createPerson(addressData).then(id => {
+    personId = id;
+
+    if (!useCompanyAddress)
+      return;
+
+    // add default values to companyAddress
+    companyAddressData.PersonId = parseInt(personId);
+    companyAddressData.AddressType = 'Arbeitgeber';
+    companyAddressData.AddressTypeId = 501;
+    companyAddressData.Country = companyAddressData.Country === null ? 'Schweiz' : companyAddressData.Country;
+    companyAddressData.CountryId = companyAddressData.CountryId === null ? 'CH' : companyAddressData.CountryId;
+
+    return postAddress(companyAddressData);
+  }).then(() => personId);
+}
+
+// this function creates a new person and returns a promise for a personId
+function createPerson(addressData) {
 
   // add default values to person
   if (settings.personDefaultValue instanceof Object) {
@@ -77,8 +118,9 @@ function createAddresses(useCompanyAddress, addressData, companyAddressData) {
     );
   }
 
-  return new Promise(resolve => postPerson(addressData).then((data, status, xhr) => { resolve([xhr]); }))
-    .then(([xhr]) => {
+  return new Promise(resolve => postPerson(addressData)
+    .then((_data, _status, xhr) => { resolve([xhr]); }))
+    .then(([xhr]) => { // xhr is in an array so it gets correctly passed along
       let duplicateHeader = xhr.getResponseHeader('x-duplicate');
       let locationHeader = xhr.getResponseHeader('location');
 
@@ -88,7 +130,7 @@ function createAddresses(useCompanyAddress, addressData, companyAddressData) {
 
       if (duplicateHeader !== null) {
         // the person already exists and must get updated
-        personId = duplicateHeader.split('/').slice(-1)[0];
+        let personId = duplicateHeader.split('/').slice(-1)[0];
 
         // delete keys with null-values
         Object.keys(addressData).forEach(key => {
@@ -99,24 +141,14 @@ function createAddresses(useCompanyAddress, addressData, companyAddressData) {
         // add id
         addressData.Id = parseInt(personId);
 
-        return putPerson(addressData, personId).catch(error => {
-          // fail silently (see https://github.com/bkd-mba-fbi/kursausschreibung/issues/26)
-          console.error('ignoring error while trying to update person', error); // eslint-disable-line no-console
-        });
+        return putPerson(addressData, personId)
+          .then(() => personId)
+          .catch(error => {
+            // fail silently (see https://github.com/bkd-mba-fbi/kursausschreibung/issues/26)
+            console.error('ignoring error while trying to update person', error); // eslint-disable-line no-console
+          });
       }
 
-      personId = locationHeader.split('/').slice(-1)[0];
-    }).then(() => {
-      if (!useCompanyAddress)
-        return;
-
-      // add default values to company-address
-      companyAddressData.PersonId = parseInt(personId);
-      companyAddressData.AddressType = 'Arbeitgeber';
-      companyAddressData.AddressTypeId = 501;
-      companyAddressData.Country = companyAddressData.Country === null ? 'Schweiz' : companyAddressData.Country;
-      companyAddressData.CountryId = companyAddressData.CountryId === null ? 'CH' : companyAddressData.CountryId;
-
-      return postAddress(companyAddressData);
-    }).then(() => personId);
+      return locationHeader.split('/').slice(-1)[0];
+    });
 }

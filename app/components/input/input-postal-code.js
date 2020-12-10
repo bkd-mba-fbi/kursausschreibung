@@ -32,7 +32,7 @@ export default Component.extend({
         }
       });
 
-    $typeahead.bind('typeahead:select', (_event, suggestion) =>
+    $typeahead.on('typeahead:select', (_event, suggestion) =>
       $locationFields.val(suggestion.Location)
     );
   },

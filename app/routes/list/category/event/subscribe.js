@@ -1,11 +1,14 @@
-import Route from '@ember/routing/route';
 import { A } from '@ember/array';
+import { get, set } from '@ember/object';
+import Route from '@ember/routing/route';
+import {
+  getDropDownItems, getSubscriptionDetails, getUserSettings,
+  SUBSCRIPTION_DETAIL_ALLOW_MULTIPLE_PEOPLE
+} from 'kursausschreibung/framework/api';
+import { autoCheckForLogin } from 'kursausschreibung/framework/login-helpers';
 import settings from 'kursausschreibung/framework/settings';
 import { getString } from 'kursausschreibung/framework/translate';
-import { getDropDownItems, getSubscriptionDetails, getUserSettings } from 'kursausschreibung/framework/api';
-import { autoCheckForLogin } from 'kursausschreibung/framework/login-helpers';
 import { Promise } from 'rsvp';
-import { get, set } from '@ember/object';
 
 // if these were loaded in the component an error
 // would just cause the template to stop rendering
@@ -97,7 +100,7 @@ function getFormFields(settings, eventTypeId) {
 }
 
 export default Route.extend({
-  model(params, transition) {
+  model(_params, transition) {
     let model = this.modelFor('list.category.event');
 
     if (model.externalSubscriptionURL !== null) {
@@ -115,6 +118,17 @@ export default Route.extend({
       .then(() => Promise.all([getUserSettings(), getSubscriptionDetails(model.Id)]))
       .then(([userSettings, subscriptionDetails]) => {
 
+        // check if multiple people are allowed to subscribe at the same time
+        let allowMultiplePeople = false;
+        subscriptionDetails = subscriptionDetails.filter(function (subscriptionDetail) {
+          if (subscriptionDetail.VssId === SUBSCRIPTION_DETAIL_ALLOW_MULTIPLE_PEOPLE) {
+            allowMultiplePeople = true;
+            return false;
+          }
+          return true;
+        });
+        set(model, 'allowMultiplePeople', allowMultiplePeople);
+
         // if userSettings.IdPerson is not 0 we can use it for the subscription
         userSettings.isLoggedIn = userSettings.IdPerson !== 0;
 
@@ -123,6 +137,8 @@ export default Route.extend({
 
         if (userSettings.isLoggedIn === false) {
           let fields = getFormFields(settings, model.EventTypeId).addressFields;
+          let additionalPeopleFields = getFormFields(settings, model.EventTypeId).additionalPeopleFields;
+          loadDropdownItems(additionalPeopleFields);
 
           return loadDropdownItems(fields);
         }
@@ -142,7 +158,14 @@ export default Route.extend({
     // company fields
     controller.set('companyFields', typeof formFields.companyFields === 'object' ? addTranslations(formFields.companyFields) : null);
 
+
     // subscriptionDetails
     controller.set('subscriptionDetailFields', get(model, 'subscriptionDetailFields'));
+
+    // additional people
+    controller.set('allowMultiplePeople', get(model, 'allowMultiplePeople'));
+    controller.set('additionalPeopleFields', formFields.additionalPeopleFields !== undefined
+      ? formFields.additionalPeopleFields : formFields.addressFields);
+    controller.set('additionalPeopleFields', addTranslations(formFields.additionalPeopleFields));
   }
 });

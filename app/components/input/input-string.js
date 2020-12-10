@@ -6,11 +6,8 @@ export default Component.extend({
     if (this.field.id === 'SocialSecurityNumber') {
       helperSocialSecurityNumber(this.element.children[0]);
     }
-
   },
   keyUp() {
-    if (this.field.id === 'SocialSecurityNumber') {
-      helperSocialSecurityNumber(this.element.children[0]);
-    }
+    this.change();
   }
 });

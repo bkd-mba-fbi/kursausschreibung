@@ -25,7 +25,7 @@ export default Route.extend({
       })
       .catch(function (error) {
         // only log exceptions thrown here so the route still loads
-        // uninitialised modules will throw an error later
+        // uninitialized modules will throw an error later
         console.error('FATAL error while initializing the module: ', error); // eslint-disable-line no-console
       });
   },

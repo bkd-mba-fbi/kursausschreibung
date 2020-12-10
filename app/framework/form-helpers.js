@@ -4,10 +4,11 @@ import { getString } from 'kursausschreibung/framework/translate';
  * set custom validity of a form element
  * @param {object} element
  * @param {boolean} valid
+ * @param {string} message
  */
-export function formDanger(element, valid) {
+export function formFieldError(element, valid, message = 'invalidInput') {
   if (valid) {
-    element.setCustomValidity(getString('invalidInput'));
+    element.setCustomValidity(getString(message));
   } else {
     element.setCustomValidity('');
   }
@@ -23,7 +24,7 @@ export function formDanger(element, valid) {
  * @param {object} element
  */
 export function helperSocialSecurityNumber(that) {
-  formDanger(that, true);
+  formFieldError(that, true);
   let number = that.value;
 
   //set delimiter "."
@@ -52,10 +53,10 @@ export function helperSocialSecurityNumber(that) {
       if ('000.0000.0000.00' !== number) {
         let numberString = number.replace(/\./g, '');
         let valid = ean13checkNumber(numberString);
-        valid ? formDanger(that, false) : formDanger(that, true);
+        valid ? formFieldError(that, false) : formFieldError(that, true);
       }
     } else {
-      formDanger(that, true);
+      formFieldError(that, true);
     }
   }
 }
@@ -70,9 +71,9 @@ function ean13checkNumber(number) {
       let int = numberReverse.charAt(i);
       sum = (int * (i & 1 === 1 ? 3 : 1)) + sum;
     }
-    let checkNummer = 10 - (sum % 10);
-    checkNummer = checkNummer === 10 ? 0 : checkNummer;
-    return Number(number.slice(-1)) === checkNummer ? true : false;
+    let checkNumber = 10 - (sum % 10);
+    checkNumber = checkNumber === 10 ? 0 : checkNumber;
+    return Number(number.slice(-1)) === checkNumber ? true : false;
   }
   return false;
 }

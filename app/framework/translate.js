@@ -36,7 +36,7 @@ export function getString(key, placeholderValues = []) {
   try {
     let string = locale[key];
 
-    if (string === undefined) {
+    if (string === undefined || string === null) {
       return '<span style="color:red;">Key not found: ' + key + '</span>';
     }
 

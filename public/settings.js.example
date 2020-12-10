@@ -168,6 +168,29 @@ window.kursausschreibung.settings = {
                   "dataType": "email",
                   "options": { "required": true, "showHint": true, "hintClassNames": "uk-text-meta"  }
                 }
+          ],
+          // if subscriptionsDetail 10893 on Event the User can subscribe additional People in the same subscripion.
+          // It's possible for additional People different person fields as form main subscripion
+          "additionalPeopleFields": [
+            {
+              "id": "FormOfAddress",
+              "dataType": "dropdown",
+              "options": { "dropdownItems": "FormsOfAddress" }
+            },
+            {
+              "id": "FirstName",
+              "dataType": "string",
+              "options": { "required": true, "autocomplete": "given-name", "showPlaceholder": true }
+            },
+            {
+              "id": "LastName",
+              "dataType": "string",
+              "options": { "required": true, "autocomplete": "family-name", "showPlaceholder": true }
+            },
+            { "id": "Email2", 
+              "dataType": "email",
+              "options": { "required": true, "autocomplete": "family-name", "showPlaceholder": true }
+            }
           ]       
       }
   },
@@ -214,5 +237,5 @@ window.kursausschreibung.settings = {
   "languageOfInstructionFilter": false,
 
   // Header Offset for scrolling
-  "headerOffset": 10
+  "headerOffset": 133
 };
