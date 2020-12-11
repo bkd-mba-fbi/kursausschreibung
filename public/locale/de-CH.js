@@ -57,6 +57,8 @@ window.kursausschreibung.locale["de-CH"] = {
   "leadership": "Anlassleitung",
   "dateString": "Datum",
   "number": "Nummer",
+  "duration": "Dauer", 
+  "time": "Zeit",
 
   // translations for the form
   "formFormOfAddress": "Anrede",
