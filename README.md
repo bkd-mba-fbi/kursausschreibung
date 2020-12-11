@@ -19,6 +19,12 @@ You will need the following things properly installed on your computer.
 * `npm install`
 * `npm run scope` (make sure node is up to date)
 
+### Problem npm install
+For one reason or another, some people can't connect to the registry via HTTPS. This can be fixed by setting the registry to use HTTP instead:
+
+* `npm config set registry http://registry.npmjs.org/`
+* `npm config set strict-ssl false`
+
 ## Running / Development
 
 * `ember serve`
