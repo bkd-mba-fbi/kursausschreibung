@@ -5,6 +5,7 @@ import { getDataToSubmit, setDataToSubmit } from 'kursausschreibung/framework/st
 import { postPerson, putPerson, postAddress, postSubscription } from 'kursausschreibung/framework/api';
 import { autoCheckForLogin } from 'kursausschreibung/framework/login-helpers';
 import settings from 'kursausschreibung/framework/settings';
+import { SUBSCRIPTION_DETAIL_ALLOW_MULTIPLE_PEOPLE } from 'kursausschreibung/framework/api';
 
 export default Route.extend({
   model() {
@@ -54,7 +55,9 @@ export default Route.extend({
       promises = promises.map(promise => {
         return promise.then(id => {
           subscriptionData.PersonId = id;
-
+          if(additionalPeople.length > 0 ){
+            subscriptionData.SubscriptionDetails.push({VssId: SUBSCRIPTION_DETAIL_ALLOW_MULTIPLE_PEOPLE , Value: additionalPeople.length });
+          }
           return postSubscription(subscriptionData);
         });
       });

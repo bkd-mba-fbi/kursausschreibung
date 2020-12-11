@@ -75,5 +75,5 @@ window.kursausschreibung.locale["de-CH"] = {
   "removePerson": "Letzte Person entfernen",
   "person": "Person",
   "confirmDeletion": "Möchten Sie die letzte Person wirklich entfernen?",
-  "noSeatsAvailable": "Dazu sind nicht genügend freie Plätze verfügbar.",
+  "noSeatsAvailable": "Dazu sind nicht genügend freie Plätze verfügbar."
 };
