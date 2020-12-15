@@ -1,6 +1,6 @@
 /* loosely based on the CLX framework */
 
-import parse from 'date-fns/parse';
+import parseISO from 'date-fns/parseISO';
 import format from 'date-fns/format';
 import de from 'date-fns/locale/de';
 import fr from 'date-fns/locale/fr';
@@ -11,31 +11,24 @@ const formats = {
   'de-CH': {
     LT: 'HH:mm',
     LTS: 'HH:mm:ss',
-    L: 'DD.MM.YYYY',
-    LL: 'D. MMMM YYYY',
-    LLL: 'D. MMMM YYYY HH:mm',
-    LLLL: 'dddd, D. MMMM YYYY HH:mm'
+    L: 'dd.MM.yyyy',
+    LL: 'EEEEEE, d. MMMM yyyy',
+    LLL: 'EEEEEE, d. MMMM yyyy HH:mm',
+    LLLL: 'EEEE, d. MMMM yyyy HH:mm'
   },
 
   'fr-CH': {
     LT: 'HH:mm',
     LTS: 'HH:mm:ss',
-    L: 'DD.MM.YYYY',
-    LL: 'D MMMM YYYY',
-    LLL: 'D MMMM YYYY HH:mm',
-    LLLL: 'dddd D MMMM YYYY HH:mm'
+    L: 'dd.MM.yyyy',
+    LL: 'EEEEEE, d MMMM yyyy',
+    LLL: 'EEEEEE, d MMMM yyyy HH:mm',
+    LLLL: 'EEEE d MMMM yyyy HH:mm'
   }
 };
 
 const language = getLanguage();
 const locale = language === 'de-CH' ? de : fr;
-
-/**
- * parse a date
- * @param {date|string|number} argument the date to parse
- * @param {object?} options the object with options
- */
-export { parse as parseDate };
 
 /**
  * format a date
@@ -45,6 +38,9 @@ export { parse as parseDate };
 export function formatDate(date, formatString = '') {
   if (date === null)
     return null;
+
+  if (typeof date === 'string')
+    date = parseISO(date);
 
   formatString = formatString in formats[language] ?
     formats[language][formatString] : formatString;
@@ -62,38 +58,37 @@ export function isInSubscriptionRange(event) {
   let now = new Date();
 
   if (event.SubscriptionFrom === null)
-    return now.getTime() < parse(event.SubscriptionTo).getTime();
+    return now.getTime() < event.SubscriptionTo.getTime();
 
-  return parse(event.SubscriptionFrom).getTime() < now.getTime() &&
-    now.getTime() < parse(event.SubscriptionTo).getTime();
+  return event.SubscriptionFrom.getTime() < now.getTime() &&
+    now.getTime() < event.SubscriptionTo.getTime();
 }
 
 /**
- * return true when the DateFrom greater or equal
- * to current date is. If DateFrom null then current date
+ * return true if DateFrom is greater than or equal
+ * to the current date
  * @param {object} event event to check
  */
 export function eventStarted(event) {
   let now = new Date();
   if (event.DateFrom === null) {
-    return now.getTime() === now.getTime();
-  } 
-  return parse(event.DateFrom).getTime() >= now.getTime();
+    return true;
+  }
+  return parseISO(event.DateFrom).getTime() >= now.getTime();
 }
 
 /**
- * return true when the DateTo earlier or equal
- * to current date is. If DateTo null then current date
+ * return true if DateTo is smaller than or equal
+ * to the current date
  * @param {object} event event to check
  */
 export function eventEnded(event) {
   let now = new Date();
   if (event.DateTo === null) {
-    return now.getTime() === now.getTime();
-  } 
-  return parse(event.DateTo).getTime() <= now.getTime();
+    return true;
+  }
+  return parseISO(event.DateTo).getTime() <= now.getTime();
 }
-
 
 /**
  * combine a date and a time to a single date object
@@ -104,7 +99,7 @@ export function eventEnded(event) {
 export function combineDate(dateString, timeString) {
   try {
     let [hours, minutes] = timeString.split(':').map(str => parseInt(str));
-    let date = parse(dateString);
+    let date = parseISO(dateString);
     date.setHours(hours, minutes);
     return date;
   } catch (exception) {
@@ -133,7 +128,7 @@ function isDMY(dateString) {
  * @param {string} dateString the date to convert
  */
 export function getDMY(dateString) {
-  return isDMY(dateString) ? dateString : format(dateString, 'L');
+  return isDMY(dateString) ? dateString : formatDate(dateString, 'L');
 }
 
 /**
@@ -141,7 +136,7 @@ export function getDMY(dateString) {
  * @param {string} dateString the date to convert
  */
 export function getYMD(dateString) {
-  return isDMY(dateString) ? dateString.split('.').reverse().join('-') : format(dateString, 'YYYY-MM-DD');
+  return isDMY(dateString) ? dateString.split('.').reverse().join('-') : formatDate(dateString, 'yyyy-MM-dd');
 }
 
 /**
@@ -156,6 +151,6 @@ export function getDateTimeForIcs(dateString) {
  * returns true if date > now
  * @param {string} dateString YYYY-MM-DD
  */
-export function dateGreaterNow(date){
-    return Date.parse(date) > Date.now() ? true : false;
+export function dateGreaterNow(date) {
+  return parseISO(date) > Date.now();
 }

@@ -3,22 +3,22 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | input-master', function(hooks) {
+module('Integration | Component | input/input-postal-code', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.set('myAction', function(val) { ... });
 
-    await render(hbs`{{input-master}}`);
+    await render(hbs`{{input/input-postal-code}}`);
 
     assert.equal(this.element.textContent.trim(), '');
 
     // Template block usage:
     await render(hbs`
-      {{#input-master}}
+      {{#input/input-postal-code}}
         template block text
-      {{/input-master}}
+      {{/input/input-postal-code}}
     `);
 
     assert.equal(this.element.textContent.trim(), 'template block text');

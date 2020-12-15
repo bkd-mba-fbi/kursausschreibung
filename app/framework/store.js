@@ -9,6 +9,7 @@ import { formatDate, combineDate, isInSubscriptionRange, removeMinutes, eventSta
 import { all } from 'rsvp';
 import settings from './settings';
 import { getLanguage, getString } from './translate';
+import format from 'date-fns/format';
 
 let initialized = false;
 
@@ -58,15 +59,6 @@ export function init() {
     getEventLocations(),
     getEventTexts(language)
   ]).then(function ([events, lessons, eventLocations, eventTexts]) {
-
-    // remove null-values (temporary fix, see #50)
-    /*let removeNull = array => array.filter(element => element !== null);
-        
-    events = removeNull(events);
-    lessons = removeNull(lessons);
-    eventLocations = removeNull(eventLocations);
-    eventTexts = removeNull(eventTexts);
-    */
     // filter events
     events = filterEvents(events, language);
 
@@ -90,7 +82,7 @@ export function init() {
     // sort areaKeys
     eventsByArea.areaKeys = Object.keys(eventsByArea.areas).sort();
 
-    // sort categoreKeys
+    // sort categoryKeys
     eventsByArea.areaKeys.forEach(area =>
       eventsByArea.areas[area].categoryKeys = Object.keys(eventsByArea.areas[area].categories).sort()
     );
@@ -128,6 +120,17 @@ function addTextsToEvents(eventTexts, language) {
     text[textItem.Type.toLowerCase()] = textItem.Value;
   });
 
+  // if the 13th event text is an url it is used to subscribe to the event
+  // see: https://github.com/bkd-mba-fbi/kursausschreibung/issues/67
+  eventsById.forEach(event => {
+    if (event.texts.length >= 14 && /^https?:\/\/[^ ]+$/.test(event.texts[13].memo)) {
+      event.externalSubscriptionURL = event.texts[13].memo;
+      event.texts[13].memo = null;
+    } else {
+      event.externalSubscriptionURL = null;
+    }
+  });
+
   // remove texts with empty label or memo
   eventsById.forEach(
     event =>
@@ -138,7 +141,7 @@ function addTextsToEvents(eventTexts, language) {
 }
 
 /**
- * add loactions to events
+ * add locations to events
  * @param {object[]} eventLocations eventLocations returned by the API
  */
 function addLocationsToEvents(eventLocations) {
@@ -371,6 +374,9 @@ function addPropertiesToEvent(event) {
   // add texts-array
   event.texts = [];
 
+  // fill empty Date properties in event object
+  fillEmptyDates(event);
+
   // combine date and time
   event.SubscriptionFrom = combineDate(event.SubscriptionDateFrom, event.SubscriptionTimeFrom);
   event.SubscriptionTo = combineDate(event.SubscriptionDateTo, event.SubscriptionTimeTo);
@@ -382,12 +388,39 @@ function addPropertiesToEvent(event) {
     event.Time = `${removeMinutes(event.TimeFrom)} - ${removeMinutes(event.TimeTo)}`;
   }
 }
-
 /**
- * if LanguageOfInstruction is number translate it
+ * if one of the Date or Time property is null get default value
+ *
+ * SubscriptionDateFrom is null => now - 1 day
+ * SubscriptionDateTo is null => now + 7 day
+ * DateFrom is null => now + 7 day
+ * DateTo is null => now + 7 day
+ * SubscriptionTimeFrom is null => '00:00:01'
+ * SubscriptionTimeTo is null => '23:59:59'
  * @param {object} event event returned by the API
  */
-function setLanguageEventFromIntToString(event){
+function fillEmptyDates(event) {
+
+  let now = new Date();
+  let yesterday = new Date().setDate(now.getDate() - 1);
+  let datePast = format(yesterday, 'yyyy-MM-dd');
+  now.setDate(now.getDate() + 7);
+  let dateNow = format(now, 'yyyy-MM-dd');
+
+  event.SubscriptionDateFrom = event.SubscriptionDateFrom || datePast;
+  event.SubscriptionDateTo = event.SubscriptionDateTo || dateNow;
+  event.DateFrom = event.DateFrom || event.DateTo || dateNow;
+  event.DateTo = event.DateTo || event.DateFrom || dateNow;
+  event.SubscriptionTimeFrom = event.SubscriptionTimeFrom || '00:00:01';
+  event.SubscriptionTimeTo = event.SubscriptionTimeTo || '23:59:59';
+
+}
+
+/**
+ * if LanguageOfInstruction is a number translate it
+ * @param {object} event event returned by the API
+ */
+function setLanguageEventFromIntToString(event) {
 
   if (event.LanguageOfInstruction === '2') {
     event.LanguageOfInstruction = getString('french');
@@ -396,9 +429,8 @@ function setLanguageEventFromIntToString(event){
   } else if (event.LanguageOfInstruction === '133') {
     event.LanguageOfInstruction = getString('english');
   } else if (event.LanguageOfInstruction === '284') {
-  event.LanguageOfInstruction = getString('italian');
+    event.LanguageOfInstruction = getString('italian');
   } else if (event.LanguageOfInstruction === '285') {
-  event.LanguageOfInstruction = getString('spain');
+    event.LanguageOfInstruction = getString('spain');
   }
-
 }

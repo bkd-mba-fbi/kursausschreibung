@@ -1,7 +1,7 @@
 {{#if showBreadcrumbs}}
   <ul class="uk-breadcrumb">
     <li>
-      {{link-to model.AreaOfEducation "list"}}{{foo}}
+      {{link-to model.AreaOfEducation "list"}}
     </li>
     <li>
       {{link-to model.EventCategory "list.category"}}
@@ -17,12 +17,21 @@
 </h2>
 {{event-details-table event=model}}
 
-{{#if badgeFreeSeatsEnabled}}
-  {{remaining-seats-badge event=model}}
-{{/if}}
-
-<div class="uk-margin">
-  {{link-to (translate "subscribe") "list.category.event.subscribe" classNames="uk-button uk-button-primary uk-float-left subscribe-button"
+{{#if model.externalSubscriptionURL}}
+  <div class="uk-margin">
+    <a href={{model.externalSubscriptionURL}} class="uk-button uk-button-primary uk-float-left subscribe-button"
+      target="_blank" rel="noopener">
+      {{translate "subscribe"}}
+    </a>
+    {{link-to (translate "back") "list.category" classNames="uk-button uk-button-default uk-float-right"}}
+  </div>
+{{else}}
+  {{#if badgeFreeSeatsEnabled}}
+    {{remaining-seats-badge event=model}}
+  {{/if}}
+  <div class="uk-margin">
+    {{link-to (translate "subscribe") "list.category.event.subscribe" classNames="uk-button uk-button-primary uk-float-left subscribe-button"
       data-uk-tooltip=(translate (concat model.status "Lamp")) tagName="button" disabled=(if model.canDoSubscription false true)}}
-  {{link-to (translate "back") "list.category" classNames="uk-button uk-button-default uk-float-right"}}
-</div>
+    {{link-to (translate "back") "list.category" classNames="uk-button uk-button-default uk-float-right"}}
+  </div>
+{{/if}}

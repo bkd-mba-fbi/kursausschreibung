@@ -1,12 +1,14 @@
 {{#if field.options.showAsRadioButtons}}
   <div class="uk-grid-small uk-child-width-auto uk-grid">
     {{#each field.options.options as |option|}}
-      <label><input class="uk-radio" type="radio" name={{field.id}} value={{option.Key}} data-human-readable={{option.Value}}
-          required={{field.options.required}} disabled={{field.options.disabled}}> {{option.Value}}</label>
+      <label><input class="uk-radio" type="radio" name={{field.id}} value={{option.Key}}
+          data-human-readable={{option.Value}} required={{field.options.required}} disabled={{field.options.disabled}}>
+        {{option.Value}}</label>
     {{/each}}
   </div>
 {{else}}
-  <select class="uk-select" name={{field.id}} autocomplete={{field.options.autocomplete}} disabled={{field.options.disabled}}>
+  <select class="uk-select" name={{field.id}} autocomplete={{field.options.autocomplete}}
+    disabled={{field.options.disabled}}>
     {{#unless field.options.required}}
       <option value=""></option>
     {{/unless}}

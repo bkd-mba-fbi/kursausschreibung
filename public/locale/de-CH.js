@@ -32,7 +32,7 @@ window.kursausschreibung.locale["de-CH"] = {
   "companyAddress": "Rechnungsadresse an Firma",
   "errorMessage": "Es ist zu einem unvorhergesehenen Fehler gekommen. Bitte versuchen Sie es nochmals.",
   "lessons": "Lektionen ",
-  "lessonExportToIcs": "Für Kalender exportieren", 
+  "lessonExportToIcs": "Für Kalender exportieren",
   "seatAvailable": "Platz übrig",
   "seatsAvailable": "Plätze übrig",
   "addressFields": "Adresse",
@@ -43,12 +43,12 @@ window.kursausschreibung.locale["de-CH"] = {
   "noEvents": "Es ist momentan keine Veranstaltung ausgeschrieben.",
   "notAvailable": "nicht verfügbar",
   "useLogin": "Ihre Anmeldung wird gemäss Ihrem Login erstellt {0}.",
-  "backToSubscripton": "Anmeldeformular",
+  "backToSubscripton": "Zurück zum Anmeldeformular",
   "invalidInput": "Ungültige Eingabe",
 
   // properties of an event
   "subscriptionFrom": "Start",
-  "subscriptionDateTo":"Anmeldefrist",
+  "subscriptionDateTo": "Anmeldefrist",
   "location": "Ort",
   "price": "Preis",
   "buildingAddress": "Adresse",
@@ -56,6 +56,7 @@ window.kursausschreibung.locale["de-CH"] = {
   "dateFrom": "Datum von",
   "dateTo": "Datum bis",
   "leadership": "Leitung",
+
   "dateString": "Datum",
   "number": "Nummer",
   "duration": "Dauer", 
@@ -73,11 +74,11 @@ window.kursausschreibung.locale["de-CH"] = {
   "formCompany": "Firmenname",
   "formAddressLine1": "Adresse",
   "formZip": "PLZ",
-  "formLocation": "Ort"
-  "duplicateEmailError": "Die E-Mail-Adresse muss unetrschiedlich sein, ansonsten kann das Formular nicht abgeschickt werden.",
+  "formLocation": "Ort",
+  "duplicateEmailError": "Die E-Mail-Adresse muss unterschiedlich sein, ansonsten kann das Formular nicht übermittelt werden.",
   "addPerson": "Weitere Person anmelden",
   "removePerson": "Letzte Person entfernen",
   "person": "Person",
-  "confirmDeletion": "Wollen Sie die letzte Person wirklich entfernen?",
-  "noSeatsAvailable": "Es hat nicht genügend freie Plätze.",
+  "confirmDeletion": "Möchten Sie die letzte Person wirklich entfernen?",
+  "noSeatsAvailable": "Dazu sind nicht genügend freie Plätze verfügbar."
 };

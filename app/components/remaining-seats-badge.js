@@ -30,8 +30,13 @@ export default Component.extend({
       clearInterval(interval);
   },
 
-  hidden: computed('event.FreeSeats', function () {
-    return this.get('event.FreeSeats') === null;
+  hidden: computed('event.{FreeSeats,status}', function () {
+    let freeSeats = this.get('event.FreeSeats');
+    let status = this.get('event.status');
+    let subscriptionYellowDisable = typeof settings.badgeFreeSeats === 'object' ?
+      settings.badgeFreeSeats.subscriptionYellowDisable : false;
+
+    return freeSeats === null || (subscriptionYellowDisable && status === 'yellow');
   }),
 
   labelType: computed('event.FreeSeats', function () {

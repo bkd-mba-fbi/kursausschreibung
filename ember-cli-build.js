@@ -71,13 +71,16 @@ module.exports = function (defaults) {
   app.import('vendor/shims/uikit.js');
 
   // date-fns
-  ['parse', 'format', 'locale/de', 'locale/fr'].forEach(module =>
+  ['parseISO', 'format', 'locale/de', 'locale/fr'].forEach(module =>
     app.import(`node_modules/date-fns/${module}/index.js`, {
       using: [
         { transformation: 'cjs', as: `date-fns/${module}` }
       ]
     })
   );
+
+  // typeahead.js
+  app.import("node_modules/corejs-typeahead/dist/typeahead.jquery.js");
 
   return app.toTree();
 };

@@ -55,7 +55,8 @@ window.kursausschreibung.settings = {
   // enable freeSeats badge and set polling interval (optional)
   "badgeFreeSeats": {
     "enabled": true,
-    "intervalSec": 5
+    "intervalSec": 5,
+    "subscriptionYellowDisable": false
   },
 
   // enable/disable subscription (required)
@@ -75,78 +76,123 @@ window.kursausschreibung.settings = {
 
   // fields for the form (required)
   "formFields": {
-    // can be specified per EventTypeId (fallback to default)
-    "default": {
-      "addressFields": [
-        {
-          "id": "FormOfAddress",
-          "dataType": "dropdown",
-          "options": { "dropdownItems": "FormsOfAddress", "required": true }
-        },
-        {
-          "id": "FirstName",
-          "dataType": "string",
-          "options": { "required": true, "autocomplete": "given-name" }
-        },
-        {
-          "id": "LastName",
-          "dataType": "string",
-          "options": { "required": true, "autocomplete": "family-name" }
-        },
-        {
-          "id": "AddressLine1",
-          "dataType": "string",
-          "options": { "required": true, "autocomplete": "address-line1" }
-        },
-        {
-          "id": "Zip",
-          "dataType": "number",
-          "options": { "required": true, "autocomplete": "postal-code" }
-        },
-        {
-          "id": "Location",
-          "dataType": "string",
-          "options": { "required": true, "autocomplete": "address-level2", "datalist": "locationCodes"}
-        },
-        {
-          "id": "PhoneMobile",
-          "dataType": "telephone",
-          "options": { "autocomplete": "tel-national", "required": "true" }
-        },
-        {
-          "id": "Birthdate",
-          "dataType": "date",
-          "options": { "required": "true" }
-        },
-        {
-          "id": "Email2",
-          "dataType": "email"
-        }
-      ],
-      // optional
-      "companyFields": [
-        {
-          "id": "Company",
-          "dataType": "string",
-          "options": { "required": true }
-        },
-        {
-          "id": "AddressLine1",
-          "dataType": "string",
-          "options": { "required": true }
-        },
-        {
-          "id": "Zip",
-          "dataType": "number",
-          "options": { "required": true }
-        },
-        {
-          "id": "Location",
-          "dataType": "string",
-          "options": { "required": true, "datalist": "locationCodes" }
-        }
-      ]
-    }
+      // can be specified per EventTypeId (fallback to default)
+      "15": {
+          "addressFields": [{
+                  "id": "FormOfAddress",
+                  "dataType": "dropdown",
+                  "options": { "dropdownItems": "FormsOfAddress" }
+              },
+              {
+                  "id": "FirstName",
+                  "dataType": "string",
+                  "options": { "required": true, "autocomplete": "given-name", "showPlaceholder": true }
+              },
+              {
+                  "id": "LastName",
+                  "dataType": "string",
+                  "options": { "required": true, "autocomplete": "family-name", "showHint": true, "hintClassNames": "uk-text-meta" }
+              },
+              { "id": "Birthdate", "dataType": "date", "options": { "required": true, "showHint": true, "hintClassNames": "uk-text-meta" } },
+              { "id": "Email2", "dataType": "email" }
+
+          ],
+          //Optional (Invoice address)
+          "companyFields": [{
+                  "id": "Company",
+                  "dataType": "string",
+                  "options": { "required": true, "showPlaceholder": true }
+              },
+              {
+                  "id": "AddressLine1",
+                  "dataType": "string",
+                  "options": { "required": true, "showPlaceholder": true }
+              },
+              {
+                  "id": "Zip",
+                  "dataType": "number",
+                  "options": { "required": true, "showPlaceholder": true }
+              },
+              {
+                  "id": "Location",
+                  "dataType": "string",
+                  "options": { "required": true, "showPlaceholder": true }
+              }
+          ]
+      },
+
+      "default": {
+          "addressFields": [
+              {
+                  "id": "FormOfAddress",
+                  "dataType": "dropdown",
+                  "options": { "dropdownItems": "FormsOfAddress", "required": true }
+                },
+                {
+                  "id": "FirstName",
+                  "dataType": "string",
+                  "options": { "required": true, "autocomplete": "given-name", "showPlaceholder": true }
+                },
+                {
+                  "id": "LastName",
+                  "dataType": "string",
+                  "options": { "required": true, "autocomplete": "family-name", "showPlaceholder": true }
+                },
+                {
+                  "id": "AddressLine1",
+                  "dataType": "string",
+                  "options": { "required": true, "autocomplete": "address-line1", "showPlaceholder": true }
+                },
+                {
+                  "id": "Zip",
+                  "dataType": "number",
+                  "options": { "required": true, "autocomplete": "postal-code", "showPlaceholder": true }
+                },
+                {
+                  "id": "Location",
+                  "dataType": "string",
+                  "options": { "required": true, "autocomplete": "address-level2", "showPlaceholder": true }
+                },
+                {
+                  "id": "PhoneMobile",
+                  "dataType": "telephone",
+                  "options": { "autocomplete": "tel-national", "showHint": true, "hintClassNames": "uk-text-meta"  }
+                },
+                {
+                  "id": "Birthdate",
+                  "dataType": "date",
+                  "options": { "required": true, "showHint": true, "hintClassNames": "uk-text-meta" }
+                },
+                {
+                  "id": "Email2",
+                  "dataType": "email",
+                  "options": { "required": true, "showHint": true, "hintClassNames": "uk-text-meta"  }
+                }
+          ],
+          // if subscriptionsDetail 10893 on Event the User can subscribe additional People in the same subscripion.
+          // It's possible for additional People different person fields as form main subscripion
+          "additionalPeopleFields": [
+            {
+              "id": "FormOfAddress",
+              "dataType": "dropdown",
+              "options": { "dropdownItems": "FormsOfAddress" }
+            },
+            {
+              "id": "FirstName",
+              "dataType": "string",
+              "options": { "required": true, "autocomplete": "given-name", "showPlaceholder": true }
+            },
+            {
+              "id": "LastName",
+              "dataType": "string",
+              "options": { "required": true, "autocomplete": "family-name", "showPlaceholder": true }
+            },
+            { "id": "Email2", 
+              "dataType": "email",
+              "options": { "required": true, "autocomplete": "family-name", "showPlaceholder": true }
+            }
+          ]       
+      }
   },
 
   // set this to true to add a button to change the langauge (optional)
@@ -191,5 +237,5 @@ window.kursausschreibung.settings = {
   "languageOfInstructionFilter": false,
 
   // Header Offset for scrolling
-  "headerOffset": 10
+  "headerOffset": 133
 };

@@ -91,6 +91,12 @@ export function getEventLocations() {
 }
 
 /**
+ * this subscription detail specifies if multiple people can
+ * subscribe at the same time
+ */
+export const SUBSCRIPTION_DETAIL_ALLOW_MULTIPLE_PEOPLE = 10893;
+
+/**
  * get subscriptionDetails of an event
  * @param {number} eventId the id of the event
  */
@@ -120,6 +126,14 @@ export function getDropDownItems(type) {
   return get('DropDownItems/' + type).then(
     response => (dropDownItems[type] = response)
   );
+}
+
+/**
+ * search postal codes
+ * @param {number} code postal code
+ */
+export function getPostalCodes(code) {
+  return get(`PostalCodes/?filter.Code=~${code}*`);
 }
 
 /**
