@@ -10,9 +10,6 @@ import { all } from 'rsvp';
 import settings from './settings';
 import { getLanguage, getString } from './translate';
 
-// temp
-import parse from 'date-fns/parse';
-
 let initialized = false;
 
 /**
