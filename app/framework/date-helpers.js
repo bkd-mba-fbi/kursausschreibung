@@ -76,22 +76,22 @@ export function isInSubscriptionRange(event) {
 export function eventStarted(event) {
   let now = new Date();
   if (event.DateFrom === null) {
-    return now.getTime() === now.getTime();
+    return true;
   }
-  return parse(event.DateFrom).getTime() < now.getTime();
+  return parseISO(event.DateFrom).getTime() >= now.getTime();
 }
 
 /**
- * return true when the DateTo earlier or equal
- * to current date is. If DateTo null then current date
+ * return true if DateTo is smaller than or equal
+ * to the current date
  * @param {object} event event to check
  */
 export function eventEnded(event) {
   let now = new Date();
   if (event.DateTo === null) {
-    return now.getTime() === now.getTime();
+    return true;
   }
-  return parse(event.DateTo).getTime() <= now.getTime();
+  return parseISO(event.DateTo).getTime() <= now.getTime();
 }
 
 /**
@@ -155,6 +155,12 @@ export function getDateTimeForIcs(dateString) {
  * returns true if date > now
  * @param {string} dateString YYYY-MM-DD
  */
+<<<<<<< HEAD
 export function dateGreaterNow(date){
     return Date.parse(date) > Date.now() ? true : false;
 }
+=======
+export function dateGreaterNow(date) {
+  return parseISO(date) > Date.now();
+}
+>>>>>>> parent of e03b175... Added eventEnded to accompany eventStarted
