@@ -72,22 +72,22 @@ export function isInSubscriptionRange(event) {
 export function eventStarted(event) {
   let now = new Date();
   if (event.DateFrom === null) {
-    return true;
+    return now.getTime() === now.getTime();
   }
-  return parseISO(event.DateFrom).getTime() >= now.getTime();
+  return parse(event.DateFrom).getTime() >= now.getTime();
 }
 
 /**
- * return true if DateTo is smaller than or equal
- * to the current date
+ * return true when the DateTo earlier or equal
+ * to current date is. If DateTo null then current date
  * @param {object} event event to check
  */
 export function eventEnded(event) {
   let now = new Date();
   if (event.DateTo === null) {
-    return true;
+    return now.getTime() === now.getTime();
   }
-  return parseISO(event.DateTo).getTime() <= now.getTime();
+  return parse(event.DateTo).getTime() <= now.getTime();
 }
 
 /**
