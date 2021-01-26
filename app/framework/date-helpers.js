@@ -74,7 +74,7 @@ export function eventStarted(event) {
   if (event.DateFrom === null) {
     return now.getTime() === now.getTime();
   }
-  return parse(event.DateFrom).getTime() >= now.getTime();
+  return parseISO(event.DateFrom).getTime() >= now.getTime();
 }
 
 /**
@@ -87,7 +87,7 @@ export function eventEnded(event) {
   if (event.DateTo === null) {
     return now.getTime() === now.getTime();
   }
-  return parse(event.DateTo).getTime() <= now.getTime();
+  return parseISO(event.DateTo).getTime() <= now.getTime();
 }
 
 /**
