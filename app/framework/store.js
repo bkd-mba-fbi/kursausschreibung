@@ -59,6 +59,15 @@ export function init() {
     getEventLocations(),
     getEventTexts(language)
   ]).then(function ([events, lessons, eventLocations, eventTexts]) {
+
+    // remove null-values (temporary fix, see #50)
+    /*let removeNull = array => array.filter(element => element !== null);
+
+    events = removeNull(events);
+    lessons = removeNull(lessons);
+    eventLocations = removeNull(eventLocations);
+    eventTexts = removeNull(eventTexts);
+    */
     // filter events
     events = filterEvents(events, language);
 

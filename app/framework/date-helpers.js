@@ -151,6 +151,7 @@ export function getDateTimeForIcs(dateString) {
  * returns true if date > now
  * @param {string} dateString YYYY-MM-DD
  */
-export function dateGreaterNow(date) {
-  return parseISO(date) > Date.now();
+
+export function dateGreaterNow(date){
+    return parseISO(date) > Date.now() ? true : false;
 }
