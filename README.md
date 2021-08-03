@@ -1,4 +1,4 @@
-# kursausschreibung 3.1.0
+# kursausschreibung 3.2.0
 [![Build Status](https://travis-ci.org/bkd-mba-fbi/kursausschreibung.svg)](https://travis-ci.org/bkd-mba-fbi/kursausschreibung)
 
 ## Prerequisites
