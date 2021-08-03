@@ -2,7 +2,7 @@ import { A } from '@ember/array';
 import { underscore } from '@ember/string';
 import EmberObject, { computed } from '@ember/object';
 import $ from 'jquery';
-import { getEvents, getEvent, getLessons, getEventLocations, getEventTexts } from './api';
+import { getEvents, getEvent, getLessons, getEventLocations, getEventTexts, getEventCodes } from './api';
 import { isGreen, isChartreuse, isYellow, isRed } from './status';
 import ObjectProxy from '@ember/object/proxy';
 import { formatDate, combineDate, isInSubscriptionRange, removeMinutes, eventStarted, eventEnded } from './date-helpers';
@@ -57,10 +57,12 @@ export function init() {
     getEvents(),
     getLessons(),
     getEventLocations(),
-    getEventTexts(language)
-  ]).then(function ([events, lessons, eventLocations, eventTexts]) {
-    // filter events
-    events = filterEvents(events, language);
+    getEventTexts(language),
+    getEventCodes()
+  ]).then(function ([events, lessons, eventLocations, eventTexts, eventCodes]) {   
+
+     // filter events
+    events = filterEvents(events, language, eventCodes);
 
     // sort events
     if (settings.sortEventList !== null) {
@@ -78,6 +80,9 @@ export function init() {
 
     // add texts to events
     addTextsToEvents(eventTexts, language);
+
+    // add codes to events (it's important to filter)
+    addCodesToEvents(eventCodes);
 
     // sort areaKeys
     eventsByArea.areaKeys = Object.keys(eventsByArea.areas).sort();
@@ -176,12 +181,29 @@ function addLessonsToEvents(lessons) {
   });
 }
 
+
+/**
+ * add Codes to events
+ * @param {object[]} eventCodes eventCodes returned by the API
+ */
+ function addCodesToEvents(eventCodes) {
+  eventCodes.forEach(function (code) {
+  
+    if (!eventsById.hasOwnProperty(code.EventId)) {
+      return;
+    }
+    // add codes-array
+    eventsById[code.EventId].codes = [];
+    eventsById[code.EventId].codes.push(code);
+  });
+}
+
 /**
  * filter out events based on settings
  * @param {object[]} events events returned by the API
  * @param {string} language the active language
  */
-function filterEvents(events, language) {
+function filterEvents(events, language, eventCodes) {
   // filter out events with undesired parameters
 
   // backwards compatibility fallback for single hostId filter
@@ -209,6 +231,16 @@ function filterEvents(events, language) {
     if (settings.initialListFilters.statusIds instanceof Array) {
       events = events.filter(event => settings.initialListFilters.statusIds.indexOf(event.StatusId) !== -1);
     }
+    
+    if (settings.initialListFilters.codeIds instanceof Array) {
+      eventCodes = eventCodes.filter(code => settings.initialListFilters.codeIds.indexOf(code.CodeId) !== -1);
+      let codes = [];
+      eventCodes.forEach(eventcode => {
+        codes.push(eventcode.EventId);
+      });  
+      events = events.filter(event => codes.indexOf(event.Id) !== -1);
+    }
+    
   }
 
   // filter out events with non-matching LanguageOfInstruction
@@ -363,7 +395,7 @@ function addDisplayData(event) {
 }
 
 /**
- * adds empty arrays for lessons and texts and adds properties SubscriptionFrom,
+ * adds empty arrays for lessons, texts and codes and adds properties SubscriptionFrom,
  * SubscriptionTo, From, To, Time
  * @param {object} event event returned by the API
  */

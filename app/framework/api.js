@@ -91,6 +91,13 @@ export function getEventLocations() {
 }
 
 /**
+ * get codes that are aasigned events
+ */
+export function getEventCodes() {
+  return get('EventCodes/')
+}
+
+/**
  * this subscription detail specifies if multiple people can
  * subscribe at the same time
  */
