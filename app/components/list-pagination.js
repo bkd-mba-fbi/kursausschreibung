@@ -60,7 +60,7 @@ export default Component.extend({
   }),
 
   filterCodes: computed('items', function () {
-    let filterCodes = this.get('items').filter(item => item.allfilterCodes.length > 0)
+    let filterCodes = this.get('items').filter(item => item.allfilterCodes.length > 0);
     return filterCodes[0].allfilterCodes;
   }),
 
