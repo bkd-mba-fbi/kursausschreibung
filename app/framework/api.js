@@ -94,7 +94,7 @@ export function getEventLocations() {
  * get codes that are aasigned events
  */
 export function getEventCodes() {
-  return get('EventCodes/')
+  return get('EventCodes/');
 }
 
 /**

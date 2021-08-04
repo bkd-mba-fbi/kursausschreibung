@@ -7,7 +7,8 @@ let n = 2;
 
 export default Component.extend({
   lastPage: computed('items', function () {
-    return Math.ceil(this.get('items').length / settings.itemsPerPage);
+    let filter = this.get('items').filter(item => item.codes.length > 0); 
+    return filter.length > 0 ?  1 : Math.ceil(this.get('items').length / settings.itemsPerPage);
   }),
 
   isFirstPage: computed('page', function () {
@@ -58,9 +59,14 @@ export default Component.extend({
     return pages;
   }),
 
+  filterCodes: computed('items', function () {
+    let filterCodes = this.get('items').filter(item => item.allfilterCodes.length > 0)
+    return filterCodes[0].allfilterCodes;
+  }),
+
   itemsOnCurrentPage: computed('items', 'page', function () {
     let page = this.get('page');
-
-    return this.get('items').slice(settings.itemsPerPage * (page - 1), settings.itemsPerPage * page);
+    let filter = this.get('items').filter(item => item.codes.length > 0);
+    return  filter.length > 0 ? this.get('items') : this.get('items').slice(settings.itemsPerPage * (page - 1), settings.itemsPerPage * page);
   })
 });

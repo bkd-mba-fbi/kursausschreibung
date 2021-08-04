@@ -187,15 +187,38 @@ function addLessonsToEvents(lessons) {
  * @param {object[]} eventCodes eventCodes returned by the API
  */
  function addCodesToEvents(eventCodes) {
+
+  // add all codes to event
+  let prefix = 'FilterTag';
+  let filterCodes = [];
+  let codeIds = []
   eventCodes.forEach(function (code) {
-  
+
+    if (codeIds.find(ids => ids === code.CodeId) === undefined) {
+      codeIds.push(code.CodeId);
+      filterCodes.push({id: code.CodeId, Code: getString(prefix+code.CodeId) }) 
+    }  
+
+  });
+
+  eventCodes.forEach(function (code) {
+    
     if (!eventsById.hasOwnProperty(code.EventId)) {
       return;
     }
     // add codes-array
     eventsById[code.EventId].codes = [];
     eventsById[code.EventId].codes.push(code);
+    
+    // adds filter tag
+    eventsById[code.EventId].filter = '';
+    let filter = eventsById[code.EventId].filter
+    eventsById[code.EventId].filter = filter === '' ? 'tag'+code.CodeId : filter+' tag'+code.CodeId;
+
+    eventsById[code.EventId].allfilterCodes = filterCodes;
+
   });
+
 }
 
 /**

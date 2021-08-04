@@ -1,3 +1,4 @@
+<div class="filter-tags {{event.filter}}">
 {{#link-to "list.category.event" event.areaKey event.categoryKey event.Id classNames="event-list-item uk-link-reset"}}
   <h3 class="uk-margin-small">
     <span class="uk-flex">
@@ -18,3 +19,11 @@
     </tbody>
   </table>
 {{/link-to}}
+</div>
+<script>
+  // add classnames to wrapper emberjs element
+  var filter = document.querySelector('.jsfilter');
+  var filterChild = filter.children;
+  var filterClass = filterChild[0].className;
+  filter.className = filterClass;
+</script>

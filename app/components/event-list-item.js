@@ -5,6 +5,7 @@ import { camelize } from "@ember/string";
 
 export default Component.extend({
   tagName: 'li',
+  classNames: 'jsfilter',
 
   title: settings.eventListTitle,
 
