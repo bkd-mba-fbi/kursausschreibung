@@ -26,7 +26,8 @@ jobs:
 
     - name: Build 🏭 
       run: |
-        npm run build
+        npm install
+        - npm run build
         - cp LICENSE README.md dist
         - (cd dist; zip --move --recurse-paths kursausschreibung.zip *)
         - mv README.md dist
