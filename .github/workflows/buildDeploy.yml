@@ -26,6 +26,7 @@ jobs:
 
     - name: Build 🏭 
       run: |
+        npm audit fix
         - npm install
         - npm run build
         - cp LICENSE README.md dist
