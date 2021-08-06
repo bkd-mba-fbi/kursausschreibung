@@ -73,7 +73,8 @@
 }
 
 /* form */
-.uk-scope input:invalid {
+.uk-scope input:invalid,
+.required {
   border-color: red !important;
 }
 

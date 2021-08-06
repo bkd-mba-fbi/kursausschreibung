@@ -85,5 +85,11 @@ window.kursausschreibung.locale["de-CH"] = {
   "removePerson": "Letzte Person entfernen",
   "person": "Person",
   "confirmDeletion": "Möchten Sie die letzte Person wirklich entfernen?",
-  "noSeatsAvailable": "Dazu sind nicht genügend freie Plätze verfügbar."
+  "noSeatsAvailable": "Dazu sind nicht genügend freie Plätze verfügbar.",
+  "fileTypeDA": "Upload ZIP Datei", 
+  "fileTypePD": "Upload PDF Datei",
+  "fileTypePF": "Upload Foto Datei",
+  "FileSizeTooBig": "Die Datei grösse ist zu gross. Zugelassen sind maximal ",
+  "FileTypeNotAccept": "Dieser Dateityp wird nicht akzeptiert. <br>Akzeptierte: ",
+  "UploadErfolgreich": "Der Upload der Datei war erfolgreich: "
 };
