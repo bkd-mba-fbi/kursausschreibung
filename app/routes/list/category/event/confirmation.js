@@ -19,7 +19,7 @@ export default Route.extend({
 
     let {
       personId, useCompanyAddress, addressData, companyAddressData,
-      subscriptionData, additionalPeople, tableData
+      subscriptionData, additionalPeople, tableData, subscriptionFiles
     } = dataToSubmit;
 
     // make sure the session is still active
@@ -58,7 +58,8 @@ export default Route.extend({
           if(additionalPeople.length > 0 ){
             subscriptionData.SubscriptionDetails.push({VssId: SUBSCRIPTION_DETAIL_ALLOW_MULTIPLE_PEOPLE , Value: additionalPeople.length });
           }
-          return postSubscription(subscriptionData);
+          console.log(subscriptionFiles);
+          //return postSubscription(subscriptionData);
         });
       });
 
