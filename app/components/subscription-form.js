@@ -94,6 +94,14 @@ function subscribe($form, self) {
       subscriptionData.SubscriptionDetails.push({ VssId: vssId, Value: value });
   });
 
+  //made a array of Files for upload to server
+  let subscriptionFiles = [];
+  for (const [key, value] of Object.entries(assocSubscriptionData)) {
+    if (value instanceof Object) {
+      subscriptionFiles.push({IdVss: key, file: value});
+    }
+  }
+
   // values for dataToSubmit
   let personId = userSettings.IdPerson, tableData = {}, addressData, companyAddressData, additionalPeople;
 
@@ -145,7 +153,7 @@ function subscribe($form, self) {
   // save the data to submit
   setDataToSubmit({
     personId, eventId, useCompanyAddress, addressData, companyAddressData, subscriptionData,
-    additionalPeople, tableData
+    additionalPeople, tableData, subscriptionFiles
   });
 }
 
@@ -191,6 +199,11 @@ function setProperties(data, element) {
     return;
   }
 
+  if (element.type === 'file') {
+    data[element.name] =  element.files[0] !== undefined ? element.files[0] : null;
+    return;
+  }
+
   data[element.name] = element.value === '' ? null : element.value;
 }
 
@@ -212,6 +225,9 @@ function getTableData(fields, data) {
       // localize dates
       if (field.dataType === 'date')
         value = formatDate(value, 'LL');
+      
+      if (field.dataType === 'file')
+        value = value.name;
 
       return { label, value };
     }).filter(field => field !== null);
