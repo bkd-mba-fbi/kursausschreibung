@@ -2,7 +2,7 @@ import Route from '@ember/routing/route';
 import { isEmpty } from '@ember/utils';
 import { Promise } from 'rsvp';
 import { getDataToSubmit, setDataToSubmit } from 'kursausschreibung/framework/storage';
-import { postPerson, putPerson, postAddress, postSubscription } from 'kursausschreibung/framework/api';
+import { postPerson, putPerson, postAddress, postSubscription, postSubscriptionDetailsFiles } from 'kursausschreibung/framework/api';
 import { autoCheckForLogin } from 'kursausschreibung/framework/login-helpers';
 import settings from 'kursausschreibung/framework/settings';
 import { SUBSCRIPTION_DETAIL_ALLOW_MULTIPLE_PEOPLE } from 'kursausschreibung/framework/api';
@@ -59,12 +59,33 @@ export default Route.extend({
             subscriptionData.SubscriptionDetails.push({VssId: SUBSCRIPTION_DETAIL_ALLOW_MULTIPLE_PEOPLE , Value: additionalPeople.length });
           }
           console.log(subscriptionFiles);
-          //return postSubscription(subscriptionData);
+          ///*
+          postSubscription(subscriptionData).then(id => {
+            subscriptionFiles.forEach(file => {
+              
+              let data = {
+                SubscriptionDetail:  {
+                    SubscriptionId: id,
+                    VssId: file.IdVss
+                },
+                    FileStreamInfo: {
+                    FileName: file.name,
+                    FileSize: file.size
+                }
+            };
+            promises.push(postSubscriptionDetailsFiles(data,file.image));
+
+            });
+            return promises;
+          });
+      //*/
         });
+      
       });
-
+      
+      console.log(promises);
       return Promise.all(promises);
-
+    
     }).then(() => {
       return { tableData: tableData, statusIsRed: event.get('status') === 'red' };
 

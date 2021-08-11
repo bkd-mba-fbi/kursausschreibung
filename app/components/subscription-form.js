@@ -85,6 +85,8 @@ function subscribe($form, self) {
 
     if (element.type === 'checkbox')
       value = element.checked ? 'Ja' : 'Nein';
+    else if (element.type === 'file') 
+      value = null;
     else if (element.value !== '' && element.dataset.type === 'date')
       value = getDMY(element.value); // this is the required format for subscriptionDetails
     else if ((element.value !== '' && element.type !== 'radio') || element.checked)
@@ -98,7 +100,7 @@ function subscribe($form, self) {
   let subscriptionFiles = [];
   for (const [key, value] of Object.entries(assocSubscriptionData)) {
     if (value instanceof Object) {
-      subscriptionFiles.push({IdVss: key, file: value});
+      subscriptionFiles.push({IdVss: key, image: value.image, name: value.name, size: value.size, type: value.type});
     }
   }
 

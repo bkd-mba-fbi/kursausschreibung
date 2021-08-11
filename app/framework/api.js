@@ -175,3 +175,32 @@ export function postAddress(data) {
 export function postSubscription(data) {
   return post('Subscriptions/', data);
 }
+
+/**
+ * Post Files to SubscriptionDetails
+ * @param {object} data of the subscription files
+ * @param {image} image des files Base64Codierung
+ * @returns 
+ */
+export function postSubscriptionDetailsFiles(data,image) {
+  return new Promise(resolve => post('SubscriptionDetails/files', data)
+  .then((_data, _status, xhr) => { resolve([xhr]); }))
+  .then(([xhr]) => { // xhr is in an array so it gets correctly passed along
+    let locationHeader = xhr.getResponseHeader('location');
+    return put(locationHeader,base64ToArrayBuffer(image));
+  });
+}
+
+/**
+ * https://stackoverflow.com/questions/21797299/convert-base64-string-to-arraybuffer 
+ */
+function base64ToArrayBuffer(base64) {
+  base64 = base64.substring(base64.indexOf('base64,'),base64.length);
+  var binary_string = window.atob(base64);
+  var len = binary_string.length;
+  var bytes = new Uint8Array(len);
+  for (var i = 0; i < len; i++) {
+      bytes[i] = binary_string.charCodeAt(i);
+  }
+  return bytes.buffer;
+}
