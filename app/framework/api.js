@@ -195,7 +195,9 @@ export function postSubscriptionDetailsFiles(data,image) {
  * https://stackoverflow.com/questions/21797299/convert-base64-string-to-arraybuffer 
  */
 function base64ToArrayBuffer(base64) {
-  base64 = base64.substring(base64.indexOf('base64,'),base64.length);
+  console.log(base64);
+  base64 = base64.substring(base64.indexOf('base64,')+7,base64.length);
+  console.log(base64);
   var binary_string = window.atob(base64);
   var len = binary_string.length;
   var bytes = new Uint8Array(len);
