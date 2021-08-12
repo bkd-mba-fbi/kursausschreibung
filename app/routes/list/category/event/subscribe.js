@@ -70,6 +70,7 @@ function getSubscriptionDetailFields(subscriptionDetails) {
       dataType: dataType,
       acceptFileType: fileType,
       fileTypeLabel: getString('fileType'+detail.VssStyle),
+      fileLabelBevorFileChoose: getString('fileType'+detail.VssStyle),
       maxFileSize: detail.MaxFileSize,
       fileObject: null,
       options: {
