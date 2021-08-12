@@ -1,4 +1,5 @@
-name: Deploy 🏭🚀
+
+name: 🏭Build 🚀Deploy
 
 on:
   push:
