@@ -438,6 +438,9 @@ function addPropertiesToEvent(event) {
   event.From = combineDate(event.DateFrom, event.TimeFrom);
   event.To = combineDate(event.DateTo, event.TimeTo);
 
+  event.SubscriptionDateFrom = event.SubscriptionDateFromIsNull ? null : event.SubscriptionDateFrom;
+  event.SubscriptionDateTo = event.SubscriptionDateToIsNull ? null : event.SubscriptionDateTo;
+
   // add event.Time
   if (typeof event.TimeFrom === 'string' && typeof event.TimeTo === 'string') {
     event.Time = `${removeMinutes(event.TimeFrom)} - ${removeMinutes(event.TimeTo)}`;
@@ -462,7 +465,9 @@ function fillEmptyDates(event) {
   now.setDate(now.getDate() + 7);
   let dateNow = format(now, 'yyyy-MM-dd');
 
+  event.SubscriptionDateFromIsNull = event.SubscriptionDateFrom === null ? true : false;
   event.SubscriptionDateFrom = event.SubscriptionDateFrom || datePast;
+  event.SubscriptionDateToIsNull = event.SubscriptionDateTo === null ? true : false;
   event.SubscriptionDateTo = event.SubscriptionDateTo || dateNow;
   event.DateFrom = event.DateFrom || event.DateTo || dateNow;
   event.DateTo = event.DateTo || event.DateFrom || dateNow;
