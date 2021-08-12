@@ -100,7 +100,7 @@ function subscribe($form, self) {
   let subscriptionFiles = [];
   for (const [key, value] of Object.entries(assocSubscriptionData)) {
     if (value instanceof Object) {
-      subscriptionFiles.push({IdVss: key, image: value.image, name: value.name, size: value.size, type: value.type});
+      subscriptionFiles.push({IdVss: key, fileAsBase64: value.data, name: value.name, size: value.size, type: value.type});
     }
   }
 

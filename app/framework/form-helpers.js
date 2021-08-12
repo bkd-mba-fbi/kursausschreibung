@@ -1,5 +1,5 @@
 import { getString } from 'kursausschreibung/framework/translate';
-
+import uikit from 'uikit';
 /**
  * set custom validity of a form element
  * @param {object} element
@@ -12,6 +12,47 @@ export function formFieldError(element, valid, message = 'invalidInput') {
   } else {
     element.setCustomValidity('');
   }
+}
+
+/**
+ * Remove a File from filelist
+ * @param {string} elementId 
+ */
+export function removeFile(elementId) {
+  document.getElementById(elementId).value = '';
+}
+
+/**
+ * Check if a file has the rigth resolution
+ * @param {file} file 
+ * @param {number} width 
+ * @param {number} height 
+ */
+export function resolutionImageValid(file, fWidth, fHeight) {
+  var reader = new FileReader();
+  //Read the contents of Image File.
+  reader.readAsDataURL(file);
+  reader.onload = function (e) {
+    //Initiate the JavaScript Image object.
+    var image = new Image();
+
+    //Set the Base64 string return from FileReader as source.
+    image.src = e.target.result;
+
+    //Validate the File Height and Width.
+    image.onload = function () {
+      var height = this.height;
+      var width = this.width;
+      if (width !== fWidth || height !== fHeight) {
+        
+        //show width and height to user
+        uikit.modal.alert(getString('FileImageResolution') + width + 'x' + height );
+        return false;
+      }
+      return true;
+    };
+  };
+
 }
 
 /**

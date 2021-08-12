@@ -1,40 +1,48 @@
 import Component from '@ember/component';
 import { getString } from 'kursausschreibung/framework/translate';
+import { resolutionImageValid, removeFile } from 'kursausschreibung/framework/form-helpers';
 import uikit from 'uikit';
 
 export default Component.extend({
   change() {
-
-      let parentElement = document.getElementById(this.elementId).childNodes;
-      const inputFile = parentElement[0].childNodes[1].files[0];     
+      
+      let elementIdFile = 'file'+this.field.id;
+      let inputFile = document.getElementById(elementIdFile).files[0];     
       let maxFileSizeMB = (this.get('field.maxFileSize') / (1024*1024)).toFixed(2);
+      let resolution = this.get('field.acceptFileType') === 'image/jpeg' ? resolutionImageValid(inputFile,300,400) : true;
 
       if(inputFile.size > this.get('field.maxFileSize') && maxFileSizeMB !== '0.00' ) {
         uikit.modal.alert(getString('FileSizeTooBig') + maxFileSizeMB+'MB');
+        removeFile(elementIdFile);
       }
-      else if(this.get('field.acceptFileType').indexOf(inputFile.type) === -1) {
+      else if(this.get('field.acceptFileType').indexOf(inputFile.type) === -1 || inputFile.type === "") {
         uikit.modal.alert(getString('FileTypeNotAccept') + this.get('field.acceptFileType') );
-      } else {
+        removeFile(elementIdFile);
+      }
+      else if (!resolution) {
+        removeFile(elementIdFile);
+      }
+      else {
 
         this.set('field.fileTypeLabel', inputFile.name);
         this.set('field.fileObject', inputFile);
-        let buttonClass = parentElement[0].childNodes[4];
-        buttonClass.classList.remove('required');
-
+        let buttonClass = document.getElementById('fileBt'+this.field.id);
+        buttonClass.classList.remove('required');     
+      
         const reader = new FileReader();
-        let imageData;
+        let data;
         
             // Note: reading file is async
             reader.onload = () => {
-              imageData = reader.result;
-              this.set('field.fileObject.image', imageData);
+              data = reader.result;
+              this.set('field.fileObject.data', data);
 
             };
         
             if (inputFile) {
               reader.readAsDataURL(inputFile);
             }
-
+        
         uikit.modal.alert(getString('UploadErfolgreich') + inputFile.name);
       }
   }

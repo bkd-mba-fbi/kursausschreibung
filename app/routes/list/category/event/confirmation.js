@@ -20,7 +20,7 @@ export default Route.extend({
     let {
       personId, useCompanyAddress, addressData, companyAddressData,
       subscriptionData, additionalPeople, tableData, subscriptionFiles
-    } = dataToSubmit;
+    } = dataToSubmit;  
 
     // make sure the session is still active
     return autoCheckForLogin().then(() => {
@@ -58,8 +58,6 @@ export default Route.extend({
           if(additionalPeople.length > 0 ){
             subscriptionData.SubscriptionDetails.push({VssId: SUBSCRIPTION_DETAIL_ALLOW_MULTIPLE_PEOPLE , Value: additionalPeople.length });
           }
-          console.log(subscriptionFiles);
-          ///*
           postSubscription(subscriptionData).then(id => {
             subscriptionFiles.forEach(file => {
               
@@ -73,17 +71,15 @@ export default Route.extend({
                     FileSize: file.size
                 }
             };
-            promises.push(postSubscriptionDetailsFiles(data,file.image));
+            promises.push(postSubscriptionDetailsFiles(data,file));
 
             });
             return promises;
           });
-      //*/
         });
       
       });
       
-      console.log(promises);
       return Promise.all(promises);
     
     }).then(() => {
