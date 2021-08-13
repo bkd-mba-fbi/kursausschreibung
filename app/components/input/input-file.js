@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { getString } from 'kursausschreibung/framework/translate';
-import { resolutionImageValid, removeFile } from 'kursausschreibung/framework/form-helpers';
+import { removeFile } from 'kursausschreibung/framework/form-helpers';
 import uikit from 'uikit';
 
 export default Component.extend({
@@ -67,28 +67,19 @@ export default Component.extend({
               
               //show width and height to user
               deleteFile(fieldId);
-              this.set('field.fileTypeLabel', this.get('field.fileLabelBevorFileChoose'));
               uikit.modal.alert(getString('FileImageResolution') + width + 'x' + height );
               
+            } else {
+              imgField.src = URL.createObjectURL(inputFile);
+              imgField.classList.remove('uk-hidden');
             }
-            imgField.src = URL.createObjectURL(inputFile);
-            imgField.classList.remove('uk-hidden');
+
           };
       };
   
-
       }
 
-      
       uikit.modal.alert(getString('UploadErfolgreich') + inputFile.name);
-
-      /*
-      if(this.get('field.acceptFileType') === 'image/jpeg') {
-        var image = document.getElementById('img'+ this.field.id);
-        image.src = URL.createObjectURL(inputFile);
-        let imgClassDel = document.getElementById('img' + this.field.id);
-        imgClassDel.classList.remove('uk-hidden');
-      }*/
      
     }
   },
