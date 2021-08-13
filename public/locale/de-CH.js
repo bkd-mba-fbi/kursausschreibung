@@ -91,6 +91,6 @@ window.kursausschreibung.locale["de-CH"] = {
   "fileTypePF": "Upload Bild Datei (300x400)",
   "FileSizeTooBig": "Die Datei grösse ist zu gross. Zugelassen sind maximal ",
   "FileTypeNotAccept": "Dieser Dateityp wird nicht akzeptiert. <br>Akzeptierte: ",
-  "FileImageResolution": "Bilder müssen ein Auflösung von 300x400 haben. Unter folgendem Link gibt es ein Tool mit dem sie es einfach machen können: <a href\"https://www.adobe.com/express/feature/image/resize\">Adobe Image resize</a> <br> Ihre Bild hat eine Auflösung von: ",
+  "FileImageResolution": "Bilder müssen ein Auflösung von 300x400 haben.<br> Ihre Bild hat eine Auflösung von: ",
   "UploadErfolgreich": "Der Upload der Datei war erfolgreich: "
 };

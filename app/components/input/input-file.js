@@ -9,7 +9,7 @@ export default Component.extend({
     let elementIdFile = 'file' + this.field.id;
     let inputFile = document.getElementById(elementIdFile).files[0];
     let maxFileSizeMB = (this.get('field.maxFileSize') / (1024 * 1024)).toFixed(2);
-    let resolution = this.get('field.acceptFileType') === 'image/jpeg' ? resolutionImageValid(inputFile, 300, 400) : true;
+    //let resolutionValid = resolutionImageValid(inputFile, this.get('field.acceptFileType'), 300, 400);
 
     if (inputFile.size > this.get('field.maxFileSize') && maxFileSizeMB !== '0.00') {
       uikit.modal.alert(getString('FileSizeTooBig') + maxFileSizeMB + 'MB');
@@ -19,11 +19,8 @@ export default Component.extend({
       uikit.modal.alert(getString('FileTypeNotAccept') + this.get('field.acceptFileType'));
       removeFile(elementIdFile);
     }
-    else if (!resolution) {
-      removeFile(elementIdFile);
-    }
     else {
-
+  
       this.set('field.fileLabelBevorFileChoose', this.get('field.fileTypeLabel'));
       this.set('field.fileTypeLabel', inputFile.name);
       this.set('field.fileObject', inputFile);
@@ -47,14 +44,65 @@ export default Component.extend({
         reader.readAsDataURL(inputFile);
       }
 
+      if(this.get('field.acceptFileType') === 'image/jpeg') {
+
+        let imgField =  document.getElementById('img'+ this.field.id);
+        let fieldId = this.field.id;
+        var readerImg = new FileReader();
+        //Read the contents of Image File.
+        readerImg.readAsDataURL(inputFile);
+        readerImg.onload = function (e) {
+      
+          //Initiate the JavaScript Image object.
+          var image = new Image();
+      
+          //Set the Base64 string return from FileReader as source.
+          image.src = e.target.result;
+      
+          //Validate the File Height and Width.
+          image.onload = function () {
+            var height = this.height;
+            var width = this.width;
+            if (width !== 300 || height !== 400) { 
+              
+              //show width and height to user
+              deleteFile(fieldId);
+              this.set('field.fileTypeLabel', this.get('field.fileLabelBevorFileChoose'));
+              uikit.modal.alert(getString('FileImageResolution') + width + 'x' + height );
+              
+            }
+            imgField.src = URL.createObjectURL(inputFile);
+            imgField.classList.remove('uk-hidden');
+          };
+      };
+  
+
+      }
+
+      
       uikit.modal.alert(getString('UploadErfolgreich') + inputFile.name);
+
+      /*
+      if(this.get('field.acceptFileType') === 'image/jpeg') {
+        var image = document.getElementById('img'+ this.field.id);
+        image.src = URL.createObjectURL(inputFile);
+        let imgClassDel = document.getElementById('img' + this.field.id);
+        imgClassDel.classList.remove('uk-hidden');
+      }*/
+     
     }
   },
   click() {
-    let elementIdFile = 'file' + this.field.id;
-    let buttonClassDel = document.getElementById('fileBtDel' + this.field.id);
-    buttonClassDel.classList.add('uk-hidden');
+    deleteFile( this.field.id);
     this.set('field.fileTypeLabel', this.get('field.fileLabelBevorFileChoose'));
-    removeFile(elementIdFile);
   }
 });
+
+function deleteFile(fieldId){
+  let elementIdFile = 'file' + fieldId;
+  let buttonClassDel = document.getElementById('fileBtDel' + fieldId);
+  buttonClassDel.classList.add('uk-hidden');
+  let imgClassDel = document.getElementById('img' + fieldId);
+  imgClassDel.classList.add('uk-hidden');
+  removeFile(elementIdFile);
+}

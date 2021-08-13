@@ -27,30 +27,33 @@ export function removeFile(elementId) {
  * @param {file} file 
  * @param {number} width 
  * @param {number} height 
+ * @param {string} elementIdFile to removeFile() on false
  */
-export function resolutionImageValid(file, fWidth, fHeight) {
-  var reader = new FileReader();
-  //Read the contents of Image File.
-  reader.readAsDataURL(file);
-  reader.onload = function (e) {
-    //Initiate the JavaScript Image object.
-    var image = new Image();
+export function resolutionImageValid(file,acceptFileType, fWidth, fHeight) {
 
-    //Set the Base64 string return from FileReader as source.
-    image.src = e.target.result;
-
-    //Validate the File Height and Width.
-    image.onload = function () {
-      var height = this.height;
-      var width = this.width;
-      if (width !== fWidth || height !== fHeight) {
-        
-        //show width and height to user
-        uikit.modal.alert(getString('FileImageResolution') + width + 'x' + height );
-        return false;
-      }
-      return true;
-    };
+    var reader = new FileReader();
+    //Read the contents of Image File.
+    reader.readAsDataURL(file);
+    reader.onload = function (e) {
+  
+      //Initiate the JavaScript Image object.
+      var image = new Image();
+  
+      //Set the Base64 string return from FileReader as source.
+      image.src = e.target.result;
+  
+      //Validate the File Height and Width.
+      image.onload = function () {
+        var height = this.height;
+        var width = this.width;
+        if (width !== fWidth || height !== fHeight && acceptFileType === 'image/jpeg') { 
+          
+          //show width and height to user
+          uikit.modal.alert(getString('FileImageResolution') + width + 'x' + height );
+          return false;
+        }
+        return true;
+      };
   };
 
 }
