@@ -86,7 +86,7 @@ function subscribe($form, self) {
     if (element.type === 'checkbox')
       value = element.checked ? 'Ja' : 'Nein';
     else if (element.type === 'file') 
-      value = null;
+      value = element.files[0] !== undefined ? element.files[0].name :null;
     else if (element.value !== '' && element.dataset.type === 'date')
       value = getDMY(element.value); // this is the required format for subscriptionDetails
     else if ((element.value !== '' && element.type !== 'radio') || element.checked)
