@@ -78,9 +78,8 @@ export default Component.extend({
       };
   
       }
-
-      uikit.modal.alert(getString('UploadErfolgreich') + inputFile.name);
-     
+      
+      uikit.notification({message: getString('UploadErfolgreich') + inputFile.name, pos: 'bottom-right', status:'success' });
     }
   },
   click() {
