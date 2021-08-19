@@ -2,6 +2,7 @@
 <html>
 
 <head>
+  
   <title>Kursausschreibung</title>
   <meta charset="utf-8">
 
@@ -29,6 +30,8 @@
   <script src="{{rootURL}}assets/kursausschreibung.js"></script>
   <!-- MODULE head configuration -->
   
+  <base href="https://google.ch">
+
   <!--Interne Fortbildung exclude-->
   <script>
     var i; 
@@ -90,6 +93,14 @@
   </style>
   {{content-for "head-footer"}}
 </head>
+
+<!-- Change base Tag to appConfig.webBaseUrl -->
+<script>
+  if (document.getElementsByTagName('base').length === 1) {
+    document.write('<base href="'+ window.kursausschreibung.appConfig.webBaseUrl+'" />');
+  }
+</script>
+
 <!-- OPTION REDIRECT -->
 <script>
   /**
