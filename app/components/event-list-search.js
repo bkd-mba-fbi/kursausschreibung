@@ -13,13 +13,12 @@ function match(value, query) {
 
 export default Component.extend({
   query: getParameterByName('search'),
-  
   // update the filtered events when the events change
   eventsChanged: observer('events', function () {
     this.send('queryChanged');
   }),
-
-  didInsertElement () {
+   
+  willRender() {
     this.send('queryChanged');
   }, 
 
@@ -31,8 +30,8 @@ export default Component.extend({
 
   actions: {
     queryChanged() {
-      let query = this.get('query').toLowerCase();
-
+      let query = this.get('query');
+      query = query === null ? '' : query.toLowerCase();
       // don't filter the events when the query is empty
       if (query === '') {
         this.set('filteredEvents', this.get('events'));

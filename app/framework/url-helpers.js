@@ -37,12 +37,15 @@ export function setParameterByName(name,value, url) {
   if (typeof url !== 'string') {
     url = window.location.href;
   }
+  if (value === null) {
+    return url;
+  }
 
-  let params = url.split('?')[1];
+  let params = decodeURI(url).split('?')[1];
   if(params !== undefined) {
      params = params.replace(name + '=' + getParameterByName(name,url), name +'='+ value);
   } else {
     params = name +'='+ value;
   }
-  window.location.href =  url.split('?')[0] + '?' + params;
+  window.location.href =  encodeURI(url.split('?')[0] + '?' + params);
 }
