@@ -238,5 +238,8 @@ window.kursausschreibung.settings = {
   "languageOfInstructionFilter": false,
 
   // Header Offset for scrolling
-  "headerOffset": 133
+  "headerOffset": 133,
+
+  //Button "Subscription with login" visibility when url to content with login readable
+  "subscriptionWithLoginURL": null
 };

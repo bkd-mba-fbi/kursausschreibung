@@ -91,6 +91,10 @@
   border-bottom: 1px solid #e5e5e5;
 }
 
+.subscribeWithLogin-button {
+  margin-left: 5px;
+}
+
 /* mobile */
 @media (max-width: 959px) {
   .uk-scope .subscribe-button {

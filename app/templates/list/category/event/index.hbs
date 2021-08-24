@@ -34,4 +34,12 @@
       data-uk-tooltip=(translate (concat model.status "Lamp")) tagName="button" disabled=(if model.canDoSubscription false true)}}
     {{link-to (translate "back") "list.category" classNames="uk-button uk-button-default uk-float-right"}}
   </div>
+  {{#if model.subscriptionWithLoginURL}}
+    {{#if model.canDoSubscription }}    
+    <div class="uk-margin">
+      <a href={{model.subscriptionWithLoginURL}}  target="_blank" rel="noopener" class="uk-button uk-button-primary uk-float-left subscribeWithLogin-button"
+        data-uk-tooltip={{translate (concat model.status "Lamp")}} >{{translate "subscribeWithLogin"}}</a>
+    </div>
+    {{/if}}
+  {{/if}}
 {{/if}}

@@ -22,6 +22,7 @@ window.kursausschreibung.locale["de-CH"] = {
   "personalData": "Personendaten",
   "confirmation": "Bestätigung",
   "subscribe": "Anmelden",
+  "subscribeWithLogin": "Anmelden mit Login",
   "back": "zurück",
   "backToCourses": "Zurück zur Übersicht",
   "thankYou": "Besten Dank für Ihre Anmeldung",
