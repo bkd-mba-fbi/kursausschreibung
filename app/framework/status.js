@@ -18,7 +18,7 @@ function createStatusCallback(settingsValue, defaultImplementation) {
 let isGreen = createStatusCallback(settings.lampIsGreen, function (event) {
   return (
     event.AllowSubscriptionInternetByStatus &&
-    event.TypeOfSubscription !== 1 &&
+    event.TypeOfSubscription === 4 &&
     isInSubscriptionRange(event) &&
     ((event.FreeSeats > 0) && ((event.MaxParticipants - event.FreeSeats) < event.MinParticipants) || event.EventTypeId === 1)
   );
@@ -27,7 +27,7 @@ let isGreen = createStatusCallback(settings.lampIsGreen, function (event) {
 let isChartreuse = createStatusCallback(settings.lampIsChartreuse, function (event) {
   return (
     event.AllowSubscriptionInternetByStatus &&
-    event.TypeOfSubscription !== 1 &&
+    event.TypeOfSubscription === 4 &&
     isInSubscriptionRange(event) &&
     event.FreeSeats > 0 &&
     (event.MaxParticipants - event.FreeSeats) >= event.MinParticipants
@@ -37,7 +37,7 @@ let isChartreuse = createStatusCallback(settings.lampIsChartreuse, function (eve
 let isYellow = createStatusCallback(settings.lampIsYellow, function (event) {
   return (
     event.AllowSubscriptionInternetByStatus &&
-    event.TypeOfSubscription !== 1 &&
+    event.TypeOfSubscription === 4 &&
     !isInSubscriptionRange(event)
   );
 });
@@ -45,7 +45,7 @@ let isYellow = createStatusCallback(settings.lampIsYellow, function (event) {
 let isRed = createStatusCallback(settings.lampIsRed, function (event) {
   return (
     event.AllowSubscriptionInternetByStatus &&
-    event.TypeOfSubscription !== 1 &&
+    event.TypeOfSubscription === 4 &&
     event.FreeSeats === 0
   );
 });
