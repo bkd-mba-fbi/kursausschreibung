@@ -37,9 +37,14 @@
   {{#if model.subscriptionWithLoginURL}}
     {{#if model.canDoSubscription }}    
     <div class="uk-margin">
-      <a href={{model.subscriptionWithLoginURL}}  target="_blank" rel="noopener" class="uk-button uk-button-primary uk-float-left subscribeWithLogin-button"
+      <a id="subscriptionWithLoginURL" href={{model.subscriptionWithLoginURL}}  target="_blank" rel="noopener" class="uk-button uk-button-primary uk-float-left subscribeWithLogin-button"
         data-uk-tooltip={{translate (concat model.status "Lamp")}} >{{translate "subscribeWithLogin"}}</a>
     </div>
     {{/if}}
   {{/if}}
 {{/if}}
+<Script>
+ var subscriptionWithLoginURL = document.getElementById('subscriptionWithLoginURL').href;
+ var route = window.location.href.substring(window.location.href.indexOf('#'),window.location.href.length);
+ document.getElementById('subscriptionWithLoginURL').href = subscriptionWithLoginURL + route + '/subscribe';
+</Script>

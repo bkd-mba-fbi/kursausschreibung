@@ -1,6 +1,5 @@
 import Route from '@ember/routing/route';
 import { underscore } from '@ember/string';
-import settings from 'kursausschreibung/framework/settings';
 import store from 'kursausschreibung/framework/store';
 
 export default Route.extend({
@@ -11,8 +10,6 @@ export default Route.extend({
     let areaKey = underscore(this.paramsFor('list').area_of_education);
     let categoryKey = underscore(this.paramsFor('list.category').category);
 
-    event.subscriptionWithLoginURL = settings.subscriptionWithLoginURL === null ? null : settings.subscriptionWithLoginURL + window.location.href.substring(window.location.href.indexOf('#'),window.location.href.length) + '/subscribe';
-  
     if (
       event === undefined ||
       event.areaKey !== areaKey ||

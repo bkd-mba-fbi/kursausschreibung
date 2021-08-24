@@ -303,6 +303,9 @@ function prepareEvent(event) {
   // create proxy for human-readable values
   addDisplayData(event);
 
+  //settings subscriptionWithLoginURL
+  event.subscriptionWithLoginURL = settings.subscriptionWithLoginURL;
+
   // create an ember-object of the event
   event = createEmberObject(event);
 
