@@ -74,7 +74,7 @@ function getSubscriptionDetailFields(subscriptionDetails) {
       maxFileSize: detail.MaxFileSize,
       fileObject: null,
       options: {
-        required: detail.Required || detail.VssInternet === 'M',
+        required: detail.VssInternet === 'M',
         autocomplete: 'off',
         options: detail.DropdownItems,
         showAsRadioButtons: dataType === 'dropdown' ? detail.ShowAsRadioButtons : undefined,
