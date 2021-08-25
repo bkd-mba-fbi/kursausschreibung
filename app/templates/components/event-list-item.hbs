@@ -6,6 +6,9 @@
       <span>{{get event.displayData title}}</span>
     </span>
   </h3>
+  {{#if event.subtitle}}
+  <span class="uk-label uk-label-warning uk-margin-small">{{event.subtitle}}</span>
+  {{/if}}
   <table class="details-table">
     <tbody>
       {{#each fields as |field|}}

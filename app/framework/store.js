@@ -307,6 +307,11 @@ function prepareEvent(event) {
   //settings subscriptionWithLoginURL
   event.subscriptionWithLoginURL = settings.subscriptionWithLoginURL;
 
+  //event subtitle when > inside string
+  let eventSubtitle = event.Designation.split(settings.eventSubtitle);
+  event.Designation = eventSubtitle.length > 1  ? eventSubtitle[0] : event.Designation;
+  event.subtitle = eventSubtitle.length > 1 ? eventSubtitle[1] : null;
+
   // create an ember-object of the event
   event = createEmberObject(event);
 

@@ -15,6 +15,9 @@
     <span>{{model.displayData.Designation}}</span>
   </span>
 </h2>
+{{#if model.subtitle}}
+<span class="uk-label uk-label-warning uk-margin-small">{{model.subtitle}}</span>
+{{/if}}
 {{event-details-table event=model}}
 
 {{#if model.externalSubscriptionURL}}
