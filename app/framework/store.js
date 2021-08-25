@@ -196,7 +196,8 @@ function addLessonsToEvents(lessons) {
 
     if (codeIds.find(ids => ids === code.CodeId) === undefined) {
       codeIds.push(code.CodeId);
-      filterCodes.push({id: code.CodeId, Code: getString(prefix+code.CodeId) }); 
+      let codeName = getString(prefix+code.CodeId).indexOf('<span style="color:red;">Key not found:') >= 0 ? code.Code : getString(prefix+code.CodeId);
+      filterCodes.push({id: code.CodeId, Code: codeName }); 
     }  
 
   });
