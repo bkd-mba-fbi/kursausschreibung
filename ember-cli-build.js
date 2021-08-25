@@ -46,7 +46,16 @@ module.exports = function (defaults) {
           comments: /^!/
         }
       }
+    },
+    emberCliConcat: {
+      js: {
+        concat: true
+      },
+      css: {
+        concat: true
+      }
     }
+
   });
 
   // Use `app.import` to add additional libraries to the generated
