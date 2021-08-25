@@ -43,7 +43,12 @@ export function setParameterByName(name,value, url) {
 
   let params = decodeURI(url).split('?')[1];
   if(params !== undefined) {
-     params = params.replace(name + '=' + getParameterByName(name,url), name +'='+ value);
+    if(params.indexOf(name) >= 0) {
+      params = params.replace(name + '=' + getParameterByName(name,url), name +'='+ value);
+    } else {
+      params = params + '&' + name +'='+ value;
+    }
+     
   } else {
     params = name +'='+ value;
   }
