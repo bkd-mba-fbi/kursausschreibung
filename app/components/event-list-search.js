@@ -5,6 +5,11 @@ import { setParameterByName, getParameterByName } from 'kursausschreibung/framew
 
 // tests if a query matches a value
 function match(value, query) {
+  
+  if (typeof value === 'object' && value !== null) {
+    value = Object.values(value).join('|');
+  } 
+    
   return (
     typeof value === 'string' &&
     value.toLowerCase().indexOf(query) !== -1
