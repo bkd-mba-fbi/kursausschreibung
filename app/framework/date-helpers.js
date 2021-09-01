@@ -65,7 +65,7 @@ export function isInSubscriptionRange(event) {
 }
 
 /**
- * return true if DateFrom is greater than or equal
+ * return true if DateFrom or SubscriptionDateTo is greater than or equal
  * to the current date
  * @param {object} event event to check
  */
