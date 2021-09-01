@@ -74,7 +74,8 @@ export function eventStarted(event) {
   if (event.DateFrom === null) {
     return true;
   }
-  return parseISO(event.DateFrom).getTime() >= now.getTime();
+  let date = event.DateFrom <= event.SubscriptionDateTo ? event.SubscriptionDateTo : event.DateFrom;
+  return parseISO(date).getTime() >= now.getTime();
 }
 
 /**
