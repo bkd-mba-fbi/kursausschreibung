@@ -34,6 +34,11 @@ export default Component.extend({
   },
 
   actions: {
+    clearSearch() {
+      this.set('query','');
+      setParameterByName('search','');
+    },
+
     queryChanged() {
       let query = this.get('query');
       query = query === null ? '' : query.toLowerCase();

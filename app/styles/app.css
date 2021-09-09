@@ -185,6 +185,18 @@
   color: black;
 }
 
+.uk-scope .search-clear {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 40px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  color: #999;
+}
+
 /* typeahead (based on https://stackoverflow.com/a/20205623) */
 .twitter-typeahead {
   width: 100%;
