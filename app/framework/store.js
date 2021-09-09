@@ -212,10 +212,8 @@ function addLessonsToEvents(lessons) {
     eventsById[code.EventId].codes.push(code);
     
     // adds filter tag
-    eventsById[code.EventId].filter = '';
     let filter = eventsById[code.EventId].filter;
-    eventsById[code.EventId].filter = filter === '' ? 'tag'+code.CodeId : filter+' tag'+code.CodeId;
-
+    eventsById[code.EventId].filter = filter === undefined ? 'tag'+code.CodeId : filter + ' tag'+code.CodeId;
     eventsById[code.EventId].allfilterCodes = filterCodes;
 
   });
