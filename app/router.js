@@ -22,10 +22,10 @@ const Router = EmberRouter.extend({
 
     if (this.currentPath === 'list.category.event.subscribe') {
       scrollToTimeout(subscriptionProcessId);
-    } else {
+    } else if (this.currentPath !== 'list.index') {
       scrollToTimeout(rootElement.id);
     }
-    //rootElement.scrollIntoView({behavior:'smooth'});
+
   }
 });
 
