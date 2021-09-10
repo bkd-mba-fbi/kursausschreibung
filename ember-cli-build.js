@@ -89,7 +89,11 @@ module.exports = function (defaults) {
   );
 
   // typeahead.js
-  app.import("node_modules/corejs-typeahead/dist/typeahead.jquery.js");
+  app.import('node_modules/corejs-typeahead/dist/typeahead.jquery.js');
+
+  // Croppie
+  app.import('node_modules/croppie/croppie.js');
+  app.import('node_modules/croppie/croppie.css');
 
   return app.toTree();
 };
