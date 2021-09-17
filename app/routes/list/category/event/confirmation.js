@@ -67,8 +67,7 @@ export default Route.extend({
                     VssId: file.IdVss
                 },
                     FileStreamInfo: {
-                    FileName: file.name,
-                    FileSize: file.size
+                    FileName: file.name
                 }
             };
             promises.push(postSubscriptionDetailsFiles(data,file));

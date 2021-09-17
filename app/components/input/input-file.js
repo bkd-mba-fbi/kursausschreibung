@@ -2,14 +2,24 @@ import Component from '@ember/component';
 import { getString } from 'kursausschreibung/framework/translate';
 import { removeFile } from 'kursausschreibung/framework/form-helpers';
 import uikit from 'uikit';
+import jQuery from 'jquery';
+
+function getInputFile(fieldId) {
+  let elementIdFile = getElementIdFile(fieldId);
+  return document.getElementById(elementIdFile).files[0];
+}
+
+function getElementIdFile(fieldId) {
+  return  'file' + fieldId;
+}
 
 export default Component.extend({
   change() {
 
-    let elementIdFile = 'file' + this.field.id;
-    let inputFile = document.getElementById(elementIdFile).files[0];
+    let elementIdFile = getElementIdFile(this.field.id);
+    let inputFile = getInputFile(this.field.id);
+    inputFile.imgDev = null;
     let maxFileSizeMB = (this.get('field.maxFileSize') / (1024 * 1024)).toFixed(2);
-    //let resolutionValid = resolutionImageValid(inputFile, this.get('field.acceptFileType'), 300, 400);
 
     if (inputFile.size > this.get('field.maxFileSize') && maxFileSizeMB !== '0.00') {
       uikit.modal.alert(getString('FileSizeTooBig') + maxFileSizeMB + 'MB');
@@ -46,53 +56,77 @@ export default Component.extend({
 
       if(this.get('field.acceptFileType') === 'image/jpeg') {
 
-        let imgField =  document.getElementById('img'+ this.field.id);
         let fieldId = this.field.id;
-        var readerImg = new FileReader();
-        //Read the contents of Image File.
-        readerImg.readAsDataURL(inputFile);
-        readerImg.onload = function (e) {
-      
-          //Initiate the JavaScript Image object.
-          var image = new Image();
-      
-          //Set the Base64 string return from FileReader as source.
-          image.src = e.target.result;
-      
-          //Validate the File Height and Width.
-          image.onload = function () {
-            var height = this.height;
-            var width = this.width;
-            if (width !== 300 || height !== 400) { 
-              
-              //show width and height to user
-              deleteFile(fieldId);
-              uikit.modal.alert(getString('FileImageResolution') + width + 'x' + height );
-              
-            } else {
-              imgField.src = URL.createObjectURL(inputFile);
-              imgField.classList.remove('uk-hidden');
-            }
+        let buttonClassUpload = document.getElementById('fileBtUpload' + fieldId);
+        buttonClassUpload.classList.remove('uk-hidden');
 
-          };
-      };
-  
+        let imgField =  document.getElementById('img'+ fieldId);
+        imgField.classList.remove('uk-hidden');
+      
+        
+        var basic = jQuery('#img'+ this.field.id).croppie({
+          viewport: { width: 296, height: 396 },
+          boundary: { width: 350, height: 450 },
+        });
+
+        basic.croppie('bind', {
+            url: URL.createObjectURL(inputFile)
+        });
+
       }
+     
       
       uikit.notification({message: getString('UploadErfolgreich') + inputFile.name, pos: 'bottom-right', status:'success' });
     }
   },
-  click() {
-    deleteFile( this.field.id);
-    this.set('field.fileTypeLabel', this.get('field.fileLabelBevorFileChoose'));
-  }
-});
+  actions: {
 
-function deleteFile(fieldId){
-  let elementIdFile = 'file' + fieldId;
-  let buttonClassDel = document.getElementById('fileBtDel' + fieldId);
-  buttonClassDel.classList.add('uk-hidden');
-  let imgClassDel = document.getElementById('img' + fieldId);
-  imgClassDel.classList.add('uk-hidden');
-  removeFile(elementIdFile);
-}
+    deleteFile() {
+      let fieldId = this.field.id;
+      let elementIdFile = getElementIdFile(fieldId);
+      let buttonClassDel = document.getElementById('fileBtDel' + fieldId);
+      buttonClassDel.classList.add('uk-hidden');
+      let imgClassDel = document.getElementById('img' + fieldId);
+      imgClassDel.classList.add('uk-hidden');
+      let imgClassUp = document.getElementById('fileBtUpload' + fieldId);
+      imgClassUp.classList.add('uk-hidden');
+      let imgFielDev =  document.getElementById('imgDev' + fieldId);
+      imgFielDev.classList.add('uk-hidden');
+      removeFile(elementIdFile);
+      this.set('field.fileTypeLabel', this.get('field.fileLabelBevorFileChoose'));
+
+      jQuery('#img'+ this.field.id).croppie('destroy');
+
+    },
+    uploadImage(){
+            let fieldId = this.field.id;
+            //on button click
+            let basic = jQuery('#img'+ fieldId);
+            let inputFile = getInputFile(fieldId);
+            basic.croppie('result', {
+              type: 'base64',
+              format: 'jpeg'            
+            }).then(function(base64) {
+              // html is div (overflow hidden)
+              // with img positioned inside.
+              inputFile.imgDev = base64;
+
+              let imgFielDev =  document.getElementById('imgDev' + fieldId);
+              imgFielDev.src = base64;
+              imgFielDev.classList.remove('uk-hidden');
+              let imgClassUp = document.getElementById('fileBtUpload' + fieldId);
+              imgClassUp.classList.add('uk-hidden');
+              let imgClassDel = document.getElementById('img' + fieldId);
+              imgClassDel.classList.add('uk-hidden');
+
+              jQuery('#img'+ fieldId).croppie('destroy');
+
+          });
+
+         
+          
+    }
+
+  }
+  
+});
