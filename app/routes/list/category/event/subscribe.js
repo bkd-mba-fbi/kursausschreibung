@@ -18,6 +18,13 @@ function loadDropdownItems(fields) {
       .filter(item => item.dataType === 'dropdown')
       .map(item => getDropDownItems(item.options.dropdownItems)
         .then(options => {
+
+          if(item.id === 'Nationality') {
+            let setDefaultLand = options;
+            let defaultLand = options.findIndex(nationality => nationality.Key === 2008100);
+            setDefaultLand.splice(0,0,options[defaultLand]);            
+          }           
+
           if (item.options.options === undefined)
             item.options.options = options;
         })
