@@ -18,6 +18,13 @@ function loadDropdownItems(fields) {
       .filter(item => item.dataType === 'dropdown')
       .map(item => getDropDownItems(item.options.dropdownItems)
         .then(options => {
+
+          if(item.id === 'Nationality') {
+            let setDefaultLand = options;
+            let defaultLand = options.findIndex(nationality => nationality.Key === 2008100);
+            setDefaultLand.splice(0,0,options[defaultLand]);            
+          }           
+
           if (item.options.options === undefined)
             item.options.options = options;
         })
@@ -34,11 +41,18 @@ let dataTypeMappings = {
   Date: 'date'
 };
 
+let fileTypeMapping = {
+  DA: 'application/zip,application/x-zip-compressed',
+  PD: 'application/pdf',
+  PF: 'image/jpeg'
+};
+
 // convert subscriptionDetails to an array of input-components
 // as they are used in the settings.js file
 function getSubscriptionDetailFields(subscriptionDetails) {
   return subscriptionDetails.map(detail => {
     let dataType = dataTypeMappings[detail.VssType];
+    let fileType = fileTypeMapping[detail.VssStyle];
 
     if (dataType === undefined)
       dataType = 'string';
@@ -53,12 +67,21 @@ function getSubscriptionDetailFields(subscriptionDetails) {
     if (detail.VssStyle === 'HE')
       return { isLegend: true, label: detail.VssDesignation };
 
+    if ( detail.VssStyle === 'DA' || detail.VssStyle === 'PD' || detail.VssStyle === 'PF' ){
+      dataType = 'file';
+    }
+
     return {
       id: detail.VssId,
       label: detail.VssDesignation,
       dataType: dataType,
+      acceptFileType: fileType,
+      fileTypeLabel: getString('fileType'+detail.VssStyle),
+      fileLabelBevorFileChoose: getString('fileType'+detail.VssStyle),
+      maxFileSize: detail.MaxFileSize,
+      fileObject: null,
       options: {
-        required: detail.Required || detail.VssInternet === 'M',
+        required: detail.VssInternet === 'M',
         autocomplete: 'off',
         options: detail.DropdownItems,
         showAsRadioButtons: dataType === 'dropdown' ? detail.ShowAsRadioButtons : undefined,

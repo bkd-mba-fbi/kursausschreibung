@@ -1,9 +1,15 @@
 import Component from '@ember/component';
 import { oneWay } from '@ember/object/computed';
 import { observer } from '@ember/object';
+import { setParameterByName, getParameterByName } from 'kursausschreibung/framework/url-helpers';
 
 // tests if a query matches a value
 function match(value, query) {
+  
+  if (typeof value === 'object' && value !== null) {
+    value = Object.values(value).join('|');
+  } 
+    
   return (
     typeof value === 'string' &&
     value.toLowerCase().indexOf(query) !== -1
@@ -11,19 +17,31 @@ function match(value, query) {
 }
 
 export default Component.extend({
-  query: '',
-
+  query: getParameterByName('search'),
   // update the filtered events when the events change
   eventsChanged: observer('events', function () {
     this.send('queryChanged');
   }),
+   
+  willRender() {
+    this.send('queryChanged');
+  }, 
 
   filteredEvents: oneWay('events'),
 
-  actions: {
-    queryChanged() {
-      let query = this.get('query').toLowerCase();
+  keyUp(){
+    setParameterByName('search',this.get('query'));
+  },
 
+  actions: {
+    clearSearch() {
+      this.set('query','');
+      setParameterByName('search','');
+    },
+
+    queryChanged() {
+      let query = this.get('query');
+      query = query === null ? '' : query.toLowerCase();
       // don't filter the events when the query is empty
       if (query === '') {
         this.set('filteredEvents', this.get('events'));

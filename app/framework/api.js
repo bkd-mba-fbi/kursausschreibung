@@ -13,16 +13,22 @@ let accessToken = null;
  * @param {string} relativeUrl the URL relative to the apiUrl
  * @param {boolean} readableError pass false to get the initial exception
  * @param {object} data data for POST and PUT calls
+ * @param {boolean} file for file upload change data and contentType
  */
-function ajax(method, relativeUrl, readableError = true, data = null) {
+function ajax(method, relativeUrl, readableError = true, data = null, file = false) {
   if (accessToken === null)
     accessToken = getAccessToken();
+  
+  if (file === false) {
+    data = data !== null ? JSON.stringify(data, null, '\t') : undefined;
+  }
 
   let promise = $.ajax({
     method: method,
     dataType: 'json',
+    contentType: method === 'GET' ? 'text/javascript' : file ? false : 'application/json',
     processData: false,
-    data: data !== null ? JSON.stringify(data, null, '\t') : undefined,
+    data: data,
     url: appConfig.apiUrl + '/' + relativeUrl,
 
     // convert empty response to valid JSON
@@ -46,8 +52,8 @@ function post(relativeUrl, data) {
   return ajax('POST', relativeUrl, false, data);
 }
 
-function put(relativeUrl, data) {
-  return ajax('PUT', relativeUrl, false, data);
+function put(relativeUrl, data, file = false) {
+  return ajax('PUT', relativeUrl, false, data, file);
 }
 
 function get(relativeUrl, readableError) {
@@ -88,6 +94,13 @@ export function getLessons() {
  */
 export function getEventLocations() {
   return get('EventLocations/');
+}
+
+/**
+ * get codes that are aasigned events
+ */
+export function getEventCodes() {
+  return get('EventCodes/');
 }
 
 /**
@@ -167,4 +180,32 @@ export function postAddress(data) {
  */
 export function postSubscription(data) {
   return post('Subscriptions/', data);
+}
+
+/**
+ * Post Files to SubscriptionDetails
+ * @param {object} data of the subscription files
+ * @param {image} image des files Base64Codierung
+ * @returns 
+ */
+export function postSubscriptionDetailsFiles(data,file) {
+  return new Promise(resolve => post('SubscriptionDetails/files', data)
+  .then((_data, _status, xhr) => { resolve([xhr]); }))
+  .then(([xhr]) => { // xhr is in an array so it gets correctly passed along
+    let locationHeader = xhr.getResponseHeader('location');
+    let arrayBuffer = base64ToArrayBuffer(file.fileAsBase64.substring(file.fileAsBase64.indexOf('base64,')+7,file.fileAsBase64.length));
+    return put(locationHeader, arrayBuffer, true);
+  });
+}
+/**
+ * https://stackoverflow.com/questions/21797299/convert-base64-string-to-arraybuffer 
+ */
+function base64ToArrayBuffer(base64) {
+  var binary_string = window.atob(base64);
+  var len = binary_string.length;
+  var bytes = new Uint8Array(len);
+  for (var i = 0; i < len; i++) {
+      bytes[i] = binary_string.charCodeAt(i);
+  }
+  return bytes.buffer;
 }

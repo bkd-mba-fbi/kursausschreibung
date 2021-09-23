@@ -15,6 +15,9 @@
     <span>{{model.displayData.Designation}}</span>
   </span>
 </h2>
+{{#if model.subtitle}}
+<span class="uk-label uk-label-warning uk-margin-small">{{model.subtitle}}</span>
+{{/if}}
 {{event-details-table event=model}}
 
 {{#if model.externalSubscriptionURL}}
@@ -34,4 +37,20 @@
       data-uk-tooltip=(translate (concat model.status "Lamp")) tagName="button" disabled=(if model.canDoSubscription false true)}}
     {{link-to (translate "back") "list.category" classNames="uk-button uk-button-default uk-float-right"}}
   </div>
+  {{#if model.subscriptionWithLoginURL}}
+    {{#if model.canDoSubscription }}    
+    <div class="uk-margin">
+      <a id="subscriptionWithLoginURL" href={{model.subscriptionWithLoginURL}}  target="_blank" rel="noopener" class="uk-button uk-button-primary uk-float-left subscribeWithLogin-button"
+        data-uk-tooltip={{translate (concat model.status "Lamp")}} >{{translate "subscribeWithLogin"}}</a>
+    </div>
+    {{/if}}
+  {{/if}}
 {{/if}}
+<Script>
+ var subscriptionWithLoginURL = document.getElementById('subscriptionWithLoginURL');
+  if(subscriptionWithLoginURL !== null) {
+    subscriptionWithLoginURL = subscriptionWithLoginURL.href;
+    var route = window.location.href.substring(window.location.href.indexOf('#'),window.location.href.length);
+    document.getElementById('subscriptionWithLoginURL').href = subscriptionWithLoginURL + route + '/subscribe';
+  }
+</Script>

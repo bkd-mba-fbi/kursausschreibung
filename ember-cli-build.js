@@ -46,7 +46,16 @@ module.exports = function (defaults) {
           comments: /^!/
         }
       }
+    },
+    emberCliConcat: {
+      js: {
+        concat: true
+      },
+      css: {
+        concat: true
+      }
     }
+
   });
 
   // Use `app.import` to add additional libraries to the generated
@@ -80,7 +89,11 @@ module.exports = function (defaults) {
   );
 
   // typeahead.js
-  app.import("node_modules/corejs-typeahead/dist/typeahead.jquery.js");
+  app.import('node_modules/corejs-typeahead/dist/typeahead.jquery.js');
+
+  // Croppie
+  app.import('node_modules/croppie/croppie.js');
+  app.import('node_modules/croppie/croppie.css');
 
   return app.toTree();
 };

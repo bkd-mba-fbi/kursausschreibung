@@ -15,6 +15,14 @@ export function formFieldError(element, valid, message = 'invalidInput') {
 }
 
 /**
+ * Remove a File from filelist
+ * @param {string} elementId 
+ */
+export function removeFile(elementId) {
+  document.getElementById(elementId).value = '';
+}
+
+/**
  * input helper
  * set delimiter "."
  * check is digit 0-9

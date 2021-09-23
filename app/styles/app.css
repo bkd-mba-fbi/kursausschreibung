@@ -32,10 +32,14 @@
 
 .uk-scope .status-lamp {
   display: inline-block;
-  height: 16px;
-  width: 16px;
-  border-radius: 8px;
-  margin-right: 8px;
+  height: 20px;
+  width: 20px;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.uk-scope .icon-lamp{
+  color: white;
 }
 
 .uk-scope .lamp-red {
@@ -51,11 +55,11 @@
 }
 
 .uk-scope .lamp-orange {
-  background-color: orange;
+  background-color: #ff7a13;
 }
 
 .uk-scope .lamp-yellow {
-  background-color: yellow;
+  background-color: #ffcf00;
 }
 
 .uk-scope .details-table > tbody > tr > td:first-child {
@@ -73,7 +77,8 @@
 }
 
 /* form */
-.uk-scope input:invalid {
+.uk-scope input:invalid,
+.required {
   border-color: red !important;
 }
 
@@ -88,6 +93,10 @@
 .uk-scope #subscriptionProcess {
   padding: 20px 0 20px 0;
   border-bottom: 1px solid #e5e5e5;
+}
+
+.subscribeWithLogin-button {
+  margin-left: 5px;
 }
 
 /* mobile */
@@ -178,6 +187,18 @@
 
 .uk-scope ol.steps li.current {
   color: black;
+}
+
+.uk-scope .search-clear {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 40px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  color: #999;
 }
 
 /* typeahead (based on https://stackoverflow.com/a/20205623) */

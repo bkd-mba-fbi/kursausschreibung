@@ -2,7 +2,7 @@ import Route from '@ember/routing/route';
 import { isEmpty } from '@ember/utils';
 import { Promise } from 'rsvp';
 import { getDataToSubmit, setDataToSubmit } from 'kursausschreibung/framework/storage';
-import { postPerson, putPerson, postAddress, postSubscription } from 'kursausschreibung/framework/api';
+import { postPerson, putPerson, postAddress, postSubscription, postSubscriptionDetailsFiles } from 'kursausschreibung/framework/api';
 import { autoCheckForLogin } from 'kursausschreibung/framework/login-helpers';
 import settings from 'kursausschreibung/framework/settings';
 import { SUBSCRIPTION_DETAIL_ALLOW_MULTIPLE_PEOPLE } from 'kursausschreibung/framework/api';
@@ -19,8 +19,8 @@ export default Route.extend({
 
     let {
       personId, useCompanyAddress, addressData, companyAddressData,
-      subscriptionData, additionalPeople, tableData
-    } = dataToSubmit;
+      subscriptionData, additionalPeople, tableData, subscriptionFiles
+    } = dataToSubmit;  
 
     // make sure the session is still active
     return autoCheckForLogin().then(() => {
@@ -58,12 +58,29 @@ export default Route.extend({
           if(additionalPeople.length > 0 ){
             subscriptionData.SubscriptionDetails.push({VssId: SUBSCRIPTION_DETAIL_ALLOW_MULTIPLE_PEOPLE , Value: additionalPeople.length });
           }
-          return postSubscription(subscriptionData);
+          postSubscription(subscriptionData).then(id => {
+            subscriptionFiles.forEach(file => {
+              
+              let data = {
+                SubscriptionDetail:  {
+                    SubscriptionId: id,
+                    VssId: file.IdVss
+                },
+                    FileStreamInfo: {
+                    FileName: file.name
+                }
+            };
+            promises.push(postSubscriptionDetailsFiles(data,file));
+
+            });
+            return promises;
+          });
         });
+      
       });
-
+      
       return Promise.all(promises);
-
+    
     }).then(() => {
       return { tableData: tableData, statusIsRed: event.get('status') === 'red' };
 

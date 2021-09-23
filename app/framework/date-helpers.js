@@ -65,7 +65,7 @@ export function isInSubscriptionRange(event) {
 }
 
 /**
- * return true if DateFrom is greater than or equal
+ * return true if DateFrom or SubscriptionDateTo is greater than or equal
  * to the current date
  * @param {object} event event to check
  */
@@ -74,7 +74,8 @@ export function eventStarted(event) {
   if (event.DateFrom === null) {
     return true;
   }
-  return parseISO(event.DateFrom).getTime() >= now.getTime();
+  let date = event.DateFrom <= event.SubscriptionDateTo ? event.SubscriptionDateTo : event.DateFrom;
+  return parseISO(date).getTime() >= now.getTime();
 }
 
 /**
@@ -151,6 +152,7 @@ export function getDateTimeForIcs(dateString) {
  * returns true if date > now
  * @param {string} dateString YYYY-MM-DD
  */
-export function dateGreaterNow(date) {
-  return parseISO(date) > Date.now();
+
+export function dateGreaterNow(date){
+    return parseISO(date) > Date.now() ? true : false;
 }
