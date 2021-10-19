@@ -42,6 +42,7 @@ export function setParameterByName(name,value, url) {
   }
 
   let params = decodeURI(url).split('?');
+  let paramsLength = params.length;
   params = params.length === 3 ? params[1] + '?' + params[2] : params[1];
   
   if(params !== undefined) {
@@ -50,7 +51,16 @@ export function setParameterByName(name,value, url) {
       params = params.replace(name + '=' + getParameterByName(name,url), name +'='+ value);
     }
     else {
-      params = params + '&' + name +'='+ value;
+      let newParam = '&';
+      if (paramsLength > 2 && params.indexOf('?') > -1) {
+        newParam = '&';
+      } else if (paramsLength > 2 && params.indexOf('?') === -1) {
+        newParam = '?';
+      } else if (paramsLength === 2 && params.indexOf('#') > -1) {
+        newParam = '?';
+      }
+
+      params = params + newParam + name +'='+ value;
     }
      
   } else {
