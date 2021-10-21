@@ -178,7 +178,7 @@ function setProperties(data, element) {
     // skip if there is no selection
     if (text === '') return;
 
-    data[element.name] = text;
+    data[element.name] = element.name === 'StayPermit' ? parseInt(element.value) : text;
     data[element.name + 'Id'] = parseInt(element.value);
     return;
   }
