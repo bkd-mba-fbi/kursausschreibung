@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { helperSocialSecurityNumber } from 'kursausschreibung/framework/form-helpers';
+import { helperSocialSecurityNumber, vssDependency } from 'kursausschreibung/framework/form-helpers';
 
 export default Component.extend({
   change() {
@@ -9,5 +9,10 @@ export default Component.extend({
   },
   keyUp() {
     this.change();
-  }
+  },
+  focusOut() {
+    let field = this.get('field');
+    let currentValue = document.getElementById('vss'+field.id).value;
+    vssDependency(currentValue,field);
+}
 });

@@ -1,4 +1,5 @@
 import Component from '@ember/component';
+import { vssDependency } from 'kursausschreibung/framework/form-helpers';
 
 export default Component.extend({
   didInsertElement() {
@@ -27,5 +28,11 @@ export default Component.extend({
   willDestroyElement() {
     this.$('.typeahead').typeahead('destroy');
     this._super(...arguments);
+  },
+
+  focusOut() {
+    let field = this.get('field');
+    let currentValue = document.getElementById('vss'+field.id).value;
+    vssDependency(currentValue,field);
   }
 });
