@@ -66,14 +66,18 @@ export default Component.extend({
   }),
 
   filterCodes: computed('items', function () {
+
     let filterCodes = this.get('itemsOnCurrentPage').filter(item => item.allfilterCodes instanceof Array);
     let eventfilterCodes = [];
     filterCodes.forEach(event => {
+
       let existsFilter = filterCodes[0].allfilterCodes.filter(filter => event.filter.indexOf(filter.id) > -1);
 
-      if(eventfilterCodes.includes(existsFilter[0]) === false) {
-        eventfilterCodes.push(existsFilter[0]);
-      }
+      existsFilter.map(filter => {
+        if(eventfilterCodes.includes(filter) === false) {
+            eventfilterCodes.push(filter);
+          }
+      });
       
     });
 

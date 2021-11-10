@@ -208,9 +208,12 @@ function addLessonsToEvents(lessons) {
       return;
     }
     // add codes-array
-    eventsById[code.EventId].codes = [];
-    eventsById[code.EventId].codes.push(code);
+    if (eventsById[code.EventId].codes === undefined) {
+      eventsById[code.EventId].codes = [];
+    }
     
+    eventsById[code.EventId].codes.push(code);
+
     // adds filter tag
     let filter = eventsById[code.EventId].filter;
     eventsById[code.EventId].filter = filter === undefined ? 'tag'+code.CodeId : filter + ' tag'+code.CodeId;
