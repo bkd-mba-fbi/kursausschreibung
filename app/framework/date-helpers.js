@@ -86,7 +86,7 @@ export function eventStarted(event) {
 export function eventEnded(event) {
   let now = new Date();
   if (event.DateTo === null) {
-    return true;
+    return false;
   }
   return parseISO(event.DateTo).getTime() <= now.getTime();
 }
