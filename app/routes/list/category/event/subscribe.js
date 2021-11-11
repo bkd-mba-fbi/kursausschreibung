@@ -20,9 +20,12 @@ function loadDropdownItems(fields) {
         .then(options => {
 
           if(item.id === 'Nationality') {
+            options.forEach(element => {
+              element.Value = element.Value.split(':')[1].trim();
+            });
             let setDefaultLand = options;
             let defaultLand = options.findIndex(nationality => nationality.Key === 2008100);
-            setDefaultLand.splice(0,0,options[defaultLand]);            
+            setDefaultLand.splice(0,0,options[defaultLand]);
           }           
 
           if (item.options.options === undefined)
