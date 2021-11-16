@@ -41,16 +41,31 @@ export function setParameterByName(name,value, url) {
     return url;
   }
 
-  let params = decodeURI(url).split('?')[1];
+  let params = decodeURI(url).split('?');
+  let paramsLength = params.length;
+  params = params.length === 3 ? params[1] + '?' + params[2] : params[1];
+  
   if(params !== undefined) {
+
     if(params.indexOf(name) >= 0) {
       params = params.replace(name + '=' + getParameterByName(name,url), name +'='+ value);
-    } else {
-      params = params + '&' + name +'='+ value;
+    }
+    else {
+      let newParam = '&';
+      if (paramsLength > 2 && params.indexOf('?') > -1) {
+        newParam = '&';
+      } else if (paramsLength > 2 && params.indexOf('?') === -1) {
+        newParam = '?';
+      } else if (paramsLength === 2 && params.indexOf('#') > -1) {
+        newParam = '?';
+      }
+
+      params = params + newParam + name +'='+ value;
     }
      
   } else {
     params = name +'='+ value;
   }
-  window.location.href =  encodeURI(url.split('?')[0] + '?' + params);
+
+  window.location.href =  encodeURI(url.split('?')[0] + '?' + params); 
 }

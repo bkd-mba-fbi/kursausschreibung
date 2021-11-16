@@ -59,14 +59,28 @@ export default Component.extend({
     return pages;
   }),
 
-  filterCodes: computed('items', function () {
-    let filterCodes = this.get('items').filter(item => item.allfilterCodes instanceof Array);
-    return filterCodes.length === 0 ? null : filterCodes[0].allfilterCodes;
-  }),
-
   itemsOnCurrentPage: computed('items', 'page', function () {
     let page = this.get('page');
     let filter = this.get('items').filter(item => item.codes instanceof Array);
     return  filter.length > 0 ? this.get('items') : this.get('items').slice(settings.itemsPerPage * (page - 1), settings.itemsPerPage * page);
-  })
+  }),
+
+  filterCodes: computed('items', function () {
+
+    let filterCodes = this.get('itemsOnCurrentPage').filter(item => item.allfilterCodes instanceof Array);
+    let eventfilterCodes = [];
+    filterCodes.forEach(event => {
+
+      let existsFilter = filterCodes[0].allfilterCodes.filter(filter => event.filter.indexOf(filter.id) > -1);
+
+      existsFilter.map(filter => {
+        if(eventfilterCodes.includes(filter) === false) {
+            eventfilterCodes.push(filter);
+          }
+      });
+      
+    });
+
+    return eventfilterCodes.length === 1 ? null : eventfilterCodes;
+  }),
 });

@@ -47,8 +47,7 @@ export function checkToken() {
   if (accessToken !== null) {
     // store token, refresh token and expiration
     let refreshToken = getParameterByName('refresh_token');
-    let expire = parseInt(getParameterByName('expires_in'));
-    let tokenExpire = Date.now() + expire * 1000;
+    let tokenExpire = parseJWT(accessToken).exp * 1000;
 
     setAccessToken(accessToken);
     setRefreshToken(refreshToken);

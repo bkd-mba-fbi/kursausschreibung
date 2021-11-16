@@ -85,3 +85,64 @@ function ean13checkNumber(number) {
   }
   return false;
 }
+
+
+/**
+* Check if vssDependency available
+* @param {string} formValue
+* @param {object} field
+*/
+export function vssDependency(formValue,field) {
+
+if(field.options.dependencyItems !== undefined) {
+  
+  let hiddenClass = 'uk-hidden';
+
+  if (field.options.dependencyItems.length > 0) {
+
+  field.options.dependencyItems.forEach(element => {
+    let values = element.Values;
+    let operator = element.Operator;
+
+    let vssId = element.IdVss;
+    let hidden = document.getElementById('hidden'+vssId);
+    let requiredElement = document.getElementById('file'+vssId) === null  ? document.getElementById('vss'+vssId) : document.getElementById('file'+vssId);
+
+    if(vssDependencyCheck(formValue,operator,values)) {     
+      hidden.classList.remove(hiddenClass);
+      requiredElement.required = true; 
+    } else {
+      hidden.classList.add(hiddenClass);
+      requiredElement.required = false; 
+    }
+
+  });
+
+}
+
+}
+
+}
+
+/**
+ * Check if vssDependency true
+* @param {string} formValue
+* @param {number} operator
+* @param {Array} values
+*/
+function vssDependencyCheck(formValue, operator, values) {
+
+  if(typeof formValue === 'boolean') {
+    formValue = formValue ? '1' : '0';
+  } 
+
+  if (operator === 349) { //contains
+    return formValue.indexOf(values) > -1 ? true : false;
+  } else if (operator === 350) { //contains Not
+    return formValue.indexOf(values) === -1 ? true : false;
+  } else if (operator === 351) { //empty
+    return formValue === null || formValue === undefined || formValue.length === 0 ? true : false;
+  } else if (operator === 352) { //notEmpty
+    return formValue.length > 0 ? true : false; //formValue !== undefined ||
+  } 
+}

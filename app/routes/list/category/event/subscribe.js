@@ -2,7 +2,7 @@ import { A } from '@ember/array';
 import { get, set } from '@ember/object';
 import Route from '@ember/routing/route';
 import {
-  getDropDownItems, getSubscriptionDetails, getUserSettings,
+  getDropDownItems, getSubscriptionDetails, getSubscriptionDetailDependencies, getUserSettings,
   SUBSCRIPTION_DETAIL_ALLOW_MULTIPLE_PEOPLE
 } from 'kursausschreibung/framework/api';
 import { autoCheckForLogin } from 'kursausschreibung/framework/login-helpers';
@@ -20,9 +20,12 @@ function loadDropdownItems(fields) {
         .then(options => {
 
           if(item.id === 'Nationality') {
+            options.forEach(element => {
+              element.Value = element.Value.split(':')[1].trim();
+            });
             let setDefaultLand = options;
             let defaultLand = options.findIndex(nationality => nationality.Key === 2008100);
-            setDefaultLand.splice(0,0,options[defaultLand]);            
+            setDefaultLand.splice(0,0,options[defaultLand]);
           }           
 
           if (item.options.options === undefined)
@@ -86,10 +89,32 @@ function getSubscriptionDetailFields(subscriptionDetails) {
         options: detail.DropdownItems,
         showAsRadioButtons: dataType === 'dropdown' ? detail.ShowAsRadioButtons : undefined,
         tooltip: detail.Tooltip,
-        disabled: detail.readOnly
+        disabled: detail.readOnly,
+        hidden: '',
+        dependencyItems: []
       }
     };
   });
+}
+
+function addSubscriptionDetailDependencies(subscriptionDetailDependencies,subscriptionDetails) {
+
+  subscriptionDetails.map(item => {
+
+    subscriptionDetailDependencies.find(dependency => {
+    
+        if (dependency.IdVss === item.id){
+          item.options.hidden = 'uk-hidden';
+          item.options.required = false;
+        }
+        if (dependency.IdVssInfluencer === item.id) {
+          item.options.dependencyItems.push(dependency);
+        }
+    });
+  });
+
+  return subscriptionDetails;
+
 }
 
 function addTranslations(fields) {
@@ -138,8 +163,8 @@ export default Route.extend({
 
     // make sure the session is still active
     return autoCheckForLogin()
-      .then(() => Promise.all([getUserSettings(), getSubscriptionDetails(model.Id)]))
-      .then(([userSettings, subscriptionDetails]) => {
+      .then(() => Promise.all([getUserSettings(), getSubscriptionDetails(model.Id), getSubscriptionDetailDependencies(model.Id)]))
+      .then(([userSettings, subscriptionDetails, subscriptionDetailDependencies]) => {
 
         // check if multiple people are allowed to subscribe at the same time
         let allowMultiplePeople = false;
@@ -157,6 +182,8 @@ export default Route.extend({
 
         set(model, 'userSettings', userSettings);
         set(model, 'subscriptionDetailFields', getSubscriptionDetailFields(A(subscriptionDetails).sortBy('Sort')));
+
+        set(model, 'subscriptionDetailFields', addSubscriptionDetailDependencies(subscriptionDetailDependencies,getSubscriptionDetailFields(A(subscriptionDetails).sortBy('Sort'))) );
 
         if (userSettings.isLoggedIn === false) {
           let fields = getFormFields(settings, model.EventTypeId).addressFields;

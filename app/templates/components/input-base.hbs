@@ -1,10 +1,13 @@
 {{#if field.isLegend}}
-  <legend class="uk-legend">{{{field.label}}}</legend>
+  <legend class="uk-legend uk-margin">{{{field.label}}}</legend>
 {{else}}
-  <div class="uk-margin uk-display-inline-block uk-width-1-1">
+  <div id="hidden{{field.id}}" class="uk-margin uk-display-inline-block uk-width-1-1 {{field.options.hidden}}">
     <label class="uk-form-label" for={{field.id}}
       data-uk-tooltip={{field.options.tooltip}}>{{{field.label}}}</label>
     <div class="uk-form-controls">
+      {{#if field.options.tooltip}}
+      <label class="uk-margin uk-display-inline-block uk-text-meta">{{field.options.tooltip}}</label>
+      {{/if}}
       {{component componentType field=field}}
       {{#if field.options.showHint }}
         <div class="{{field.options.hintClassNames}}">{{{field.hint}}}</div>

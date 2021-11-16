@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { getString } from 'kursausschreibung/framework/translate';
-import { removeFile } from 'kursausschreibung/framework/form-helpers';
+import { removeFile, vssDependency } from 'kursausschreibung/framework/form-helpers';
 import uikit from 'uikit';
 import jQuery from 'jquery';
 
@@ -77,6 +77,10 @@ export default Component.extend({
      
       
       uikit.notification({message: getString('UploadErfolgreich') + inputFile.name, pos: 'bottom-right', status:'success' });
+
+      let field = this.get('field');
+      vssDependency(inputFile,field);
+
     }
   },
   actions: {

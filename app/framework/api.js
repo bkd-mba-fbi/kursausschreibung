@@ -118,6 +118,14 @@ export function getSubscriptionDetails(eventId) {
 }
 
 /**
+ * get subscriptionDetailDependencies of an event
+ * @param {number} eventId the id of the event
+ */
+ export function getSubscriptionDetailDependencies(eventId) {
+  return get('SubscriptionDetailDependencies/?idEvent=' + eventId);
+}
+
+/**
  * get all eventTexts
  * @param {string} cultureInfo 'de-CH' for german and 'en-US' for french
  */
