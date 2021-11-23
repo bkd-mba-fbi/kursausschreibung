@@ -31,7 +31,6 @@ export default Component.extend({
     }
     else {
   
-      this.set('field.fileLabelBevorFileChoose', this.get('field.fileTypeLabel'));
       this.set('field.fileTypeLabel', inputFile.name);
       this.set('field.fileObject', inputFile);
 
