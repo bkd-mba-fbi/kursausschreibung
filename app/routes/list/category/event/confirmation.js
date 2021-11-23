@@ -58,7 +58,7 @@ export default Route.extend({
           if(additionalPeople.length > 0 ){
             subscriptionData.SubscriptionDetails.push({VssId: SUBSCRIPTION_DETAIL_ALLOW_MULTIPLE_PEOPLE , Value: additionalPeople.length });
           }
-          postSubscription(subscriptionData).then(id => {
+          return postSubscription(subscriptionData).then(id => {
             subscriptionFiles.forEach(file => {
               
               let data = {
@@ -73,7 +73,6 @@ export default Route.extend({
             promises.push(postSubscriptionDetailsFiles(data,file));
 
             });
-            return promises;
           });
         });
       
