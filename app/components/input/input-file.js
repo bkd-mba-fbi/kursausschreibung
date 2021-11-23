@@ -89,6 +89,12 @@ export default Component.extend({
       let elementIdFile = getElementIdFile(fieldId);
       let buttonClassDel = document.getElementById('fileBtDel' + fieldId);
       buttonClassDel.classList.add('uk-hidden');
+    
+      if (this.get('field.options.required')) {
+        let buttonClass = document.getElementById('fileBt' + this.field.id);
+        buttonClass.classList.add('required');
+      }
+       
       let imgClassDel = document.getElementById('img' + fieldId);
       imgClassDel.classList.add('uk-hidden');
       let imgClassUp = document.getElementById('fileBtUpload' + fieldId);
