@@ -79,8 +79,8 @@ export function eventStarted(event) {
 }
 
 /**
- * return true if DateTo is smaller than or equal
- * to the current date
+ * return true if DateTo + TimeTo is smaller than or equal
+ * to the current datetime
  * @param {object} event event to check
  */
 export function eventEnded(event) {
