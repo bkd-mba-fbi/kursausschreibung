@@ -85,10 +85,14 @@ export function eventStarted(event) {
  */
 export function eventEnded(event) {
   let now = new Date();
-  if (event.DateTo === null) {
+  let dateTo = event.DateTo;
+  let repalcePattern = '00:00:00';
+  if (dateTo === null) {
     return false;
   }
-  return parseISO(event.DateTo).getTime() <= now.getTime();
+
+  dateTo = dateTo.search(repalcePattern) > 0 ? dateTo.replace(repalcePattern,event.TimeTo) : dateTo;
+  return parseISO(dateTo).getTime() <= now.getTime();
 }
 
 /**
