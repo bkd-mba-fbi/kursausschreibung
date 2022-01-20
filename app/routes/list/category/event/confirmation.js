@@ -137,6 +137,12 @@ function createPerson(addressData) {
     );
   }
 
+  // delete keys with null-values
+  Object.keys(addressData).forEach(key => {
+    if (addressData[key] === null)
+      delete addressData[key];
+  });
+
   return new Promise(resolve => postPerson(addressData)
     .then((_data, _status, xhr) => { resolve([xhr]); }))
     .then(([xhr]) => { // xhr is in an array so it gets correctly passed along
@@ -150,12 +156,6 @@ function createPerson(addressData) {
       if (duplicateHeader !== null) {
         // the person already exists and must get updated
         let personId = duplicateHeader.split('/').slice(-1)[0];
-
-        // delete keys with null-values
-        Object.keys(addressData).forEach(key => {
-          if (addressData[key] === null)
-            delete addressData[key];
-        });
 
         // add id
         addressData.Id = parseInt(personId);
