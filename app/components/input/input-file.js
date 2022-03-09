@@ -31,7 +31,6 @@ export default Component.extend({
     }
     else {
   
-      this.set('field.fileLabelBevorFileChoose', this.get('field.fileTypeLabel'));
       this.set('field.fileTypeLabel', inputFile.name);
       this.set('field.fileObject', inputFile);
 
@@ -65,7 +64,7 @@ export default Component.extend({
       
         
         var basic = jQuery('#img'+ this.field.id).croppie({
-          viewport: { width: 296, height: 396 },
+          viewport: { width: 300, height: 400 },
           boundary: { width: 350, height: 450 },
         });
 
@@ -90,6 +89,12 @@ export default Component.extend({
       let elementIdFile = getElementIdFile(fieldId);
       let buttonClassDel = document.getElementById('fileBtDel' + fieldId);
       buttonClassDel.classList.add('uk-hidden');
+    
+      if (this.get('field.options.required')) {
+        let buttonClass = document.getElementById('fileBt' + this.field.id);
+        buttonClass.classList.add('required');
+      }
+       
       let imgClassDel = document.getElementById('img' + fieldId);
       imgClassDel.classList.add('uk-hidden');
       let imgClassUp = document.getElementById('fileBtUpload' + fieldId);
@@ -109,7 +114,8 @@ export default Component.extend({
             let inputFile = getInputFile(fieldId);
             basic.croppie('result', {
               type: 'base64',
-              format: 'jpeg'            
+              format: 'jpeg',
+              size: {width: '300', height: '400'}
             }).then(function(base64) {
               // html is div (overflow hidden)
               // with img positioned inside.

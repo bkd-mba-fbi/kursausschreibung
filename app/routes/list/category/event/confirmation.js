@@ -58,7 +58,7 @@ export default Route.extend({
           if(additionalPeople.length > 0 ){
             subscriptionData.SubscriptionDetails.push({VssId: SUBSCRIPTION_DETAIL_ALLOW_MULTIPLE_PEOPLE , Value: additionalPeople.length });
           }
-          postSubscription(subscriptionData).then(id => {
+          return postSubscription(subscriptionData).then(id => {
             subscriptionFiles.forEach(file => {
               
               let data = {
@@ -73,7 +73,6 @@ export default Route.extend({
             promises.push(postSubscriptionDetailsFiles(data,file));
 
             });
-            return promises;
           });
         });
       
@@ -138,6 +137,12 @@ function createPerson(addressData) {
     );
   }
 
+  // delete keys with null-values
+  Object.keys(addressData).forEach(key => {
+    if (addressData[key] === null)
+      delete addressData[key];
+  });
+
   return new Promise(resolve => postPerson(addressData)
     .then((_data, _status, xhr) => { resolve([xhr]); }))
     .then(([xhr]) => { // xhr is in an array so it gets correctly passed along
@@ -152,15 +157,12 @@ function createPerson(addressData) {
         // the person already exists and must get updated
         let personId = duplicateHeader.split('/').slice(-1)[0];
 
-        // delete keys with null-values
-        Object.keys(addressData).forEach(key => {
-          if (addressData[key] === null)
-            delete addressData[key];
-        });
-
         // add id
         addressData.Id = parseInt(personId);
 
+        //On duplicat Person itz not allowed to update SocialSecurityNumber
+        delete addressData.SocialSecurityNumber;
+        
         return putPerson(addressData, personId)
           .then(() => personId)
           .catch(error => {

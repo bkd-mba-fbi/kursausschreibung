@@ -24,8 +24,7 @@ let [
   [getCulture, setCulture],
   [getAccessToken, setAccessToken],
   [getRefreshToken, setRefreshToken],
-  [getTokenExpire, setTokenExpire],
-  [getDataToSubmit, setDataToSubmit]
+  [getTokenExpire, setTokenExpire]
 ] = [
   'uiCulture',
   'CLX.LoginToken',
@@ -38,6 +37,13 @@ export {
   getCulture, setCulture,
   getAccessToken, setAccessToken,
   getRefreshToken, setRefreshToken,
-  getTokenExpire, setTokenExpire,
-  getDataToSubmit, setDataToSubmit
+  getTokenExpire, setTokenExpire
 };
+
+export function getDataToSubmit(){
+  return window.kursausschreibung.dataToSubmit;
+}
+
+export function setDataToSubmit(dataToSubmit){
+  window.kursausschreibung.dataToSubmit = dataToSubmit;
+}
