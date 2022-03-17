@@ -1,3 +1,5 @@
+import appConfig from './app-config';
+
 /**
  * get an URL-parameter
  * taken from https://stackoverflow.com/q/901115#answer-901144
@@ -69,3 +71,17 @@ export function setParameterByName(name,value, url) {
 
   window.location.href =  encodeURI(url.split('?')[0] + '?' + params); 
 }
+
+/**
+ * It checks if the url starts with "http". If true change url to relative url
+ * @param {string} url location url
+ */
+export function getCorrectApiUrl(url){
+  if(url.indexOf('http') === 0) {
+    var apiUriSplitLength = appConfig.apiUrl.split('/').length;
+    var getIndex = url.split('/')[apiUriSplitLength];
+    return url.substring(url.indexOf(getIndex),url.length); 
+  } else {
+    return url;
+  }
+} 
