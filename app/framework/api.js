@@ -4,6 +4,7 @@ import $ from 'jquery';
 import appConfig from './app-config';
 import { getAccessToken } from './storage';
 import { Promise } from 'rsvp';
+import { getCorrectApiUrl } from './url-helpers';
 
 let accessToken = null;
 
@@ -202,7 +203,7 @@ export function postSubscriptionDetailsFiles(data,file) {
   .then(([xhr]) => { // xhr is in an array so it gets correctly passed along
     let locationHeader = xhr.getResponseHeader('location');
     let arrayBuffer = base64ToArrayBuffer(file.fileAsBase64.substring(file.fileAsBase64.indexOf('base64,')+7,file.fileAsBase64.length));
-    return put(locationHeader, arrayBuffer, true);
+    return put(getCorrectApiUrl(locationHeader), arrayBuffer, true);
   });
 }
 /**
