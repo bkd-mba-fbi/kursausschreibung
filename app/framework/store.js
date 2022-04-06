@@ -423,7 +423,7 @@ function addDisplayData(event) {
     SubscriptionFrom: formatDate(event.SubscriptionFrom, 'LLL'),
     SubscriptionTo: formatDate(event.SubscriptionTo, 'LLL'),
 
-    Price: 'CHF ' + event.Price
+    Price: event.Price === 0.0000 ? null : 'CHF ' + event.Price
   });
 }
 
