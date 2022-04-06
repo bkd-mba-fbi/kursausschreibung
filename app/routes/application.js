@@ -17,7 +17,7 @@ export default Route.extend({
         // reroute to the confirmation page if there is data that has to be submitted
         let dataToSubmit = getDataToSubmit();
 
-        if (dataToSubmit !== null) {
+        if (dataToSubmit !== undefined) {
           let event = getEventById(dataToSubmit.eventId);
           this.replaceWith('list.category.event.confirmation', event.areaKey, event.categoryKey, event.Id);
         }
