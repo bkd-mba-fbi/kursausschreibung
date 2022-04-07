@@ -41,6 +41,7 @@ window.kursausschreibung.locale["fr-CH"] = {
     "subscriptionDetailFields": "Détails d'inscription",
     "sendingData": "Envoyer",
     "subscriptionFailed": "L'inscription a échoué.",
+    "subscriptionFilesUploadFailed": "",
     "noEvents": "Aucune manifestation n'est annoncée pour le moment.",
     "FilterTagAllEvents": "Tous",
     "FilterTag1018": "Test 1",
