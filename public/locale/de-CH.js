@@ -41,7 +41,7 @@ window.kursausschreibung.locale["de-CH"] = {
   "subscriptionDetailFields": "Anmeldedetails",
   "sendingData": "Daten senden",
   "subscriptionFailed": "Anmeldung fehlgeschlagen.",
-  "subscriptionFilesUploadFailed": "Die Anmeldung war erfolgreich. Es konnten jedoch nicht alle Dateien an den Server übermittelt werden. Bitte melden Sie sich direkt bei...",
+  "subscriptionFilesUploadFailed": " Die Anmeldung war erfolgreich. Es konnten jedoch nicht alle Dateien übermittelt werden. Bitte melden Sie sich beim Veranstalter.",
   "noEvents": "Es ist momentan keine Veranstaltung ausgeschrieben.",
   "FilterTagAllEvents": "Alle",
   "FilterTag1018": "Test 1",
