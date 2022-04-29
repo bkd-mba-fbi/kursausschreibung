@@ -177,6 +177,9 @@ export default Route.extend({
         });
         set(model, 'allowMultiplePeople', allowMultiplePeople);
 
+        //VssInternet = H (Hidden) don't display
+        subscriptionDetails = subscriptionDetails.filter(det => det.VssInternet !== 'H');
+
         // if userSettings.IdPerson is not 0 we can use it for the subscription
         userSettings.isLoggedIn = userSettings.IdPerson !== 0;
 
