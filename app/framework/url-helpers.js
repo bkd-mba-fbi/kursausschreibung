@@ -85,3 +85,10 @@ export function getCorrectApiUrl(url){
     return url;
   }
 } 
+
+/**
+ * Get the first term window.location.href split by #
+ */
+export function getRootModulUrl(){
+  return window.location.href.split('#')[0];
+}

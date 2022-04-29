@@ -4,6 +4,7 @@ import $ from 'jquery';
 import { init as initStore, getAllEvents, getEventById } from 'kursausschreibung/framework/store';
 import { getDataToSubmit } from 'kursausschreibung/framework/storage';
 import { autoCheckForLogin } from 'kursausschreibung/framework/login-helpers';
+import { setJsonLd } from '../framework/seo';
 
 export default Route.extend({
   beforeModel() {
@@ -33,7 +34,8 @@ export default Route.extend({
   model() {
     // remove loader
     $('#kursausschreibung-loading').remove();
-
-    return getAllEvents();
+    let allEvents = getAllEvents();
+    setJsonLd(allEvents);
+    return allEvents;
   }
 });
