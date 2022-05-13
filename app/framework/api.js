@@ -204,7 +204,7 @@ export function postSubscriptionDetailsFiles(data,file) {
   .then(([xhr]) => { // xhr is in an array so it gets correctly passed along
     let locationHeader = xhr.getResponseHeader('location');
     let arrayBuffer = base64ToArrayBuffer(file.fileAsBase64.substring(file.fileAsBase64.indexOf('base64,')+7,file.fileAsBase64.length));
-    return put(getCorrectApiUrl(locationHeader+53), arrayBuffer, true);
+    return put(getCorrectApiUrl(locationHeader), arrayBuffer, true);
 
   }).catch(error => {
 

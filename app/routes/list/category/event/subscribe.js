@@ -137,9 +137,15 @@ function addTranslations(fields) {
   return fields;
 }
 
-function getFormFields(settings, eventTypeId) {
-  if (eventTypeId in settings.formFields)
-    return settings.formFields[eventTypeId];
+function getFormFields(settings, eventTypeId, eventCategoryId) {
+
+   if (eventTypeId in settings.formFields) {
+    if (eventCategoryId in settings.formFields[eventTypeId]) {
+      return settings.formFields[eventTypeId][eventCategoryId] ;
+    } else if (settings.formFields[eventTypeId].addressFields !== undefined) {
+      return settings.formFields[eventTypeId];
+    }
+  } 
 
   if (settings.formFields.default === undefined)
     throw new Error("config for eventTypeId " + eventTypeId + " not found and no default config is available");
@@ -189,8 +195,8 @@ export default Route.extend({
         set(model, 'subscriptionDetailFields', addSubscriptionDetailDependencies(subscriptionDetailDependencies,getSubscriptionDetailFields(A(subscriptionDetails).sortBy('Sort'))) );
 
         if (userSettings.isLoggedIn === false) {
-          let fields = getFormFields(settings, model.EventTypeId).addressFields;
-          let additionalPeopleFields = getFormFields(settings, model.EventTypeId).additionalPeopleFields;
+          let fields = getFormFields(settings, model.EventTypeId, model.EventCategoryId).addressFields;
+          let additionalPeopleFields = getFormFields(settings, model.EventTypeId, model.EventCategoryId).additionalPeopleFields;
           if (get(model, 'allowMultiplePeople' )){
             loadDropdownItems(additionalPeopleFields !== undefined ? additionalPeopleFields : fields);
           } 
@@ -207,7 +213,7 @@ export default Route.extend({
   setupController(controller, model) {
     this._super(...arguments);
 
-    let formFields = getFormFields(settings, model.EventTypeId);
+    let formFields = getFormFields(settings, model.EventTypeId, model.EventCategoryId);
 
     // person fields
     controller.set('fields', addTranslations(formFields.addressFields));

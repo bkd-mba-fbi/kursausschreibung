@@ -77,8 +77,11 @@ window.kursausschreibung.settings = {
 
   // fields for the form (required)
   "formFields": {
-      // can be specified per EventTypeId (fallback to default)
-      "15": {
+      // can be specified per EventTypeId > EventCategoryId
+      // if EventCategoryId not exists fallback to EventTypeId
+      // if EventTypeId not exists fallback to default
+      "15": { //EventTypeId
+            "111424": { //EventCategoryId
           "addressFields": [{
                   "id": "FormOfAddress",
                   "dataType": "dropdown",
@@ -120,6 +123,7 @@ window.kursausschreibung.settings = {
                   "options": { "required": true, "showPlaceholder": true }
               }
           ]
+          }
       },
 
       "default": {
