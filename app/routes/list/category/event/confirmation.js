@@ -160,9 +160,6 @@ function createPerson(addressData) {
 
         // add id
         addressData.Id = parseInt(personId);
-
-        //On duplicat Person itz not allowed to update SocialSecurityNumber
-        delete addressData.SocialSecurityNumber;
         
         return putPerson(addressData, personId)
           .then(() => personId)
