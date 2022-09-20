@@ -160,7 +160,6 @@ function createPerson(addressData) {
 
         // add id
         addressData.Id = parseInt(personId);
-        
         return putPerson(addressData, personId)
           .then(() => personId)
           .catch(error => {
