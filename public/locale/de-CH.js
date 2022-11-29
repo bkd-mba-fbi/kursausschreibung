@@ -103,5 +103,6 @@ window.kursausschreibung.locale["de-CH"] = {
   "FileSizeTooBig": "Die Datei ist zu gross. Zugelassen sind maximal ",
   "FileTypeNotAccept": "Dieser Dateityp wird nicht akzeptiert. <br>Akzeptiert wird: ",
   "FileImageResolution": "Bilder müssen eine Auflösung von 300 x 400 Pixel haben.<br> Ihr Bild hat eine Auflösung von ",
-  "UploadErfolgreich": "Das Hochladen der Datei war erfolgreich: "
+  "UploadErfolgreich": "Das Hochladen der Datei war erfolgreich: ",
+  "subscriptionFilesUploadFaild": "Das Hochladen der Datei war nicht erfolgreich. Bitte melden Sie sich beim Veranstalter, damit geklärt werden kann welche Dateien nicht übermittelt wurden."
 };
