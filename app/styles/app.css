@@ -101,13 +101,7 @@
 
 /* mobile */
 @media (max-width: 959px) {
-  .uk-scope .subscribe-button {
-    position: fixed;
-    bottom: 0px;
-    min-width: 200px;
-    left: calc((100vw - 200px) / 2);
-    z-index: 200; /* always on top */
-  }
+ 
   .uk-scope ol.steps {
     font-size: 14px;
   }
@@ -129,6 +123,10 @@
   }
   .uk-scope .uk-navbar-nav > li > a {
     padding: 0 10px;
+  }
+  .uk-scope #subscriptionWithLoginURL{
+    margin-top: 10px;
+    margin-left: 0px;  
   }
 
 }
