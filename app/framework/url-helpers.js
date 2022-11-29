@@ -82,7 +82,7 @@ export function getCorrectApiUrl(url){
     var getIndex = url.split('/')[apiUriSplitLength];
     return url.substring(url.indexOf(getIndex),url.length); 
   } else {
-    return url;
+    return '..' + url;
   }
 } 
 
