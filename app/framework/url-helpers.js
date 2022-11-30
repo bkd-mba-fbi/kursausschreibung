@@ -43,7 +43,7 @@ export function setParameterByName(name,value, url) {
     return url;
   }
 
-  let params = decodeURI(url).split('?');
+  let params = decodeURIComponent(url).split('?');
   let paramsLength = params.length;
   params = params.length === 3 ? params[1] + '?' + params[2] : params[1];
   
@@ -68,8 +68,8 @@ export function setParameterByName(name,value, url) {
   } else {
     params = name +'='+ value;
   }
-
-  window.location.href =  encodeURI(url.split('?')[0] + '?' + params); 
+  
+  window.location.href =  url.split('?')[0] + '?' + params; 
 }
 
 /**
