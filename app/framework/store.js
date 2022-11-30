@@ -168,6 +168,7 @@ function addLocationsToEvents(eventLocations) {
  * @param {object[]} lessons lessons returned by the API
  */
 function addLessonsToEvents(lessons) {
+
   lessons.forEach(function (lesson) {
     if (!eventsById.hasOwnProperty(lesson.EventId)) {
       return;
@@ -178,6 +179,12 @@ function addLessonsToEvents(lessons) {
     lesson.TimeTo = formatDate(lesson.DateTimeTo, 'LT');
 
     eventsById[lesson.EventId].lessons.push(lesson);
+    if (eventsById[lesson.EventId].lessons.length > settings.howManyLessonsShow) {
+      eventsById[lesson.EventId].lessonsCollaps = true;
+    } else {
+      eventsById[lesson.EventId].lessonsCollaps = false;
+    }
+    
   });
 }
 
@@ -423,7 +430,7 @@ function addDisplayData(event) {
     SubscriptionFrom: formatDate(event.SubscriptionFrom, 'LLL'),
     SubscriptionTo: formatDate(event.SubscriptionTo, 'LLL'),
 
-    Price: event.Price === 0.0000 ? null : 'CHF ' + event.Price
+    Price: event.Price === 0.0000 || event.Price === null ? null : 'CHF ' + event.Price
   });
 }
 

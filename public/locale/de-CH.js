@@ -44,10 +44,7 @@ window.kursausschreibung.locale["de-CH"] = {
   "subscriptionFilesUploadFailed": " Die Anmeldung war erfolgreich. Es konnten jedoch nicht alle Dateien übermittelt werden. Bitte melden Sie sich beim Veranstalter.",
   "noEvents": "Es ist momentan keine Veranstaltung ausgeschrieben.",
   "FilterTagAllEvents": "Alle",
-  "FilterTag1018": "Test 1",
-  "FilterTag1020": "Test 2",
-  "FilterTag1021": "Test 3",
-  "FilterTag1022": "Test 4",
+  "FilterTag1018": "Code Filter Überschreiben (FilterTag1018)", // example overwrite codes filter 
   "notAvailable": "nicht verfügbar",
   "useLogin": "Ihre Anmeldung wird gemäss Ihrem Login erstellt {0}.",
   "backToSubscripton": "Zurück zum Anmeldeformular",
