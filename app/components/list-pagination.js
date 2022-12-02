@@ -1,6 +1,8 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import settings from 'kursausschreibung/framework/settings';
+import { displayAsGrid } from 'kursausschreibung/framework/gui-helpers';
+import {getListViewGrid} from 'kursausschreibung/framework/storage';
 
 // pages to show before and after the current page
 let n = 2;
@@ -83,4 +85,20 @@ export default Component.extend({
 
     return eventfilterCodes.length === 1 ? null : eventfilterCodes;
   }),
+
+  actions: {
+    grid() {
+      displayAsGrid(true); 
+    },
+    list() {
+      displayAsGrid(false); 
+    }
+  },
+
+  didRender(){
+    var listViewGrid = getListViewGrid();
+    listViewGrid = listViewGrid === null ? settings.displayGrid : getListViewGrid();
+    displayAsGrid(listViewGrid);
+  }
+
 });

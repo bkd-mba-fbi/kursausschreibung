@@ -8,6 +8,10 @@
     {{/each}}  
   </ul>
   {{/if}}
+    <div class="uk-align-right">
+    <button type="button" {{action "list"}} uk-icon="icon: list"></button>
+    <button type="button" {{action "grid"}} uk-icon="icon: grid"></button>
+  </div>
   <ul class="uk-pagination" data-uk-margin>
     <li>
       {{#link-to route (query-params page=previousPage) class=(if isFirstPage "uk-disabled")}}
@@ -45,7 +49,7 @@
       {{/link-to}}
     </li>
   </ul>
-  <ul class="uk-list uk-list-divider js-filter">
+  <ul id="list-cards" class="uk-list uk-list-divider js-filter">
     {{yield itemsOnCurrentPage}}
   </ul>
   <ul class="uk-pagination" data-uk-margin>

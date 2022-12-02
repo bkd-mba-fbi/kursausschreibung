@@ -234,6 +234,9 @@ window.kursausschreibung.settings = {
   // put event-categories in a dropdown menu (required)
   "eventCategoryDropdown": false,
 
+  // default display eventlist as grid(true) oder list(false)
+  "displayGrid": true,
+
   // property by which the event-list should be sorted (optional)
   "sortEventList": "Designation",
 

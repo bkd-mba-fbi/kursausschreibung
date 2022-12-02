@@ -99,6 +99,10 @@
   margin-left: 5px;
 }
 
+.card-list {
+  border: 1px solid #e5e5e5;
+}
+
 /* mobile */
 @media (max-width: 959px) {
  
