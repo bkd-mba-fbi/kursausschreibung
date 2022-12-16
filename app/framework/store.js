@@ -9,6 +9,7 @@ import { formatDate, combineDate, isInSubscriptionRange, removeMinutes, eventSta
 import { all } from 'rsvp';
 import settings from './settings';
 import { getLanguage, getString } from './translate';
+import { getSortAs } from './storage';
 import format from 'date-fns/format';
 
 let initialized = false;
@@ -65,8 +66,13 @@ export function init() {
     events = filterEvents(events, language, eventCodes);
 
     // sort events
-    if (settings.sortEventList !== null) {
-      events = A(events).sortBy(settings.sortEventList);
+    var sortAs = getSortAs();
+    if(sortAs === null) {
+      if (settings.sortEventList !== null) {
+        events = A(events).sortBy(settings.sortEventList);
+      }
+    } else {
+      events = A(events).sortBy(sortAs);
     }
 
     // prepare events
@@ -168,6 +174,7 @@ function addLocationsToEvents(eventLocations) {
  * @param {object[]} lessons lessons returned by the API
  */
 function addLessonsToEvents(lessons) {
+
   lessons.forEach(function (lesson) {
     if (!eventsById.hasOwnProperty(lesson.EventId)) {
       return;
@@ -178,6 +185,12 @@ function addLessonsToEvents(lessons) {
     lesson.TimeTo = formatDate(lesson.DateTimeTo, 'LT');
 
     eventsById[lesson.EventId].lessons.push(lesson);
+    if (eventsById[lesson.EventId].lessons.length > settings.howManyLessonsShow) {
+      eventsById[lesson.EventId].lessonsCollaps = true;
+    } else {
+      eventsById[lesson.EventId].lessonsCollaps = false;
+    }
+    
   });
 }
 
@@ -423,7 +436,7 @@ function addDisplayData(event) {
     SubscriptionFrom: formatDate(event.SubscriptionFrom, 'LLL'),
     SubscriptionTo: formatDate(event.SubscriptionTo, 'LLL'),
 
-    Price: 'CHF ' + event.Price
+    Price: event.Price === 0.0000 || event.Price === null ? null : 'CHF ' + event.Price
   });
 }
 

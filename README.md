@@ -1,4 +1,4 @@
-# kursausschreibung 3.3.4
+# kursausschreibung 3.4.0
 [![Build 🏭🚀](https://github.com/bkd-mba-fbi/kursausschreibung/actions/workflows/buildDeploy.yml/badge.svg)](https://github.com/bkd-mba-fbi/kursausschreibung/actions/workflows/buildDeploy.yml)
 
 # Documentation
@@ -53,7 +53,7 @@ For one reason or another, some people can't connect to the registry via HTTPS. 
 * Visit your app at [http://localhost:4200](http://localhost:4200).
 * Visit your tests at [http://localhost:4200/tests](http://localhost:4200/tests).
 
-## Code Generators
+### Code Generators
 
 Make use of the many generators for code, try `ember help generate` for more details
 

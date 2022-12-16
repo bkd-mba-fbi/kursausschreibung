@@ -58,6 +58,7 @@
 
 {{#if model.tableData.subscriptionDetailFields}}
   <h3 class="uk-h3">{{translate "subscriptionDetailFields"}}</h3>
+  <div id="subscriptionFilesUploadFailed" class="uk-text-danger"></div>
   <table class="uk-table uk-table-striped uk-margin confirmation-table">
     {{#each model.tableData.subscriptionDetailFields as |subscriptionDetailField|}}
       <tr>
@@ -73,7 +74,7 @@
   <table class="uk-table uk-table-striped uk-margin confirmation-table">
     {{#each person.data as |personField|}}
       <tr>
-        <td>{{{personField.label}}}</td>
+        <td>{{personField.label}}</td>
         <td>{{personField.value}}</td>
       </tr>
     {{/each}}
@@ -83,3 +84,11 @@
 <div class="uk-margin">
   {{link-to (translate "backToCourses") "list.category" classNames="uk-button uk-button-default uk-float-left"}}
 </div>
+<script>
+  setInterval(function(){
+    if(window.kursausschreibung.subscriptionFilesUploadFailed !== undefined) {
+        document.getElementById('subscriptionFilesUploadFailed').innerHTML = window.kursausschreibung.subscriptionFilesUploadFailed;
+        window.kursausschreibung.subscriptionFilesUploadFailed = undefined;
+      }
+  },1500);
+</script>

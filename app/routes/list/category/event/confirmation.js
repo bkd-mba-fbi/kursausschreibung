@@ -6,6 +6,7 @@ import { postPerson, putPerson, postAddress, postSubscription, postSubscriptionD
 import { autoCheckForLogin } from 'kursausschreibung/framework/login-helpers';
 import settings from 'kursausschreibung/framework/settings';
 import { SUBSCRIPTION_DETAIL_ALLOW_MULTIPLE_PEOPLE } from 'kursausschreibung/framework/api';
+import { getString } from 'kursausschreibung/framework/translate';
 
 export default Route.extend({
   model() {
@@ -94,7 +95,7 @@ export default Route.extend({
       try {
         message = error.responseJSON.Issues[0].Message;
       } catch (exception) {
-        // ignore exception
+        message = getString('subscriptionFailed');
       }
       throw { message: message };
     });

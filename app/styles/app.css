@@ -1,3 +1,7 @@
+:root{
+  --mainColor: #1e87f0;
+}
+
 .uk-scope {
   display: inline-block;
   width: 100%;
@@ -14,16 +18,21 @@
 }
 
 .uk-scope .uk-navbar-nav > li.uk-active > a {
-  border-bottom: 2px solid #1e87f0;
+  border-bottom: 2px solid var(--mainColor);
 }
 
 .uk-scope h2 {
   overflow-wrap: break-word;
 }
 
-.uk-scope .event-list-item:hover {
+
+.uk-scope #list-cards>li:hover {
   display: block;
-  background: #f5f5f5;
+  background: #fcfcfc;
+}
+
+.uk-scope .card-list:hover {
+  border: solid 1px;
 }
 
 .uk-scope .uk-navbar-container {
@@ -36,6 +45,10 @@
   width: 20px;
   border-radius: 5px;
   margin-right: 10px;
+}
+
+.uk-search-icon {
+  left: unset !important;
 }
 
 .uk-scope .icon-lamp{
@@ -99,15 +112,26 @@
   margin-left: 5px;
 }
 
+.uk-scope .uk-card-body {
+  display: flow-root;
+  padding: 25px 20px;
+}
+
+.uk-scope .active-tab {
+  fill: var(--mainColor) !important;
+}
+
+.uk-scope .card-list {
+  border: 1px solid #e5e5e5;
+}
+
+.uk-scope #list-cards{
+  margin-left: auto;
+}
+
 /* mobile */
 @media (max-width: 959px) {
-  .uk-scope .subscribe-button {
-    position: fixed;
-    bottom: 0px;
-    min-width: 200px;
-    left: calc((100vw - 200px) / 2);
-    z-index: 200; /* always on top */
-  }
+ 
   .uk-scope ol.steps {
     font-size: 14px;
   }
@@ -129,6 +153,10 @@
   }
   .uk-scope .uk-navbar-nav > li > a {
     padding: 0 10px;
+  }
+  .uk-scope #subscriptionWithLoginURL{
+    margin-top: 10px;
+    margin-left: 0px;  
   }
 
 }
@@ -227,9 +255,13 @@
 
 .tt-suggestion.tt-cursor {
   color: #fff;
-  background-color: #1e87f0;
+  background-color: var(--mainColor);
 }
 
 .tt-suggestion p {
   margin: 0;
+}
+
+.uk-search {
+  margin-bottom: 20px;
 }

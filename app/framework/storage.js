@@ -24,20 +24,26 @@ let [
   [getCulture, setCulture],
   [getAccessToken, setAccessToken],
   [getRefreshToken, setRefreshToken],
-  [getTokenExpire, setTokenExpire]
+  [getTokenExpire, setTokenExpire],
+  [getListViewGrid, setListViewGrid],
+  [getSortAs, setSortAs]
 ] = [
   'uiCulture',
   'CLX.LoginToken',
   'CLX.RefreshToken',
   'CLX.TokenExpire',
-  'kursausschreibung.dataToSubmit'
+  'listViewGrid',
+  'sortAs',
+  'kursausschreibung.dataToSubmit',
 ].map(key => [getItem.bind(null, key), setItem.bind(null, key)]);
 
 export {
   getCulture, setCulture,
   getAccessToken, setAccessToken,
   getRefreshToken, setRefreshToken,
-  getTokenExpire, setTokenExpire
+  getTokenExpire, setTokenExpire, 
+  getListViewGrid, setListViewGrid,
+  getSortAs, setSortAs
 };
 
 export function getDataToSubmit(){

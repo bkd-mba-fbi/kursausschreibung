@@ -19,7 +19,12 @@
     {{#if event.displayData.lessons}}
       <tr>
         <a {{action "getIcsFileFromEvent" on="click"}} uk-tooltip="title:{{translate "lessonExportToIcs"}}"><td>{{translate "lessons"}}<span uk-icon="icon: calendar; ratio: 1.4"></span></td></a>
+        
+        {{#if event.lessonsCollaps}}
+        <td><a uk-toggle="target: #lesson-display">Alle Lektionen anzeigen</a><div id="lesson-display" hidden>{{#each event.displayData.lessons as |lesson|}}{{lesson.DateFrom}} - {{lesson.TimeTo}}{{#if lesson.Designation}}: {{{lesson.Designation}}}{{/if}}<br>{{/each}}</div></td>
+        {{else}}
         <td>{{#each event.displayData.lessons as |lesson|}}{{lesson.DateFrom}} - {{lesson.TimeTo}}{{#if lesson.Designation}}: {{{lesson.Designation}}}{{/if}}<br>{{/each}}</td>
+        {{/if}}    
       </tr>
     {{/if}}
   </tbody>

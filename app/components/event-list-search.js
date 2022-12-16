@@ -2,6 +2,9 @@ import Component from '@ember/component';
 import { oneWay } from '@ember/object/computed';
 import { observer } from '@ember/object';
 import { setParameterByName, getParameterByName } from 'kursausschreibung/framework/url-helpers';
+import { sortAs } from '../framework/gui-helpers';
+import { getSortAs } from '../framework/storage';
+import settings from '../framework/settings';
 
 // tests if a query matches a value
 function match(value, query) {
@@ -25,7 +28,21 @@ export default Component.extend({
    
   willRender() {
     this.send('queryChanged');
+
+    let sortOptions = [];
+    if(settings.sortOptions === undefined) {
+      sortOptions.push({key:'error', value:'configure key sortoptions array in settings'});
+    } else {
+      settings.sortOptions.forEach(option => {
+        sortOptions.push({key:option, value:"sort"+option});
+      }); 
+    }
+    this.set('sortOptions',sortOptions);
   }, 
+
+  didRender() {
+    document.getElementById('sortList').value = getSortAs();
+  },
 
   filteredEvents: oneWay('events'),
 
@@ -57,6 +74,10 @@ export default Component.extend({
       );
 
       this.get('queryChanged')(query);
+    },
+    sortBy(value) {
+      sortAs(value);
     }
-  }
+  },
+
 });

@@ -5,6 +5,7 @@ import appConfig from './app-config';
 import { getAccessToken } from './storage';
 import { Promise } from 'rsvp';
 import { getCorrectApiUrl } from './url-helpers';
+import { getString } from 'kursausschreibung/framework/translate';
 
 let accessToken = null;
 
@@ -204,6 +205,20 @@ export function postSubscriptionDetailsFiles(data,file) {
     let locationHeader = xhr.getResponseHeader('location');
     let arrayBuffer = base64ToArrayBuffer(file.fileAsBase64.substring(file.fileAsBase64.indexOf('base64,')+7,file.fileAsBase64.length));
     return put(getCorrectApiUrl(locationHeader), arrayBuffer, true);
+
+  }).catch(error => {
+
+    if (error instanceof Error) {
+      console.error(error); // eslint-disable-line no-console
+    }
+
+    let message = '';
+    try {
+      message = error.responseJSON.Issues[0].Message;
+    } catch (exception) {
+      message = window.kursausschreibung.subscriptionFilesUploadFailed = getString('subscriptionFilesUploadFailed');
+    }
+    throw { message: message };
   });
 }
 /**
