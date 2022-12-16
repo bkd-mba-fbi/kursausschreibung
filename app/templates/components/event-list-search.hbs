@@ -11,12 +11,12 @@
         {{#each sortOptions as |option|}}
         <option value={{option.key}}>{{translate option.value}}</option>
         {{/each}}
-        <!--
-        <option value="Designation">{{translate "Designation"}}</option>
-        <option value="DateFrom">{{translate "DateFrom"}}</option>
-        <option value="SubscriptionTo">{{translate "SubscriptionTo"}}</option>-->
       </select>
     </div>
 </div>
+{{#if filteredEvents.length}}
+  {{yield filteredEvents}}
+{{else}}
+  <div>{{translate "searchNoEvents"}}</div>
+{{/if}}
 
-{{yield filteredEvents}}

@@ -53,6 +53,7 @@ window.kursausschreibung.locale["de-CH"] = {
   "sortLeadership": "Sortiert nach Leitung A-Z",
   "sortLocation": "Sortiert nach Ort A-Z",
   "sortSubscriptionTo": "Sortiert nach Anmeldeschluss aufsteigend",
+  "searchNoEvents": "Mit dem Filter wurden keine Kurse gefunden.",
 
   // properties of an event
   "subscriptionFrom": "Start",
