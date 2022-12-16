@@ -47,6 +47,9 @@ window.kursausschreibung.settings = {
     "Price"
   ],
 
+  // configure sort options: you can choose the same fileds like in eventListFields or eventDetailsFields
+  "sortOptions": ["DateFrom","SubscriptionTo","Leadership", "Location", "BuildingAddress"],
+
   // show breadcrumbs navigation (optional)
   "showBreadcrumbs": false,
 

@@ -9,6 +9,7 @@ import { formatDate, combineDate, isInSubscriptionRange, removeMinutes, eventSta
 import { all } from 'rsvp';
 import settings from './settings';
 import { getLanguage, getString } from './translate';
+import { getSortAs } from './storage';
 import format from 'date-fns/format';
 
 let initialized = false;
@@ -65,8 +66,13 @@ export function init() {
     events = filterEvents(events, language, eventCodes);
 
     // sort events
-    if (settings.sortEventList !== null) {
-      events = A(events).sortBy(settings.sortEventList);
+    var sortAs = getSortAs();
+    if(sortAs === null) {
+      if (settings.sortEventList !== null) {
+        events = A(events).sortBy(settings.sortEventList);
+      }
+    } else {
+      events = A(events).sortBy(sortAs);
     }
 
     // prepare events

@@ -2,94 +2,100 @@
 <div uk-filter="target: .js-filter">
   {{#if filterCodes}}
   <ul class="uk-subnav uk-subnav-pill">
-    <li id="tagAll" class="uk-active filter-tag" uk-filter-control=""><a href="#">{{translate "FilterTagAllEvents"}}</a></li>
+    <li id="tagAll" class="uk-active filter-tag" uk-filter-control=""><a href="#">{{translate "FilterTagAllEvents"}}</a>
+    </li>
     {{#each filterCodes as |code|}}
-    <li id="tag{{code.id}}" class="filter-tag" uk-filter-control=".tag{{code.id}}"><a href="#{{code.Code}}">{{code.Code}}</a></li>    
-    {{/each}}  
+    <li id="tag{{code.id}}" class="filter-tag" uk-filter-control=".tag{{code.id}}"><a
+        href="#{{code.Code}}">{{code.Code}}</a></li>
+    {{/each}}
   </ul>
   {{/if}}
-    <div class="uk-align-right">
-    <button type="button" {{action "list"}} uk-icon="icon: list"></button>
-    <button type="button" {{action "grid"}} uk-icon="icon: grid"></button>
+  <div class="uk-grid">
+    <div class="uk-width-auto@m">
+      <ul class="uk-pagination" data-uk-margin>
+        <li>
+          {{#link-to route (query-params page=previousPage) class=(if isFirstPage "uk-disabled")}}
+          <span data-uk-pagination-previous></span>
+          {{/link-to}}
+        </li>
+        {{#if showFirst}}
+        <li class={{if p.active "uk-active" }}>
+          {{#link-to route (query-params page=1)}}1{{/link-to}}
+        </li>
+        {{/if}}
+        {{#if showLeftDots}}
+        <li class="uk-disabled">
+          <span>...</span>
+        </li>
+        {{/if}}
+        {{#each pages as |p|}}
+        <li class={{if p.active "uk-active" }}>
+          {{#link-to route (query-params page=p.page)}}{{p.page}}{{/link-to}}
+        </li>
+        {{/each}}
+        {{#if showRightDots}}
+        <li class="uk-disabled">
+          <span>...</span>
+        </li>
+        {{/if}}
+        {{#if showLast}}
+        <li class={{if p.active "uk-active" }}>
+          {{#link-to route (query-params page=lastPage)}}{{lastPage}}{{/link-to}}
+        </li>
+        {{/if}}
+        <li>
+          {{#link-to route (query-params page=nextPage) class=(if isLastPage "uk-disabled")}}
+          <span data-uk-pagination-next></span>
+          {{/link-to}}
+        </li>
+      </ul>
+    </div>
+    <div class="uk-text-right uk-width-expand@m">
+      <button type="button" {{action "list" }} uk-icon="icon: list"></button>
+      <button type="button" {{action "grid" }} uk-icon="icon: grid"></button>
+    </div>
   </div>
-  <ul class="uk-pagination" data-uk-margin>
-    <li>
-      {{#link-to route (query-params page=previousPage) class=(if isFirstPage "uk-disabled")}}
-        <span data-uk-pagination-previous></span>
-      {{/link-to}}
-    </li>
-    {{#if showFirst}}
-      <li class={{if p.active "uk-active"}}>
-        {{#link-to route (query-params page=1)}}1{{/link-to}}
-      </li>
-    {{/if}}
-    {{#if showLeftDots}}
-      <li class="uk-disabled">
-        <span>...</span>
-      </li>
-    {{/if}}
-    {{#each pages as |p|}}
-      <li class={{if p.active "uk-active"}}>
-        {{#link-to route (query-params page=p.page)}}{{p.page}}{{/link-to}}
-      </li>
-    {{/each}}
-    {{#if showRightDots}}
-      <li class="uk-disabled">
-        <span>...</span>
-      </li>
-    {{/if}}
-    {{#if showLast}}
-      <li class={{if p.active "uk-active"}}>
-        {{#link-to route (query-params page=lastPage)}}{{lastPage}}{{/link-to}}
-      </li>
-    {{/if}}
-    <li>
-      {{#link-to route (query-params page=nextPage) class=(if isLastPage "uk-disabled")}}
-        <span data-uk-pagination-next></span>
-      {{/link-to}}
-    </li>
-  </ul>
   <ul id="list-cards" class="uk-list uk-list-divider js-filter">
     {{yield itemsOnCurrentPage}}
   </ul>
   <ul class="uk-pagination" data-uk-margin>
     <li>
       {{#link-to route (query-params page=previousPage) class=(if isFirstPage "uk-disabled")}}
-        <span data-uk-pagination-previous></span>
+      <span data-uk-pagination-previous></span>
       {{/link-to}}
     </li>
     {{#if showFirst}}
-      <li class={{if p.active "uk-active"}}>
-        {{#link-to route (query-params page=1)}}1{{/link-to}}
-      </li>
+    <li class={{if p.active "uk-active" }}>
+      {{#link-to route (query-params page=1)}}1{{/link-to}}
+    </li>
     {{/if}}
     {{#if showLeftDots}}
-      <li class="uk-disabled">
-        <span>...</span>
-      </li>
+    <li class="uk-disabled">
+      <span>...</span>
+    </li>
     {{/if}}
     {{#each pages as |p|}}
-      <li class={{if p.active "uk-active"}}>
-        {{#link-to route (query-params page=p.page)}}{{p.page}}{{/link-to}}
-      </li>
+    <li class={{if p.active "uk-active" }}>
+      {{#link-to route (query-params page=p.page)}}{{p.page}}{{/link-to}}
+    </li>
     {{/each}}
     {{#if showRightDots}}
-      <li class="uk-disabled">
-        <span>...</span>
-      </li>
+    <li class="uk-disabled">
+      <span>...</span>
+    </li>
     {{/if}}
     {{#if showLast}}
-      <li class={{if p.active "uk-active"}}>
-        {{#link-to route (query-params page=lastPage)}}{{lastPage}}{{/link-to}}
-      </li>
+    <li class={{if p.active "uk-active" }}>
+      {{#link-to route (query-params page=lastPage)}}{{lastPage}}{{/link-to}}
+    </li>
     {{/if}}
     <li>
       {{#link-to route (query-params page=nextPage) class=(if isLastPage "uk-disabled")}}
-        <span data-uk-pagination-next></span>
+      <span data-uk-pagination-next></span>
       {{/link-to}}
     </li>
   </ul>
 </div>
 {{else}}
-  {{translate "noResults"}}
+{{translate "noResults"}}
 {{/if}}

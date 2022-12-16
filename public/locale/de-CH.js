@@ -49,6 +49,10 @@ window.kursausschreibung.locale["de-CH"] = {
   "useLogin": "Ihre Anmeldung wird gemäss Ihrem Login erstellt {0}.",
   "backToSubscripton": "Zurück zum Anmeldeformular",
   "invalidInput": "Ungültige Eingabe",
+  "sortDateFrom": "Sortiert nach Datum von aufsteigend",
+  "sortLeadership": "Sortiert nach Leitung A-Z",
+  "sortLocation": "Sortiert nach Ort A-Z",
+  "sortSubscriptionTo": "Sortiert nach Anmeldeschluss aufsteigend",
 
   // properties of an event
   "subscriptionFrom": "Start",

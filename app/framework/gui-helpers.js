@@ -1,7 +1,19 @@
-import {setListViewGrid} from 'kursausschreibung/framework/storage';
+import {setListViewGrid, setSortAs} from 'kursausschreibung/framework/storage';
 
 /**
- * 
+ * sort value set localStroage sortAs and reload
+ * @param {string} value 
+ */
+export function sortAs(value) {
+  setSortAs(value);
+  window.location.reload();
+}
+
+
+/**
+ * display eventlist as grid or list
+ * true > grid
+ * false > list
  * @param {boolean} bool 
  */
 export function displayAsGrid(bool) {
