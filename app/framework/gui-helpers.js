@@ -18,6 +18,8 @@ export function sortAs(value) {
  */
 export function displayAsGrid(bool) {
     var list = document.getElementById('list-cards');
+    var btGrid = document.getElementById('bt-grid');
+    var btList = document.getElementById('bt-list');
 
     if (typeof bool === "boolean") {
       setListViewGrid(bool);
@@ -33,6 +35,8 @@ export function displayAsGrid(bool) {
       list.classList.add('uk-child-width-1-3@l'); 
       list.classList.remove('uk-list-divider'); 
       list.classList.remove('uk-list'); 
+      btGrid.classList.add('active-tab');
+      btList.classList.remove('active-tab');
       
     } else {
       list.classList.add('uk-list-divider'); 
@@ -42,6 +46,8 @@ export function displayAsGrid(bool) {
       list.classList.remove('uk-grid-stack'); 
       list.classList.remove('uk-child-width-1-2@m'); 
       list.classList.remove('uk-child-width-1-3@l'); 
+      btList.classList.add('active-tab');
+      btGrid.classList.remove('active-tab');
     }
     for (const child of list.children) {
 

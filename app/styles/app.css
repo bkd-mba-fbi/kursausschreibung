@@ -1,3 +1,7 @@
+:root{
+  --mainColor: #1e87f0;
+}
+
 .uk-scope {
   display: inline-block;
   width: 100%;
@@ -14,7 +18,7 @@
 }
 
 .uk-scope .uk-navbar-nav > li.uk-active > a {
-  border-bottom: 2px solid #1e87f0;
+  border-bottom: 2px solid var(--mainColor);
 }
 
 .uk-scope h2 {
@@ -101,6 +105,10 @@
 
 .subscribeWithLogin-button {
   margin-left: 5px;
+}
+
+.active-tab {
+  fill: var(--mainColor) !important;
 }
 
 .card-list {
@@ -237,7 +245,7 @@
 
 .tt-suggestion.tt-cursor {
   color: #fff;
-  background-color: #1e87f0;
+  background-color: var(--mainColor);
 }
 
 .tt-suggestion p {
