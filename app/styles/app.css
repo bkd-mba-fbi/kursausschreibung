@@ -25,9 +25,14 @@
   overflow-wrap: break-word;
 }
 
-.uk-scope .event-list-item:hover {
+
+.uk-scope #list-cards>li:hover {
   display: block;
-  background: #f5f5f5;
+  background: #fcfcfc;
+}
+
+.uk-scope .card-list:hover {
+  border: solid 1px;
 }
 
 .uk-scope .uk-navbar-container {
