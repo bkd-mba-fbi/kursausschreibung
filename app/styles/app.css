@@ -112,15 +112,20 @@
   margin-left: 5px;
 }
 
-.active-tab {
+.uk-scope .uk-card-body {
+  display: flow-root;
+  padding: 25px 20px;
+}
+
+.uk-scope .active-tab {
   fill: var(--mainColor) !important;
 }
 
-.card-list {
+.uk-scope .card-list {
   border: 1px solid #e5e5e5;
 }
 
-#list-cards{
+.uk-scope #list-cards{
   margin-left: auto;
 }
 
