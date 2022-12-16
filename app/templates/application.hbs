@@ -89,10 +89,10 @@
       {{/if}}
 
       {{! LEGEND }}
-      <div class="uk-margin uk-card uk-card-default uk-card-small uk-card-body">
+      <div class="uk-margin uk-card uk-card-small uk-card-body">
         <h2 id="header-legend" class="uk-h3 uk-card-title">{{translate "legend"}}</h2>
 
-        <ul class="uk-list uk-list-divider">
+        <ul class="uk-list">
           <li class="uk-flex">
             <span>{{status-lamp status="green"}}</span><span>{{translate "greenLamp"}}</span></li>
           <li class="uk-flex">
@@ -108,7 +108,7 @@
 
       {{! CONTACT }}
       {{#if showContact}}
-        <div class="uk-margin uk-card uk-card-default uk-card-small uk-card-body">
+        <div class="uk-margin uk-card uk-card-small uk-card-body">
           <h2 id="header-contact" class="uk-h3 uk-card-title">{{translate "contact"}}</h2>
           <p>{{translate "contactContent"}}</p>
         </div>
@@ -116,7 +116,7 @@
 
       {{! TWEETS }}
       {{#if twitterHandle}}
-        <div class="uk-margin uk-card uk-card-default uk-card-small uk-card-body uk-visible@l">
+        <div class="uk-margin uk-card uk-card-small uk-card-body uk-visible@l">
           {{twitter-feed twitterHandle}}
         </div>
       {{/if}}
