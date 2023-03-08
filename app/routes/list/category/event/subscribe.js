@@ -174,17 +174,19 @@ export default Route.extend({
 
         // check if multiple people are allowed to subscribe at the same time
         let allowMultiplePeople = false;
-        subscriptionDetails = subscriptionDetails.filter(function (subscriptionDetail) {
-          if (subscriptionDetail.VssId === SUBSCRIPTION_DETAIL_ALLOW_MULTIPLE_PEOPLE) {
-            allowMultiplePeople = true;
-            return false;
-          }
-          return true;
-        });
-        set(model, 'allowMultiplePeople', allowMultiplePeople);
+        if(subscriptionDetails !== null) {
+          subscriptionDetails = subscriptionDetails.filter(function (subscriptionDetail) {
+            if (subscriptionDetail.VssId === SUBSCRIPTION_DETAIL_ALLOW_MULTIPLE_PEOPLE) {
+              allowMultiplePeople = true;
+              return false;
+            }
+            return true;
+          });
+          //VssInternet = H (Hidden) don't display
+          subscriptionDetails = subscriptionDetails.filter(det => det.VssInternet !== 'H');
+        }
 
-        //VssInternet = H (Hidden) don't display
-        subscriptionDetails = subscriptionDetails.filter(det => det.VssInternet !== 'H');
+        set(model, 'allowMultiplePeople', allowMultiplePeople);
 
         // if userSettings.IdPerson is not 0 we can use it for the subscription
         userSettings.isLoggedIn = userSettings.IdPerson !== 0;
