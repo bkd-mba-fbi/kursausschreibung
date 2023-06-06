@@ -1,0 +1,9 @@
+#subscriptionWithLoginURL {
+    margin-left: 10px;
+}
+
+@media (max-width:959px) {
+#subscriptionWithLoginURL {
+    margin-left: 0px;
+}
+}

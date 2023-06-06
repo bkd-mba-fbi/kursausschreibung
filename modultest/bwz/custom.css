@@ -1,0 +1,36 @@
+:root {
+    --primary: #3abff0;
+}
+
+body {
+    font-family: "century-gothic",sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+nav.uk-navbar-container.uk-margin-top.uk-navbar {
+    display: none;
+}
+
+.uk-h1, .uk-h2, .uk-h3, .uk-h4, .uk-h5, .uk-h6, h1, h2, h3, h4, h5, h6 {
+    color: var(--primary) !important;
+}
+
+.uk-table-striped tbody tr:nth-of-type(odd), .uk-table-striped>tr:nth-of-type(odd) {
+    background: transparent !important;
+    border-top: 1px solid var(--primary) !important;
+    border-bottom: 1px solid var(--primary) !important;
+}
+
+.uk-scope .details-table>tbody>tr>td:first-child {
+    font-weight: bold;
+    color: var(--primary);
+}
+.uk-button-primary {
+    background-color: var(--primary) !important;
+}
+.uk-input, .uk-select, .uk-textarea {
+    border-color: var(--primary) !important;
+}
+.uk-form-label {
+    color:  var(--primary) !important;
+}

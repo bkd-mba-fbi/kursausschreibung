@@ -1,0 +1,974 @@
+@charset "UTF-8";
+/*
+ERZ Applikations CSS / KTBE Mobile / checked 03.2017 mos
+zuletzt geändert: 10.02.2017 mos
+*/
+
+/* ***** Beginn BIKU ***** */
+/* ====== Zweispaltige Liste von Checkboxen ====== */
+#content-col-main .biku form div.checkbox-left,
+#content-col-main .biku form div.checkbox-right {
+  width: 155px; }
+
+#content-col-main .biku form div.checkbox-right {
+  margin-left: 10px; }
+
+#content-col-main .biku form div.checkbox-left div label,
+#content-col-main .biku form div.checkbox-right div label {
+  width: 132px; }
+
+/* ====== Box mit Testimonials ====== */
+/* Bugfix KTBE-5708: size of h2 adapted / sei / 21.10.2014*/
+#content-col-context .biku .box .title h2 {
+  font-size: 14px; }
+
+#content-col-context .biku .box .body h3 span {
+  padding: 35px 0 10px;
+  display: inline-block; }
+
+#content-col-context .biku .box .body h3 img {
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 5px; }
+
+#content-col-context .biku .box .body .quote blockquote {
+  color: #161616;
+  font-size: 1.1em;
+  line-height: 18px;
+  margin-top: 0; }
+
+#content-col-context .biku .box .body .quote.photo blockquote {
+  background: none;
+  padding-left: 0;
+  margin-top: 0; }
+
+#content-col-context .biku .box .body .quote .info {
+  font-size: 1.1em; }
+
+/* mos 07.11.2012 */
+#content-col-context .biku .box div.lined {
+  border-top: 0px;
+  margin-top: 0px; }
+
+/* ====== Suchformular ====== */
+.biku #biku-searchform {
+  border: 1px solid #c8d9e9;
+  background-color: #fbfcfd;
+  padding: 0 9px 9px;
+  position: relative;
+  z-index: 0;
+  /* for IE 7 */ }
+
+* html .biku #biku-searchform {
+  position: static; }
+
+.biku #biku-searchform .left {
+  width: 458px;
+  float: left; }
+
+.biku #biku-searchform .right {
+  width: 222px;
+  padding-left: 9px;
+  /* zeix 21.11.2013 eb */
+  float: left; }
+
+#content-col-main .biku form fieldset.no-border,
+#content-col-main .biku form fieldset.hasflyout {
+  border: 0;
+  padding: 0; }
+
+#content-col-main .biku form fieldset.hasflyout {
+  margin: 0;
+  position: relative; }
+
+* html #content-col-main .biku form fieldset.no-border,
+* html #content-col-main .biku form fieldset.hasflyout,
+* + html #content-col-main .biku form fieldset.no-border,
+* + html #content-col-main .biku form fieldset.hasflyout {
+  margin-top: 3px; }
+
+#content-col-main .biku form fieldset.line-top {
+  border: 0;
+  border-top: 1px solid #c8d9e9;
+  margin: 0;
+  padding: 10px 0 0; }
+
+#content-col-main .biku form fieldset.no-border legend {
+  color: #323232;
+  padding: 0;
+  margin-bottom: 0;
+  font-weight: bold; }
+
+* html #content-col-main .biku form fieldset.no-border legend {
+  margin: 0 -7px; }
+
+* + html #content-col-main .biku form fieldset.no-border legend {
+  margin: 4px -7px 0; }
+
+#content-col-main .biku form fieldset.no-border legend span {
+  display: inline-block;
+  padding-bottom: 5px; }
+
+#content-col-main .biku form fieldset.hasflyout legend {
+  padding: 0 0 6px;
+  /* statt 5px, zeix 21.11.2013 eb */
+  font-weight: normal;
+  display: inline-block;
+  float: left; }
+
+* html #content-col-main .biku form fieldset.hasflyout legend {
+  margin: -3px -7px 3px;
+  padding-bottom: 3px; }
+
+* + html #content-col-main .biku form fieldset.hasflyout legend {
+  margin-top: -3px;
+  margin-bottom: 3px;
+  padding-bottom: 0; }
+
+#content-col-main .biku form fieldset.hasflyout legend a {
+  border: 1px solid #c8d9e9;
+  background: #ecf2f7 url("/etc/designs/std/media/icon-doppelpfeil.gif") no-repeat scroll right center;
+  text-decoration: none;
+  color: #161616;
+  display: inline-block;
+  width: 153px;
+  padding: 2px; }
+
+#content-col-main .biku form fieldset.hasflyout legend a.open {
+  z-index: 501;
+  position: relative;
+  border-right: 0;
+  background-image: none;
+  width: 154px; }
+
+#content-col-main .biku form fieldset.hasflyout .flyout {
+  position: absolute;
+  left: 158px;
+  top: 0;
+  width: 527px;
+  background: #ecf2f7;
+  z-index: 500;
+  border: 1px solid #c8d9e9;
+  padding: 9px; }
+
+#content-col-main .biku form fieldset.hasflyout .flyout .left,
+#content-col-main .biku form fieldset.hasflyout .flyout .right {
+  width: 220px;
+  /* statt 206px, zeix 21.11.2013 eb */ }
+
+#content-col-main .biku form fieldset.hasflyout .flyout .special {
+  clear: left;
+  float: left;
+  margin-top: 10px;
+  width: 422px; }
+
+#content-col-main .biku form fieldset.hasflyout .flyout input.checkbox {
+  vertical-align: top; }
+
+#content-col-main .biku form fieldset.hasflyout .flyout label {
+  width: 196px;
+  /* statt 182px, zeix 21.11.2013 eb */
+  padding-right: 0;
+  text-align: left; }
+
+/* ----- Stylesheet-Regeln für unsichtbare Checkboxen in Flyouts -----
+
+#content-col-main .biku form fieldset.hasflyout .flyout .invisible {
+  visibility: hidden;
+}
+
+#content-col-main .biku form fieldset.hasflyout .flyout label {
+  color: #13226e;
+  text-decoration: underline;
+}
+
+#content-col-main .biku form fieldset.hasflyout .flyout label:hover {
+  text-decoration: none;
+}
+
+----- /Stylesheet-Regeln für unsichtbare Checkboxen in Flyouts ----- */
+#content-col-main .biku form fieldset.hasflyout .flyout .special label {
+  width: 398px; }
+
+#content-col-main .biku form fieldset.hasflyout .flyout label .count,
+#content-col-main .biku form fieldset.hasflyout .flyout label:hover .count {
+  color: #515151; }
+
+#content-col-main .biku form fieldset.hasflyout .flyout p.close {
+  text-align: right; }
+
+#content-col-main .biku form fieldset.hasflyout .flyout p.close a {
+  background: url("/etc/designs/std/media/icon-schliessen.gif") no-repeat right center;
+  color: #a00000;
+  font-size: 0.9em;
+  padding-right: 17px;
+  margin-right: 5px;
+  text-decoration: none; }
+
+#content-col-main .biku form fieldset.hasflyout .flyout .accept button {
+  position: absolute;
+  bottom: 15px;
+  right: 15px; }
+
+* html #content-col-main .biku form fieldset.hasflyout .flyout .accept button {
+  padding: 0 10px;
+  font-size: 1em; }
+
+* + html #content-col-main .biku form fieldset.hasflyout .flyout .accept button {
+  width: 50px;
+  font-size: 1em; }
+
+#content-col-main .biku form fieldset.hasflyout span.selected,
+#content-col-main .biku form fieldset.hasflyout span.tipp {
+  display: inline-block;
+  clear: none;
+  margin: 5px 0 5px 10px;
+  float: left;
+  width: 289px; }
+
+#content-col-main .biku form fieldset.hasflyout span.selected {
+  font-weight: bold;
+  font-size: 0.9em;
+  line-height: 1.2em; }
+
+* html #content-col-main .biku form fieldset.hasflyout span.selected,
+* html #content-col-main .biku form fieldset.hasflyout span.tipp {
+  margin: -22px 0 5px 170px; }
+
+* + html #content-col-main .biku form fieldset.hasflyout span.selected,
+* + html #content-col-main .biku form fieldset.hasflyout span.tipp {
+  margin: -16px 0 5px 170px; }
+
+.wide #content-col-main .biku #biku-searchform .right div.checkbox {
+  width: auto; }
+
+.wide #content-col-main .biku #biku-searchform .right div.checkbox div {
+  float: none;
+  display: inline-block;
+  vertical-align: top; }
+
+* html .wide #content-col-main .biku #biku-searchform .right input.checkbox,
+* html .wide #content-col-main .biku #biku-searchform .right div.checkbox div {
+  float: left; }
+
+* html .wide #content-col-main .biku #biku-searchform .right label.checkbox {
+  padding-top: 3px; }
+
+* + html .wide #content-col-main .biku #biku-searchform .right input.checkbox,
+* + html .wide #content-col-main .biku #biku-searchform .right div.checkbox div {
+  float: left; }
+
+.wide #content-col-main .biku #biku-searchform .right div.checkbox .row {
+  display: block; }
+
+.wide #content-col-main .biku #biku-searchform .right div.checkbox .row label {
+  width: 25px; }
+
+#content-col-main .biku #biku-searchform input.submit {
+  margin-left: 0;
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  z-index: 0; }
+
+* html #content-col-main .biku .search-submit {
+  text-align: right; }
+
+* html #content-col-main .biku #biku-searchform input.submit {
+  position: static;
+  margin: 6px; }
+
+/* ====== Suchresultate ====== */
+/* neu, zeix 21.11.2013 eb */
+.biku .ticker .row {
+  padding: 10px 0 10px; }
+
+.biku .ticker .row .image {
+  float: left; }
+
+.biku .ticker .row .image a {
+  display: block;
+  width: 248px;
+  background: #f1f1f1;
+  text-align: center; }
+
+.biku .ticker .row .description {
+  margin-left: 273px; }
+
+.biku .ticker .row .description .more {
+  text-align: right;
+  padding: 10px 0; }
+
+.biku .ticker .row .description .more a.next {
+  /* FMEL KTBEBIKU-1737 */
+  background: url("/etc/designs/std/media/icon-weiter.gif") no-repeat right center !important;
+  padding-right: 15px; }
+
+.biku .ticker .row .description .more a:visited {
+  color: #13226e; }
+
+/* ====== Detailansicht ====== */
+#content-col-main .biku .paging.detail {
+  padding-bottom: 0; }
+
+/* ergänzung 01.09.2011 fmel */
+#content-col-main .biku .paging.top {
+  margin-bottom: 20px;
+  /* KTBE-5996 */ }
+
+/* ergänzung 15.04.2015 fmel */
+#content-col-main .biku .paging.bottom {
+  margin-top: 20px;
+}
+
+#content-col-main .biku .paging p {
+  margin: 0; }
+/* ende ergänzung 01.09.2011 fmel */
+
+/* KTBEBIKU-1737 ergänzt (URL und selector) */
+.biku .paging.detail a.previous, .biku .paging .select a.previous {
+  /* border right wieder entfernt KTBEBIKU-1787 */
+  line-height: 18px;
+  /* Bugfix KTBE-5708: line height added / sei / 21.10.2014*/
+  background-image: url("/etc/designs/std/media/icon-zurueck.gif")!important;
+}
+
+.biku .paging.detail a.next,
+body.msie .paging.detail a.next {
+  padding-left: 5px;
+  line-height: 18px;
+  /* Bugfix KTBE-5708: line height added / sei / 21.10.2014*/
+  border-left: 1px solid #C8D9E9;
+  /* Bugfix KTBE-5708: border left added / sei / 21.10.2014*/
+  background-image: url("/etc/designs/std/media/icon-weiter.gif") !important;
+  /* Bugfix KTBE-5708: original bg-image added / sei / 22.10.2014*/
+  background-position: right 50% !important; /*15.04.2015 FMEL korrigiert */
+}
+
+/* ende ergänzung 15.04.2015  fmel */
+#content-col-main .biku .paging.top.detail p a.back,
+body.msie .biku .paging.top.detail p a.back, #content-col-main .biku .paging.bottom.detail p a.back,
+body.msie .biku .paging.bottom.detail p a.back {
+  display: inline !important; }
+
+#content-col-main .biku .paging.detail a.back,
+body.msie .biku .paging.detail a.back {
+  background-repeat: no-repeat;
+  padding: 0 12px;
+  margin: 10px 0 20px 0;
+  /* Bugfix KTBE-5708: margins added / sei / 21.10.2014*/
+  border: none !important;
+  background-image: url("/etc/designs/std/media/icon-zurueck.gif") !important;
+  /* Bugfix KTBE-5708: original bg-image added / sei / 21.10.2014*/
+  background-position: 0 50% !important;
+  /* Bugfix KTBE-5708: original bg-position added / sei / 21.10.2014*/
+}
+
+/* KTBE-5708 */
+#content-col-main .biku .paging.detail .select {
+  margin: 0 0 10px 0 !important; }
+
+/* anpassung 22.01.2014 (09.02.2012) fmel */
+#content-col-main .biku .paging.detail .select a:first-child {
+  border: none !important; }
+
+.biku table.alternative.fixed th {
+  width: 120px; }
+
+/* ====== Bildergalerie ====== */
+.biku .imageslider {
+  width: 248px;
+  margin-right: 25px;
+  float: left;
+  position: relative; }
+
+.biku .imageslider .image {
+  float: left; }
+
+.biku .imageslider .image div {
+  width: 248px;
+  height: 186px;
+  background: #f1f1f1;
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle; }
+
+.biku .imageslider .caption {
+  padding: 0 20px;
+  display: block;
+  word-break: break-all; }
+
+.biku .imageslider .control {
+  list-style: none !important;
+  padding: 3px 0 0 !important;
+  margin: 0 !important;
+  position: absolute;
+  top: 0;
+  left: 0; }
+
+.biku .imageslider .control li {
+  padding: 0 !important;
+  margin: 0 !important;
+  background: none !important;
+  width: 124px;
+  height: 225px;
+  float: left; }
+
+.biku .imageslider .control a {
+  width: 124px;
+  height: 225px;
+  display: block; }
+
+.biku .imageslider .control a.previous {
+  text-align: left;
+  padding: 0;
+}
+
+.biku .imageslider .control a.next {
+  text-align: right;
+  padding: 0;
+}
+
+.biku .imageslider .control a.previous:focus,
+.biku .imageslider .control a.previous:active {
+  background: transparent url("/etc/designs/std/media/icon-zurueck-fokus.gif") no-repeat left 192px !important;
+  outline: none; }
+
+.biku .imageslider .control a.next:focus,
+.biku .imageslider .control a.next:active {
+  background: transparent url("/etc/designs/std/media/icon-weiter-fokus.gif") no-repeat right 192px !important;
+  outline: none;
+}
+
+.biku .imageslider .control a img {
+  margin-top: 192px;
+}
+
+/* ====== Video-Auswahl ===== */
+.biku .videochooser {
+  width: 500px; }
+
+.biku .videochooser .tablist {
+  width: 499px;
+  height: 50px;
+  border-left: 1px solid #c8d9e9;
+  margin-bottom: 0 !important; }
+
+.biku .videochooser .tablist li {
+  height: 49px;
+  width: 165px;
+  line-height: 1.3em !important;
+  border: 1px solid #c8d9e9;
+  background: #ecf2f7 !important;
+  border-left: 0;
+  margin: 0 !important;
+  padding: 0 !important;
+  float: left; }
+
+.biku .videochooser .tablist li a {
+  text-decoration: none;
+  color: #13226e;
+  padding: 8px 9px;
+  height: 33px;
+  display: block; }
+
+.biku .videochooser .tablist li a:hover {
+  text-decoration: underline;
+  color: #0026e0; }
+
+.biku .videochooser .tablist li a.active {
+  font-weight: bold;
+  color: #101031;
+  background: transparent url("/etc/designs/std/media/video-aktiv.gif") no-repeat right center;
+  height: 45px;
+  z-index: 10;
+  position: relative; }
+
+* html .biku .videochooser .tablist li a.active {
+  background: none !important;
+  height: 33px; }
+
+.biku .videochooser .tablist li a.active:focus,
+.biku .videochooser .tablist li a.active:active {
+  background: transparent url("/etc/designs/std/media/video-fokus.gif") no-repeat right center !important; }
+
+* html .biku .videochooser .tablist li a.active:active {
+  background: #f9f4bb !important; }
+
+.biku .videochooser .tabpanel {
+  margin: 0 0 10px; }
+
+.biku .videochooser .tabpanel .image {
+  padding: 0 !important;
+  display: none; }
+
+.biku .videochooser .tabpanel .image.active {
+  display: block; }
+
+#content-col-main .biku table.overview tbody td.hashovermenu {
+  padding-bottom: 20px; }
+
+#content-col-main .biku table.overview tbody th a {
+  font-weight: bold; }
+
+#content-col-main .biku table.overview tr.focus td,
+#content-col-main .biku table.overview tbody tr.focus th {
+  background: #f9f4bb;
+  padding-bottom: 3px; }
+
+#content-col-main .biku table.overview ul.hovermenu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  left: -5000px;
+  top: 0; }
+
+#content-col-main .biku table.overview tr.focus ul.hovermenu {
+  position: static;
+  left: auto;
+  top: auto; }
+
+#content-col-main .biku table.overview ul.hovermenu li {
+  background: none;
+  padding: 0 5px 0 0;
+  display: inline;
+  line-height: 16px;
+  /* Anpassung KAIO, 16.09.2011, Wert von 17 auf 16 geändert */ }
+
+#content-col-main .biku table.overview ul.hovermenu li a {
+  font-weight: normal; }
+
+/*BEGIN ergänzung KAIO, hovermenu beim status MOS, 16.09.2011*/
+#content-col-main .biku table.overview tr:hover .tohide {
+  display: none; }
+
+/*END ergänzung KAIO*/
+#content-col-main .biku table.overview p {
+  margin-bottom: 0; }
+
+#content-col-main .biku strong.warning {
+  color: #e3001a; }
+
+/*BEGIN ergänzung KAIO, 22.09.2011*/
+#content-col-main .biku p.right {
+  text-align: right; }
+
+/*END ergänzung KAIO*/
+/* gutscheinsuche*/
+#content-col-main .biku #biku-voucherform fieldset .left label,
+#content-col-main .biku #biku-voucherform fieldset .right label {
+  width: 120px; }
+
+#content-col-main .biku #biku-voucherform fieldset .right .full {
+  width: 275px; }
+
+#content-col-main .biku #biku-voucherform fieldset .toprow {
+  margin-top: 15px; }
+
+#content-col-main .biku #biku-voucherform fieldset .submit {
+  margin-left: 168px; }
+
+/* ende gutscheinsuche*/
+/* ====== Mutations-Elemente Angebot ====== */
+#content-col-main .biku .mutation {
+  margin-bottom: 40px; }
+
+#content-col-main .biku .mutation fieldset {
+  padding: 5px 12px 0;
+  border: #0066ff 1px solid; }
+
+#content-col-main .biku .mutation fieldset div.row {
+  margin-bottom: 12px; }
+
+#content-col-main .biku .mutation legend {
+  font-weight: bold; }
+
+#content-col-main .biku .mutation .buttons input {
+  margin-right: 12px; }
+
+#content-col-main .biku .mutation fieldset h4 {
+  margin-top: 20px; }
+
+#content-col-main .biku .mutation fieldset div.label {
+  width: 85px !important; }
+
+/*BEGIN ergänzung KAIO, 22.09.2011*/
+#content-col-main .biku .mutation span.menu a {
+  padding-left: 10px; }
+
+/*END ergänzung KAIO*/
+#content-col-main .biku .confirm {
+  margin-left: 0;
+  border: 1px solid #66ff33;
+  background-color: #ccffcc;
+  padding: 5px; }
+
+/* 05.11.2013 mos*/
+#content-col-main .biku .linkright {
+  width: 50%;
+  float: right;
+  text-align: right; }
+
+/* ====== Filemanager-Elemente Angebot ====== */
+#content-col-main .biku .filemanager .uploader {
+  background-color: #ECF2F7;
+  padding: 5px;
+  margin-bottom: 10px; }
+
+#content-col-main .biku .filemanager p {
+  margin: 5px 0; }
+
+#content-col-main .biku .filemanager p:first-child {
+  margin: 0 0 5px 0; }
+
+#content-col-main .biku .filemanager h3 {
+  margin: 0px;
+  padding: 2px 5px;
+  background-color: #C8D9E9; }
+
+#content-col-main .biku .filemanager .functions {
+  font-size: 0.9em; }
+
+#content-col-main .biku .filemanager .functions a {
+  margin-right: 10px; }
+
+#content-col-main .biku .filemanager ul li h4 {
+  margin: 0px; }
+
+#content-col-main .biku .filemanager ul li {
+  border-top: 1px solid #4A81B6;
+  margin: 0px;
+  padding: 3px 0; }
+
+#content-col-main .biku .filemanager ul li:first-child {
+  border-top: none;
+  padding-top: 0; }
+
+#content-col-main .biku fieldset .filemanager label {
+  /* KTBEBIKU-1668 breite von 138 auf 135 reduziert */
+  width: 135px; }
+
+#content-col-main .biku fieldset .filemanager .submit {
+  margin: 0 0 0 150px; }
+
+* + html #content-col-main .biku fieldset .filemanager .submit,
+* html #content-col-main .biku fieldset .filemanager .submit {
+  border: 1px #4A81B6 solid; }
+
+* + html #content-col-main .biku fieldset .filemanager .submit:hover,
+* html #content-col-main .biku fieldset .filemanager .submit:hover {
+  border: 1px #001BA1 solid;
+  color: #001BA1; }
+
+#content-col-main .biku fieldset .filemanager input.mutation {
+  width: 450px;
+  margin: 0;
+  font-weight: bold;
+  color: #484848; }
+
+#content-col-main .biku .filemanager .save,
+#content-col-main .biku .filemanager input.warn {
+  margin: 5px 0 0 0; }
+
+#content-col-main .biku .filemanager input.warn {
+  color: #A00000; }
+
+/* error darstellung wieder eingefügt  / fmel 26.08.2011 */
+#content-col-main .biku .filemanager p.error {
+  background-color: #FFE5E5;
+  border: 1px solid #E3001A;
+  padding: 5px; }
+
+/* angepasst 01.11.2013 MOS */
+#content-col-main form .required.xLarge, #content-col-main form .required.full {
+  width: 306px; }
+
+/* end filemanager */
+/* BEGIN ergänzung KAIO, formulardarstellung MOS, 07.07.2011 */
+/* fmel 03.08.2011 hinfälliger Teil entfernt (html wurde in der Zwischenzeit geändert) */
+#content-col-main .biku .step2 form .email {
+  width: 200px;
+  border: 1px solid #4A81B6; }
+
+/* ENDE ergänzung KAIO */
+/* BEGIN ergänzung KAIO, buttondarstellung MOS, 12.08.2011 */
+#content-col-main .biku .confirmationDialog form .submit {
+  margin: 0 30px 10px 0;
+  float: left; }
+
+#content-col-main .biku .confirmationDialog form .submit,
+#content-col-main .biku .confirmationDialog form .submit:hover {
+  -webkit-border-radius: 4px;
+  -khtml-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px; }
+
+#content-col-main .biku .confirmationDialog form .reset,
+#content-col-main .biku .confirmationDialog form .reset:hover {
+  -webkit-border-radius: 3px;
+  -khtml-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px; }
+
+#content-col-main .biku .confirmationDialog form .submit,
+#content-col-main .biku .confirmationDialog form .reset {
+  cursor: pointer;
+  color: #484848;
+  font-weight: bold;
+  border: 1px solid #cccccc;
+  background-color: #efefef;
+  background: -moz-linear-gradient(top, white, #cccccc);
+  background: -webkit-gradient(linear, 0 0, 0 100%, from(white), to(#cccccc)); }
+
+#content-col-main .biku .confirmationDialog form .submit:hover,
+#content-col-main .biku .confirmationDialog form .reset:hover {
+  color: #141414;
+  border: 1px solid #666666;
+  background-color: #e7e7e7;
+  background: -moz-linear-gradient(top, #efefef, #bcbcbc);
+  background: -webkit-gradient(linear, 0 0, 0 100%, from(#efefef), to(#bcbcbc)); }
+
+#content-col-main .biku .confirmationDialog form .submit {
+  padding: 5px 12px;
+  font-size: 1.3em; }
+
+* + html #content-col-main .biku .confirmationDialog form .submit,
+* html #content-col-main .biku .confirmationDialog form .submit {
+  padding: 5px 0px; }
+
+#content-col-main .biku .confirmationDialog form .reset {
+  margin: 8px 30px 10px 0;
+  padding: 3px 12px;
+  font-size: 1.1em; }
+
+* + html #content-col-main .biku .confirmationDialog form .reset,
+* html #content-col-main .biku .confirmationDialog form .reset {
+  padding: 3px 4px; }
+
+/* ENDE ergänzung KAIO */
+/* BEGIN ergänzung KAIO, buttondarstellung MOS, 16.09.2011 */
+#content-col-main .biku .vouchers .infobox {
+  width: 230px;
+  float: left; }
+
+#content-col-main .biku .vouchers .infobox h3 {
+  margin-top: 0; }
+
+#content-col-main .biku .vouchers .left {
+  margin-right: 40px; }
+
+#content-col-main .biku form .buttonstyle {
+  margin-left: 0px; }
+
+/* Bugfix KTBE-5708: bg-position added / sei / 21.10.2014*/
+#content-col-main .biku .buttonstyle,
+#content-col-main .biku .warnbox {
+  background-position: 0 0 !important; }
+
+body.msie a.intern.buttonstyle,
+body.msie body.classic a.intern.buttonstyle,
+body.msie a.intern.warnbox,
+body.msie body.classic a.intern.warnbox {
+  background-image: none !important; }
+
+/* / */
+/* statistiken */
+#content-col-main .biku .statistik {
+  border-bottom: none; }
+
+#content-col-main .biku .statistik thead th {
+  background-color: transparent;
+  color: #484848;
+  font-weight: normal; }
+
+#content-col-main .biku .statistik thead .th3cols {
+  width: 93px; }
+
+#content-col-main .biku .statistik td.col {
+  padding: 2px 3px;
+  text-align: center;
+  border-left: none; }
+
+#content-col-main .biku .statistik tbody .th {
+  background-color: #ECF2F7; }
+
+#content-col-main .biku .statistik tbody tr:hover .th {
+  background-color: #ecf2f7 !important; }
+
+#content-col-main .biku .statistik tbody th {
+  font-weight: normal; }
+
+#content-col-main .biku .statistik th.empty {
+  border: none;
+  background-color: transparent !important; }
+
+#content-col-main .biku .statistik td.total {
+  font-weight: bold; }
+
+#content-col-main .biku .statistik td.firstcell {
+  border-left: 1px solid #C8D9E9; }
+
+#content-col-main .biku .statistik .lastrow {
+  border-bottom: 1px solid #C8D9E9; }
+
+#content-col-main .biku .statistik tbody tr:hover th,
+#content-col-main .biku .statistik tr:hover .col {
+  background-color: #FFF3AA; }
+
+/* anbieter */
+#content-col-main .biku .statistik.anbieter tbody tr th {
+  text-align: right; }
+
+#content-col-main .biku .statistik.anbieter thead tr th {
+  text-align: center; }
+
+#content-col-main .biku .statistik.anbieter tbody td.firstcell {
+  width: 122px; }
+
+/* end statistiken */
+/* erg. gutscheinverwaltung 02.07.2014 MOS */
+#content-col-main .biku .buttonstyle {
+  margin-top: 15px; }
+
+#content-col-main .biku .buttonstyle h3 {
+  margin-top: 0; }
+
+#content-col-main .biku .buttonstyle .abbrechen,
+#content-col-main .biku .buttonstyle .ALabbrechen {
+  float: right;
+  position: relative;
+  top: -30px;
+  background: url("/etc/designs/std/media/icon-schliessen.gif") no-repeat right center;
+  color: #a00000;
+  font-size: 0.9em;
+  padding-right: 17px;
+  margin-right: 5px;
+  text-decoration: none; }
+
+/* .toverify ergänzt 11.05.2015 dRey */
+.biku a.set_back, .biku a.cancel, .biku a.verify_amount, .biku a.toverify {
+  text-decoration: none !important;
+  color: #161616; }
+
+/* .toverify ergänzt 11.05.2015 dRey */
+.biku a.set_back:hover, .biku a.cancel:hover, .biku a.verify_amount:hover, .biku a.toverify:hover {
+  text-decoration: none !important;
+  background-color: #ecf2f7;
+  border: 1px solid #c8d9e9; }
+
+/* .toverify ergänzt 11.05.2015 dRey */
+.biku .set_back, .biku .cancel, .biku .verify_amount, .biku a.toverify {
+  float: left;
+  padding: 5px 10px;
+  margin: 0 10px 0 0;
+  border: 1px solid #999;
+  background-color: #e7e7e7;
+  border-radius: 3px; }
+
+.biku .verify_amount {
+  margin: 0;
+  float: right; }
+
+/* Anpassung Checkbox 14.01.2015 */
+#content-col-main #betragbewilligen .buttonstyle .text, #content-col-main #gsablehnen .buttonstyle .text {
+  *background-position: 12px 9px; }
+
+#content-col-main .buttonstyle form .fulltext label {
+  display: inline !important;
+  float: none; }
+
+/* Ende Anpassung Checkbox 14.01.2015 */
+#content-col-main .biku form .buttonstyle .small {
+  width: 60px; }
+
+#content-col-main .biku .buttonstyle .amount_splited {
+  font-weight: bold; }
+
+#content-col-main .biku form input.zurueck {
+  margin-right: 8px !important; }
+
+/* deaktiviert zeix/ebr 24.10.2014: verursacht alignment-probleme bei labels
+#content-col-main .biku form label {
+    float:none;
+    margin-left: 5px;
+    display: inline;
+} */
+#content-col-main .biku form textarea.wide {
+  width: 99.5%;
+  height: 4em;
+  margin-bottom: 5px; }
+
+#content-col-main .biku form textarea.extendet {
+  height: 20em;
+  margin-bottom: 5px; }
+
+#content-col-main .biku .buttonext, #content-col-main .biku .buttonnoext {
+  float: right;
+  cursor: pointer;
+  padding-top: 30px; }
+
+#content-col-main .biku p.remarques_txt {
+  border: 1px dashed #4a81b6;
+  padding: 3px; }
+
+/* list tabs */
+#content-col-main .biku div.tabs {
+  margin-bottom: 1.0em;
+  line-height: 2em;
+  border-bottom: 1px solid #4a81b6; }
+
+/* angepasst MOS 22.10.2014*/
+.biku div.tabs a, .biku div.tabs span {
+  border: 1px solid #4a81b6;
+  border-bottom: none;
+  padding: 0.4em 0.8em;
+  margin-right: 0.8em;
+  text-decoration: none;
+  display: inline-block; }
+
+.biku div.tabs a {
+  border: 1px solid #c8d9e9;
+  border-bottom: none; }
+
+.biku div.tabs span {
+  font-weight: bold;
+  color: #fff;
+  background-color: #4a81b6; }
+
+.biku div.tabs a:hover {
+  border: 1px solid #4a81b6;
+  border-bottom: none;
+  background-color: #c8d9e9;
+  text-decoration: underline; }
+
+table.amount_confirmed thead th {
+  color: #A00000; }
+
+/* Listenansicht */
+table.hoverlist tbody tr:hover td {
+  background-color: #f9f4bb !important; }
+
+table.hoverlist tbody tr.zeitnah td {
+  background-color: pink; }
+
+table.hoverlist tbody tr.zeitnah td.cdatum {
+  font-weight: bold; }
+
+table.hoverlist tbody tr.zeitnah:hover td.cdatum {
+  color: #A00000; }
+
+table.hoverlist tbody tr td span.funcs {
+  visibility: hidden; }
+
+table.hoverlist tbody tr:hover td span.funcs {
+  visibility: visible; }
+
+/* end erg. gutscheinverwaltung */
+/* ENDE ergänzung KAIO */
+/* ***** Ende BIKU ***** */
+/* KTBE-5788 */
+#content-col-main > div.content > div > div > div > div.paging.bottom.detail > p.select {
+  margin: 10px 0 0 !important; }
+
+/*# sourceMappingURL=erz_apps.css.map */

@@ -1,0 +1,59 @@
+{
+    "mandant": [{
+            "name": "BFB",
+            "color": "#005967"
+        },
+        {
+            "name": "BFF",
+            "color": "#6AA4B8"
+        },
+        {
+            "name": "BIZ",
+            "color": "#e3001a"
+        },
+        {
+            "name": "bsd",
+            "color": "rgb(255, 238, 0)"
+        },
+        {
+            "name": "bwz",
+            "color": "#3abff0"
+        },
+        {
+            "name": "bzemme",
+            "color": "#e20031"
+        },
+        {
+            "name": "bzi",
+            "color": "#007dbe"
+        },
+        {
+            "name": "FBI",
+            "color": "#e3001a"
+        },
+        {
+            "name": "IDM",
+            "color": "#00457f"
+        },
+        {
+            "name": "INFORAMA",
+            "color": "#e3001a"
+        },
+        {
+            "name": "KAWA",
+            "color": "#e3001a"
+        },
+        {
+            "name": "SfGBB",
+            "color": "rgb(63, 63, 63)"
+        },
+        {
+            "name": "TFBern",
+            "color": "#0082b4"
+        },
+        {
+            "name": "Neuf",
+            "color": "#3c67a5"
+        }
+    ]
+}
