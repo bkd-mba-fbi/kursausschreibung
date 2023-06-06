@@ -23,20 +23,6 @@
         instructions how to enable JavaScript in your web browser</a>.
     </noscript>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-120052503-1"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
-
-        gtag('config', 'UA-120052503-1');
-    </script>
-
-
     <style>
         .text {
             color: white;
@@ -154,7 +140,6 @@
                 <ul id="desktop-menu" class="uk-navbar-nav">
                     <li class="uk-active uk-animation-slide-left"><a class="text" href="#feature">FEATURES</a></li>
                     <li class="uk-active uk-animation-slide-top"><a href="#module-test">LIVE TEST</a></li>
-                    <li class="uk-active uk-animation-slide-right"><a href="https://wwwin.erz.be.ch/intranet_erz/de/index/direktion/direktion/mittelschule_berufsbildung/abteilung_fbi/fbi_tutorials/tutorials_allgemein.html#anker-anchor-4" target="_blank">EVT-API</a></li>
                 </ul>
 
                 <div class="uk-offcanvas-content">
@@ -318,7 +303,7 @@
     
             //console.log(val);
             //content erstellen
-                $('#mandanten').append('<div> <div style="background-color:'+val.color+'" class="uk-card uk-card-default uk-card-body uk-card-secondary">  <a class="uk-link-heading uk-position-center uk-h2" onclick="localStorage.clear()" href="'+val.name+'" target="_blank">'+val.name+'</a>            </div>' +' </div>'); }); });
+                $('#mandanten').append('<div> <div style="background-color:'+val.color+'" class="uk-card uk-card-default uk-card-body uk-card-secondary">  <a class="uk-link-heading uk-position-center uk-h2" onclick="localStorage.clear()" href="'+val.name+'/index.html" target="_blank">'+val.name+'</a>            </div>' +' </div>'); }); });
 
         </script>
 

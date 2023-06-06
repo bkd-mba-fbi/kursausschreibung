@@ -15,7 +15,7 @@ window.kursausschreibung.appConfig = {
     // the instance id for this application. This value is mandatory when authenticate with CLX.Evento OAuth Server
     "instanceId": "BsBWZ",
     // the client id for this application. This value is mandatory when authenticate with CLX.Evento OAuth Server
-    "clientId": "zublerbwz",
+    "clientId": "github",
     // url to a page that can refresh the session (website and modules)
     "refreshSessionUrl": "../tools/RefreshSession.aspx",
     // the interval to refresh the session on website and modules (in minutes)
