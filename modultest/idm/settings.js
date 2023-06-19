@@ -170,4 +170,7 @@ window.kursausschreibung.settings = {
     
     // Header Offset for scrolling
     "headerOffset": 5
+
+    // configure how many lessons show. if count of lessons > howManyLessonsShow lessons will be collaps
+    "howManyLessonsShow": 5,
 };
