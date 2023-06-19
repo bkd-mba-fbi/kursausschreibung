@@ -169,8 +169,8 @@ window.kursausschreibung.settings = {
     "sortEventList": "SubscriptionDateTo",
     
     // Header Offset for scrolling
-    "headerOffset": 5
+    "headerOffset": 5,
 
     // configure how many lessons show. if count of lessons > howManyLessonsShow lessons will be collaps
-    "howManyLessonsShow": 5,
+    "howManyLessonsShow": 5
 };
