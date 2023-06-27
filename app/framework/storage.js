@@ -16,6 +16,10 @@ function setItem(key, value) {
 function getItem(key) {
   let item = localStorage.getItem(key);
 
+  if (item && !item.includes('"')) {
+    item = `"${item}"`;
+  }
+
   return item !== undefined ? JSON.parse(item) : null;
 }
 
