@@ -27,7 +27,7 @@ export function displayAsGrid(bool) {
       setListViewGrid(false);
     }
     
-    if(bool) {
+    if(bool === true) {
       list.classList.add('uk-grid');
       list.classList.add('uk-grid-match');
       list.classList.add('uk-grid-stack'); 
@@ -51,7 +51,7 @@ export function displayAsGrid(bool) {
     }
     for (const child of list.children) {
 
-      if(bool) {
+      if(bool === true) {
         child.classList.add('uk-card');
         child.classList.add('uk-card-body');
         child.classList.add('card-list');
