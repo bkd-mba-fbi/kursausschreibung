@@ -27,8 +27,11 @@ export default Component.extend({
   }),
    
   willRender() {
-    this.send('queryChanged');
-
+    //only on first page. filter eventcode
+    if  (this.get('parentView').page === 1){
+      this.send('queryChanged');
+    }
+    
     let sortOptions = [];
     if(settings.sortOptions === undefined) {
       sortOptions.push({key:'error', value:'configure key sortoptions array in settings'});

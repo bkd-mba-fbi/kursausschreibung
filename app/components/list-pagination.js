@@ -97,7 +97,7 @@ export default Component.extend({
 
   didRender(){
     var listViewGrid = getListViewGrid();
-    listViewGrid = listViewGrid === null ? settings.displayGrid : getListViewGrid();
+    listViewGrid = listViewGrid === null ? settings.displayGrid : listViewGrid;
     displayAsGrid(listViewGrid);
   }
 

@@ -456,10 +456,10 @@ function addPropertiesToEvent(event) {
   fillEmptyDates(event);
 
   // combine date and time
-  event.SubscriptionFrom = combineDate(event.SubscriptionDateFrom, event.SubscriptionTimeFrom);
-  event.SubscriptionTo = combineDate(event.SubscriptionDateTo, event.SubscriptionTimeTo);
-  event.From = combineDate(event.DateFrom, event.TimeFrom);
-  event.To = combineDate(event.DateTo, event.TimeTo);
+  event.SubscriptionFrom = event.SubscriptionDateFrom === null ? null : combineDate(event.SubscriptionDateFrom, event.SubscriptionTimeFrom);
+  event.SubscriptionTo = event.SubscriptionDateTo === null ? null : combineDate(event.SubscriptionDateTo, event.SubscriptionTimeTo);
+  event.From = event.DateFrom === null ? null : combineDate(event.DateFrom, event.TimeFrom);
+  event.To = event.DateTo === null ? null : combineDate(event.DateTo, event.TimeTo);
 
   event.SubscriptionDateFrom = event.SubscriptionDateFromIsNull ? null : event.SubscriptionDateFrom;
   event.SubscriptionDateTo = event.SubscriptionDateToIsNull ? null : event.SubscriptionDateTo;
@@ -492,8 +492,6 @@ function fillEmptyDates(event) {
   event.SubscriptionDateFrom = event.SubscriptionDateFrom || datePast;
   event.SubscriptionDateToIsNull = event.SubscriptionDateTo === null ? true : false;
   event.SubscriptionDateTo = event.SubscriptionDateTo || dateNow;
-  event.DateFrom = event.DateFrom || event.DateTo || dateNow;
-  event.DateTo = event.DateTo || event.DateFrom || dateNow;
   event.SubscriptionTimeFrom = event.SubscriptionTimeFrom || '00:00:01';
   event.SubscriptionTimeTo = event.SubscriptionTimeTo || '23:59:59';
 
