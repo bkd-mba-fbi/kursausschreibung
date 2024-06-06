@@ -1,4 +1,4 @@
-# kursausschreibung 3.4.0
+# kursausschreibung 3.4.1
 [![Build 🏭🚀](https://github.com/bkd-mba-fbi/kursausschreibung/actions/workflows/buildDeploy.yml/badge.svg)](https://github.com/bkd-mba-fbi/kursausschreibung/actions/workflows/buildDeploy.yml)
 
 # Documentation
