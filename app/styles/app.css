@@ -125,6 +125,19 @@
   border: 1px solid #e5e5e5;
 }
 
+.uk-scope .card-list .event-list-item h3 span {
+  display: grid;
+  text-align: center;
+}
+
+.uk-scope .card-list .event-list-item h3 span span {
+  margin: auto;
+}
+
+.uk-scope .card-list .event-list-item table {
+  margin: auto;
+}
+
 .uk-scope #list-cards{
   margin-left: auto;
 }

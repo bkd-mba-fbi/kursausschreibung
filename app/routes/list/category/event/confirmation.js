@@ -117,6 +117,7 @@ function createAddresses(useCompanyAddress, addressData, companyAddressData) {
     companyAddressData.PersonId = parseInt(personId);
     companyAddressData.AddressType = 'Arbeitgeber';
     companyAddressData.AddressTypeId = 501;
+    companyAddressData.IsBillingAddress = true;
     companyAddressData.Country = companyAddressData.Country === null ? 'Schweiz' : companyAddressData.Country;
     companyAddressData.CountryId = companyAddressData.CountryId === null ? 'CH' : companyAddressData.CountryId;
 
