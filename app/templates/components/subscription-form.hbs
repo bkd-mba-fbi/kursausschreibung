@@ -1,23 +1,23 @@
 <form id="subscriptionForm" autocomplete="on" onsubmit={{action "submit"}} class="uk-grid-small uk-form-horizontal"
   data-uk-grid>
-  {{#if userSettings.isLoggedIn}}
+  {{#if this.userSettings.isLoggedIn}}
     <span class="uk-text-muted">{{translate "useLogin" userSettings.FullName}}</span>
   {{else}}
     <fieldset class="address-fields uk-width-1-1 uk-fieldset">
-      {{#each fields as |field|}}
+      {{#each this.fields as |field|}}
         {{input-base field=field}}
       {{/each}}
     </fieldset>
 
-    {{#if companyFields}}
+    {{#if this.companyFields}}
       <label class="uk-width-1-1">
-        {{input type="checkbox" class="uk-checkbox" checked=useCompanyAddress}}
+        <input type="checkbox" class="uk-checkbox" checked={{useCompanyAddress}} />
         {{translate "companyAddress"}}
       </label>
 
       <fieldset hidden={{if useCompanyAddress false true}} disabled={{if useCompanyAddress false true}}
         class="company-address-fields uk-width-1-1 uk-fieldset">
-        {{#each companyFields as |field|}}
+        {{#each this.companyFields as |field|}}
           {{input-base field=field}}
         {{/each}}
       </fieldset>
@@ -29,26 +29,26 @@
   {{/if}}
 
   <fieldset class="subscription-detail-fields uk-width-1-1 uk-fieldset">
-    {{#each subscriptionDetailFields as |field|}}
+    {{#each this.subscriptionDetailFields as |field|}}
       {{input-base field=field}}
     {{/each}}
   </fieldset>
 
-  {{#if allowMultiplePeople}}
+  {{#if this.allowMultiplePeople}}
     <div class="uk-width-1-1">
       <button class="uk-button uk-button-default" type="button" {{action "addPerson"}}><span
           data-uk-icon="icon: plus; ratio: 0.7"></span> {{translate "addPerson"}}</button>
-      {{#if thereAreAdditionalPeople}}
+      {{#if this.thereAreAdditionalPeople}}
         <button class="uk-button uk-button-default" type="button" {{action "removePerson"}}><span
             data-uk-icon="icon: minus; ratio: 0.7"></span> {{translate "removePerson"}}</button>
       {{/if}}
       <hr>
     </div>
 
-    {{#each additionalPeople as |index|}}
+    {{#each this.additionalPeople as |index|}}
       <fieldset class="additional-person-fields uk-width-1-1 uk-fieldset">
         <h3>{{translate "person"}} {{index}}</h3>
-        {{#each additionalPeopleFields as |field|}}
+        {{#each this.additionalPeopleFields as |field|}}
           {{input-base field=field}}
         {{/each}}
         <hr>
@@ -58,6 +58,6 @@
 
   <div class="uk-width-1-1">
     <input class="uk-button uk-button-primary uk-float-left" type="submit" value={{translate "subscribe"}}>
-    {{link-to (translate "back") "list.category.event" classNames="uk-button uk-button-default uk-float-right"}}
+    {{link-to (translate "back") "list.category.event" class="uk-button uk-button-default uk-float-right"}}
   </div>
 </form>

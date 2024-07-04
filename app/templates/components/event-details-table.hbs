@@ -1,29 +1,29 @@
 <table class="uk-table uk-table-striped details-table table-collapse">
   <tbody>
-    {{#each fields as |field|}}
-      {{#if (get event.displayData field.key)}}
+    {{#each this.fields as |field|}}
+      {{#if (get this.event.displayData field.key)}}
         <tr>
           <td>{{{field.name}}}</td>
-          <td>{{{get event.displayData field.key}}}</td>
+          <td>{{{get this.event.displayData field.key}}}</td>
         </tr>
       {{/if}}
     {{/each}}
-    {{#if showEventText}}
-      {{#each event.texts as |text|}}
+    {{#if this.showEventText}}
+      {{#each this.event.texts as |text|}}
         <tr>
           <td>{{{text.label}}}</td>
           <td>{{{text.memo}}}</td>
         </tr>
       {{/each}}
     {{/if}}
-    {{#if event.displayData.lessons}}
+    {{#if this.event.displayData.lessons}}
       <tr>
         <a {{action "getIcsFileFromEvent" on="click"}} uk-tooltip="title:{{translate "lessonExportToIcs"}}"><td>{{translate "lessons"}}<span uk-icon="icon: calendar; ratio: 1.4"></span></td></a>
         
-        {{#if event.lessonsCollaps}}
+        {{#if this.event.lessonsCollaps}}
         <td><a uk-toggle="target: #lesson-display">Alle Lektionen anzeigen</a><div id="lesson-display" hidden>{{#each event.displayData.lessons as |lesson|}}{{lesson.DateFrom}} - {{lesson.TimeTo}}{{#if lesson.Designation}}: {{{lesson.Designation}}}{{/if}}<br>{{/each}}</div></td>
         {{else}}
-        <td>{{#each event.displayData.lessons as |lesson|}}{{lesson.DateFrom}} - {{lesson.TimeTo}}{{#if lesson.Designation}}: {{{lesson.Designation}}}{{/if}}<br>{{/each}}</td>
+        <td>{{#each this.event.displayData.lessons as |lesson|}}{{lesson.DateFrom}} - {{lesson.TimeTo}}{{#if lesson.Designation}}: {{{lesson.Designation}}}{{/if}}<br>{{/each}}</td>
         {{/if}}    
       </tr>
     {{/if}}

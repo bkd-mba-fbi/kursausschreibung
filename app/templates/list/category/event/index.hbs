@@ -1,4 +1,4 @@
-{{#if showBreadcrumbs}}
+{{#if this.showBreadcrumbs}}
   <ul class="uk-breadcrumb">
     <li>
       {{link-to model.AreaOfEducation "list"}}
@@ -11,37 +11,42 @@
 
 <h2>
   <span class="uk-flex">
-    <span>{{status-lamp status=model.status}}</span>
-    <span>{{model.displayData.Designation}}</span>
+    <span>{{status-lamp status=this.model.status}}</span>
+    <span>{{this.model.displayData.Designation}}</span>
   </span>
 </h2>
-{{#if model.subtitle}}
+{{#if this.model.subtitle}}
 <span class="uk-label uk-label-warning uk-margin-small">{{model.subtitle}}</span>
 {{/if}}
-{{event-details-table event=model}}
+{{event-details-table event=this.model}}
 
-{{#if model.externalSubscriptionURL}}
+{{#if this.model.externalSubscriptionURL}}
   <div class="uk-margin">
-    <a href={{model.externalSubscriptionURL}} class="uk-button uk-button-primary uk-float-left subscribe-button"
+    <a href={{this.model.externalSubscriptionURL}} class="uk-button uk-button-primary uk-float-left subscribe-button"
       target="_blank" rel="noopener">
       {{translate "subscribe"}}
     </a>
-    {{link-to (translate "back") "list.category" classNames="uk-button uk-button-default uk-float-right"}}
+    {{link-to (translate "back") "list.category" class="uk-button uk-button-default uk-float-right"}}
   </div>
 {{else}}
-  {{#if badgeFreeSeatsEnabled}}
-    {{remaining-seats-badge event=model}}
+  {{#if this.badgeFreeSeatsEnabled}}
+    {{remaining-seats-badge event=this.model}}
   {{/if}}
   <div class="uk-margin">
-    {{link-to (translate "subscribe") "list.category.event.subscribe" classNames="uk-button uk-button-primary uk-float-left subscribe-button"
-      data-uk-tooltip=(translate (concat model.status "Lamp")) tagName="button" disabled=(if model.canDoSubscription false true)}}
-    {{link-to (translate "back") "list.category" classNames="uk-button uk-button-default uk-float-right"}}
+    <!--
+    <LinkTo  route="list.category.event.subscribe" class="uk-button uk-button-primary uk-float-left subscribe-button"
+      data-uk-tooltip={{translate (concat this.model.status "Lamp")}} tagName="button" disabled=(if this.model.canDoSubscription false true)>{{translate "subscribe"}}</LinkTo>-->
+   
+   {{link-to (translate "subscribe") "list.category.event.subscribe" class="uk-button uk-button-primary uk-float-left subscribe-button"
+      data-uk-tooltip=(translate (concat this.model.status "Lamp")) disabled=(if this.model.canDoSubscription false true)}}
+      
+    {{link-to (translate "back") "list.category" class="uk-button uk-button-default uk-float-right"}}
   </div>
-  {{#if model.subscriptionWithLoginURL}}
-    {{#if model.canDoSubscription }}    
+  {{#if this.model.subscriptionWithLoginURL}}
+    {{#if this.model.canDoSubscription }}    
     <div class="uk-margin">
-      <a id="subscriptionWithLoginURL" href={{model.subscriptionWithLoginURL}}  target="_blank" rel="noopener" class="uk-button uk-button-primary uk-float-left subscribeWithLogin-button"
-        data-uk-tooltip={{translate (concat model.status "Lamp")}} >{{translate "subscribeWithLogin"}}</a>
+      <a id="subscriptionWithLoginURL" href={{this.model.subscriptionWithLoginURL}}  target="_blank" rel="noopener" class="uk-button uk-button-primary uk-float-left subscribeWithLogin-button"
+        data-uk-tooltip={{translate (concat this.model.status "Lamp")}} >{{translate "subscribeWithLogin"}}</a>
     </div>
     {{/if}}
   {{/if}}

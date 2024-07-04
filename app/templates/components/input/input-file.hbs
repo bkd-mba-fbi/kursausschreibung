@@ -1,14 +1,14 @@
 <div class="js-upload" uk-form-custom>
-    <input id="file{{field.id}}" class="uk-input" type="file" accept={{field.acceptFileType}} name={{field.id}} required={{field.options.required}} disabled={{field.options.disabled}}>
-    {{#if field.options.required}}
-    <button id="fileBt{{field.id}}" class="uk-button uk-button-default required" type="button" tabindex="-1" required={{field.options.required}}>{{field.fileTypeLabel}}</button>
+    <input id="file{{this.field.id}}" class="uk-input" type="file" accept={{this.field.acceptFileType}} name={{this.field.id}} required={{this.field.options.required}} disabled={{this.field.options.disabled}}>
+    {{#if this.field.options.required}}
+    <button id="fileBt{{this.field.id}}" class="uk-button uk-button-default required" type="button" tabindex="-1" required={{this.field.options.required}}>{{√field.fileTypeLabel}}</button>
     {{else}} 
-    <button id="fileBt{{field.id}}" class="uk-button uk-button-default" type="button" tabindex="-1" required={{field.options.required}}>{{field.fileTypeLabel}}</button>
+    <button id="fileBt{{field.id}}" class="uk-button uk-button-default" type="button" tabindex="-1" required={{this.field.options.required}}>{{this.field.fileTypeLabel}}</button>
     {{/if}}
 </div>
-<div id="img{{field.id}}" class="uk-margin uk-hidden" style="height: auto;">
+<div id="img{{this.field.id}}" class="uk-margin uk-hidden" style="height: auto;">
     <p>{{translate "fileTypePFInfo"}} <span uk-icon="icon: upload; ratio: 1"></span></p>
 </div>
-<img id="imgDev{{field.id}}" class="uk-margin uk-hidden" width="300" />
-<button id="fileBtDel{{field.id}}" class="uk-button-danger uk-hidden" {{action "deleteFile"}}><span uk-icon="icon: close; ratio: 1"></span></button>
-<button id="fileBtUpload{{field.id}}" class="uk-button-primary uk-hidden" {{action "uploadImage"}}><span uk-icon="icon: upload; ratio: 1"></span></button>
+<img id="imgDev{{this.field.id}}" class="uk-margin uk-hidden" width="300" />
+<button id="fileBtDel{{this.field.id}}" class="uk-button-danger uk-hidden" {{action "deleteFile"}}><span uk-icon="icon: close; ratio: 1"></span></button>
+<button id="fileBtUpload{{this.field.id}}" class="uk-button-primary uk-hidden" {{action "uploadImage"}}><span uk-icon="icon: upload; ratio: 1"></span></button>
