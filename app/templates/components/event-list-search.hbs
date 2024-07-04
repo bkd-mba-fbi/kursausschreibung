@@ -8,9 +8,7 @@
   </div>
       <div class="uk-width-1-3@s">
       <select id="sortList" onchange={{action "sortBy" value="target.value"}} class="uk-select" aria-label="Select">
-        {{#each sortOptions as |option|}}
-        <option value={{option.key}}>{{translate option.value}}</option>
-        {{/each}}
+        {{sortOptions}}
       </select>
     </div>
 </div>

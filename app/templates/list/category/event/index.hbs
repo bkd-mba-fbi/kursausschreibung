@@ -46,11 +46,3 @@
     {{/if}}
   {{/if}}
 {{/if}}
-<Script>
- var subscriptionWithLoginURL = document.getElementById('subscriptionWithLoginURL');
-  if(subscriptionWithLoginURL !== null) {
-    subscriptionWithLoginURL = subscriptionWithLoginURL.href;
-    var route = window.location.href.substring(window.location.href.indexOf('#'),window.location.href.length);
-    document.getElementById('subscriptionWithLoginURL').href = subscriptionWithLoginURL + route + '/subscribe';
-  }
-</Script>
