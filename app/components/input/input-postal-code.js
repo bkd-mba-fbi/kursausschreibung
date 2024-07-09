@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { debounce } from '@ember/runloop';
 import { getPostalCodes } from 'kursausschreibung/framework/api';
+import jQuery from 'jquery';
 
 
 export default Component.extend({
@@ -11,8 +12,8 @@ export default Component.extend({
       getPostalCodes(query).then(response => asyncResults(response));
     };
 
-    let $typeahead = this.$('.typeahead');
-    let $locationFields = this.$().closest('fieldset').find('input[name="Location"]');
+    let $typeahead = jQuery('.typeaheadZip');
+    let $locationFields = jQuery('.typeaheadZip').closest('fieldset').find('input[name="Location"]');
 
     $typeahead.typeahead(
       {
@@ -38,7 +39,7 @@ export default Component.extend({
   },
 
   willDestroyElement() {
-    this.$('.typeahead').typeahead('destroy');
+    jQuery('.typeaheadZip').typeahead('destroy');
     this._super(...arguments);
   }
 });

@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { vssDependency } from 'kursausschreibung/framework/form-helpers';
+import jQuery from 'jquery';
 
 export default Component.extend({
   didInsertElement() {
@@ -7,7 +8,7 @@ export default Component.extend({
 
     let options = this.get('field.options').options.map(option => option.Value);
 
-    this.$('.typeahead').typeahead(
+    jQuery('.typeahead').typeahead(
       {
         hint: true,
         highlight: true,
@@ -26,7 +27,7 @@ export default Component.extend({
   },
 
   willDestroyElement() {
-    this.$('.typeahead').typeahead('destroy');
+    jQuery('.typeahead').typeahead('destroy');
     this._super(...arguments);
   },
 

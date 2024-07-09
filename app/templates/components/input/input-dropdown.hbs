@@ -12,8 +12,10 @@
     {{#unless this.field.options.required}}
       <option value=""></option>
     {{/unless}}
+    {{this.dropdownOptions}}
+    <!--
     {{#each this.field.options.options as |option|}}
       <option value={{option.Key}}>{{option.Value}}</option>
-    {{/each}} 
+    {{/each}}--> 
   </select>
 {{/if}}

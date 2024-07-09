@@ -42,7 +42,7 @@ export default Component.extend({
         options = options + '<option value='+option+'>'+getString("sort"+option)+'</option>';
       }); 
     }
-    this.set('sortOptions',htmlSafe(options));;
+    this.set('sortOptions',htmlSafe(options));
   }, 
 
   didRender() {

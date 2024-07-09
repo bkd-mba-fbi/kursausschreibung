@@ -1,10 +1,11 @@
 import Component from '@ember/component';
 import { formFieldError } from 'kursausschreibung/framework/form-helpers';
+import jQuery from 'jquery';
 
 export default Component.extend({
   change() {
     // show an error message for duplicate e-mails
-    const emailFields = this.$().closest('form').find('input[type="email"]').toArray();
+    const emailFields = jQuery('#subscriptionForm').closest('form').find('input[type="email"]').toArray();
     const emailFieldValues = emailFields.map(field => field.value);
 
     emailFields.forEach((field, fieldIndex) => {
