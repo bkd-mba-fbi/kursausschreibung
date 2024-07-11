@@ -12,7 +12,7 @@ module.exports = function (defaults) {
 
     // see: https://github.com/ember-cli/ember-cli-uglify
     'ember-cli-terser': {
-      enabled: true,
+      enabled: false,
       exclude: ['appConfig.js', 'settings.js', 'locale/de-CH.js', 'locale/fr-CH.js'],
       terser: {
         compress: {

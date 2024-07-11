@@ -11,11 +11,12 @@
 
     {{#if this.companyFields}}
       <label class="uk-width-1-1">
-        <input type="checkbox" class="uk-checkbox" checked={{useCompanyAddress}} />
+        <input type="checkbox" class="uk-checkbox" checked={{this.useCompanyAddress}} name="useCompanyAddress" />
         {{translate "companyAddress"}}
       </label>
+      {{log this}}
 
-      <fieldset hidden={{if useCompanyAddress false true}} disabled={{if useCompanyAddress false true}}
+      <fieldset hidden={{if this.useCompanyAddress false true}} disabled={{if this.useCompanyAddress false true}}
         class="company-address-fields uk-width-1-1 uk-fieldset">
         {{#each this.companyFields as |field|}}
           {{input-base field=field}}
