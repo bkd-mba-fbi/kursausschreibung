@@ -12,8 +12,9 @@ export default Component.extend({
       getPostalCodes(query).then(response => asyncResults(response));
     };
 
-    let $typeahead = jQuery('.typeaheadZip');
-    let $locationFields = jQuery('.typeaheadZip').closest('fieldset').find('input[name="Location"]');
+    let elementId = '#'+this.elementId
+    let $typeahead = jQuery(elementId).children(0);
+    let $locationFields = jQuery(elementId).closest('fieldset').find('input[name="Location"]');
 
     $typeahead.typeahead(
       {
