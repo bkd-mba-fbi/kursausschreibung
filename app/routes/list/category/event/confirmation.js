@@ -14,7 +14,7 @@ export default Route.extend({
     let event = this.modelFor('list.category.event');
 
     if (dataToSubmit === null) {
-      this.replaceWith('list.category.event');
+      this.router.transitionTo('list.category.event');
       return;
     }
 

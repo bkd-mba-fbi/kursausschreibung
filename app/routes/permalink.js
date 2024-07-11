@@ -7,9 +7,9 @@ export default Route.extend({
 
     // redirect to event if it exists
     if (event !== undefined) {
-      this.replaceWith('list.category.event', event.areaKey, event.categoryKey, event.Id);
+      this.router.transitionTo('list.category.event', event.areaKey, event.categoryKey, event.Id);
     } else {
-      this.replaceWith('');
+      this.router.transitionTo('');
     }
   }
 });

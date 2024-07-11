@@ -11,7 +11,7 @@ export default Route.extend({
 
     // check if area of education exists
     if (!eventsByArea.areas.hasOwnProperty(params.area_of_education)) {
-      this.replaceWith('/');
+      this.router.transitionTo('/');
       return;
     }
 
@@ -19,12 +19,14 @@ export default Route.extend({
   },
 
   actions: {
-    didTransition() {
-      let modal = uikit.modal('#menu-modal');
-
+    init() { 
+      this.on('routeDidChange', transition => {
+        let modal = uikit.modal('#menu-modal');
+      
       if (modal !== undefined) {
         modal.hide();
       }
+      });
     }
   }
 });

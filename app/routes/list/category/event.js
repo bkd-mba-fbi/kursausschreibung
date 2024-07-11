@@ -15,7 +15,7 @@ export default Route.extend({
       event.areaKey !== areaKey ||
       event.categoryKey !== categoryKey
     ) {
-      this.replaceWith('list.category');
+      this.router.transitionTo('list.category');
       return;
     }
 
