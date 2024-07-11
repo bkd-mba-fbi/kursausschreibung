@@ -10,7 +10,7 @@ export default Route.extend({
 
     // check if category exists
     if (!(categories.hasOwnProperty(params.category))) {
-      this.router.transitionTo('list');
+      this.replaceWith('list');
       return;
     }
 

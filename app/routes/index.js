@@ -14,6 +14,6 @@ export default Route.extend({
       throw new Error('failed to load.');
     }
 
-    this.router.transitionTo('list', applicationModel.areaKeys[0]);
+    this.replaceWith('list', applicationModel.areaKeys[0]);
   }
 });

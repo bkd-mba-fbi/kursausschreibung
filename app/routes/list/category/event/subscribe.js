@@ -158,11 +158,11 @@ export default Route.extend({
     let model = this.modelFor('list.category.event');
 
     if (model.externalSubscriptionURL !== null) {
-      this.router.transitionTo('list.category.event.index');
+      this.replaceWith('list.category.event.index');
     }
 
     if (model.get('canDoSubscription') === false) {
-      this.router.transitionTo('list.category.event');
+      this.replaceWith('list.category.event');
       transition.abort();
       return;
     }

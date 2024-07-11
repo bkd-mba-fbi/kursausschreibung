@@ -20,7 +20,7 @@ export default Route.extend({
 
         if (dataToSubmit !== undefined) {
           let event = getEventById(dataToSubmit.eventId);
-          this.router.transitionTo('list.category.event.confirmation', event.areaKey, event.categoryKey, event.Id);
+          this.replaceWith('list.category.event.confirmation', event.areaKey, event.categoryKey, event.Id);
         }
 
       })
