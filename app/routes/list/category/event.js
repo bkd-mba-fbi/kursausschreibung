@@ -1,8 +1,10 @@
 import Route from '@ember/routing/route';
 import { underscore } from '@ember/string';
 import store from 'kursausschreibung/framework/store';
+import { inject as service } from '@ember/service';
 
-export default Route.extend({
+export default class event extends Route {
+  @service router;
   model(params) {
     let event = store.getEventById(params.event_id);
 
@@ -15,10 +17,10 @@ export default Route.extend({
       event.areaKey !== areaKey ||
       event.categoryKey !== categoryKey
     ) {
-      this.replaceWith('list.category');
+      this.router.transitionTo('list.category');
       return;
     }
 
     return event;
   }
-});
+};
