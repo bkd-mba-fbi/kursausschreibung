@@ -52,7 +52,9 @@ export default Component.extend({
   filteredEvents: oneWay('events'),
 
   keyUp(){
+    this.set('query',document.getElementById('searchEvents').value)
     setParameterByName('search',this.get('query'));
+    this.send('queryChanged');
   },
 
   actions: {

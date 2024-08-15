@@ -1,7 +1,7 @@
 <div class="uk-grid uk-margin">
   <div class="uk-search uk-search-default uk-width-2-3@s">
     <span data-uk-search-icon></span>
-    {{input class="uk-search-input" type="search" placeholder=(translate "search") value=query key-up=(action "queryChanged")}}   
+    <input id="searchEvents" class="uk-search-input" type="search" placeholder={{translate "search"}} value={{this.query}}>  
     {{#if this.query}}
       <button class="search-clear" type="button" uk-close {{action "clearSearch"}}></button>
     {{/if}}
