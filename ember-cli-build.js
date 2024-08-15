@@ -12,19 +12,10 @@ module.exports = function (defaults) {
 
     // see: https://github.com/ember-cli/ember-cli-uglify
     'ember-cli-terser': {
-      enabled: false,
+      enabled: true,
       exclude: ['appConfig.js', 'settings.js', 'locale/de-CH.js', 'locale/fr-CH.js'],
-      terser: {
-        compress: {
-          sequences: 50,
-        },
-        output: {
-          semicolons: true,
-        },
-      },
-  
       // Tell broccoli-terser-sourcemap to not add sourcemap URLs
-      hiddenSourceMap: false
+      hiddenSourceMap: true
     }, 
     emberCliConcat: {
       js: {
