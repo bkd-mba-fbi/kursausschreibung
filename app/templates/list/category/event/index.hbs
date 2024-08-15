@@ -1,10 +1,10 @@
 {{#if this.showBreadcrumbs}}
   <ul class="uk-breadcrumb">
     <li>
-      {{link-to model.AreaOfEducation "list"}}
+      <LinkTo @route="list">{{this.model.AreaOfEducation}}</LinkTo>
     </li>
     <li>
-      {{link-to model.EventCategory "list.category"}}
+      <LinkTo @route="list.category">{{this.model.EventCategory}}</LinkTo>
     </li>
   </ul>
 {{/if}}
@@ -26,21 +26,19 @@
       target="_blank" rel="noopener">
       {{translate "subscribe"}}
     </a>
-    {{link-to (translate "back") "list.category" class="uk-button uk-button-default uk-float-right"}}
+   <LinkTo @route="list.category" class="uk-button uk-button-default uk-float-right">{{translate "back"}}</LinkTo>
   </div>
 {{else}}
   {{#if this.badgeFreeSeatsEnabled}}
     {{remaining-seats-badge event=this.model}}
   {{/if}}
   <div class="uk-margin">
-    <!--
-    <LinkTo  route="list.category.event.subscribe" class="uk-button uk-button-primary uk-float-left subscribe-button"
-      data-uk-tooltip={{translate (concat this.model.status "Lamp")}} tagName="button" disabled=(if this.model.canDoSubscription false true)>{{translate "subscribe"}}</LinkTo>-->
-   
-   {{link-to (translate "subscribe") "list.category.event.subscribe" class="uk-button uk-button-primary uk-float-left subscribe-button"
-      data-uk-tooltip=(translate (concat this.model.status "Lamp")) disabled=(if this.model.canDoSubscription false true)}}
-      
-    {{link-to (translate "back") "list.category" class="uk-button uk-button-default uk-float-right"}}
+    {{#if this.model.canDoSubscription}}
+      <LinkTo @route="list.category.event.subscribe" data-uk-tooltip={{translate (concat this.model.status "Lamp")}} class="uk-button uk-button-primary uk-float-left subscribe-button">{{translate "subscribe"}}</LinkTo>   
+    {{else}}
+      <button data-uk-tooltip={{translate (concat this.model.status "Lamp")}} disabled class="uk-button uk-button-primary uk-float-left subscribe-button">{{translate "subscribe"}}</button> 
+    {{/if}}
+    <LinkTo @route="list.category" class="uk-button uk-button-default uk-float-right">{{translate "back"}}</LinkTo>
   </div>
   {{#if this.model.subscriptionWithLoginURL}}
     {{#if this.model.canDoSubscription }}    

@@ -5,14 +5,13 @@
     <div class="uk-navbar-left">
       <ul class="uk-navbar-nav">
         {{#each this.model.areaKeys as |areaKey|}}
-          {{#link-to "list" areaKey tagName="li" activeClass="uk-active"}}
-            {{#link-to "list" areaKey}}
-              {{get (get this.model.areas areaKey) "name"}}
+            <li>
+              <LinkTo @route="list" @model={{areaKey}}>{{get (get this.model.areas areaKey) "name"}}
               {{#if this.eventCategoryDropdown}}
                 <span uk-icon="icon: chevron-down"></span>
               {{/if}}
-            {{/link-to}}
-          {{/link-to}}
+              </LinkTo>
+          </li>
           {{#if this.eventCategoryDropdown}}
             <div data-uk-dropdown>
               {{area-navigation (get this.model.areas areaKey) hideHeading=true}}

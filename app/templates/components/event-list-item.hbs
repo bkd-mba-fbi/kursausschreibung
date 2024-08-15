@@ -1,5 +1,5 @@
 <div class="filter-tags {{this.event.filter}}">
-{{#link-to "list.category.event" this.event.areaKey this.event.categoryKey this.event.Id class="event-list-item uk-link-reset"}}
+<LinkTo @route="permalink" @model={{this.event.Id}} class="event-list-item uk-link-reset">
   <h3 class="uk-margin-small">
     <span class="uk-flex">
       <span>{{status-lamp status=this.event.status}}</span>
@@ -21,7 +21,7 @@
       {{/each}}
     </tbody>
   </table>
-{{/link-to}}
+</LinkTo>
 </div>
 <script>
   // add classes to wrapper emberjs element

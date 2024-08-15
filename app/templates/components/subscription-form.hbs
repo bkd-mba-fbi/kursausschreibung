@@ -17,7 +17,7 @@
       </label>
 
       <fieldset hidden={{if this.useCompanyAddress false true}} disabled={{if this.useCompanyAddress false true}}
-        class="company-address-fields uk-width-1-1 uk-fieldset">
+        class="company-address-fields uk-width-1-1 uk-grid-margin uk-fieldset">
         {{#each this.companyFields as |field|}}
           {{input-base field=field}}
         {{/each}}
