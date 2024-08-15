@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import $ from 'jquery';
+import jQuery from 'jquery';
 import { formatDate, getDMY, getYMD } from 'kursausschreibung/framework/date-helpers';
 import { setDataToSubmit } from 'kursausschreibung/framework/storage';
 import { getString } from 'kursausschreibung/framework/translate';
@@ -30,7 +30,7 @@ export default Component.extend({
     submit(event) {
       event.preventDefault();
 
-      subscribe(this.$('form'), this);
+      subscribe(jQuery('form'), this);
       this.get('subscribe')();
     },
 
