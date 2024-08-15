@@ -1,11 +1,11 @@
 <h2>
   <span class="uk-flex">
-    <span>{{status-lamp status=this.model.status}}</span>
+    <span><StatusLamp @status={{this.model.status}} /></span>
     <span>{{this.model.displayData.Designation}}</span>
   </span>
 </h2>
 
-{{event-details-table event=this.model}}
+<EventDetailsTable @event={{this.model}} />
 <hr>
 
 <ol id="subscriptionProcess" class="steps uk-margin-bottom" style="z-index: 980;"
@@ -30,13 +30,4 @@
 </ol>
 
 {{! FORM }}
-{{subscription-form
-  event=this.model
-  fields=this.fields
-  companyFields=this.companyFields
-  subscriptionDetailFields=this.subscriptionDetailFields
-  allowMultiplePeople=this.allowMultiplePeople
-  additionalPeopleFields=this.additionalPeopleFields
-  userSettings=this.model.userSettings
-  subscribe=(action "subscribe")
-}}
+<SubscriptionForm @event={{this.model}} @fields={{this.fields}} @companyFields={{this.companyFields}} @subscriptionDetailFields={{this.subscriptionDetailFields}} @allowMultiplePeople={{this.allowMultiplePeople}} @additionalPeopleFields={{this.additionalPeopleFields}} @userSettings={{this.model.userSettings}} @subscribe={{action "subscribe"}} />

@@ -11,14 +11,14 @@
 
 <h2>
   <span class="uk-flex">
-    <span>{{status-lamp status=this.model.status}}</span>
+    <span><StatusLamp @status={{this.model.status}} /></span>
     <span>{{this.model.displayData.Designation}}</span>
   </span>
 </h2>
 {{#if this.model.subtitle}}
 <span class="uk-label uk-label-warning uk-margin-small">{{model.subtitle}}</span>
 {{/if}}
-{{event-details-table event=this.model}}
+<EventDetailsTable @event={{this.model}} />
 
 {{#if this.model.externalSubscriptionURL}}
   <div class="uk-margin">
@@ -30,7 +30,7 @@
   </div>
 {{else}}
   {{#if this.badgeFreeSeatsEnabled}}
-    {{remaining-seats-badge event=this.model}}
+    <RemainingSeatsBadge @event={{this.model}} />
   {{/if}}
   <div class="uk-margin">
     {{#if this.model.canDoSubscription}}

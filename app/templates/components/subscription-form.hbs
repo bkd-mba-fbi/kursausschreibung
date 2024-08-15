@@ -1,11 +1,10 @@
-<form id="subscriptionForm" autocomplete="on" onsubmit={{action "submit"}} class="uk-grid-small uk-form-horizontal"
-  data-uk-grid>
+<form id="subscriptionForm" autocomplete="on" onsubmit={{action "submit"}} class="uk-grid-small uk-form-horizontal" data-uk-grid>
   {{#if this.userSettings.isLoggedIn}}
     <span class="uk-text-muted">{{translate "useLogin" userSettings.FullName}}</span>
   {{else}}
     <fieldset class="address-fields uk-width-1-1 uk-fieldset">
       {{#each this.fields as |field|}}
-        {{input-base field=field}}
+        <InputBase @field={{field}} />
       {{/each}}
     </fieldset>
 
@@ -16,10 +15,9 @@
         </button>
       </label>
 
-      <fieldset hidden={{if this.useCompanyAddress false true}} disabled={{if this.useCompanyAddress false true}}
-        class="company-address-fields uk-width-1-1 uk-grid-margin uk-fieldset">
+      <fieldset hidden={{if this.useCompanyAddress false true}} disabled={{if this.useCompanyAddress false true}} class="company-address-fields uk-width-1-1 uk-grid-margin uk-fieldset">
         {{#each this.companyFields as |field|}}
-          {{input-base field=field}}
+          <InputBase @field={{field}} />
         {{/each}}
       </fieldset>
     {{/if}}
@@ -31,7 +29,7 @@
 
   <fieldset class="subscription-detail-fields uk-width-1-1 uk-fieldset">
     {{#each this.subscriptionDetailFields as |field|}}
-      {{input-base field=field}}
+      <InputBase @field={{field}} />
     {{/each}}
   </fieldset>
 
@@ -50,7 +48,7 @@
       <fieldset class="additional-person-fields uk-width-1-1 uk-fieldset">
         <h3>{{translate "person"}} {{index}}</h3>
         {{#each this.additionalPeopleFields as |field|}}
-          {{input-base field=field}}
+          <InputBase @field={{field}} />
         {{/each}}
         <hr>
       </fieldset>

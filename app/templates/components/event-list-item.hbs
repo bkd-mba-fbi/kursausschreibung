@@ -2,7 +2,7 @@
 <LinkTo @route="permalink" @model={{this.event.Id}} class="event-list-item uk-link-reset">
   <h3 class="uk-margin-small">
     <span class="uk-flex">
-      <span>{{status-lamp status=this.event.status}}</span>
+      <span><StatusLamp @status={{this.event.status}} /></span>
       <span>{{get this.event.displayData this.title}}</span>
     </span>
   </h3>
