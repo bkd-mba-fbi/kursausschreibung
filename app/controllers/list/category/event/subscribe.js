@@ -1,9 +1,11 @@
 import Controller from '@ember/controller';
+import { inject as service } from '@ember/service';
+import { action } from '@ember/object';
 
-export default Controller.extend({
-  actions: {
-    subscribe() {
-      this.transitionToRoute('list.category.event.confirmation');
+export default class subscribeController extends Controller {
+  @service router;
+  @action
+  subscribe() {
+      this.router.transitionTo('list.category.event.confirmation');
     }
-  }
-});
+};

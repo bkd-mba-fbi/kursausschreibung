@@ -9,7 +9,6 @@ import { autoCheckForLogin } from 'kursausschreibung/framework/login-helpers';
 import settings from 'kursausschreibung/framework/settings';
 import { getString } from 'kursausschreibung/framework/translate';
 import { Promise } from 'rsvp';
-import { inject as service } from '@ember/service';
 
 // if these were loaded in the component an error
 // would just cause the template to stop rendering
@@ -154,17 +153,16 @@ function getFormFields(settings, eventTypeId, eventCategoryId) {
   return settings.formFields.default;
 }
 
-export default class subscribe extends Route {
-  @service router;
+export default Route.extend({
   model(_params, transition) {
     let model = this.modelFor('list.category.event');
 
     if (model.externalSubscriptionURL !== null) {
-      this.router.transitionTo('list.category.event.index');
+      transition.abort();
     }
 
     if (model.get('canDoSubscription') === false) {
-      this.router.transitionTo('list.category.event')
+      transition.abort();
       return;
     }
 
@@ -211,7 +209,7 @@ export default class subscribe extends Route {
       }).then(
         () => model
       );
-  }
+  },
 
   setupController(controller, model) {
     this._super(...arguments);
@@ -237,4 +235,4 @@ export default class subscribe extends Route {
       }
     
   }
-}
+});
