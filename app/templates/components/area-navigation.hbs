@@ -1,13 +1,13 @@
-{{#unless hideHeading}}
-  <h3 id="header-naviagtion-area" class="uk-margin-small">{{area.name}}</h3>
+{{#unless this.hideHeading}}
+  <h3 id="header-naviagtion-area" class="uk-margin-small">{{this.area.name}}</h3>
 {{/unless}}
 <ul class="uk-nav uk-nav-default">
-  {{#link-to "list.index" area.key tagName="li" activeClass="uk-active"}}
-    {{link-to (translate "overview") "list.index" area.key}}
-  {{/link-to}}
-  {{#each area.categoryKeys as |categoryKey|}}
-    {{#link-to "list.category" area.key categoryKey tagName="li" activeClass="uk-active"}}
-      {{link-to (get (get area.categories categoryKey) "name") "list.category" area.key categoryKey}}
-    {{/link-to}}
+  <li>
+    <LinkTo @route="list.index">{{translate "overview"}}</LinkTo>
+  </li>
+  {{#each this.area.categoryKeys as |categoryKey|}}
+    <li>
+      <LinkTo @route="list.category" @model={{categoryKey}}>{{get (get this.area.categories categoryKey) "name"}}</LinkTo>
+  </li>
   {{/each}}
 </ul>

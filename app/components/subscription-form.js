@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import $ from 'jquery';
+import jQuery from 'jquery';
 import { formatDate, getDMY, getYMD } from 'kursausschreibung/framework/date-helpers';
 import { setDataToSubmit } from 'kursausschreibung/framework/storage';
 import { getString } from 'kursausschreibung/framework/translate';
@@ -30,10 +30,18 @@ export default Component.extend({
     submit(event) {
       event.preventDefault();
 
-      subscribe(this.$('form'), this);
+      subscribe(jQuery('form'), this);
       this.get('subscribe')();
     },
 
+    useCompanyAddress(){
+      var value = this.get('useCompanyAddress');
+      if(value){
+        this.set('useCompanyAddress',false);
+      } else {
+        this.set('useCompanyAddress',true);
+      }
+    },
     addPerson() {
       if (this.get('event.FreeSeats') - 1 - this.get('additionalPeopleCount') <= 0) {
         uikit.modal.alert(getString('noSeatsAvailable'));

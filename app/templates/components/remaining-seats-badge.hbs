@@ -1,4 +1,4 @@
-{{#unless hidden}}
-  <span class="uk-label uk-label-{{labelType}}">{{event.FreeSeats}}
-    {{translate (if plural "seatsAvailable" "seatAvailable")}}</span>
+{{#unless this.hidden}}
+  <span class="uk-label uk-label-{{this.labelType}}">{{this.event.FreeSeats}}
+    {{translate (if this.plural "seatsAvailable" "seatAvailable")}}</span>
 {{/unless}}

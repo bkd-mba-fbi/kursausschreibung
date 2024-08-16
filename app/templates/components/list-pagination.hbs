@@ -1,10 +1,10 @@
-{{#if itemsOnCurrentPage}}
+{{#if this.itemsOnCurrentPage}}
 <div uk-filter="target: .js-filter">
-  {{#if filterCodes}}
+  {{#if this.filterCodes}}
   <ul class="uk-subnav uk-subnav-pill">
     <li id="tagAll" class="uk-active filter-tag" uk-filter-control=""><a href="#">{{translate "FilterTagAllEvents"}}</a>
     </li>
-    {{#each filterCodes as |code|}}
+    {{#each this.filterCodes as |code|}}
     <li id="tag{{code.id}}" class="filter-tag" uk-filter-control=".tag{{code.id}}"><a
         href="#{{code.Code}}">{{code.Code}}</a></li>
     {{/each}}
@@ -14,39 +14,51 @@
     <div class="uk-width-auto@m">
       <ul class="uk-pagination" data-uk-margin>
         <li>
-          {{#link-to route (query-params page=previousPage) class=(if isFirstPage "uk-disabled")}}
-          <span data-uk-pagination-previous></span>
-          {{/link-to}}
+          {{#if this.isFirstPage}}
+          <LinkTo @route={{this.route}} @query={{hash page=this.previousPage}} class="uk-disabled">
+                    <span data-uk-pagination-previous></span>
+          </LinkTo>
+          {{else}}
+          <LinkTo @route={{this.route}} @query={{hash page=this.previousPage}}>
+                    <span data-uk-pagination-previous></span>
+          </LinkTo>
+          {{/if}}
         </li>
-        {{#if showFirst}}
+        {{#if this.showFirst}}
         <li class={{if p.active "uk-active" }}>
-          {{#link-to route (query-params page=1)}}1{{/link-to}}
+          <LinkTo @route={{this.route}} @query={{hash page=1}}></LinkTo>
         </li>
         {{/if}}
-        {{#if showLeftDots}}
+        {{#if this.showLeftDots}}
         <li class="uk-disabled">
           <span>...</span>
         </li>
         {{/if}}
-        {{#each pages as |p|}}
+        {{#each this.pages as |p|}}
         <li class={{if p.active "uk-active" }}>
-          {{#link-to route (query-params page=p.page)}}{{p.page}}{{/link-to}}
+          <LinkTo @route={{this.route}} @query={{hash page=p.page}}>{{p.page}}</LinkTo>
         </li>
         {{/each}}
-        {{#if showRightDots}}
+        {{#if this.showRightDots}}
         <li class="uk-disabled">
           <span>...</span>
         </li>
         {{/if}}
-        {{#if showLast}}
+        {{#if this.showLast}}
         <li class={{if p.active "uk-active" }}>
-          {{#link-to route (query-params page=lastPage)}}{{lastPage}}{{/link-to}}
+          <LinkTo @route={{this.route}} @query={{hash page=this.lastPage}}>{{this.lastPage}}</LinkTo>
         </li>
         {{/if}}
         <li>
-          {{#link-to route (query-params page=nextPage) class=(if isLastPage "uk-disabled")}}
-          <span data-uk-pagination-next></span>
-          {{/link-to}}
+          {{#if this.isLastPage}}
+          <LinkTo @route={{this.route}} @query={{hash page=this.nextPage}} class="uk-disabled">
+                    <span data-uk-pagination-next></span>
+          </LinkTo>
+          {{else}}
+          <LinkTo @route={{this.route}} @query={{hash page=this.nextPage}}>
+                    <span data-uk-pagination-next></span>
+          </LinkTo>
+          {{/if}}
         </li>
       </ul>
     </div>
@@ -56,45 +68,57 @@
     </div>
   </div>
   <ul id="list-cards" class="uk-list uk-list-divider js-filter">
-    {{yield itemsOnCurrentPage}}
+    {{yield this.itemsOnCurrentPage}}
   </ul>
-  <ul class="uk-pagination" data-uk-margin>
-    <li>
-      {{#link-to route (query-params page=previousPage) class=(if isFirstPage "uk-disabled")}}
-      <span data-uk-pagination-previous></span>
-      {{/link-to}}
-    </li>
-    {{#if showFirst}}
-    <li class={{if p.active "uk-active" }}>
-      {{#link-to route (query-params page=1)}}1{{/link-to}}
-    </li>
-    {{/if}}
-    {{#if showLeftDots}}
-    <li class="uk-disabled">
-      <span>...</span>
-    </li>
-    {{/if}}
-    {{#each pages as |p|}}
-    <li class={{if p.active "uk-active" }}>
-      {{#link-to route (query-params page=p.page)}}{{p.page}}{{/link-to}}
-    </li>
-    {{/each}}
-    {{#if showRightDots}}
-    <li class="uk-disabled">
-      <span>...</span>
-    </li>
-    {{/if}}
-    {{#if showLast}}
-    <li class={{if p.active "uk-active" }}>
-      {{#link-to route (query-params page=lastPage)}}{{lastPage}}{{/link-to}}
-    </li>
-    {{/if}}
-    <li>
-      {{#link-to route (query-params page=nextPage) class=(if isLastPage "uk-disabled")}}
-      <span data-uk-pagination-next></span>
-      {{/link-to}}
-    </li>
-  </ul>
+        <ul class="uk-pagination" data-uk-margin>
+        <li>
+          {{#if this.isFirstPage}}
+          <LinkTo @route={{this.route}} @query={{hash page=this.previousPage}} class="uk-disabled">
+                    <span data-uk-pagination-previous></span>
+          </LinkTo>
+          {{else}}
+          <LinkTo @route={{this.route}} @query={{hash page=this.previousPage}}>
+                    <span data-uk-pagination-previous></span>
+          </LinkTo>
+          {{/if}}
+        </li>
+        {{#if this.showFirst}}
+        <li class={{if p.active "uk-active" }}>
+          <LinkTo @route={{this.route}} @query={{hash page=1}}></LinkTo>
+        </li>
+        {{/if}}
+        {{#if this.showLeftDots}}
+        <li class="uk-disabled">
+          <span>...</span>
+        </li>
+        {{/if}}
+        {{#each this.pages as |p|}}
+        <li class={{if p.active "uk-active" }}>
+          <LinkTo @route={{this.route}} @query={{hash page=p.page}}>{{p.page}}</LinkTo>
+        </li>
+        {{/each}}
+        {{#if this.showRightDots}}
+        <li class="uk-disabled">
+          <span>...</span>
+        </li>
+        {{/if}}
+        {{#if this.showLast}}
+        <li class={{if p.active "uk-active" }}>
+          <LinkTo @route={{this.route}} @query={{hash page=this.lastPage}}>{{this.lastPage}}</LinkTo>
+        </li>
+        {{/if}}
+        <li>
+          {{#if this.isLastPage}}
+          <LinkTo @route={{this.route}} @query={{hash page=this.nextPage}} class="uk-disabled">
+                    <span data-uk-pagination-next></span>
+          </LinkTo>
+          {{else}}
+          <LinkTo @route={{this.route}} @query={{hash page=this.nextPage}}>
+                    <span data-uk-pagination-next></span>
+          </LinkTo>
+          {{/if}}
+        </li>
+      </ul>
 </div>
 {{else}}
 {{translate "noResults"}}

@@ -1,2 +1,2 @@
 <h2 id="headerCategory">{{translate "overview"}}</h2>
-{{event-list events=model.events page=page queryChanged=(action "queryChanged") route="list"}}
+<EventList @events={{this.model.events}} @page={{this.page}} @queryChanged={{action "queryChanged"}} @route="list" />
