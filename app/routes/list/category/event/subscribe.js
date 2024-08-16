@@ -105,6 +105,7 @@ function addSubscriptionDetailDependencies(subscriptionDetailDependencies,subscr
     
         if (dependency.IdVss === item.id){
           item.options.hidden = 'uk-hidden';
+          dependency.required = item.options.required
           item.options.required = false;
         }
         if (dependency.IdVssInfluencer === item.id) {

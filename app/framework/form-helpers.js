@@ -110,7 +110,7 @@ if(field.options.dependencyItems !== undefined) {
 
     if(vssDependencyCheck(formValue,operator,values)) {     
       hidden.classList.remove(hiddenClass);
-      requiredElement.required = true; 
+      requiredElement.required = element.required; 
     } else {
       hidden.classList.add(hiddenClass);
       requiredElement.required = false; 
