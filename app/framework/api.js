@@ -37,7 +37,7 @@ function ajax(method, relativeUrl, readableError = true, data = null, file = fal
     dataFilter: data => data === '' ? 'null' : data,
 
     headers: {
-      'CLX-Authorization': `token_type=${appConfig.tokenType}, access_token=${accessToken}`
+      'Authorization': `Bearer ${accessToken}`
     }
   });
 
