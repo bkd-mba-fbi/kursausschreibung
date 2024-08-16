@@ -92,6 +92,7 @@ window.kursausschreibung.locale["de-CH"] = {
   "formAddressLine1Placeholder": "Musterstrasse 99",
   "formZipPlaceholder": "3000",
   "formLocationPlaceholder": "Bern",
+  "formOptionEmpty": "-- Leer --",
   "duplicateEmailError": "Die E-Mail-Adresse muss unterschiedlich sein, ansonsten kann das Formular nicht übermittelt werden.",
   "addPerson": "Weitere Person anmelden",
   "removePerson": "Letzte Person entfernen",

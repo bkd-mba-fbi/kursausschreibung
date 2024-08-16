@@ -15,6 +15,8 @@ export default Component.extend({
     change(){
         let field = this.get('field');
         let currentValue = null;
+
+        document.getElementById(this.elementId).children[0].classList.remove('required');
     
         document.getElementsByName(field.id).forEach(input => {
             if(field.options.showAsRadioButtons) {
