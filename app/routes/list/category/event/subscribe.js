@@ -39,9 +39,9 @@ let dataTypeMappings = {
   ShortText: 'string',
   Text: 'textarea',
   Int: 'number',
-  YesNo: 'checkbox',
   Currency: 'number',
-  Date: 'date'
+  Date: 'date',
+  Yes: 'checkbox'
 };
 
 let fileTypeMapping = {
@@ -72,6 +72,23 @@ function getSubscriptionDetailFields(subscriptionDetails) {
 
     if ( detail.VssStyle === 'DA' || detail.VssStyle === 'PD' || detail.VssStyle === 'PF' ){
       dataType = 'file';
+    }
+
+    if (detail.VssType === 'YesNo'){
+      dataType = 'dropdown';
+      detail.ShowAsRadioButtons = true;
+      let yes = {
+        Key: "Ja",
+        Value: getString('yes')
+      };
+      let no = {
+        Key: "Nein",
+        Value: getString('no')
+      };
+      let items = [];
+      items.push(yes);
+      items.push(no);
+      detail.DropdownItems = items;
     }
 
     return {
