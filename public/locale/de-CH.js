@@ -70,7 +70,8 @@ window.kursausschreibung.locale["de-CH"] = {
   "number": "Nummer",
   "duration": "Dauer", 
   "time": "Zeit",
-
+  "weekday": "Wochentag",
+  
   // translations for the form
   "formFormOfAddress": "Anrede",
   "formFirstName": "Vorname",
