@@ -19,7 +19,6 @@ function setItem(key, value) {
  */
 function getItem(key) {
   let item = undefined;
-  console.log(item);
   if (key === 'CLX.LoginToken') {
     item = sessionStorage.getItem(key);
   } else {

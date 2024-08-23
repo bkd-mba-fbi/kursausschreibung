@@ -20,6 +20,7 @@ export function displayAsGrid(bool) {
     var list = document.getElementById('list-cards');
     var btGrid = document.getElementById('bt-grid');
     var btList = document.getElementById('bt-list');
+    var bool = (String(bool).toLowerCase() === 'true');
 
     if (typeof bool === "boolean") {
       setListViewGrid(bool);
