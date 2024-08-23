@@ -133,6 +133,10 @@
   display: block;
 }
 
+.uk-scope .card-list .event-list-item h3 span span span {
+  margin-bottom: 5px;
+}
+
 .uk-scope .card-list .event-list-item h3 span span {
   margin: auto;
 }
