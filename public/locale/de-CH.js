@@ -26,7 +26,7 @@ window.kursausschreibung.locale["de-CH"] = {
   "back": "zurück",
   "backToCourses": "Zurück zur Übersicht",
   "thankYou": "Besten Dank für Ihre Anmeldung",
-  "thankYouWaitingList": "Besten Dank für Ihre Anmeldung auf die Warteliste",
+  "thankYouWaitingList": "Besten Dank für Ihre Anmeldung auf die Warteliste.",
   "youWillReceiveAConfirmationEMail": "Sie erhalten eine Anmeldebestätigung per E-Mail.",
   "officeAddress": "Kurssekretariat<br>Telefon 031 123 45 67<br>info@kurssekretariat.ch",
   "yourDetails": "Ihre Angaben",
@@ -53,6 +53,7 @@ window.kursausschreibung.locale["de-CH"] = {
   "sortLeadership": "Sortiert nach Leitung A-Z",
   "sortLocation": "Sortiert nach Ort A-Z",
   "sortSubscriptionTo": "Sortiert nach Anmeldeschluss aufsteigend",
+  "sortBuildingAddress": "Sortiert nach Standort",
   "searchNoEvents": "Mit dem Filter wurden keine Kurse gefunden.",
 
   // properties of an event
@@ -93,6 +94,9 @@ window.kursausschreibung.locale["de-CH"] = {
   "formZipPlaceholder": "3000",
   "formLocationPlaceholder": "Bern",
   "formOptionEmpty": "-- Leer --",
+  "formPhoneMobileHint": "Das ist ein hint und kann in den /local/de-CH.js konfiguriert werden",
+  "formBirthdateHint": "Das ist ein hint und kann in den /local/de-CH.js konfiguriert werden",
+  "formEmail2Hint": "Das ist ein hint und kann in den /local/de-CH.js konfiguriert werden",
   "duplicateEmailError": "Die E-Mail-Adresse muss unterschiedlich sein, ansonsten kann das Formular nicht übermittelt werden.",
   "addPerson": "Weitere Person anmelden",
   "removePerson": "Letzte Person entfernen",
