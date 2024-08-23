@@ -46,7 +46,7 @@ window.kursausschreibung.locale["de-CH"] = {
   "FilterTagAllEvents": "Alle",
   "FilterTag1018": "Code Filter Überschreiben (FilterTag1018)", // example overwrite codes filter 
   "notAvailable": "nicht verfügbar",
-  "useLogin": "Ihre Anmeldung wird gemäss Ihrem Login erstellt {0}.",
+  "useLogin": "Bitte klicken Sie auf die Schaltfläche «Anmelden», um Ihre Anmeldung zu bestätigen und abzuschliessen.",
   "backToSubscripton": "Zurück zum Anmeldeformular",
   "invalidInput": "Ungültige Eingabe",
   "sortDateFrom": "Sortiert nach Datum von aufsteigend",

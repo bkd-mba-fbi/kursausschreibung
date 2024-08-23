@@ -1,6 +1,6 @@
 <form id="subscriptionForm" autocomplete="on" onsubmit={{action "submit"}} class="uk-grid-small uk-form-horizontal" data-uk-grid>
   {{#if this.userSettings.isLoggedIn}}
-    <span class="uk-text-muted">{{translate "useLogin" userSettings.FullName}}</span>
+    <span class="uk-text-warning">{{translate "useLogin"}}</span>
   {{else}}
     <fieldset class="address-fields uk-width-1-1 uk-fieldset">
       {{#each this.fields as |field|}}

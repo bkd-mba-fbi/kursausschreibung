@@ -49,7 +49,7 @@ window.kursausschreibung.locale["fr-CH"] = {
     "FilterTag1021": "Test 3",
     "FilterTag1022": "Test 4",
     "notAvailable": "indisponible",
-    "useLogin": "Votre inscription sera créée en fonction de votre nom d'utilisateur {0}.",
+    "useLogin": "Veuillez cliquer sur le bouton \"Inscription\" pour confirmer et finaliser votre inscription.",
     "backToSubscripton": "Formulaire d'inscription",
     "invalidInput": "Entrée invalide",
     
