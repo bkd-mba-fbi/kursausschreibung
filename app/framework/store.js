@@ -319,7 +319,7 @@ function prepareEvent(event) {
   addDisplayData(event);
 
   //settings subscriptionWithLoginURL
-  event.subscriptionWithLoginURL = encodeURI(settings.subscriptionWithLoginURL+'/'+event.EventCategory+'/'+event.Id+'/subscribe');
+  event.subscriptionWithLoginURL = settings.subscriptionWithLoginURL === null ? null : encodeURI(settings.subscriptionWithLoginURL+'/'+event.EventCategory+'/'+event.Id+'/subscribe');
 
   //event subtitle when > inside string
   let eventSubtitle = event.Designation.split(settings.eventSubtitle);
