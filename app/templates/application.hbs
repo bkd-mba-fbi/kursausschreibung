@@ -2,6 +2,7 @@
 
   {{! NAVIGATION }}
   <nav class="uk-navbar-container uk-margin-top" data-uk-navbar>
+    {{#if this.model.moreOneAreaKeys}}
     <div class="uk-navbar-left">
       <ul class="uk-navbar-nav">
         {{#each this.model.areaKeys as |areaKey|}}
@@ -20,6 +21,7 @@
         {{/each}}
       </ul>
     </div>
+    {{/if}}
     <div class="uk-navbar-right">
       <ul class="uk-navbar-nav">
         <li>
