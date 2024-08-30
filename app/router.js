@@ -23,6 +23,8 @@ const Router = EmberRouter.extend({
 
       if (this.currentPath === 'list.category.event.subscribe') {
         scrollToTimeout(subscriptionProcessId);
+      } else if (this.currentPath !== 'list.category' && screen.width <= 960) {
+        scrollToTimeout('headerCategory');
       } else if (this.currentPath !== 'list.index') {
         scrollToTimeout(rootElement.id);
       }
