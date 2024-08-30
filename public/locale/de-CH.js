@@ -19,6 +19,7 @@ window.kursausschreibung.locale["de-CH"] = {
   "french": "Französisch",
   "menu": "Menu",
   "navigation": "Navigation",
+  "kursCategoryHeader": "Kategorie",
   "personalData": "Personendaten",
   "confirmation": "Bestätigung",
   "subscribe": "Anmelden",
@@ -26,7 +27,7 @@ window.kursausschreibung.locale["de-CH"] = {
   "back": "zurück",
   "backToCourses": "Zurück zur Übersicht",
   "thankYou": "Besten Dank für Ihre Anmeldung",
-  "thankYouWaitingList": "Besten Dank für Ihre Anmeldung auf die Warteliste",
+  "thankYouWaitingList": "Besten Dank für Ihre Anmeldung auf die Warteliste.",
   "youWillReceiveAConfirmationEMail": "Sie erhalten eine Anmeldebestätigung per E-Mail.",
   "officeAddress": "Kurssekretariat<br>Telefon 031 123 45 67<br>info@kurssekretariat.ch",
   "yourDetails": "Ihre Angaben",
@@ -46,13 +47,14 @@ window.kursausschreibung.locale["de-CH"] = {
   "FilterTagAllEvents": "Alle",
   "FilterTag1018": "Code Filter Überschreiben (FilterTag1018)", // example overwrite codes filter 
   "notAvailable": "nicht verfügbar",
-  "useLogin": "Ihre Anmeldung wird gemäss Ihrem Login erstellt {0}.",
+  "useLogin": "Bitte klicken Sie auf die Schaltfläche «Anmelden», um Ihre Anmeldung zu bestätigen und abzuschliessen.",
   "backToSubscripton": "Zurück zum Anmeldeformular",
   "invalidInput": "Ungültige Eingabe",
   "sortDateFrom": "Sortiert nach Datum von aufsteigend",
   "sortLeadership": "Sortiert nach Leitung A-Z",
   "sortLocation": "Sortiert nach Ort A-Z",
   "sortSubscriptionTo": "Sortiert nach Anmeldeschluss aufsteigend",
+  "sortBuildingAddress": "Sortiert nach Standort",
   "searchNoEvents": "Mit dem Filter wurden keine Kurse gefunden.",
 
   // properties of an event
@@ -69,7 +71,8 @@ window.kursausschreibung.locale["de-CH"] = {
   "number": "Nummer",
   "duration": "Dauer", 
   "time": "Zeit",
-
+  "weekday": "Wochentag",
+  
   // translations for the form
   "formFormOfAddress": "Anrede",
   "formFirstName": "Vorname",
@@ -92,6 +95,10 @@ window.kursausschreibung.locale["de-CH"] = {
   "formAddressLine1Placeholder": "Musterstrasse 99",
   "formZipPlaceholder": "3000",
   "formLocationPlaceholder": "Bern",
+  "formOptionEmpty": "-- Leer --",
+  "formPhoneMobileHint": "Das ist ein hint und kann in den /local/de-CH.js konfiguriert werden",
+  "formBirthdateHint": "Das ist ein hint und kann in den /local/de-CH.js konfiguriert werden",
+  "formEmail2Hint": "Das ist ein hint und kann in den /local/de-CH.js konfiguriert werden",
   "duplicateEmailError": "Die E-Mail-Adresse muss unterschiedlich sein, ansonsten kann das Formular nicht übermittelt werden.",
   "addPerson": "Weitere Person anmelden",
   "removePerson": "Letzte Person entfernen",

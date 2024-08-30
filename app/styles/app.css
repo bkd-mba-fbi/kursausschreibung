@@ -17,8 +17,12 @@
   border-bottom: 1px solid #e5e5e5;
 }
 
-.uk-scope .uk-navbar-nav > li.uk-active > a {
+.uk-scope .uk-navbar-nav > li.uk-active > a,
+.uk-scope .uk-navbar-nav > li > a.active {
   border-bottom: 2px solid var(--mainColor);
+}
+.uk-scope a.active {
+  color: #666;
 }
 
 .uk-scope h2 {
@@ -126,20 +130,19 @@
 }
 
 .uk-scope .card-list .event-list-item h3 span {
-  display: grid;
-  text-align: center;
+  display: block;
 }
 
-.uk-scope .card-list .event-list-item h3 span span {
-  margin: auto;
-}
-
-.uk-scope .card-list .event-list-item table {
-  margin: auto;
+.uk-scope .card-list .event-list-item h3 span span span {
+  margin-bottom: 5px;
 }
 
 .uk-scope #list-cards{
   margin-left: auto;
+}
+
+.uk-scope .card-list .event-list-item .details-table td {
+  display: block;
 }
 
 /* mobile */

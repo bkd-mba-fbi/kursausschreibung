@@ -1,30 +1,30 @@
-<div class="filter-tags {{event.filter}}">
-{{#link-to "list.category.event" event.areaKey event.categoryKey event.Id classNames="event-list-item uk-link-reset"}}
+<div class="filter-tags {{this.event.filter}}">
+<LinkTo @route="permalink" @model={{this.event.Id}} class="event-list-item uk-link-reset">
   <h3 class="uk-margin-small">
     <span class="uk-flex">
-      <span>{{status-lamp status=event.status}}</span>
-      <span>{{get event.displayData title}}</span>
+      <span><StatusLamp @status={{this.event.status}} /></span>
+      <span>{{get this.event.displayData this.title}}</span>
     </span>
   </h3>
-  {{#if event.subtitle}}
-  <span class="uk-label uk-label-warning uk-margin-small">{{event.subtitle}}</span>
+  {{#if this.event.subtitle}}
+  <span class="uk-label uk-label-warning uk-margin-small">{{this.event.subtitle}}</span>
   {{/if}}
   <table class="details-table">
     <tbody>
-      {{#each fields as |field|}}
-        {{#if (get event.displayData field.key)}}
+      {{#each this.fields as |field|}}
+        {{#if (get this.event.displayData field.key)}}
           <tr>
             <td>{{{field.name}}}</td>
-            <td>{{{get event.displayData field.key}}}</td>
+            <td>{{{get this.event.displayData field.key}}}</td>
           </tr>
         {{/if}}
       {{/each}}
     </tbody>
   </table>
-{{/link-to}}
+</LinkTo>
 </div>
 <script>
-  // add classnames to wrapper emberjs element
+  // add classes to wrapper emberjs element
   var filter = document.querySelector('.jsfilter');
   var filterChild = filter.children;
   var filterClass = filterChild[0].className;

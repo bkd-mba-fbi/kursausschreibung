@@ -1,7 +1,9 @@
 import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
 import { underscore } from '@ember/string';
 
-export default Route.extend({
+export default class category extends Route {
+  @service router;
   model(params) {
     let categories = this.modelFor('list').categories;
 
@@ -10,10 +12,10 @@ export default Route.extend({
 
     // check if category exists
     if (!(categories.hasOwnProperty(params.category))) {
-      this.replaceWith('list');
+      this.router.transitionTo('list');
       return;
     }
 
     return categories[params.category];
   }
-});
+}

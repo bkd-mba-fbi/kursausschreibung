@@ -1,7 +1,7 @@
-{{#event-list-search queryChanged=(action "queryChanged") events=events as |filteredEvents|}}
-  {{#list-pagination page=page items=filteredEvents route=route as |eventsOnCurrentPage|}}
+<EventListSearch @queryChanged={{action "queryChanged"}} @events={{this.events}} as |filteredEvents|>
+  <ListPagination @page={{this.page}} @items={{filteredEvents}} @route={{this.route}} as |eventsOnCurrentPage|>
     {{#each eventsOnCurrentPage as |event|}}
-      {{event-list-item event=event}}
+      <EventListItem @event={{event}} />
     {{/each}}
-  {{/list-pagination}}
-{{/event-list-search}}
+  </ListPagination>
+</EventListSearch>

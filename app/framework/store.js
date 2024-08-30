@@ -22,7 +22,7 @@ export function isInitialized() {
 }
 
 // group events by areaOfEducation, EventCategory and Id
-let eventsByArea = { areas: {}, areaKeys: [] };
+let eventsByArea = { areas: {}, areaKeys: [], moreOneAreaKeys: true };
 let eventsById = [];
 
 /**
@@ -92,6 +92,7 @@ export function init() {
 
     // sort areaKeys
     eventsByArea.areaKeys = Object.keys(eventsByArea.areas).sort();
+    eventsByArea.moreOneAreaKeys = eventsByArea.areaKeys.length === 1 && settings.eventCategoryDropdown === false ? false : true;
 
     // sort categoryKeys
     eventsByArea.areaKeys.forEach(area =>
@@ -319,7 +320,7 @@ function prepareEvent(event) {
   addDisplayData(event);
 
   //settings subscriptionWithLoginURL
-  event.subscriptionWithLoginURL = settings.subscriptionWithLoginURL;
+  event.subscriptionWithLoginURL = settings.subscriptionWithLoginURL === null ? null : encodeURI(settings.subscriptionWithLoginURL+'/'+event.EventCategory+'/'+event.Id+'/subscribe');
 
   //event subtitle when > inside string
   let eventSubtitle = event.Designation.split(settings.eventSubtitle);

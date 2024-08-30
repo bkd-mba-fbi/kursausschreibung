@@ -1,7 +1,9 @@
 import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
 import { isInitialized } from 'kursausschreibung/framework/store';
 
-export default Route.extend({
+export default class permalink extends Route {
+  @service router;
   beforeModel() {
     let applicationModel = this.modelFor('application');
 
@@ -14,6 +16,6 @@ export default Route.extend({
       throw new Error('failed to load.');
     }
 
-    this.replaceWith('list', applicationModel.areaKeys[0]);
+    this.router.transitionTo('list', applicationModel.areaKeys[0]);
   }
-});
+}

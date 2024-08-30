@@ -1,13 +1,13 @@
 {{! LEFT }}
-{{#unless eventCategoryDropdown}}
+{{#unless this.eventCategoryDropdown}}
   <div class="uk-visible@m uk-width-1-4@m">
     <div class="uk-card uk-card-small uk-card-body">
-      {{area-navigation model}}
+      {{area-navigation this.model}}
     </div>
   </div>
 {{/unless}}
 
 {{! CENTER }}
-<div class="{{centerWidth}} center-container uk-margin-bottom">
+<div class="{{this.centerWidth}} center-container uk-margin-bottom">
   {{outlet}}
 </div>

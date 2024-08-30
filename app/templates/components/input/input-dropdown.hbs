@@ -1,19 +1,23 @@
-{{#if field.options.showAsRadioButtons}}
+{{#if this.field.options.showAsRadioButtons}}
   <div class="uk-grid-small uk-child-width-auto uk-grid">
-    {{#each field.options.options as |option|}}
+    {{#each this.field.options.options as |option|}}
       <label><input id="vss{{field.id}}" class="uk-radio" type="radio" name={{field.id}} value={{option.Key}}
           data-human-readable={{option.Value}} required={{field.options.required}} disabled={{field.options.disabled}}>
         {{option.Value}}</label>
     {{/each}}
   </div>
 {{else}}
-  <select id="vss{{field.id}}" class="uk-select" name={{field.id}} autocomplete={{field.options.autocomplete}}
-    disabled={{field.options.disabled}}>
-    {{#unless field.options.required}}
-      <option value=""></option>
-    {{/unless}}
-    {{#each field.options.options as |option|}}
-      <option value={{option.Key}}>{{option.Value}}</option>
-    {{/each}}
+  {{#if this.field.options.required}}
+  <select id="vss{{this.field.id}}" class="uk-select required" name={{this.field.id}} autocomplete={{this.field.options.autocomplete}}
+    disabled={{this.field.options.disabled}} required="">
+    <option disabled selected value>{{translate "formOptionEmpty"}}</option>
+    {{this.dropdownOptions}}
   </select>
+    {{else}}
+      <select id="vss{{this.field.id}}" class="uk-select" name={{this.field.id}} autocomplete={{this.field.options.autocomplete}}
+    disabled={{this.field.options.disabled}}>
+    <option value>{{translate "formOptionEmpty"}}</option>
+    {{this.dropdownOptions}}
+  </select>
+  {{/if}}
 {{/if}}

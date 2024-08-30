@@ -7,14 +7,16 @@ import { autoCheckForLogin } from 'kursausschreibung/framework/login-helpers';
 import settings from 'kursausschreibung/framework/settings';
 import { SUBSCRIPTION_DETAIL_ALLOW_MULTIPLE_PEOPLE } from 'kursausschreibung/framework/api';
 import { getString } from 'kursausschreibung/framework/translate';
+import { inject as service } from '@ember/service';
 
-export default Route.extend({
+export default class confirmation extends Route {
+  @service router;
   model() {
     let dataToSubmit = getDataToSubmit();
     let event = this.modelFor('list.category.event');
 
     if (dataToSubmit === null) {
-      this.replaceWith('list.category.event');
+      this.router.transitionTo('list.category.event');
       return;
     }
 
@@ -100,7 +102,7 @@ export default Route.extend({
       throw { message: message };
     });
   }
-});
+}
 
 // this function creates an address, a company address (if requested) and returns a
 // promise for a personId
@@ -117,7 +119,7 @@ function createAddresses(useCompanyAddress, addressData, companyAddressData) {
     companyAddressData.PersonId = parseInt(personId);
     companyAddressData.AddressType = 'Arbeitgeber';
     companyAddressData.AddressTypeId = 501;
-    companyAddressData.IsBillingAddress = true;
+    companyAddressData.IsBilling = true;
     companyAddressData.Country = companyAddressData.Country === null ? 'Schweiz' : companyAddressData.Country;
     companyAddressData.CountryId = companyAddressData.CountryId === null ? 'CH' : companyAddressData.CountryId;
 

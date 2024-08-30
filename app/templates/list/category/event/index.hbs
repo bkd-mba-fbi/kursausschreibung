@@ -1,56 +1,51 @@
-{{#if showBreadcrumbs}}
+{{#if this.showBreadcrumbs}}
   <ul class="uk-breadcrumb">
     <li>
-      {{link-to model.AreaOfEducation "list"}}
+      <LinkTo @route="list">{{this.model.AreaOfEducation}}</LinkTo>
     </li>
     <li>
-      {{link-to model.EventCategory "list.category"}}
+      <LinkTo @route="list.category">{{this.model.EventCategory}}</LinkTo>
     </li>
   </ul>
 {{/if}}
 
 <h2>
   <span class="uk-flex">
-    <span>{{status-lamp status=model.status}}</span>
-    <span>{{model.displayData.Designation}}</span>
+    <span><StatusLamp @status={{this.model.status}} /></span>
+    <span>{{this.model.displayData.Designation}}</span>
   </span>
 </h2>
-{{#if model.subtitle}}
+{{#if this.model.subtitle}}
 <span class="uk-label uk-label-warning uk-margin-small">{{model.subtitle}}</span>
 {{/if}}
-{{event-details-table event=model}}
+<EventDetailsTable @event={{this.model}} />
 
-{{#if model.externalSubscriptionURL}}
+{{#if this.model.externalSubscriptionURL}}
   <div class="uk-margin">
-    <a href={{model.externalSubscriptionURL}} class="uk-button uk-button-primary uk-float-left subscribe-button"
+    <a href={{this.model.externalSubscriptionURL}} class="uk-button uk-button-primary uk-float-left subscribe-button"
       target="_blank" rel="noopener">
       {{translate "subscribe"}}
     </a>
-    {{link-to (translate "back") "list.category" classNames="uk-button uk-button-default uk-float-right"}}
+   <LinkTo @route="list.category" class="uk-button uk-button-default uk-float-right">{{translate "back"}}</LinkTo>
   </div>
 {{else}}
-  {{#if badgeFreeSeatsEnabled}}
-    {{remaining-seats-badge event=model}}
+  {{#if this.badgeFreeSeatsEnabled}}
+    <RemainingSeatsBadge @event={{this.model}} />
   {{/if}}
   <div class="uk-margin">
-    {{link-to (translate "subscribe") "list.category.event.subscribe" classNames="uk-button uk-button-primary uk-float-left subscribe-button"
-      data-uk-tooltip=(translate (concat model.status "Lamp")) tagName="button" disabled=(if model.canDoSubscription false true)}}
-    {{link-to (translate "back") "list.category" classNames="uk-button uk-button-default uk-float-right"}}
+    {{#if this.model.canDoSubscription}}
+      <LinkTo @route="list.category.event.subscribe" data-uk-tooltip={{translate (concat this.model.status "Lamp")}} class="uk-button uk-button-primary uk-float-left subscribe-button">{{translate "subscribe"}}</LinkTo>   
+    {{else}}
+      <button data-uk-tooltip={{translate (concat this.model.status "Lamp")}} disabled class="uk-button uk-button-primary uk-float-left subscribe-button">{{translate "subscribe"}}</button> 
+    {{/if}}
+    <LinkTo @route="list.category" class="uk-button uk-button-default uk-float-right">{{translate "back"}}</LinkTo>
   </div>
-  {{#if model.subscriptionWithLoginURL}}
-    {{#if model.canDoSubscription }}    
+  {{#if this.model.subscriptionWithLoginURL}}
+    {{#if this.model.canDoSubscription }}    
     <div class="uk-margin">
-      <a id="subscriptionWithLoginURL" href={{model.subscriptionWithLoginURL}}  target="_blank" rel="noopener" class="uk-button uk-button-primary uk-float-left subscribeWithLogin-button"
-        data-uk-tooltip={{translate (concat model.status "Lamp")}} >{{translate "subscribeWithLogin"}}</a>
+      <a id="subscriptionWithLoginURL" href={{this.model.subscriptionWithLoginURL}}  target="_blank" rel="noopener" class="uk-button uk-button-primary uk-float-left subscribeWithLogin-button"
+        data-uk-tooltip={{translate (concat this.model.status "Lamp")}} >{{translate "subscribeWithLogin"}}</a>
     </div>
     {{/if}}
   {{/if}}
 {{/if}}
-<Script>
- var subscriptionWithLoginURL = document.getElementById('subscriptionWithLoginURL');
-  if(subscriptionWithLoginURL !== null) {
-    subscriptionWithLoginURL = subscriptionWithLoginURL.href;
-    var route = window.location.href.substring(window.location.href.indexOf('#'),window.location.href.length);
-    document.getElementById('subscriptionWithLoginURL').href = subscriptionWithLoginURL + route + '/subscribe';
-  }
-</Script>

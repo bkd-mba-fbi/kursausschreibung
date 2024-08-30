@@ -2,30 +2,31 @@
 
   {{! NAVIGATION }}
   <nav class="uk-navbar-container uk-margin-top" data-uk-navbar>
+    {{#if this.model.moreOneAreaKeys}}
     <div class="uk-navbar-left">
       <ul class="uk-navbar-nav">
-        {{#each model.areaKeys as |areaKey|}}
-          {{#link-to "list" areaKey tagName="li" activeClass="uk-active"}}
-            {{#link-to "list" areaKey}}
-              {{get (get model.areas areaKey) "name"}}
-              {{#if eventCategoryDropdown}}
+        {{#each this.model.areaKeys as |areaKey|}}
+            <li>
+              <LinkTo @route="list" @model={{areaKey}}>{{get (get this.model.areas areaKey) "name"}}
+              {{#if this.eventCategoryDropdown}}
                 <span uk-icon="icon: chevron-down"></span>
               {{/if}}
-            {{/link-to}}
-          {{/link-to}}
-          {{#if eventCategoryDropdown}}
+              </LinkTo>
+          </li>
+          {{#if this.eventCategoryDropdown}}
             <div data-uk-dropdown>
-              {{area-navigation (get model.areas areaKey) hideHeading=true}}
+              {{area-navigation (get this.model.areas areaKey) hideHeading=true}}
             </div>
           {{/if}}
         {{/each}}
       </ul>
     </div>
+    {{/if}}
     <div class="uk-navbar-right">
       <ul class="uk-navbar-nav">
         <li>
           {{! MENU MODAL }}
-          {{#unless eventCategoryDropdown}}
+          {{#unless this.eventCategoryDropdown}}
             <a href="#menu-modal" class="uk-icon-link uk-hidden@m" data-uk-icon="more"
               data-uk-toggle></a>
 
@@ -34,12 +35,12 @@
                 <button class="uk-modal-close-full uk-close-large" type="button" data-uk-close></button>
                 <div class="uk-padding-large" data-uk-height-viewport>
                   <h2>{{translate "navigation"}}</h2>
-                  {{#each-in model.areas as |area data|}}
+                  {{#each-in this.model.areas as |area data|}}
                     <div class="uk-margin">
                       {{area-navigation data}}
                     </div>
                   {{/each-in}}
-                  {{#if showLanguageButton}}
+                  {{#if this.showLanguageButton}}
                     <div class="uk-margin">
                       <h2>{{translate "language"}}</h2>
                       <ul class="uk-nav uk-nav-default">
@@ -54,8 +55,8 @@
           {{/unless}}
 
           {{! LANGUAGE BUTTON }}
-          {{#if showLanguageButton}}
-            <div class="uk-margin-right {{unless eventCategoryDropdown "uk-visible@m"}}">
+          {{#if this.showLanguageButton}}
+            <div class="uk-margin-right {{unless this.eventCategoryDropdown "uk-visible@m"}}">
               <a href="#" class="uk-icon-link" data-uk-icon="world">{{translate "language"}} </a>
               <div data-uk-dropdown="mode: click">
                 <ul class="uk-list uk-link-text uk-margin-remove">
@@ -75,10 +76,10 @@
     {{outlet}}
 
     {{! RIGHT }}
-    <div class={{rightWidth}}>
+    <div class={{this.rightWidth}}>
 
       {{! LOGO }}
-      {{#if logoImage}}
+      {{#if this.logoImage}}
         {{#if logoLink}}
           <a target="_blank" href={{logoLink}}>
             <img class="uk-margin" src={{logoImage}}>
@@ -94,20 +95,20 @@
 
         <ul class="uk-list">
           <li class="uk-flex">
-            <span>{{status-lamp status="green"}}</span><span>{{translate "greenLamp"}}</span></li>
+            <span><StatusLamp @status="green" /></span><span>{{translate "greenLamp"}}</span></li>
           <li class="uk-flex">
-            <span>{{status-lamp status="chartreuse"}}</span><span>{{translate "chartreuseLamp"}}</span></li>
+            <span><StatusLamp @status="chartreuse" /></span><span>{{translate "chartreuseLamp"}}</span></li>
           <li class="uk-flex">
-            <span>{{status-lamp status="yellow"}}</span><span>{{translate "yellowLamp"}}</span></li>
+            <span><StatusLamp @status="yellow" /></span><span>{{translate "yellowLamp"}}</span></li>
           <li class="uk-flex">
-            <span>{{status-lamp status="red"}}</span><span>{{translate "redLamp"}}</span></li>
+            <span><StatusLamp @status="red" /></span><span>{{translate "redLamp"}}</span></li>
           <li class="uk-flex">
-            <span>{{status-lamp status="orange"}}</span><span>{{translate "orangeLamp"}}</span></li>
+            <span><StatusLamp @status="orange" /></span><span>{{translate "orangeLamp"}}</span></li>
         </ul>
       </div>
 
       {{! CONTACT }}
-      {{#if showContact}}
+      {{#if this.showContact}}
         <div class="uk-margin uk-card uk-card-small uk-card-body">
           <h2 id="header-contact" class="uk-h3 uk-card-title">{{translate "contact"}}</h2>
           <p>{{translate "contactContent"}}</p>
@@ -115,7 +116,7 @@
       {{/if}}
 
       {{! TWEETS }}
-      {{#if twitterHandle}}
+      {{#if this.twitterHandle}}
         <div class="uk-margin uk-card uk-card-small uk-card-body uk-visible@l">
           {{twitter-feed twitterHandle}}
         </div>

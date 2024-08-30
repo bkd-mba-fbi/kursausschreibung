@@ -9,23 +9,26 @@ const Router = EmberRouter.extend({
   location: config.locationType,
   rootURL: config.rootURL,
 
-  didTransition() {
-    this._super(...arguments);
+  init(){
+    this.on('routeDidChange', transition => {
+      this._super(...arguments);
 
-    var subscriptionProcessId = 'subscriptionProcess';
+      var subscriptionProcessId = 'subscriptionProcess';
+  
+      setInterval(function () {
+        if (document.getElementById(subscriptionProcessId) !== null) {
+          setOffsetStickyHeader(subscriptionProcessId);
+        }
+      }, 1000);
 
-    setInterval(function () {
-      if (document.getElementById(subscriptionProcessId) !== null) {
-        setOffsetStickyHeader(subscriptionProcessId);
+      if (this.currentPath === 'list.category.event.subscribe') {
+        scrollToTimeout(subscriptionProcessId);
+      } else if (this.currentPath !== 'list.category' && screen.width <= 960) {
+        scrollToTimeout('headerCategory');
+      } else if (this.currentPath !== 'list.index') {
+        scrollToTimeout(rootElement.id);
       }
-    }, 1000);
-
-    if (this.currentPath === 'list.category.event.subscribe') {
-      scrollToTimeout(subscriptionProcessId);
-    } else if (this.currentPath !== 'list.index') {
-      scrollToTimeout(rootElement.id);
-    }
-
+    });
   }
 });
 

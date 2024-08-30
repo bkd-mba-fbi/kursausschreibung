@@ -6,7 +6,11 @@
  * @param {object} value the value to store
  */
 function setItem(key, value) {
-  localStorage.setItem(key, JSON.stringify(value));
+  if (key === 'CLX.LoginToken') {
+    sessionStorage.setItem(key,JSON.stringify(value));
+  } else {
+    localStorage.setItem(key, JSON.stringify(value));
+  } 
 }
 
 /**
@@ -14,7 +18,12 @@ function setItem(key, value) {
  * @param {string} key key used to store the object
  */
 function getItem(key) {
-  let item = localStorage.getItem(key);
+  let item = undefined;
+  if (key === 'CLX.LoginToken') {
+    item = sessionStorage.getItem(key);
+  } else {
+    item = localStorage.getItem(key);
+  }
 
   if (item && !item.includes('"')) {
     item = `"${item}"`;
