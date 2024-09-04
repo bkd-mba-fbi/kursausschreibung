@@ -1,8 +1,8 @@
-# kursausschreibung 3.5.1
+# kursausschreibung 3.5.2
 [![Build 🏭🚀](https://github.com/bkd-mba-fbi/kursausschreibung/actions/workflows/buildDeploy.yml/badge.svg)](https://github.com/bkd-mba-fbi/kursausschreibung/actions/workflows/buildDeploy.yml)
 
 # Documentation
-Go to the [Wiki](https://github.com/bkd-mba-fbi/kursausschreibung/wiki)
+Go to the [FBI GitBook docs](https://fbi-mba-bkd.gitbook.io/github-docs-public)
 
 # How to implement in your page?
 
