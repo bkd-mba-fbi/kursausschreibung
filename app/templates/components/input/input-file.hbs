@@ -1,7 +1,7 @@
-<div class="js-upload" uk-form-custom>
+<div class="js-upload uk-form-custom">
     <input id="file{{this.field.id}}" class="uk-input" type="file" accept={{this.field.acceptFileType}} name={{this.field.id}} required={{this.field.options.required}} disabled={{this.field.options.disabled}}>
     {{#if this.field.options.required}}
-    <button id="fileBt{{this.field.id}}" class="uk-button uk-button-default required" type="button" tabindex="-1" required={{this.field.options.required}}>{{√field.fileTypeLabel}}</button>
+    <button id="fileBt{{this.field.id}}" class="uk-button uk-button-default required" type="button" tabindex="-1" required={{this.field.options.required}}>{{field.fileTypeLabel}}</button>
     {{else}} 
     <button id="fileBt{{this.field.id}}" class="uk-button uk-button-default" type="button" tabindex="-1" required={{this.field.options.required}}>{{this.field.fileTypeLabel}}</button>
     {{/if}}
