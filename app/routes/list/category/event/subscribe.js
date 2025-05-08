@@ -3,7 +3,7 @@ import { get, set } from '@ember/object';
 import Route from '@ember/routing/route';
 import {
   getDropDownItems, getSubscriptionDetails, getSubscriptionDetailDependencies, getUserSettings,
-  SUBSCRIPTION_DETAIL_ALLOW_MULTIPLE_PEOPLE
+  SUBSCRIPTION_DETAIL_ALLOW_MULTIPLE_PEOPLE, SUBSCRIPTION_DETAIL_INVOICE_ADRESS
 } from 'kursausschreibung/framework/api';
 import { autoCheckForLogin } from 'kursausschreibung/framework/login-helpers';
 import settings from 'kursausschreibung/framework/settings';
@@ -18,18 +18,17 @@ function loadDropdownItems(fields) {
       .filter(item => item.dataType === 'dropdown')
       .map(item => getDropDownItems(item.options.dropdownItems)
         .then(options => {
-          
-          if(item.id === 'Nationality') {
+          if (item.id === 'Nationality') {
             options.forEach(element => {
               element.Value = element.Value.split(':')[1].trim();
             });
             let setDefaultLand = options;
             let defaultLand = options.findIndex(nationality => nationality.Key === 2008100);
-            setDefaultLand.splice(0,0,options[defaultLand]);
-          }  
+            setDefaultLand.splice(0, 0, options[defaultLand]);
+          }
           if (item.id === 'Profession') {
-            item.dataType = 'freeform-dropdown'
-          }         
+            item.dataType = 'freeform-dropdown';
+          }
 
           if (item.options.options === undefined)
             item.options.options = options;
@@ -53,10 +52,22 @@ let fileTypeMapping = {
   PF: 'image/jpeg'
 };
 
-// convert subscriptionDetails to an array of input-components
-// as they are used in the settings.js file
 function getSubscriptionDetailFields(subscriptionDetails) {
-  return subscriptionDetails.map(detail => {
+  return subscriptionDetails.flatMap(detail => {
+    if (detail.VssId === SUBSCRIPTION_DETAIL_INVOICE_ADRESS) {
+      return settings.formFields.default.companyFields.map(field => ({
+        id: `${field.id}_${detail.VssId}`,
+        label: getString('form' + field.id),
+        dataType: field.dataType,
+        options: {
+          ...field.options,
+          autocomplete: field.options.autocomplete || 'off',
+          required: true,
+          showPlaceholder: true
+        }
+      }));
+    }
+
     let dataType = dataTypeMappings[detail.VssType];
     let fileType = fileTypeMapping[detail.VssStyle];
 
@@ -73,11 +84,11 @@ function getSubscriptionDetailFields(subscriptionDetails) {
     if (detail.VssStyle === 'HE')
       return { isLegend: true, label: detail.VssDesignation };
 
-    if ( detail.VssStyle === 'DA' || detail.VssStyle === 'PD' || detail.VssStyle === 'PF' ){
+    if (detail.VssStyle === 'DA' || detail.VssStyle === 'PD' || detail.VssStyle === 'PF') {
       dataType = 'file';
     }
 
-    if (detail.VssType === 'YesNo'){
+    if (detail.VssType === 'YesNo') {
       dataType = 'dropdown';
       detail.ShowAsRadioButtons = true;
       let yes = {
@@ -94,13 +105,13 @@ function getSubscriptionDetailFields(subscriptionDetails) {
       detail.DropdownItems = items;
     }
 
-    return {
+    return [{
       id: detail.VssId,
       label: detail.VssDesignation,
       dataType: dataType,
       acceptFileType: fileType,
-      fileTypeLabel: getString('fileType'+detail.VssStyle),
-      fileLabelBevorFileChoose: getString('fileType'+detail.VssStyle),
+      fileTypeLabel: getString('fileType' + detail.VssStyle),
+      fileLabelBevorFileChoose: getString('fileType' + detail.VssStyle),
       maxFileSize: detail.MaxFileSize,
       fileObject: null,
       options: {
@@ -113,29 +124,24 @@ function getSubscriptionDetailFields(subscriptionDetails) {
         hidden: '',
         dependencyItems: []
       }
-    };
+    }];
   });
 }
 
-function addSubscriptionDetailDependencies(subscriptionDetailDependencies,subscriptionDetails) {
-
+function addSubscriptionDetailDependencies(subscriptionDetailDependencies, subscriptionDetails) {
   subscriptionDetails.map(item => {
-
     subscriptionDetailDependencies.find(dependency => {
-    
-        if (dependency.IdVss === item.id){
-          item.options.hidden = 'uk-hidden';
-          dependency.required = item.options.required
-          item.options.required = false;
-        }
-        if (dependency.IdVssInfluencer === item.id) {
-          item.options.dependencyItems.push(dependency);
-        }
+      if (dependency.IdVss === item.id) {
+        item.options.hidden = 'uk-hidden';
+        dependency.required = item.options.required;
+        item.options.required = false;
+      }
+      if (dependency.IdVssInfluencer === item.id) {
+        item.options.dependencyItems.push(dependency);
+      }
     });
   });
-
   return subscriptionDetails;
-
 }
 
 function addTranslations(fields) {
@@ -154,19 +160,17 @@ function addTranslations(fields) {
       }
     }
   });
-
   return fields;
 }
 
 function getFormFields(settings, eventTypeId, eventCategoryId) {
-
-   if (eventTypeId in settings.formFields) {
+  if (eventTypeId in settings.formFields) {
     if (eventCategoryId in settings.formFields[eventTypeId]) {
-      return settings.formFields[eventTypeId][eventCategoryId] ;
+      return settings.formFields[eventTypeId][eventCategoryId];
     } else if (settings.formFields[eventTypeId].addressFields !== undefined) {
       return settings.formFields[eventTypeId];
     }
-  } 
+  }
 
   if (settings.formFields.default === undefined)
     throw new Error("config for eventTypeId " + eventTypeId + " not found and no default config is available");
@@ -189,16 +193,23 @@ export default Route.extend({
 
     // make sure the session is still active
     return autoCheckForLogin()
-      .then(() => Promise.all([getUserSettings(), getSubscriptionDetails(model.Id), getSubscriptionDetailDependencies(model.Id)]))
+      .then(() => Promise.all([
+        getUserSettings(),
+        getSubscriptionDetails(model.Id),
+        getSubscriptionDetailDependencies(model.Id)
+      ]))
       .then(([userSettings, subscriptionDetails, subscriptionDetailDependencies]) => {
-
         // check if multiple people are allowed to subscribe at the same time
         let allowMultiplePeople = false;
-        if(subscriptionDetails !== null) {
-          subscriptionDetails = subscriptionDetails.filter(function (subscriptionDetail) {
-            if (subscriptionDetail.VssId === SUBSCRIPTION_DETAIL_ALLOW_MULTIPLE_PEOPLE) {
+        let enableInvoiceAddress = false;
+
+        if (subscriptionDetails !== null) {
+          subscriptionDetails = subscriptionDetails.filter(detail => {
+            if (detail.VssId === SUBSCRIPTION_DETAIL_ALLOW_MULTIPLE_PEOPLE) {
               allowMultiplePeople = true;
-              return false;
+            }
+            if (detail.VssId === SUBSCRIPTION_DETAIL_INVOICE_ADRESS) {
+              enableInvoiceAddress = true;
             }
             return true;
           });
@@ -207,53 +218,70 @@ export default Route.extend({
         }
 
         set(model, 'allowMultiplePeople', allowMultiplePeople);
+        set(model, 'enableInvoiceAddress', enableInvoiceAddress);
+
+        console.log('enableInvoiceAddress', enableInvoiceAddress);
+
+
 
         // if userSettings.IdPerson is not 0 we can use it for the subscription
         userSettings.isLoggedIn = userSettings.IdPerson !== 0;
-
         set(model, 'userSettings', userSettings);
-        set(model, 'subscriptionDetailFields', getSubscriptionDetailFields(A(subscriptionDetails).sortBy('Sort')));
 
-        set(model, 'subscriptionDetailFields', addSubscriptionDetailDependencies(subscriptionDetailDependencies,getSubscriptionDetailFields(A(subscriptionDetails).sortBy('Sort'))) );
+        const sortedDetails = A(subscriptionDetails).sortBy('Sort');
+        set(model, 'subscriptionDetailFields', addSubscriptionDetailDependencies(
+          subscriptionDetailDependencies,
+          getSubscriptionDetailFields(sortedDetails)
+        ));
 
-        if (userSettings.isLoggedIn === false) {
-          let fields = getFormFields(settings, model.EventTypeId, model.EventCategoryId).addressFields;
-          let additionalPeopleFields = getFormFields(settings, model.EventTypeId, model.EventCategoryId).additionalPeopleFields;
-          if (get(model, 'allowMultiplePeople' )){
-            loadDropdownItems(additionalPeopleFields !== undefined ? additionalPeopleFields : fields);
-          } 
+        const formFields = getFormFields(settings, model.EventTypeId, model.EventCategoryId);
+        const fields = formFields.addressFields || [];
+        const additionalPeopleFields = formFields.additionalPeopleFields || [];
+        const companyFields = formFields.companyFields || [];
 
-          
+        console.log(companyFields, 'companyFields');
 
+        console.log('all subscriptionDetails IDs:', subscriptionDetails.map(d => d.VssId));
+        console.log('SUBSCRIPTION_DETAIL_INVOICE_ADRESS constant is:', SUBSCRIPTION_DETAIL_INVOICE_ADRESS);
+
+        if (!userSettings.isLoggedIn) {
+          if (allowMultiplePeople || enableInvoiceAddress) {
+            loadDropdownItems([...fields, ...additionalPeopleFields, ...companyFields]);
+          }
           return loadDropdownItems(fields);
+        } else {
+          if (enableInvoiceAddress && companyFields.length > 0) {
+            return loadDropdownItems(companyFields);
+          }
         }
-      }).then(
-        () => model
-      );
+      })
+      .then(() => model);
   },
 
   setupController(controller, model) {
     this._super(...arguments);
 
-    let formFields = getFormFields(settings, model.EventTypeId, model.EventCategoryId);
+    const formFields = getFormFields(settings, model.EventTypeId, model.EventCategoryId);
 
     // person fields
     controller.set('fields', addTranslations(formFields.addressFields));
 
     // company fields
-    controller.set('companyFields', typeof formFields.companyFields === 'object' ? addTranslations(formFields.companyFields) : null);
+    if (model.enableInvoiceAddress === true) {
+      controller.set('companyFields', addTranslations(formFields.companyFields));
+    } else {
+      controller.set('companyFields', null);
+    }
 
+    controller.set('enableInvoiceAddress', model.enableInvoiceAddress);
 
-    // subscriptionDetails
+    controller.set('useCompanyAddress', false);
+
     controller.set('subscriptionDetailFields', get(model, 'subscriptionDetailFields'));
 
-    // additional people
+     // additional people
     controller.set('allowMultiplePeople', get(model, 'allowMultiplePeople'));
-    let setAdditionalPeopleFields = formFields.additionalPeopleFields !== undefined ? formFields.additionalPeopleFields : formFields.addressFields;
-    controller.set('additionalPeopleFields', setAdditionalPeopleFields);
-      if (get(model, 'allowMultiplePeople')){
-        controller.set('additionalPeopleFields', addTranslations(setAdditionalPeopleFields));
-      }
-    
+    const peopleFields = formFields.additionalPeopleFields || formFields.addressFields;
+    controller.set('additionalPeopleFields', get(model, 'allowMultiplePeople') ? addTranslations(peopleFields) : peopleFields);
   }
 });

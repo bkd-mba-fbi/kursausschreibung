@@ -30,4 +30,13 @@
 </ol>
 
 {{! FORM }}
-<SubscriptionForm @event={{this.model}} @fields={{this.fields}} @companyFields={{this.companyFields}} @subscriptionDetailFields={{this.subscriptionDetailFields}} @allowMultiplePeople={{this.allowMultiplePeople}} @additionalPeopleFields={{this.additionalPeopleFields}} @userSettings={{this.model.userSettings}} @subscribe={{action "subscribe"}} />
+<SubscriptionForm 
+  @event={{this.model}} 
+  @fields={{this.fields}} 
+  @companyFields={{this.companyFields}} 
+  @enableInvoiceAddress={{this.enableInvoiceAddress}} 
+  @subscriptionDetailFields={{this.subscriptionDetailFields}} 
+  @allowMultiplePeople={{this.allowMultiplePeople}} 
+  @additionalPeopleFields={{this.additionalPeopleFields}} 
+  @userSettings={{this.model.userSettings}} 
+  @subscribe={{action "subscribe"}} />
