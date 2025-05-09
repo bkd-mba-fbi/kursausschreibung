@@ -10,8 +10,6 @@ import settings from 'kursausschreibung/framework/settings';
 import { getString } from 'kursausschreibung/framework/translate';
 import { Promise } from 'rsvp';
 
-// if these were loaded in the component an error
-// would just cause the template to stop rendering
 function loadDropdownItems(fields) {
   return Promise.all(
     fields
@@ -27,7 +25,7 @@ function loadDropdownItems(fields) {
             setDefaultLand.splice(0, 0, options[defaultLand]);
           }
           if (item.id === 'Profession') {
-            item.dataType = 'freeform-dropdown';
+            item.dataType = 'freeform-dropdown'
           }
 
           if (item.options.options === undefined)
@@ -52,22 +50,10 @@ let fileTypeMapping = {
   PF: 'image/jpeg'
 };
 
+// convert subscriptionDetails to an array of input-components
+// as they are used in the settings.js file
 function getSubscriptionDetailFields(subscriptionDetails) {
-  return subscriptionDetails.flatMap(detail => {
-    if (detail.VssId === SUBSCRIPTION_DETAIL_INVOICE_ADRESS) {
-      return settings.formFields.default.companyFields.map(field => ({
-        id: `${field.id}_${detail.VssId}`,
-        label: getString('form' + field.id),
-        dataType: field.dataType,
-        options: {
-          ...field.options,
-          autocomplete: field.options.autocomplete || 'off',
-          required: true,
-          showPlaceholder: true
-        }
-      }));
-    }
-
+  return subscriptionDetails.map(detail => {
     let dataType = dataTypeMappings[detail.VssType];
     let fileType = fileTypeMapping[detail.VssStyle];
 
@@ -105,7 +91,7 @@ function getSubscriptionDetailFields(subscriptionDetails) {
       detail.DropdownItems = items;
     }
 
-    return [{
+    return {
       id: detail.VssId,
       label: detail.VssDesignation,
       dataType: dataType,
@@ -124,7 +110,7 @@ function getSubscriptionDetailFields(subscriptionDetails) {
         hidden: '',
         dependencyItems: []
       }
-    }];
+    };
   });
 }
 
@@ -133,7 +119,7 @@ function addSubscriptionDetailDependencies(subscriptionDetailDependencies, subsc
     subscriptionDetailDependencies.find(dependency => {
       if (dependency.IdVss === item.id) {
         item.options.hidden = 'uk-hidden';
-        dependency.required = item.options.required;
+        dependency.required = item.options.required
         item.options.required = false;
       }
       if (dependency.IdVssInfluencer === item.id) {
@@ -191,7 +177,6 @@ export default Route.extend({
       return;
     }
 
-    // make sure the session is still active
     return autoCheckForLogin()
       .then(() => Promise.all([
         getUserSettings(),
@@ -199,7 +184,6 @@ export default Route.extend({
         getSubscriptionDetailDependencies(model.Id)
       ]))
       .then(([userSettings, subscriptionDetails, subscriptionDetailDependencies]) => {
-        // check if multiple people are allowed to subscribe at the same time
         let allowMultiplePeople = false;
         let enableInvoiceAddress = false;
 
@@ -207,13 +191,15 @@ export default Route.extend({
           subscriptionDetails = subscriptionDetails.filter(detail => {
             if (detail.VssId === SUBSCRIPTION_DETAIL_ALLOW_MULTIPLE_PEOPLE) {
               allowMultiplePeople = true;
+              return false;
             }
             if (detail.VssId === SUBSCRIPTION_DETAIL_INVOICE_ADRESS) {
               enableInvoiceAddress = true;
+              return false;
             }
             return true;
           });
-          //VssInternet = H (Hidden) don't display
+
           subscriptionDetails = subscriptionDetails.filter(det => det.VssInternet !== 'H');
         }
 
@@ -222,9 +208,6 @@ export default Route.extend({
 
         console.log('enableInvoiceAddress', enableInvoiceAddress);
 
-
-
-        // if userSettings.IdPerson is not 0 we can use it for the subscription
         userSettings.isLoggedIn = userSettings.IdPerson !== 0;
         set(model, 'userSettings', userSettings);
 
@@ -239,17 +222,13 @@ export default Route.extend({
         const additionalPeopleFields = formFields.additionalPeopleFields || [];
         const companyFields = formFields.companyFields || [];
 
-        console.log(companyFields, 'companyFields');
-
-        console.log('all subscriptionDetails IDs:', subscriptionDetails.map(d => d.VssId));
-        console.log('SUBSCRIPTION_DETAIL_INVOICE_ADRESS constant is:', SUBSCRIPTION_DETAIL_INVOICE_ADRESS);
-
         if (!userSettings.isLoggedIn) {
           if (allowMultiplePeople || enableInvoiceAddress) {
             loadDropdownItems([...fields, ...additionalPeopleFields, ...companyFields]);
           }
           return loadDropdownItems(fields);
         } else {
+          // Wenn eingeloggt: auch Dropdowns für Rechnungsadresse laden, wenn vorhanden
           if (enableInvoiceAddress && companyFields.length > 0) {
             return loadDropdownItems(companyFields);
           }
@@ -263,23 +242,16 @@ export default Route.extend({
 
     const formFields = getFormFields(settings, model.EventTypeId, model.EventCategoryId);
 
-    // person fields
     controller.set('fields', addTranslations(formFields.addressFields));
 
-    // company fields
     if (model.enableInvoiceAddress === true) {
       controller.set('companyFields', addTranslations(formFields.companyFields));
     } else {
       controller.set('companyFields', null);
     }
 
-    controller.set('enableInvoiceAddress', model.enableInvoiceAddress);
-
-    controller.set('useCompanyAddress', false);
-
     controller.set('subscriptionDetailFields', get(model, 'subscriptionDetailFields'));
 
-     // additional people
     controller.set('allowMultiplePeople', get(model, 'allowMultiplePeople'));
     const peopleFields = formFields.additionalPeopleFields || formFields.addressFields;
     controller.set('additionalPeopleFields', get(model, 'allowMultiplePeople') ? addTranslations(peopleFields) : peopleFields);
