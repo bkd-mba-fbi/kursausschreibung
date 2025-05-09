@@ -54,7 +54,7 @@ export function checkToken() {
     setTokenExpire(tokenExpire);
 
     // navigate back to initial url
-    history.replaceState(null, null, getParameterByName('moduleRedirectUrl'));
+    history.replaceState(null, null, getParameterByName('redirectUrl'));
   }
 }
 
