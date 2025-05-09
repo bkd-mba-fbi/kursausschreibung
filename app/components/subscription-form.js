@@ -8,6 +8,7 @@ import uikit from 'uikit';
 
 export default Component.extend({
   useCompanyAddress: false,
+  enableInvoiceAddress: false,
 
   additionalPeopleCount: 0,
 
