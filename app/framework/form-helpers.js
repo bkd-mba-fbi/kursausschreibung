@@ -35,7 +35,7 @@ export function helperSocialSecurityNumber(that) {
   formFieldError(that, true);
   let number = that.value;
 
-  //set delimiter "."
+    //set delimiter "."
   if (number.length === 3) {
     that.value = number + '.';
   } else if (number.length === 8) {
@@ -88,48 +88,72 @@ function ean13checkNumber(number) {
 
 
 /**
-* Check if vssDependency available
-* @param {string} formValue
-* @param {object} field
-*/
-export function vssDependency(formValue,field) {
+ * Check if vssDependency available
+ * @param {string} formValue
+ * @param {object} field
+ */
+export function vssDependency(formValue, field) {
+  // Nur wenn das richtige Feld (Zahlungsart) und AD 10895 vorhanden ist
+  if (field.id === 3801) {
+    const isPraxis = formValue === '4000197' || formValue === '4000198';
+    const comp = window.kursausschreibung?.component;
+    const button = document.querySelector('button[name="useCompanyAddress"]');
+    const fieldset = document.querySelector('.company-address-fields');
 
-if(field.options.dependencyItems !== undefined) {
-  
-  let hiddenClass = 'uk-hidden';
+    if (!comp || !button || !fieldset || !comp.get('enableInvoiceAddress')) return;
 
-  if (field.options.dependencyItems.length > 0) {
-
-  field.options.dependencyItems.forEach(element => {
-    let values = element.Values;
-    let operator = element.Operator;
-
-    let vssId = element.IdVss;
-    let hidden = document.getElementById('hidden'+vssId);
-    let requiredElement = document.getElementById('file'+vssId) === null  ? document.getElementById('vss'+vssId) : document.getElementById('file'+vssId);
-
-    if(vssDependencyCheck(formValue,operator,values)) {     
-      hidden.classList.remove(hiddenClass);
-      requiredElement.required = element.required; 
+    if (isPraxis) {
+      comp.set('praxisPaymentEnforced', true);
+      comp.set('useCompanyAddress', true); // erzwingen
+      button.disabled = true;
+      fieldset.hidden = false;
+      fieldset.disabled = false;
+      fieldset.querySelectorAll('input, select, textarea').forEach(el => el.required = true);
     } else {
-      hidden.classList.add(hiddenClass);
-      requiredElement.required = false; 
+      comp.set('praxisPaymentEnforced', false);
+      comp.set('useCompanyAddress', false); // optional
+      button.disabled = false;
+      fieldset.hidden = true;
+      fieldset.disabled = true;
+      fieldset.querySelectorAll('input, select, textarea').forEach(el => el.required = false);
     }
+  }
 
-  });
 
-}
+  // 🔁 Normale Abhängigkeitslogik
+  if (field.options?.dependencyItems?.length) {
+    let hiddenClass = 'uk-hidden';
+    field.options.dependencyItems.forEach(element => {
+      let values = element.Values;
+      let operator = element.Operator;
 
-}
+      let vssId = element.IdVss;
+      
+      let hidden = document.getElementById('hidden' + vssId);
+      let requiredElement = document.getElementById('file' + vssId) || document.getElementById('vss' + vssId);
+
+      if (!hidden || !requiredElement) return;
+
+      if (vssDependencyCheck(formValue, operator, values)) {
+        hidden.classList.remove(hiddenClass);
+        requiredElement.required = element.required;
+      } else {
+        hidden.classList.add(hiddenClass);
+        requiredElement.required = false;
+      }
+
+    });
+
+  }
 
 }
 
 /**
- * Check if vssDependency true
-* @param {string} formValue
-* @param {number} operator
-* @param {Array} values
-*/
+  * Check if vssDependency true
+ * @param {string} formValue
+ * @param {number} operator
+ * @param {Array} values
+ */
 function vssDependencyCheck(formValue, operator, values) {
 
   if(typeof formValue === 'boolean') {
