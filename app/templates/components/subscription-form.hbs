@@ -14,7 +14,7 @@
               type="button"
               name="useCompanyAddress"
               class="uk-button uk-button-default"
-              disabled={{and this.enableInvoiceAddress this.praxisPaymentEnforced}} 
+              disabled={{this.praxisPaymentEnforced}}
               {{action "useCompanyAddress"}}>
               {{translate "companyAddress"}}
             </button>
