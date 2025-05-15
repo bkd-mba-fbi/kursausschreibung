@@ -3,30 +3,33 @@ import { get, set } from '@ember/object';
 import Route from '@ember/routing/route';
 import {
   getDropDownItems, getSubscriptionDetails, getSubscriptionDetailDependencies, getUserSettings,
-  SUBSCRIPTION_DETAIL_ALLOW_MULTIPLE_PEOPLE, SUBSCRIPTION_DETAIL_INVOICE_ADRESS
+  SUBSCRIPTION_DETAIL_ALLOW_MULTIPLE_PEOPLE
 } from 'kursausschreibung/framework/api';
 import { autoCheckForLogin } from 'kursausschreibung/framework/login-helpers';
 import settings from 'kursausschreibung/framework/settings';
 import { getString } from 'kursausschreibung/framework/translate';
 import { Promise } from 'rsvp';
 
+// if these were loaded in the component an error
+// would just cause the template to stop rendering
 function loadDropdownItems(fields) {
   return Promise.all(
     fields
       .filter(item => item.dataType === 'dropdown')
       .map(item => getDropDownItems(item.options.dropdownItems)
         .then(options => {
-          if (item.id === 'Nationality') {
+          
+          if(item.id === 'Nationality') {
             options.forEach(element => {
               element.Value = element.Value.split(':')[1].trim();
             });
             let setDefaultLand = options;
             let defaultLand = options.findIndex(nationality => nationality.Key === 2008100);
-            setDefaultLand.splice(0, 0, options[defaultLand]);
-          }
+            setDefaultLand.splice(0,0,options[defaultLand]);
+          }  
           if (item.id === 'Profession') {
             item.dataType = 'freeform-dropdown'
-          }
+          }         
 
           if (item.options.options === undefined)
             item.options.options = options;
@@ -70,11 +73,11 @@ function getSubscriptionDetailFields(subscriptionDetails) {
     if (detail.VssStyle === 'HE')
       return { isLegend: true, label: detail.VssDesignation };
 
-    if (detail.VssStyle === 'DA' || detail.VssStyle === 'PD' || detail.VssStyle === 'PF') {
+    if ( detail.VssStyle === 'DA' || detail.VssStyle === 'PD' || detail.VssStyle === 'PF' ){
       dataType = 'file';
     }
 
-    if (detail.VssType === 'YesNo') {
+    if (detail.VssType === 'YesNo'){
       dataType = 'dropdown';
       detail.ShowAsRadioButtons = true;
       let yes = {
@@ -96,8 +99,8 @@ function getSubscriptionDetailFields(subscriptionDetails) {
       label: detail.VssDesignation,
       dataType: dataType,
       acceptFileType: fileType,
-      fileTypeLabel: getString('fileType' + detail.VssStyle),
-      fileLabelBevorFileChoose: getString('fileType' + detail.VssStyle),
+      fileTypeLabel: getString('fileType'+detail.VssStyle),
+      fileLabelBevorFileChoose: getString('fileType'+detail.VssStyle),
       maxFileSize: detail.MaxFileSize,
       fileObject: null,
       options: {
@@ -114,20 +117,25 @@ function getSubscriptionDetailFields(subscriptionDetails) {
   });
 }
 
-function addSubscriptionDetailDependencies(subscriptionDetailDependencies, subscriptionDetails) {
+function addSubscriptionDetailDependencies(subscriptionDetailDependencies,subscriptionDetails) {
+
   subscriptionDetails.map(item => {
+
     subscriptionDetailDependencies.find(dependency => {
-      if (dependency.IdVss === item.id) {
-        item.options.hidden = 'uk-hidden';
-        dependency.required = item.options.required
-        item.options.required = false;
-      }
-      if (dependency.IdVssInfluencer === item.id) {
-        item.options.dependencyItems.push(dependency);
-      }
+    
+        if (dependency.IdVss === item.id){
+          item.options.hidden = 'uk-hidden';
+          dependency.required = item.options.required
+          item.options.required = false;
+        }
+        if (dependency.IdVssInfluencer === item.id) {
+          item.options.dependencyItems.push(dependency);
+        }
     });
   });
+
   return subscriptionDetails;
+
 }
 
 function addTranslations(fields) {
@@ -146,17 +154,19 @@ function addTranslations(fields) {
       }
     }
   });
+
   return fields;
 }
 
 function getFormFields(settings, eventTypeId, eventCategoryId) {
-  if (eventTypeId in settings.formFields) {
+
+   if (eventTypeId in settings.formFields) {
     if (eventCategoryId in settings.formFields[eventTypeId]) {
-      return settings.formFields[eventTypeId][eventCategoryId];
+      return settings.formFields[eventTypeId][eventCategoryId] ;
     } else if (settings.formFields[eventTypeId].addressFields !== undefined) {
       return settings.formFields[eventTypeId];
     }
-  }
+  } 
 
   if (settings.formFields.default === undefined)
     throw new Error("config for eventTypeId " + eventTypeId + " not found and no default config is available");
@@ -177,79 +187,73 @@ export default Route.extend({
       return;
     }
 
+    // make sure the session is still active
     return autoCheckForLogin()
-      .then(() => Promise.all([
-        getUserSettings(),
-        getSubscriptionDetails(model.Id),
-        getSubscriptionDetailDependencies(model.Id)
-      ]))
+      .then(() => Promise.all([getUserSettings(), getSubscriptionDetails(model.Id), getSubscriptionDetailDependencies(model.Id)]))
       .then(([userSettings, subscriptionDetails, subscriptionDetailDependencies]) => {
-        let allowMultiplePeople = false;
-        let enableInvoiceAddress = false;
 
-        if (subscriptionDetails !== null) {
-          subscriptionDetails = subscriptionDetails.filter(detail => {
-            if (detail.VssId === SUBSCRIPTION_DETAIL_ALLOW_MULTIPLE_PEOPLE) {
+        // check if multiple people are allowed to subscribe at the same time
+        let allowMultiplePeople = false;
+        if(subscriptionDetails !== null) {
+          subscriptionDetails = subscriptionDetails.filter(function (subscriptionDetail) {
+            if (subscriptionDetail.VssId === SUBSCRIPTION_DETAIL_ALLOW_MULTIPLE_PEOPLE) {
               allowMultiplePeople = true;
-              return false;
-            }
-            if (detail.VssId === SUBSCRIPTION_DETAIL_INVOICE_ADRESS) {
-              enableInvoiceAddress = true;
               return false;
             }
             return true;
           });
-
+          //VssInternet = H (Hidden) don't display
           subscriptionDetails = subscriptionDetails.filter(det => det.VssInternet !== 'H');
         }
 
         set(model, 'allowMultiplePeople', allowMultiplePeople);
-        set(model, 'enableInvoiceAddress', enableInvoiceAddress);
 
+        // if userSettings.IdPerson is not 0 we can use it for the subscription
         userSettings.isLoggedIn = userSettings.IdPerson !== 0;
+
         set(model, 'userSettings', userSettings);
+        set(model, 'subscriptionDetailFields', getSubscriptionDetailFields(A(subscriptionDetails).sortBy('Sort')));
 
-        const sortedDetails = A(subscriptionDetails).sortBy('Sort');
-        set(model, 'subscriptionDetailFields', addSubscriptionDetailDependencies(
-          subscriptionDetailDependencies,
-          getSubscriptionDetailFields(sortedDetails)
-        ));
+        set(model, 'subscriptionDetailFields', addSubscriptionDetailDependencies(subscriptionDetailDependencies,getSubscriptionDetailFields(A(subscriptionDetails).sortBy('Sort'))) );
 
-        const formFields = getFormFields(settings, model.EventTypeId, model.EventCategoryId);
-        const fields = formFields.addressFields || [];
-        const additionalPeopleFields = formFields.additionalPeopleFields || [];
-        const companyFields = formFields.companyFields || [];
+        if (userSettings.isLoggedIn === false) {
+          let fields = getFormFields(settings, model.EventTypeId, model.EventCategoryId).addressFields;
+          let additionalPeopleFields = getFormFields(settings, model.EventTypeId, model.EventCategoryId).additionalPeopleFields;
+          if (get(model, 'allowMultiplePeople' )){
+            loadDropdownItems(additionalPeopleFields !== undefined ? additionalPeopleFields : fields);
+          } 
 
-        if (!userSettings.isLoggedIn) {
-          if (allowMultiplePeople || enableInvoiceAddress) {
-            loadDropdownItems([...fields, ...additionalPeopleFields, ...companyFields]);
-          }
+          
+
           return loadDropdownItems(fields);
-        } else {
-          // Wenn eingeloggt: auch Dropdowns für Rechnungsadresse laden, wenn vorhanden
-          if (enableInvoiceAddress && companyFields.length > 0) {
-            return loadDropdownItems(companyFields);
-          }
         }
-      })
-      .then(() => model);
+      }).then(
+        () => model
+      );
   },
 
   setupController(controller, model) {
     this._super(...arguments);
 
-    const formFields = getFormFields(settings, model.EventTypeId, model.EventCategoryId);
+    let formFields = getFormFields(settings, model.EventTypeId, model.EventCategoryId);
 
+    // person fields
     controller.set('fields', addTranslations(formFields.addressFields));
 
-    controller.set('enableInvoiceAddress', model.enableInvoiceAddress === true);
-    controller.set('companyFields', addTranslations(formFields.companyFields || []));
+    // company fields
+    controller.set('companyFields', typeof formFields.companyFields === 'object' ? addTranslations(formFields.companyFields) : null);
 
 
+    // subscriptionDetails
     controller.set('subscriptionDetailFields', get(model, 'subscriptionDetailFields'));
 
+    // additional people
     controller.set('allowMultiplePeople', get(model, 'allowMultiplePeople'));
-    const peopleFields = formFields.additionalPeopleFields || formFields.addressFields;
-    controller.set('additionalPeopleFields', get(model, 'allowMultiplePeople') ? addTranslations(peopleFields) : peopleFields);
+    let setAdditionalPeopleFields = formFields.additionalPeopleFields !== undefined ? formFields.additionalPeopleFields : formFields.addressFields;
+    controller.set('additionalPeopleFields', setAdditionalPeopleFields);
+      if (get(model, 'allowMultiplePeople')){
+        controller.set('additionalPeopleFields', addTranslations(setAdditionalPeopleFields));
+      }
+    
   }
 });
