@@ -206,6 +206,8 @@ export default Route.extend({
         set(model, 'allowMultiplePeople', allowMultiplePeople);
         set(model, 'enableInvoiceAddress', enableInvoiceAddress);
 
+        console.log('enableInvoiceAddress', enableInvoiceAddress);
+
         userSettings.isLoggedIn = userSettings.IdPerson !== 0;
         set(model, 'userSettings', userSettings);
 
@@ -242,9 +244,11 @@ export default Route.extend({
 
     controller.set('fields', addTranslations(formFields.addressFields));
 
-    controller.set('enableInvoiceAddress', model.enableInvoiceAddress === true);
-    controller.set('companyFields', addTranslations(formFields.companyFields || []));
-
+    if (model.enableInvoiceAddress === true) {
+      controller.set('companyFields', addTranslations(formFields.companyFields));
+    } else {
+      controller.set('companyFields', null);
+    }
 
     controller.set('subscriptionDetailFields', get(model, 'subscriptionDetailFields'));
 
