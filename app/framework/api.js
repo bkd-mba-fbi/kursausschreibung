@@ -110,7 +110,6 @@ export function getEventCodes() {
  * subscribe at the same time
  */
 export const SUBSCRIPTION_DETAIL_ALLOW_MULTIPLE_PEOPLE = 10893;
-export const SUBSCRIPTION_DETAIL_INVOICE_ADRESS = 10895;
 
 /**
  * get subscriptionDetails of an event
