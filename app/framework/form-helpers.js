@@ -102,25 +102,22 @@ export function vssDependency(formValue, field) {
 
     if (!comp || !button || !fieldset || !comp.get('enableInvoiceAddress')) return;
 
-    const hasInvoiceDependency = field.options?.dependencyItems?.some(dep => dep.IdVss === 10895);
-
-    if (isPraxis && hasInvoiceDependency) {
+    if (isPraxis) {
       comp.set('praxisPaymentEnforced', true);
-      comp.set('useCompanyAddress', true);
+      comp.set('useCompanyAddress', true); // erzwingen
       button.disabled = true;
       fieldset.hidden = false;
       fieldset.disabled = false;
       fieldset.querySelectorAll('input, select, textarea').forEach(el => el.required = true);
     } else {
       comp.set('praxisPaymentEnforced', false);
-      comp.set('useCompanyAddress', false);
+      comp.set('useCompanyAddress', false); // optional
       button.disabled = false;
       fieldset.hidden = true;
       fieldset.disabled = true;
       fieldset.querySelectorAll('input, select, textarea').forEach(el => el.required = false);
     }
   }
-
 
 
   // 🔁 Normale Abhängigkeitslogik
