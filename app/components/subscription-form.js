@@ -8,8 +8,19 @@ import uikit from 'uikit';
 
 export default Component.extend({
   useCompanyAddress: false,
+  enableInvoiceAddress: false,
+  paymentEnforced: false,
+
+
 
   additionalPeopleCount: 0,
+
+  didInsertElement() {
+  this._super(...arguments);
+  window.kursausschreibung = window.kursausschreibung || {};
+  window.kursausschreibung.component = this;
+  },
+
 
   additionalPeople: computed('additionalPeopleCount', function () {
     // create an array so handlebars can iterate over it
@@ -34,14 +45,15 @@ export default Component.extend({
       this.get('subscribe')();
     },
 
-    useCompanyAddress(){
-      var value = this.get('useCompanyAddress');
-      if(value){
-        this.set('useCompanyAddress',false);
-      } else {
-        this.set('useCompanyAddress',true);
+    useCompanyAddress() {
+      if (this.get('enableInvoiceAddress') && this.get('paymentEnforced')) {
+        return;
       }
+      this.toggleProperty('useCompanyAddress');
     },
+
+
+
     addPerson() {
       if (this.get('event.FreeSeats') - 1 - this.get('additionalPeopleCount') <= 0) {
         uikit.modal.alert(getString('noSeatsAvailable'));
@@ -69,6 +81,7 @@ export default Component.extend({
         });
     }
   }
+  
 });
 
 // this function subscribes a person to an event using the information

@@ -8,19 +8,28 @@
       {{/each}}
     </fieldset>
 
-    {{#if this.companyFields}}
-      <label class="uk-width-1-1">
-        <button type="button" class="uk-button uk-button-default" checked={{this.useCompanyAddress}} name="useCompanyAddress" {{action "useCompanyAddress"}}>
-        {{translate "companyAddress"}}
-        </button>
-      </label>
+        {{#if this.companyFields}}
+          <label class="uk-width-1-1">
+            <button 
+              type="button"
+              name="useCompanyAddress"
+              class="uk-button uk-button-default"
+              disabled={{this.paymentEnforced}}
+              {{action "useCompanyAddress"}}>
+              {{translate "companyAddress"}}
+            </button>
+          </label>
 
-      <fieldset hidden={{if this.useCompanyAddress false true}} disabled={{if this.useCompanyAddress false true}} class="company-address-fields uk-width-1-1 uk-grid-margin uk-fieldset">
-        {{#each this.companyFields as |field|}}
-          <InputBase @field={{field}} />
-        {{/each}}
-      </fieldset>
-    {{/if}}
+          <fieldset 
+            hidden={{if this.useCompanyAddress false true}} 
+            disabled={{if this.useCompanyAddress false true}} 
+            class="company-address-fields uk-width-1-1 uk-grid-margin uk-fieldset">
+            {{#each this.companyFields as |field|}}
+              <InputBase @field={{field}} />
+            {{/each}}
+          </fieldset>
+        {{/if}}
+
 
     <div class="uk-width-1-1">
       <hr>
