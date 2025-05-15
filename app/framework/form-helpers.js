@@ -149,7 +149,7 @@ function invoiceDependencyCheck(vssId, dependency) {
       button.disabled = false;
       fieldset.hidden = true;
       fieldset.disabled = true;
-      fieldset.querySelectorAll('input, select, textarea').forEach(el => el.required = false);
+      fieldset.querySelectorAll('input, select, textarea').forEach(el => el.required = true);
     }
 
 }
