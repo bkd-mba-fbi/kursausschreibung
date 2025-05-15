@@ -1,4 +1,5 @@
 import { getString } from 'kursausschreibung/framework/translate';
+import { SUBSCRIPTION_DETAIL_INVOICE_ADRESS } from 'kursausschreibung/framework/api';
 
 /**
  * set custom validity of a form element
@@ -93,37 +94,7 @@ function ean13checkNumber(number) {
  * @param {object} field
  */
 export function vssDependency(formValue, field) {
-  // Nur wenn das richtige Feld (Zahlungsart) und AD 10895 vorhanden ist
-  if (field.id === 3801) {
-    const isPraxis = formValue === '4000197' || formValue === '4000198';
-    const comp = window.kursausschreibung?.component;
-    const button = document.querySelector('button[name="useCompanyAddress"]');
-    const fieldset = document.querySelector('.company-address-fields');
 
-    if (!comp || !button || !fieldset || !comp.get('enableInvoiceAddress')) return;
-
-    const hasInvoiceDependency = field.options?.dependencyItems?.some(dep => dep.IdVss === 10895);
-
-    if (isPraxis && hasInvoiceDependency) {
-      comp.set('praxisPaymentEnforced', true);
-      comp.set('useCompanyAddress', true);
-      button.disabled = true;
-      fieldset.hidden = false;
-      fieldset.disabled = false;
-      fieldset.querySelectorAll('input, select, textarea').forEach(el => el.required = true);
-    } else {
-      comp.set('praxisPaymentEnforced', false);
-      comp.set('useCompanyAddress', false);
-      button.disabled = false;
-      fieldset.hidden = true;
-      fieldset.disabled = true;
-      fieldset.querySelectorAll('input, select, textarea').forEach(el => el.required = false);
-    }
-  }
-
-
-
-  // 🔁 Normale Abhängigkeitslogik
   if (field.options?.dependencyItems?.length) {
     let hiddenClass = 'uk-hidden';
     field.options.dependencyItems.forEach(element => {
@@ -131,13 +102,16 @@ export function vssDependency(formValue, field) {
       let operator = element.Operator;
 
       let vssId = element.IdVss;
+
+      let dependency = vssDependencyCheck(formValue, operator, values);
+      invoiceDependencyCheck(vssId, dependency);
       
       let hidden = document.getElementById('hidden' + vssId);
       let requiredElement = document.getElementById('file' + vssId) || document.getElementById('vss' + vssId);
 
       if (!hidden || !requiredElement) return;
 
-      if (vssDependencyCheck(formValue, operator, values)) {
+      if (dependency) {
         hidden.classList.remove(hiddenClass);
         requiredElement.required = element.required;
       } else {
@@ -148,6 +122,35 @@ export function vssDependency(formValue, field) {
     });
 
   }
+
+}
+/***
+ * Check if vssDependency true and SUBSCRIPTION_DETAIL_INVOICE_ADRESS on event. Display useCompanyAddress 
+ * @param {number} vssId
+ * @param {boolean} dependency
+ */
+function invoiceDependencyCheck(vssId, dependency) {
+
+    const comp = window.kursausschreibung?.component;
+    const button = document.querySelector('button[name="useCompanyAddress"]');
+    const fieldset = document.querySelector('.company-address-fields');
+
+    if (!comp || !button || !fieldset || !comp.get('enableInvoiceAddress')) return;
+    if (vssId === SUBSCRIPTION_DETAIL_INVOICE_ADRESS && dependency) {
+      comp.set('paymentEnforced', true);
+      comp.set('useCompanyAddress', true);
+      button.disabled = true;
+      fieldset.hidden = false;
+      fieldset.disabled = false;
+      fieldset.querySelectorAll('input, select, textarea').forEach(el => el.required = true);
+    } else {
+      comp.set('paymentEnforced', false);
+      comp.set('useCompanyAddress', false);
+      button.disabled = false;
+      fieldset.hidden = true;
+      fieldset.disabled = true;
+      fieldset.querySelectorAll('input, select, textarea').forEach(el => el.required = false);
+    }
 
 }
 
@@ -164,9 +167,9 @@ function vssDependencyCheck(formValue, operator, values) {
   } 
 
   if (operator === 349) { //contains
-    return formValue.indexOf(values) > -1 ? true : false;
+    return values.includes(formValue);
   } else if (operator === 350) { //contains Not
-    return formValue.indexOf(values) === -1 ? true : false;
+    return !values.includes(formValue);
   } else if (operator === 351) { //empty
     return formValue === null || formValue === undefined || formValue.length === 0 ? true : false;
   } else if (operator === 352) { //notEmpty

@@ -9,8 +9,7 @@ import uikit from 'uikit';
 export default Component.extend({
   useCompanyAddress: false,
   enableInvoiceAddress: false,
-  praxisPaymentSelected: false,
-  praxisPaymentEnforced: false,
+  paymentEnforced: false,
 
 
 
@@ -47,8 +46,7 @@ export default Component.extend({
     },
 
     useCompanyAddress() {
-      if (this.get('enableInvoiceAddress') && this.get('praxisPaymentEnforced')) {
-        console.log('🔒 Button deaktiviert (Praxiszahlung). Aktion blockiert.');
+      if (this.get('enableInvoiceAddress') && this.get('paymentEnforced')) {
         return;
       }
       this.toggleProperty('useCompanyAddress');
