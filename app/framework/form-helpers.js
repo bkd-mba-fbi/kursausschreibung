@@ -149,7 +149,15 @@ function invoiceDependencyCheck(vssId, dependency) {
       button.disabled = false;
       fieldset.hidden = true;
       fieldset.disabled = true;
-      fieldset.querySelectorAll('input, select, textarea').forEach(el => el.required = true);
+
+      const fields = comp.get('companyFields') || [];
+      // für jedes Input/Select/Textarea
+      fieldset.querySelectorAll('input, select, textarea').forEach(el => {
+        // finde das zugehörige Field-Objekt nach dem Name-Attribut
+        const def = fields.find(f => String(f.id) === el.name);
+        // setze required wie in der config
+        el.required = def?.options.required === true;
+      });
     }
 
 }
