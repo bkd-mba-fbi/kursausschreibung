@@ -77,6 +77,7 @@ window.kursausschreibung.locale["de-CH"] = {
   "formFormOfAddress": "Anrede",
   "formFirstName": "Vorname",
   "formLastName": "Nachname",
+  "formEmail": "E-Mail-Adresse",
   "formEmail2": "E-Mail-Adresse",
   "formBirthdate": "Geburtsdatum",
   "formPhoneMobile": "Telefon mobil",
