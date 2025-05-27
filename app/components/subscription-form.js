@@ -173,13 +173,6 @@ function subscribe($form, self) {
     ({ index: index + 1, data: getTableData(self.get('additionalPeopleFields'), data) })
   );
 
-  if (useCompanyAddress) {
-    subscriptionData.SubscriptionDetails.push({
-      VssId: 10895,
-      Value: "1"
-    });
-  }
-
   // save the data to submit
   setDataToSubmit({
     personId, eventId, useCompanyAddress, addressData, companyAddressData, subscriptionData,
