@@ -31,7 +31,7 @@ jobs:
         npm install
         npm run build
         cp LICENSE README.md dist
-        cp -a /dist/. /dist/latest/
+        cp -a dist/. /dist/latest/
         (cd dist; zip --move --recurse-paths kursausschreibung.zip *)
         mv README.md dist
         
