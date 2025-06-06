@@ -34,13 +34,8 @@ jobs:
         cp -a dist/. latest/
         (cd dist; zip --move --recurse-paths kursausschreibung.zip *)
         mv README.md dist
+        mv dist/kursausschreibung.zip latest/
         
-    - name: Deploy zip 🚀
-      uses: JamesIves/github-pages-deploy-action@4.1.4
-      with:
-         branch: gh-pages # The branch the action should deploy to.
-         folder: dist # The folder the action should deploy.
-
     - name: Deploy latest 🚀
       uses: JamesIves/github-pages-deploy-action@4.1.4
       with:
