@@ -131,6 +131,7 @@ function addSubscriptionDetailDependencies(subscriptionDetailDependencies, subsc
 }
 
 function addTranslations(fields) {
+
   fields.forEach(detail => {
     if (detail.label === undefined)
       detail.label = getString('form' + detail.id);
@@ -220,7 +221,7 @@ export default Route.extend({
         const additionalPeopleFields = formFields.additionalPeopleFields || [];
         const companyFields = formFields.companyFields || [];
 
-        if (!userSettings.isLoggedIn) {
+        if (!userSettings.isLoggedIn || (userSettings.isLoggedIn && !enableInvoiceAddress)) {
           if (allowMultiplePeople || enableInvoiceAddress) {
             loadDropdownItems([...fields, ...additionalPeopleFields, ...companyFields]);
           }
@@ -244,6 +245,8 @@ export default Route.extend({
 
     controller.set('enableInvoiceAddress', model.enableInvoiceAddress === true);
     controller.set('companyFields', addTranslations(formFields.companyFields || []));
+    controller.set('showAddressInputs', !model.userSettings.isLoggedIn);
+    controller.set('showCompanyButtonOnly', model.userSettings.isLoggedIn && model.enableInvoiceAddress);
 
 
     controller.set('subscriptionDetailFields', get(model, 'subscriptionDetailFields'));
