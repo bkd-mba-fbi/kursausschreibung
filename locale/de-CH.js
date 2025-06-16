@@ -96,6 +96,7 @@ window.kursausschreibung.locale["de-CH"] = {
   "formAddressLine1Placeholder": "Musterstrasse 99",
   "formZipPlaceholder": "3000",
   "formLocationPlaceholder": "Bern",
+  "formEmailPlaceholder": "firma@example.com",
   "formOptionEmpty": "-- Leer --",
   "formPhoneMobileHint": "Das ist ein hint und kann in den /local/de-CH.js konfiguriert werden",
   "formBirthdateHint": "Das ist ein hint und kann in den /local/de-CH.js konfiguriert werden",
