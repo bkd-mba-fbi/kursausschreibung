@@ -8,56 +8,34 @@
     </fieldset>
   {{/if}}
 
-  {{#if this.companyFields}}
-    {{#if this.showAddressInputs}}
-      <label class="uk-width-1-1">
-        <button 
-          type="button"
-          name="useCompanyAddress"
-          class="uk-button uk-button-default"
-          disabled={{this.paymentEnforced}}
-          {{action "useCompanyAddress"}}>
-          {{translate "companyAddress"}}
-        </button>
-      </label>
-    {{else if this.showCompanyButtonOnly}}
-      <label class="uk-width-1-1">
-        <button 
-          type="button"
-          name="useCompanyAddress"
-          class="uk-button uk-button-default"
-          disabled={{this.paymentEnforced}}
-          {{action "useCompanyAddress"}}>
-          {{translate "companyAddress"}}
-        </button>
-      </label>
-    {{else}}
-      {{!-- Button bleibt im DOM für dynamische Aktivierung/Deaktivierung --}}
-      <label class="uk-width-1-1" hidden>
-        <button 
-          type="button"
-          name="useCompanyAddress"
-          class="uk-button uk-button-default"
-          disabled={{this.paymentEnforced}}
-          {{action "useCompanyAddress"}}>
-          {{translate "companyAddress"}}
-        </button>
-      </label>
-    {{/if}}
+  {{#if this.showCompanyButtonOnly}}
+    {{#if this.companyFields }}
+        <label class="uk-width-1-1">
+          <button 
+            type="button"
+            name="useCompanyAddress"
+            class="uk-button uk-button-default"
+            disabled={{this.paymentEnforced}}
+            {{action "useCompanyAddress"}}>
+            {{translate "companyAddress"}}
+          </button>
+        </label>
 
-    <fieldset 
-      hidden={{if this.useCompanyAddress false true}} 
-      disabled={{if this.useCompanyAddress false true}} 
-      class="company-address-fields uk-width-1-1 uk-grid-margin uk-fieldset">
-      {{#each this.companyFields as |field|}}
-        <InputBase @field={{field}} />
-      {{/each}}
-    </fieldset>
+      <fieldset 
+        hidden={{if this.useCompanyAddress false true}} 
+        disabled={{if this.useCompanyAddress false true}} 
+        class="company-address-fields uk-width-1-1 uk-grid-margin uk-fieldset">
+        {{#each this.companyFields as |field|}}
+          <InputBase @field={{field}} />
+        {{/each}}
+      </fieldset>
+      <div class="uk-width-1-1">
+        <hr>
+      </div>
+    {{/if}}
   {{/if}}
 
-  <div class="uk-width-1-1">
-    <hr>
-  </div>
+
 
   <fieldset class="subscription-detail-fields uk-width-1-1 uk-fieldset">
     {{#each this.subscriptionDetailFields as |field|}}

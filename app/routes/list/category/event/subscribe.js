@@ -246,7 +246,7 @@ export default Route.extend({
     controller.set('enableInvoiceAddress', model.enableInvoiceAddress === true);
     controller.set('companyFields', addTranslations(formFields.companyFields || []));
     controller.set('showAddressInputs', !model.userSettings.isLoggedIn);
-    controller.set('showCompanyButtonOnly', model.userSettings.isLoggedIn && model.enableInvoiceAddress);
+    controller.set('showCompanyButtonOnly', !model.userSettings.isLoggedIn || (model.userSettings.isLoggedIn || model.enableInvoiceAddress) );
 
 
     controller.set('subscriptionDetailFields', get(model, 'subscriptionDetailFields'));

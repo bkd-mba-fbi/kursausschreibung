@@ -92,7 +92,7 @@ function subscribe($form, self) {
   let useCompanyAddress = self.get('useCompanyAddress') === true;
   let eventId = self.get('event.Id');
   let userSettings = self.get('userSettings');
-  let enableInvoiceAddress = self.get('enableInvoiceAddress');
+  let showCompanyButtonOnly = self.get('showCompanyButtonOnly');
 
   // subscription
   let subscriptionData = {
@@ -145,10 +145,8 @@ function subscribe($form, self) {
     'LastName', 'Location', 'Remark', 'ValidFrom', 'ValidTo', 'Zip'
   ];
 
-  const addressFieldsShouldBeLoaded = !userSettings.isLoggedIn || (userSettings.isLoggedIn && enableInvoiceAddress)
-
   // read address and companyAddress if we don't know the personId yet
-  if (addressFieldsShouldBeLoaded) {
+  if (showCompanyButtonOnly) {
 
     // main address
     addressData = getFieldSetData(addressProperties, $form.find('.address-fields'));
