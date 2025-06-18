@@ -1,4 +1,5 @@
 import { getString } from 'kursausschreibung/framework/translate';
+import { SUBSCRIPTION_DETAIL_INVOICE_ADRESS } from 'kursausschreibung/framework/api';
 
 /**
  * set custom validity of a form element
@@ -35,7 +36,7 @@ export function helperSocialSecurityNumber(that) {
   formFieldError(that, true);
   let number = that.value;
 
-  //set delimiter "."
+    //set delimiter "."
   if (number.length === 3) {
     that.value = number + '.';
   } else if (number.length === 8) {
@@ -88,48 +89,85 @@ function ean13checkNumber(number) {
 
 
 /**
-* Check if vssDependency available
-* @param {string} formValue
-* @param {object} field
-*/
-export function vssDependency(formValue,field) {
+ * Check if vssDependency available
+ * @param {string} formValue
+ * @param {object} field
+ */
+export function vssDependency(formValue, field) {
 
-if(field.options.dependencyItems !== undefined) {
-  
-  let hiddenClass = 'uk-hidden';
+  if (field.options?.dependencyItems?.length) {
+    let hiddenClass = 'uk-hidden';
+    field.options.dependencyItems.forEach(element => {
+      let values = element.Values;
+      let operator = element.Operator;
 
-  if (field.options.dependencyItems.length > 0) {
+      let vssId = element.IdVss;
 
-  field.options.dependencyItems.forEach(element => {
-    let values = element.Values;
-    let operator = element.Operator;
+      let dependency = vssDependencyCheck(formValue, operator, values);
+      invoiceDependencyCheck(vssId, dependency);
+      
+      let hidden = document.getElementById('hidden' + vssId);
+      let requiredElement = document.getElementById('file' + vssId) || document.getElementById('vss' + vssId);
 
-    let vssId = element.IdVss;
-    let hidden = document.getElementById('hidden'+vssId);
-    let requiredElement = document.getElementById('file'+vssId) === null  ? document.getElementById('vss'+vssId) : document.getElementById('file'+vssId);
+      if (!hidden || !requiredElement) return;
 
-    if(vssDependencyCheck(formValue,operator,values)) {     
-      hidden.classList.remove(hiddenClass);
-      requiredElement.required = element.required; 
+      if (dependency) {
+        hidden.classList.remove(hiddenClass);
+        requiredElement.required = element.required;
+      } else {
+        hidden.classList.add(hiddenClass);
+        requiredElement.required = false;
+      }
+
+    });
+
+  }
+
+}
+/***
+ * Check if vssDependency true and SUBSCRIPTION_DETAIL_INVOICE_ADRESS on event. Display useCompanyAddress 
+ * @param {number} vssId
+ * @param {boolean} dependency
+ */
+function invoiceDependencyCheck(vssId, dependency) {
+
+    const comp = window.kursausschreibung?.component;
+    const button = document.querySelector('button[name="useCompanyAddress"]');
+    const fieldset = document.querySelector('.company-address-fields');
+
+    if (!comp || !button || !fieldset || !comp.get('enableInvoiceAddress')) return;
+    if (vssId === SUBSCRIPTION_DETAIL_INVOICE_ADRESS && dependency) {
+      comp.set('paymentEnforced', true);
+      comp.set('useCompanyAddress', true);
+      button.disabled = true;
+      fieldset.hidden = false;
+      fieldset.disabled = false;
+      fieldset.querySelectorAll('input, select, textarea').forEach(el => el.required = true);
     } else {
-      hidden.classList.add(hiddenClass);
-      requiredElement.required = false; 
+      comp.set('paymentEnforced', false);
+      comp.set('useCompanyAddress', false);
+      button.disabled = false;
+      fieldset.hidden = true;
+      fieldset.disabled = true;
+
+      const fields = comp.get('companyFields') || [];
+      // für jedes Input/Select/Textarea
+      fieldset.querySelectorAll('input, select, textarea').forEach(el => {
+        // finde das zugehörige Field-Objekt nach dem Name-Attribut
+        const def = fields.find(f => String(f.id) === el.name);
+        // setze required wie in der config
+        el.required = def?.options.required === true;
+      });
     }
-
-  });
-
-}
-
-}
 
 }
 
 /**
- * Check if vssDependency true
-* @param {string} formValue
-* @param {number} operator
-* @param {Array} values
-*/
+  * Check if vssDependency true
+ * @param {string} formValue
+ * @param {number} operator
+ * @param {Array} values
+ */
 function vssDependencyCheck(formValue, operator, values) {
 
   if(typeof formValue === 'boolean') {
@@ -137,9 +175,9 @@ function vssDependencyCheck(formValue, operator, values) {
   } 
 
   if (operator === 349) { //contains
-    return formValue.indexOf(values) > -1 ? true : false;
+    return values.includes(formValue);
   } else if (operator === 350) { //contains Not
-    return formValue.indexOf(values) === -1 ? true : false;
+    return !values.includes(formValue);
   } else if (operator === 351) { //empty
     return formValue === null || formValue === undefined || formValue.length === 0 ? true : false;
   } else if (operator === 352) { //notEmpty
