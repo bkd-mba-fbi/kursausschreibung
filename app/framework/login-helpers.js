@@ -54,7 +54,7 @@ export function checkToken() {
     setTokenExpire(tokenExpire);
 
     // navigate back to initial url
-    history.replaceState(null, null, getParameterByName('moduleRedirectUrl'));
+    history.replaceState(null, null, getParameterByName('redirectUrl'));
   }
 }
 
@@ -71,10 +71,9 @@ export function autoCheckForLogin() {
     // get a new token from the OAuth server
     let params = $.param({
       clientId: appConfig.clientId,
-      redirectUrl: appConfig.webBaseUrl,
+      redirectUrl: location.href,
       culture_info: getLanguage(),
-      application_scope: appConfig.applicationScope,
-      moduleRedirectUrl: location.href
+      application_scope: appConfig.applicationScope
     });
 
     let url = `${appConfig.oauthUrl}/Authorization/${
