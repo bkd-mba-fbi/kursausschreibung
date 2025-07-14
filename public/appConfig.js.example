@@ -2,8 +2,6 @@ window.kursausschreibung = window.kursausschreibung || {};
 window.kursausschreibung.appConfig = {
   // API base URL without trailing slash
   "apiUrl": "https://eventotest.api",
-  // base Url of the web application without trailing slash (also the redirect url for public clients)
-  "webBaseUrl": "http://localhost:4200",
   // base url of the CLX.Evento OAuth Server.
   "oauthUrl": "https://eventotest.oauth",
   // the instance id for this application.
