@@ -65,6 +65,10 @@
     {{/each}}
   {{/if}}
 
+  {{#if this.showLoginHint}}
+    <span class="uk-text-warning">{{translate "useLogin"}}</span>
+  {{/if}}
+
   <div class="uk-width-1-1">
     <input class="uk-button uk-button-primary uk-float-left" type="submit" value={{translate "subscribe"}}>
     <LinkTo @route="list.category.event" class="uk-button uk-button-default uk-float-right">{{translate "back"}}</LinkTo>

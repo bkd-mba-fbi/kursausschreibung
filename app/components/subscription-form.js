@@ -39,6 +39,10 @@ export default Component.extend({
     return this.get('additionalPeopleCount') > 0;
   }),
 
+  showLoginHint: computed('userSettings.isLoggedIn', function () {
+    return this.userSettings?.isLoggedIn === true;
+  }),
+
   actions: {
     submit(event) {
       event.preventDefault();
