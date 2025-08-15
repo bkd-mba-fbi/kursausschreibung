@@ -6,7 +6,7 @@
     </li>
     {{#each this.filterCodes as |code|}}
     <li id="tag{{code.id}}" class="filter-tag" uk-filter-control=".tag{{code.id}}"><a
-        href="#{{code.Code}}">{{code.Code}}</a></li>
+        href="#{{code.Code}}" {{action "cancelNav"}}>{{code.Code}}</a></li>
     {{/each}}
   </ul>
   {{/if}}
