@@ -8,8 +8,21 @@ import uikit from 'uikit';
 
 export default Component.extend({
   useCompanyAddress: false,
+  enableInvoiceAddress: false,
+  paymentEnforced: false,
+  showAddressInputs: false,
+  showCompanyButtonOnly: false,
+
+
 
   additionalPeopleCount: 0,
+
+  didInsertElement() {
+  this._super(...arguments);
+  window.kursausschreibung = window.kursausschreibung || {};
+  window.kursausschreibung.component = this;
+  },
+
 
   additionalPeople: computed('additionalPeopleCount', function () {
     // create an array so handlebars can iterate over it
@@ -26,6 +39,10 @@ export default Component.extend({
     return this.get('additionalPeopleCount') > 0;
   }),
 
+  showLoginHint: computed('userSettings.isLoggedIn', function () {
+    return this.userSettings?.isLoggedIn === true;
+  }),
+
   actions: {
     submit(event) {
       event.preventDefault();
@@ -34,14 +51,15 @@ export default Component.extend({
       this.get('subscribe')();
     },
 
-    useCompanyAddress(){
-      var value = this.get('useCompanyAddress');
-      if(value){
-        this.set('useCompanyAddress',false);
-      } else {
-        this.set('useCompanyAddress',true);
+    useCompanyAddress() {
+      if (this.get('enableInvoiceAddress') && this.get('paymentEnforced')) {
+        return;
       }
+      this.toggleProperty('useCompanyAddress');
     },
+
+
+
     addPerson() {
       if (this.get('event.FreeSeats') - 1 - this.get('additionalPeopleCount') <= 0) {
         uikit.modal.alert(getString('noSeatsAvailable'));
@@ -69,6 +87,7 @@ export default Component.extend({
         });
     }
   }
+  
 });
 
 // this function subscribes a person to an event using the information
@@ -77,6 +96,7 @@ function subscribe($form, self) {
   let useCompanyAddress = self.get('useCompanyAddress') === true;
   let eventId = self.get('event.Id');
   let userSettings = self.get('userSettings');
+  let showCompanyButtonOnly = self.get('showCompanyButtonOnly');
 
   // subscription
   let subscriptionData = {
@@ -130,7 +150,7 @@ function subscribe($form, self) {
   ];
 
   // read address and companyAddress if we don't know the personId yet
-  if (userSettings.isLoggedIn !== true) {
+  if (showCompanyButtonOnly) {
 
     // main address
     addressData = getFieldSetData(addressProperties, $form.find('.address-fields'));

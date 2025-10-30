@@ -361,6 +361,7 @@ function putIntoAssocArrays(event) {
   // category (in area)
   let categoryName = event.EventCategory;
   let categoryKey = event.categoryKey = underscore(categoryName);
+  categoryKey = event.categoryKey = categoryKey.replaceAll('.','_'); 
 
   if (!eventsByArea.areas[areaKey].categories.hasOwnProperty(categoryKey)) {
     eventsByArea.areas[areaKey].categories[categoryKey] = {

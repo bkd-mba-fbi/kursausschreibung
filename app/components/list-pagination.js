@@ -82,7 +82,7 @@ export default Component.extend({
       });
       
     });
-
+    
     return eventfilterCodes.length === 1 ? null : eventfilterCodes;
   }),
 
@@ -92,6 +92,11 @@ export default Component.extend({
     },
     list() {
       displayAsGrid(false); 
+    },
+    cancelNav(e) {
+      e?.preventDefault?.();
+      e?.stopPropagation?.();
+      return false;
     }
   },
 
