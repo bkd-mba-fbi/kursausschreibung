@@ -6114,7 +6114,9 @@ t=t.split("").join("")
 let r=0
 for(let e=0;e<t.length;e++){r=t.charAt(e)*(!0&e?3:1)+r}let n=10-r%10
 return n=10===n?0:n,Number(e.slice(-1))===n}return!1}(t.replace(/\./g,"")))}}else n(e,!0)},e.removeFile=function(e){document.getElementById(e).value=""},e.vssDependency=function(e,t){if(t.options?.dependencyItems?.length){let n="uk-hidden"
-t.options.dependencyItems.forEach(t=>{let i=t.Values,o=t.Operator,s=t.IdVss,a=function(e,t,r){"boolean"==typeof e&&(e=e?"1":"0")
+t.options.dependencyItems.forEach(t=>{let i=t.Values,o=t.Operator,s=t.IdVss,a=function(e,t,r){"Ja"===e&&(e="1")
+"Nein"===e&&(e="0")
+"boolean"==typeof e&&(e=e?"1":"0")
 if(349===t)return r.includes(e)
 if(350===t)return!r.includes(e)
 if(351===t)return null==e||0===e.length
@@ -6455,4 +6457,4 @@ e.default=(0,t.createTemplateFactory)({id:"I4uIwhPc",block:'[[[10,"h2"],[14,1,"h
 Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0
 e.default=(0,t.createTemplateFactory)({id:"rpyji6CZ",block:'[[[10,"h2"],[14,1,"headerCategory"],[12],[1,[28,[35,0],["overview"],null]],[13],[1,"\\n"],[8,[39,1],null,[["@events","@page","@queryChanged","@route"],[[30,0,["model","events"]],[30,0,["page"]],[28,[37,2],[[30,0],"queryChanged"],null],"list"]],null],[1,"\\n"]],[],false,["translate","event-list","action"]]',moduleName:"kursausschreibung/templates/list/index.hbs",isStrictMode:!1})})
 define("kursausschreibung/config/environment",[],function(){try{var e="kursausschreibung/config/environment",t=document.querySelector('meta[name="'+e+'"]').getAttribute("content"),r={default:JSON.parse(decodeURIComponent(t))}
-return Object.defineProperty(r,"__esModule",{value:!0}),r}catch(n){throw new Error('Could not read config from meta tag with name "'+e+'".')}}),runningTests||require("kursausschreibung/app").default.create({rootElement:"#kursausschreibung-root",name:"kursausschreibung",version:"3.3.4+334515e4"})
+return Object.defineProperty(r,"__esModule",{value:!0}),r}catch(n){throw new Error('Could not read config from meta tag with name "'+e+'".')}}),runningTests||require("kursausschreibung/app").default.create({rootElement:"#kursausschreibung-root",name:"kursausschreibung",version:"3.3.4+e76fab9b"})
