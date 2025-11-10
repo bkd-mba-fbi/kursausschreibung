@@ -170,6 +170,10 @@ function invoiceDependencyCheck(vssId, dependency) {
  */
 function vssDependencyCheck(formValue, operator, values) {
 
+  if (formValue === 'Ja') formValue = '1';
+  if (formValue === 'Nein') formValue = '0';
+
+
   if(typeof formValue === 'boolean') {
     formValue = formValue ? '1' : '0';
   } 
