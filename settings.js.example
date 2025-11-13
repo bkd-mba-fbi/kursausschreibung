@@ -255,7 +255,7 @@ window.kursausschreibung.settings = {
   "headerOffset": 133,
 
   //Button "Subscription with login" visibility when url to content with login readable
-  "subscriptionWithLoginURL": null,
+  "subscriptionWithLoginURL": "https://evt.apps.be.ch/?locale=de-CH&module=coursesAndEvents/#",
 
   //if in designation this sign. Module will add event subtitle as uk-label-warning
   "eventSubtitle": ">"
