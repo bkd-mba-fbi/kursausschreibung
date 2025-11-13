@@ -370,8 +370,10 @@ function putIntoAssocArrays(event) {
   eventsByArea.areas[areaKey].categories[categoryKey].events.push(event);
 
   //settings subscriptionWithLoginURL
+  if (settings.subscriptionWithLoginURL !== null) {
   let loginUrl = settings.subscriptionWithLoginURL.indexOf('#') > 0 ? settings.subscriptionWithLoginURL.split('#')[0] : settings.subscriptionWithLoginURL;
   event.subscriptionWithLoginURL = settings.subscriptionWithLoginURL === null ? null : encodeURI(loginUrl+ '#/' + areaKey + '/'+categoryKey +'/'+event.Id+'/subscribe');
+  }
 
 }
 
