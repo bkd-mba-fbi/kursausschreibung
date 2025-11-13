@@ -319,9 +319,6 @@ function prepareEvent(event) {
   // create proxy for human-readable values
   addDisplayData(event);
 
-  //settings subscriptionWithLoginURL
-  event.subscriptionWithLoginURL = settings.subscriptionWithLoginURL === null ? null : encodeURI(settings.subscriptionWithLoginURL+'/'+event.EventCategory+'/'+event.Id+'/subscribe');
-
   //event subtitle when > inside string
   let eventSubtitle = event.Designation.split(settings.eventSubtitle);
   event.Designation = eventSubtitle.length > 1  ? eventSubtitle[0] : event.Designation;
@@ -371,6 +368,11 @@ function putIntoAssocArrays(event) {
     };
   }
   eventsByArea.areas[areaKey].categories[categoryKey].events.push(event);
+
+  //settings subscriptionWithLoginURL
+  let loginUrl = settings.subscriptionWithLoginURL.indexOf('#') > 0 ? settings.subscriptionWithLoginURL.split('#')[0] : settings.subscriptionWithLoginURL;
+  event.subscriptionWithLoginURL = settings.subscriptionWithLoginURL === null ? null : encodeURI(loginUrl+ '#/' + areaKey + '/'+categoryKey +'/'+event.Id+'/subscribe');
+
 }
 
 /**
