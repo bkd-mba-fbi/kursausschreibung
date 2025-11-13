@@ -6,9 +6,10 @@ export default Component.extend({
   didInsertElement() {
     this._super(...arguments);
 
+    let id = this.get('field.id');
     let options = this.get('field.options').options.map(option => option.Value);
 
-    jQuery('.typeahead').typeahead(
+    jQuery('#vss'+ id).typeahead(
       {
         hint: true,
         highlight: true,
