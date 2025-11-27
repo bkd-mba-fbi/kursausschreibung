@@ -18,7 +18,6 @@ let accessToken = null;
  * @param {boolean} file for file upload change data and contentType
  */
 function ajax(method, relativeUrl, readableError = true, data = null, file = false) {
-  if (accessToken === null)
     accessToken = getAccessToken();
   
   if (file === false) {
