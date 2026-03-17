@@ -18,7 +18,8 @@ function loadDropdownItems(fields) {
         .then(options => {
           if (item.id === 'Nationality') {
             options.forEach(element => {
-              element.Value = element.Value.split(':')[1].trim();
+              const parts = element.Value.split(':');
+              element.Value = (parts[1] ?? parts[0]).trim();
             });
             let setDefaultLand = options;
             let defaultLand = options.findIndex(nationality => nationality.Key === 2008100);
