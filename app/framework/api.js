@@ -6,6 +6,7 @@ import { getAccessToken } from './storage';
 import { Promise } from 'rsvp';
 import { getCorrectApiUrl } from './url-helpers';
 import { getString } from 'kursausschreibung/framework/translate';
+import { autoCheckForLogin } from './login-helpers';
 
 let accessToken = null;
 
@@ -18,8 +19,8 @@ let accessToken = null;
  * @param {boolean} file for file upload change data and contentType
  */
 function ajax(method, relativeUrl, readableError = true, data = null, file = false) {
-  if (accessToken === null)
-    accessToken = getAccessToken();
+  autoCheckForLogin();
+  accessToken = getAccessToken();
   
   if (file === false) {
     data = data !== null ? JSON.stringify(data, null, '\t') : undefined;
