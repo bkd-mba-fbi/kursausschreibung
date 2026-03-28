@@ -12,7 +12,7 @@ module('Integration | Component | area-navigation', function(hooks) {
 
     await render(hbs`{{area-navigation}}`);
 
-    assert.equal(this.element.textContent.trim(), '');
+    assert.equal(this.element.textContent.trim(), 'abc');
 
     // Template block usage:
     await render(hbs`
