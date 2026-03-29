@@ -1,26 +1,36 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | input-base', function(hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
+  test('renders a label and matching input component for regular fields', async function(assert) {
+    this.set('field', {
+      id: 'Email',
+      label: 'E-Mail',
+      dataType: 'string',
+      options: { required: true, disabled: false }
+    });
 
-    await render(hbs`{{input-base}}`);
+    await render(hbs`{{input-base field=this.field}}`);
 
-    assert.equal(this.element.textContent.trim(), '');
+    assert.ok(find('label[for="Email"]'), 'label is rendered with matching for attribute');
+    assert.ok(find('input[name="Email"]'), 'string input subcomponent is rendered');
+  });
 
-    // Template block usage:
-    await render(hbs`
-      {{#input-base}}
-        template block text
-      {{/input-base}}
-    `);
+  test('renders a legend for legend fields', async function(assert) {
+    this.set('field', {
+      id: 'LegendOnly',
+      label: 'Persönliche Angaben',
+      isLegend: true,
+      options: {}
+    });
 
-    assert.equal(this.element.textContent.trim(), 'template block text');
+    await render(hbs`{{input-base field=this.field}}`);
+
+    assert.ok(find('legend.uk-legend'), 'legend is rendered');
+    assert.notOk(find('input'), 'no input is rendered for legend entries');
   });
 });

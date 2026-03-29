@@ -1,6 +1,5 @@
 import Component from '@ember/component';
-import { oneWay } from '@ember/object/computed';
-import { observer } from '@ember/object';
+import { computed, observer } from '@ember/object';
 import { setParameterByName, getParameterByName } from 'kursausschreibung/framework/url-helpers';
 import { sortAs } from '../framework/gui-helpers';
 import { getSortAs } from '../framework/storage';
@@ -10,11 +9,11 @@ import { htmlSafe } from '@ember/string';
 
 // tests if a query matches a value
 function match(value, query) {
-  
+
   if (typeof value === 'object' && value !== null) {
     value = Object.values(value).join('|');
-  } 
-    
+  }
+
   return (
     typeof value === 'string' &&
     value.toLowerCase().indexOf(query) !== -1
@@ -23,33 +22,36 @@ function match(value, query) {
 
 export default Component.extend({
   query: getParameterByName('search'),
+  didReceiveAttrs() {
+    this._super(...arguments);
+    this.send('queryChanged');
+  },
+
   // update the filtered events when the events change
   eventsChanged: observer('events', function () {
+    this.set('filteredEvents', this.get('events'));
     this.send('queryChanged');
   }),
-   
-  willRender() {
-    //only on first page. filter eventcode
-    if  (this.get('parentView').page === 1){
-      this.send('queryChanged');
-    }
-    
+
+  sortOptions: computed(function () {
     let options = '';
-    if(settings.sortOptions === undefined) {
+
+    if (settings.sortOptions === undefined) {
       options = '<option value=error>configure key sortoptions array in settings</option>';
     } else {
       settings.sortOptions.forEach(option => {
-        options = options + '<option value='+option+'>'+getString("sort"+option)+'</option>';
-      }); 
+        options = options + '<option value=' + option + '>' + getString('sort' + option) + '</option>';
+      });
     }
-    this.set('sortOptions',htmlSafe(options));
-  }, 
+
+    return htmlSafe(options);
+  }),
 
   didRender() {
     document.getElementById('sortList').value = getSortAs();
   },
 
-  filteredEvents: oneWay('events'),
+  filteredEvents: null,
 
   keyUp(){
     this.set('query',document.getElementById('searchEvents').value)

@@ -30,3 +30,4 @@ package.json.ember-try
 
 # ember test logs
 *test.log
+*components.log
