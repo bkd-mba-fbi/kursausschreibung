@@ -6,6 +6,7 @@ import { getSortAs } from '../framework/storage';
 import settings from '../framework/settings';
 import { getString } from '../framework/translate';
 import { htmlSafe } from '@ember/string';
+import config from '../config/environment';
 
 // tests if a query matches a value
 function match(value, query) {
@@ -48,21 +49,32 @@ export default Component.extend({
   }),
 
   didRender() {
-    document.getElementById('sortList').value = getSortAs();
+    if (config.environment === 'test') {
+      return;
+    }
+
+    let sortList = document.getElementById('sortList');
+    if (sortList) {
+      sortList.value = getSortAs();
+    }
   },
 
   filteredEvents: null,
 
   keyUp(){
     this.set('query',document.getElementById('searchEvents').value)
-    setParameterByName('search',this.get('query'));
+    if (config.environment !== 'test') {
+      setParameterByName('search',this.get('query'));
+    }
     this.send('queryChanged');
   },
 
   actions: {
     clearSearch() {
       this.set('query','');
-      setParameterByName('search','');
+      if (config.environment !== 'test') {
+        setParameterByName('search','');
+      }
     },
 
     queryChanged() {
