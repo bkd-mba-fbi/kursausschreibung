@@ -1,26 +1,32 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+
+function makeField(overrides = {}) {
+  return Object.assign({
+    id: 'NumberOfParticipants',
+    placeholder: '',
+    options: { required: false, disabled: false, autocomplete: 'off' }
+  }, overrides);
+}
 
 module('Integration | Component | input/input-number', function(hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
+  test('renders a number input with the field name', async function(assert) {
+    this.set('field', makeField());
+    await render(hbs`{{input/input-number field=this.field}}`);
 
-    await render(hbs`{{input/input-number}}`);
+    const input = find('input[type="number"]');
+    assert.ok(input, 'number input is rendered');
+    assert.equal(input.getAttribute('name'), 'NumberOfParticipants', 'name matches field id');
+  });
 
-    assert.equal(this.element.textContent.trim(), '');
+  test('renders as required when field.options.required is true', async function(assert) {
+    this.set('field', makeField({ options: { required: true, disabled: false, autocomplete: 'off' } }));
+    await render(hbs`{{input/input-number field=this.field}}`);
 
-    // Template block usage:
-    await render(hbs`
-      {{#input/input-number}}
-        template block text
-      {{/input/input-number}}
-    `);
-
-    assert.equal(this.element.textContent.trim(), 'template block text');
+    assert.ok(find('input[type="number"][required]'), 'number input is required');
   });
 });

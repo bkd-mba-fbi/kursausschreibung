@@ -1,26 +1,38 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+
+function makeField(overrides = {}) {
+  return Object.assign({
+    id: 'AcceptTerms',
+    options: { required: false, disabled: false, autocomplete: 'off' }
+  }, overrides);
+}
 
 module('Integration | Component | input/input-checkbox', function(hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
+  test('renders a checkbox input with the field name', async function(assert) {
+    this.set('field', makeField());
+    await render(hbs`{{input/input-checkbox field=this.field}}`);
 
-    await render(hbs`{{input/input-checkbox}}`);
+    const input = find('input[type="checkbox"]');
+    assert.ok(input, 'checkbox input is rendered');
+    assert.equal(input.getAttribute('name'), 'AcceptTerms', 'name matches field id');
+  });
 
-    assert.equal(this.element.textContent.trim(), '');
+  test('renders as disabled when field.options.disabled is true', async function(assert) {
+    this.set('field', makeField({ options: { required: false, disabled: true, autocomplete: 'off' } }));
+    await render(hbs`{{input/input-checkbox field=this.field}}`);
 
-    // Template block usage:
-    await render(hbs`
-      {{#input/input-checkbox}}
-        template block text
-      {{/input/input-checkbox}}
-    `);
+    assert.ok(find('input[type="checkbox"]:disabled'), 'checkbox is disabled');
+  });
 
-    assert.equal(this.element.textContent.trim(), 'template block text');
+  test('renders as required when field.options.required is true', async function(assert) {
+    this.set('field', makeField({ options: { required: true, disabled: false, autocomplete: 'off' } }));
+    await render(hbs`{{input/input-checkbox field=this.field}}`);
+
+    assert.ok(find('input[type="checkbox"][required]'), 'checkbox is required');
   });
 });

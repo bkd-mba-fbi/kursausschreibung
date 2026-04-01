@@ -6,12 +6,19 @@ import hbs from 'htmlbars-inline-precompile';
 module('Integration | Helper | translate', function(hooks) {
   setupRenderingTest(hooks);
 
-  // Replace this with your real tests.
-  test('it renders', async function(assert) {
-    this.set('inputValue', '1234');
+  test('renders translated value for known key', async function(assert) {
+    this.set('inputValue', 'overview');
 
     await render(hbs`{{translate inputValue}}`);
 
-    assert.equal(this.element.textContent.trim(), '1234');
+    assert.ok(this.element.textContent.toLowerCase().includes('bersicht'), 'known key is translated');
+  });
+
+  test('renders key-not-found marker for unknown key', async function(assert) {
+    this.set('inputValue', 'unknownTranslationKeyForTest');
+
+    await render(hbs`{{translate inputValue}}`);
+
+    assert.ok(this.element.textContent.includes('Key not found'), 'fallback marker is rendered');
   });
 });
