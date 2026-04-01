@@ -17,10 +17,10 @@ Current full test snapshot (latest local run):
 
 | Metric | Value |
 | --- | --- |
-| Total tests | 49 |
-| Passed | 48 |
-| Failed | 1 |
-| Failing suite | `Integration | Component | event-list-search` |
+| Total tests | 78 |
+| Passed | 78 |
+| Failed | 0 |
+| Failing suite | none |
 
 Important note:
 
@@ -56,19 +56,16 @@ Important note:
 
 | State | Count | Notes | Not Tested Yet |
 | --- | --- | --- | --- |
-| Component files | 22 | Full component test file presence exists | Presence alone does not imply meaningful behavior coverage |
-| Integration test files | 22 | Structure coverage exists | Several tests are still generated placeholders (`it renders`, `template block text`) |
-| Strengthened suites | 8 | `area-navigation`, `event-list-item`, `event-details-table`, `input-base`, `list-pagination`, `remaining-seats-badge`, `status-lamp`, `twitter-feed` now use behavior assertions | Additional behavior depth still needed for input subcomponents and form-heavy components |
-| Known unstable suite | 1 | `event-list-search` currently has a runtime timeout in isolated integration run | Needs refactor to remove render-time side effects and make filtering logic test-safe |
-| Overall status | Mixed | Good progress on key components, but still one flaky/failing component and multiple shallow tests | Replace remaining placeholder tests with behavior assertions |
+| Component files | 22 | Full component test file presence exists | Remaining gaps are mostly depth/edge-cases, not missing suites |
+| Integration test files | 22 | Structure coverage exists and tests are now behavior-focused | Some plugin-heavy controls (typeahead/file upload) still use presence-oriented assertions for stability |
+| Strengthened suites | 22 | All component integration suites were migrated away from generated placeholder assertions | Add more interaction-level assertions for complex JS plugins and async workflows |
+| Known unstable suite | 0 | Previous `event-list-search` flakiness was resolved | Keep test-only side effects guarded to prevent regressions |
+| Overall status | Stable | Component integration suite is green in full run | Expand negative-path and edge-case coverage |
 
 ## Priority Gaps To Close Next
 
-1. Fix `event-list-search` integration timeout and add stable behavior tests.
-2. Replace placeholder tests under `tests/integration/components/input/*` with field-specific behavior assertions.
-3. Strengthen `subscription-form` integration coverage for:
-	- add/remove person behavior
-	- required field behavior
-	- conditional sections (company address, additional people, login hint)
-4. Add coverage tooling (`ember-cli-code-coverage`) when suite is stable, then track statement/branch/function/line percentages.
+1. Add code coverage tooling (`ember-cli-code-coverage`) and publish statement/branch/function/line baselines.
+2. Increase depth for plugin-driven input tests (`typeahead`, upload/croppie) with interaction-level assertions.
+3. Add more negative-path cases for `subscription-form` (validation and submission edge paths).
+4. Add acceptance/E2E smoke flows for key user journeys (list -> category -> event -> subscribe).
 
