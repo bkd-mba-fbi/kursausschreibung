@@ -14,12 +14,12 @@
   },
   "scripts": {
     "npmInstall": "npm install",
-    "build": "ember build --environment=production",
+    "build": "npx ember build --environment=production",
     "lint:fix": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*:fix",
-    "lint:hbs:fix": "ember-template-lint . --fix",
-    "lint:js": "eslint . --cache",
-    "lint:js:fix": "eslint . --fix",
-    "start": "ember serve",
+    "lint:hbs:fix": "npx ember-template-lint . --fix",
+    "lint:js": "npx eslint . --cache",
+    "lint:js:fix": "npx eslint . --fix",
+    "start": "npx ember serve",
     "test": "npm-run-all lint test:*"
   },
   "ember": {
