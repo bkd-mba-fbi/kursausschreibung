@@ -39,6 +39,7 @@
     "ember-cli-cjs-transform": "^2.0.0",
     "ember-cli-concat": "^2.3.0",
     "ember-cli-dependency-checker": "^2.2.1",
+    "ember-cli-deprecation-workflow": "^2.2.0",
     "ember-cli-htmlbars": "^5.7.2",
     "ember-cli-inject-live-reload": "^2.1.0",
     "ember-cli-shims": "^1.2.0",
