@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { vssDependency } from 'kursausschreibung/framework/form-helpers';
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 
 export default Component.extend({
     willRender() {

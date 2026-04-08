@@ -5,7 +5,7 @@ import { sortAs } from '../framework/gui-helpers';
 import { getSortAs } from '../framework/storage';
 import settings from '../framework/settings';
 import { getString } from '../framework/translate';
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 import config from '../config/environment';
 
 // tests if a query matches a value

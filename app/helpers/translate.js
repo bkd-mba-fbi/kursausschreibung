@@ -1,6 +1,6 @@
 import { helper } from '@ember/component/helper';
 import { getString } from 'kursausschreibung/framework/translate';
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 
 export function translate([key, ...placeholderValues]) {
   return htmlSafe(getString(key, placeholderValues));

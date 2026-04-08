@@ -9,7 +9,7 @@ module('Integration | Helper | translate', function(hooks) {
   test('renders translated value for known key', async function(assert) {
     this.set('inputValue', 'overview');
 
-    await render(hbs`{{translate inputValue}}`);
+    await render(hbs`{{translate this.inputValue}}`);
 
     assert.ok(this.element.textContent.toLowerCase().includes('bersicht'), 'known key is translated');
   });
@@ -17,7 +17,7 @@ module('Integration | Helper | translate', function(hooks) {
   test('renders key-not-found marker for unknown key', async function(assert) {
     this.set('inputValue', 'unknownTranslationKeyForTest');
 
-    await render(hbs`{{translate inputValue}}`);
+    await render(hbs`{{translate this.inputValue}}`);
 
     assert.ok(this.element.textContent.includes('Key not found'), 'fallback marker is rendered');
   });
