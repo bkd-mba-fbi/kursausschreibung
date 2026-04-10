@@ -1,5 +1,63 @@
 # Upgrade Log
 
+## Post-Upgrade Hardening On `ember-upgrade`
+
+After the initial Ember 4.12 upgrade landed, the branch continued with focused compatibility-hardening batches so the next major bump is mostly dependency and addon work instead of legacy app-code cleanup.
+
+### Current outcome
+
+1. `npm run lint` passes.
+2. `npx ember test` passes with 78/78 tests.
+3. `ember/no-component-lifecycle-hooks` is enabled and passing.
+4. `ember/no-jquery` is enabled and passing.
+5. `app/components` no longer relies on `@ember/component` as a base class.
+
+### Recent hardening batches
+
+#### Template and action cleanup
+
+- `57283d5` `refactor(ember4): batch 1 - normalize translate helper and modernize action syntax in templates`
+- `9ece52e` `refactor(ember4): batch 2 - fix bare variable references (logoLink, logoImage, model.subtitle)`
+
+What changed:
+1. normalized `translate` helper usage toward named args,
+2. replaced legacy `{{action ...}}` template usage with modern function/action references,
+3. removed lingering bare template references that are risky for newer Ember versions.
+
+#### Component modernization
+
+- `780275b` `refactor(ember4): batch 3a - convert input-dropdown and event-list-item to Glimmer components`
+- `51e7456` `refactor(ember4): batch 3b - replace lifecycle hooks with reactive getters and modifiers`
+- `a03de7f` `refactor(ember4): convert input-file to a Glimmer component`
+- `7a26aa1` `refactor(ember4): convert subscription-form to a Glimmer component`
+- `71e0eb1` `refactor(ember4): move typeahead inputs to Glimmer modifiers`
+
+What changed:
+1. converted remaining high-value classic components to native/Glimmer-style components,
+2. replaced `didRender`/`didReceiveAttrs` patterns with tracked state, getters, and `ember-modifier`,
+3. reduced the classic component surface to zero inside `app/components`.
+
+#### jQuery removal and lint hardening
+
+- `24f4f75` `chore(lint): enable no-component-lifecycle-hooks and no-jquery with scoped exceptions`
+- `00e1c59` `refactor(ember4): replace api jquery transport with fetch and tighten no-jquery exceptions`
+- `9b6ea6d` `refactor(ember4): replace typeahead jquery usage with native input behavior`
+- `01bd35c` `refactor(ember4): replace croppie jquery upload flow with native image processing`
+
+What changed:
+1. replaced `$.ajax` transport with `fetch`,
+2. removed jQuery-based typeahead flows in favor of simpler native input behavior,
+3. replaced the croppie-based upload flow with native preview plus canvas-based JPEG processing,
+4. removed the final `ember/no-jquery` exceptions.
+
+### Practical result for the next version bump
+
+The branch is now in a materially better place for Ember 5:
+
+1. framework code cleanup is no longer the main unknown,
+2. the next likely blockers are addon compatibility and dependency alignment,
+3. the recommended next step is a 4.x -> 5.x compatibility audit plus `ember-cli-update --compare-only` before changing package versions.
+
 ## Upgrade to V4
 
 [Commit](https://github.com/bkd-mba-fbi/kursausschreibung/commit/cb103a84c981b57c127b2b51ff51307528846164)

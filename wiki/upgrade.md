@@ -31,6 +31,43 @@
 | 5 -> 6 | Finish modernization of app code, tests, and dependencies before touching the build pipeline. | Combining framework upgrade and build-system migration makes debugging much harder. |
 | After 6.x | Evaluate Embroider, then optionally Vite. | Build modernization should be a separate project, not part of emergency framework stabilization. |
 
+## Current Repository Status
+
+This section reflects the current state of the `ember-upgrade` branch after the Ember 4 preparation work already completed in this repo.
+
+### Completed hardening work
+
+1. Full test suite is green: `npx ember test` passes with 78/78 tests.
+2. Lint is green: `npm run lint` passes.
+3. `ember/no-component-lifecycle-hooks` is enabled and clean.
+4. `ember/no-jquery` is enabled and clean.
+5. jQuery has been removed from active app code paths, including API transport and input helpers.
+6. Classic component base class usage in `app/components` has been removed.
+7. High-risk classic patterns were migrated incrementally:
+	- template helper/action normalization
+	- bare template reference cleanup
+	- Glimmer/native-class conversion for components
+	- lifecycle hook replacement with reactive getters and modifiers
+	- jQuery transport/plugin removal or isolation, followed by removal
+
+### Practical meaning for the next upgrade step
+
+For this repo, the Ember 4 preparation phase is no longer mainly about framework-internal cleanup. The next highest-value work is:
+
+1. verify Node version alignment for the actual 4 -> 5 step,
+2. audit addon compatibility for Ember 5,
+3. run `ember-cli-update --compare-only` for the chosen Ember 5 target,
+4. perform the version bump only after dependency compatibility is reviewed.
+
+### Updated decision rule for this branch
+
+Treat Ember 4 readiness for this repo as already achieved on the current branch because:
+
+1. automated tests are green,
+2. compatibility lint rules are enabled and passing,
+3. classic/jQuery-heavy application code has been substantially removed,
+4. remaining work is now mostly dependency/addon and framework-version compatibility work.
+
 
 ## Version Bump Workflow Matrix
 
