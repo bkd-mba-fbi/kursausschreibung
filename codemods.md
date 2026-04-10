@@ -11,7 +11,7 @@ This runbook documents which codemods we apply for the Ember 4 migration, why ea
 
 ## Current Status
 - Branch: `ember-upgrade`
-- First codemod commit completed: `90764a3` (`chore(codemod): apply ember-qunit-codemod`)
+- All planned codemods applied. See commit tracking table below.
 
 ## Codemod Inventory For Ember 4
 
@@ -42,7 +42,7 @@ This runbook documents which codemods we apply for the Ember 4 migration, why ea
 - Source/docs:
   - https://github.com/ember-codemods/ember-test-helpers-codemod
 - Commit:
-  - TBD (to be added after run)
+  - `08c1dc3` (no-op — tests already used modern helpers)
 
 ### 3) ember-modules-codemod
 - Why apply:
@@ -55,7 +55,9 @@ This runbook documents which codemods we apply for the Ember 4 migration, why ea
 - Source/docs:
   - https://github.com/ember-cli/ember-modules-codemod
 - Commit:
-  - TBD (to be added after run)
+  - `cf4b8bc` (cosmetic import reformatting in 2 files; 3 files skipped due to optional-chaining syntax newer than bundled babylon parser)
+- Notes:
+  - Skipped files (`form-helpers.js`, `list-pagination.js`, `status-lamp-test.js`) already use explicit imports — no action needed.
 
 ### 4) ember-angle-brackets-codemod
 - Why apply:
@@ -68,9 +70,10 @@ This runbook documents which codemods we apply for the Ember 4 migration, why ea
 - Source/docs:
   - https://github.com/ember-codemods/ember-angle-brackets-codemod
 - Commit:
-  - TBD (to be added after run)
+  - `ac889f0` (no-op — all invocations use positional parameters which the codemod cannot auto-convert)
 - Notes:
   - Medium risk; should be validated template-by-template with tests.
+  - All `{{translate}}` and `{{area-navigation}}` usages were skipped — manual migration needed.
 
 ### 5) ember-3x-codemods (targeted transforms)
 These codemods address specific deprecated API patterns.
@@ -83,7 +86,7 @@ These codemods address specific deprecated API patterns.
 - Source/docs:
   - https://github.com/ember-codemods/ember-3x-codemods
 - Commit:
-  - TBD
+  - `615cacd` (cosmetic whitespace fix in vendored `ics-file.js`)
 
 #### 5b) cp-property-map
 - Why apply:
@@ -93,7 +96,7 @@ These codemods address specific deprecated API patterns.
 - Source/docs:
   - https://github.com/ember-codemods/ember-3x-codemods
 - Commit:
-  - TBD
+  - `6f3598e` (no-op)
 
 #### 5c) cp-volatile
 - Why apply:
@@ -103,7 +106,7 @@ These codemods address specific deprecated API patterns.
 - Source/docs:
   - https://github.com/ember-codemods/ember-3x-codemods
 - Commit:
-  - TBD
+  - `42ad8d9` (no-op)
 
 #### 5d) deprecate-merge
 - Why apply:
@@ -113,7 +116,7 @@ These codemods address specific deprecated API patterns.
 - Source/docs:
   - https://github.com/ember-codemods/ember-3x-codemods
 - Commit:
-  - TBD
+  - `79f5ddb` (no-op)
 
 #### 5e) deprecate-router-events
 - Why apply:
@@ -123,7 +126,7 @@ These codemods address specific deprecated API patterns.
 - Source/docs:
   - https://github.com/ember-codemods/ember-3x-codemods
 - Commit:
-  - TBD
+  - `4bd9d8f` (no-op)
 
 #### 5f) fpe-on / fpe-observes / fpe-computed
 - Why apply:
@@ -135,8 +138,10 @@ These codemods address specific deprecated API patterns.
   - `npx ember-3x-codemods fpe-computed app/**/*.js`
 - Source/docs:
   - https://github.com/ember-codemods/ember-3x-codemods
-- Commit:
-  - TBD
+- Commits:
+  - fpe-on: `1f6b6ad` (no-op)
+  - fpe-observes: `982cc9c` (no-op)
+  - fpe-computed: `9a8b8c6` (no-op)
 
 ### 6) qunit-dom-codemod
 - Why apply:
@@ -147,11 +152,12 @@ These codemods address specific deprecated API patterns.
 - Command:
   - `npx jscodeshift -t https://raw.githubusercontent.com/simplabs/qunit-dom-codemod/master/qunit-dom-codemod.js ./tests`
 - Source/docs:
-  - https://github.com/simplabs/qunit-dom-codemod
+  - https://github.com/mainmatter/qunit-dom-codemod
 - Commit:
-  - TBD
+  - `29d3e65` (20 test files updated with modern `assert.dom()` assertions)
 - Notes:
-  - Remote transform URLs can fail intermittently; pinning local transform files is safer.
+  - Repo was moved from `simplabs` to `mainmatter`; remote URL in manifest is stale (404).
+  - Transform was saved locally as `tmp-qunit-dom-codemod.js` and deleted after use.
 
 ## About `ember-cli-update --run-codemods`
 - We attempted manifest-driven codemod execution and repeatedly hit remote fetch failures (`404: Not Found`) in temporary jscodeshift transforms.
@@ -160,20 +166,20 @@ These codemods address specific deprecated API patterns.
 ## Commit Tracking Table
 | Codemod | Status | Commit | Notes |
 |---|---|---|---|
-| ember-qunit-codemod | done | `90764a3` | Applied + helper wrapper fix |
-| ember-test-helpers-codemod (integration) | pending | TBD | Run next |
-| ember-test-helpers-codemod (acceptance) | pending | TBD | If acceptance tests exist |
-| ember-modules-codemod | pending | TBD | Run after test codemods |
-| ember-angle-brackets-codemod | pending | TBD | Validate templates carefully |
-| ember-3x-codemods: cp-property | pending | TBD | Incremental |
-| ember-3x-codemods: cp-property-map | pending | TBD | Incremental |
-| ember-3x-codemods: cp-volatile | pending | TBD | Incremental |
-| ember-3x-codemods: deprecate-merge | pending | TBD | Incremental |
-| ember-3x-codemods: deprecate-router-events | pending | TBD | Incremental |
-| ember-3x-codemods: fpe-on | pending | TBD | Incremental |
-| ember-3x-codemods: fpe-observes | pending | TBD | Incremental |
-| ember-3x-codemods: fpe-computed | pending | TBD | Incremental |
-| qunit-dom-codemod | pending | TBD | Prefer pinned local transform |
+| ember-qunit-codemod | done | `90764a3` | Applied + helper wrapper import alias fix |
+| ember-test-helpers-codemod (integration) | done | `08c1dc3` | No-op — already modern |
+| ember-test-helpers-codemod (acceptance) | n/a | — | No acceptance tests in repo |
+| ember-modules-codemod | done | `cf4b8bc` | Cosmetic import formatting in 2 files; 3 files skipped (optional chaining) |
+| ember-angle-brackets-codemod | done | `ac889f0` | No-op — all templates use positional params; manual migration needed |
+| ember-3x-codemods: cp-property | done | `615cacd` | Trivial whitespace fix in vendored file |
+| ember-3x-codemods: cp-property-map | done | `6f3598e` | No-op |
+| ember-3x-codemods: cp-volatile | done | `42ad8d9` | No-op |
+| ember-3x-codemods: deprecate-merge | done | `79f5ddb` | No-op |
+| ember-3x-codemods: deprecate-router-events | done | `4bd9d8f` | No-op |
+| ember-3x-codemods: fpe-on | done | `1f6b6ad` | No-op |
+| ember-3x-codemods: fpe-observes | done | `982cc9c` | No-op |
+| ember-3x-codemods: fpe-computed | done | `9a8b8c6` | No-op |
+| qunit-dom-codemod | done | `29d3e65` | 20 test files updated; transform fetched locally (mainmatter repo) |
 
 ## Decision Rule Per Codemod
 - Keep codemod commit if:
