@@ -25,8 +25,8 @@ module.exports = {
     eqeqeq: 'off',
     'ember/no-classic-classes': 'off',
     'ember/no-classic-components': 'off',
-    'ember/no-component-lifecycle-hooks': 'off',
-    'ember/no-jquery': 'off',
+    'ember/no-component-lifecycle-hooks': 'error',
+    'ember/no-jquery': 'error',
     'ember/require-tagless-components': 'off',
     'no-dupe-keys': 'off',
     'no-redeclare': 'off',
@@ -64,6 +64,18 @@ module.exports = {
       extends: ['plugin:qunit/recommended'],
       rules: {
         'qunit/no-assert-equal': 'off',
+      },
+    },
+    {
+      // temporary jQuery exceptions for plugin-bound code paths and legacy API behavior
+      files: [
+        'app/components/input/input-file.js',
+        'app/components/input/input-freeform-dropdown.js',
+        'app/components/input/input-postal-code.js',
+        'app/framework/api.js',
+      ],
+      rules: {
+        'ember/no-jquery': 'off',
       },
     },
   ],
