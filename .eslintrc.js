@@ -29,7 +29,6 @@ module.exports = {
     'ember/no-component-lifecycle-hooks': 'off',
     'ember/no-get': 'off',
     'ember/no-jquery': 'off',
-    'ember/no-observers': 'off',
     'ember/require-tagless-components': 'off',
     'no-dupe-keys': 'off',
     'no-redeclare': 'off',

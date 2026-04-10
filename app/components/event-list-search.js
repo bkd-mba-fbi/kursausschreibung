@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { computed, observer } from '@ember/object';
+import { computed } from '@ember/object';
 import {
   setParameterByName,
   getParameterByName,
@@ -24,14 +24,9 @@ export default Component.extend({
   query: getParameterByName('search'),
   didReceiveAttrs() {
     this._super(...arguments);
-    this.send('queryChanged');
-  },
-
-  // update the filtered events when the events change
-  eventsChanged: observer('events', function () {
     this.set('filteredEvents', this.events);
     this.send('queryChanged');
-  }),
+  },
 
   sortOptions: computed(function () {
     let options = '';
