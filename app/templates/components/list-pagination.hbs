@@ -2,7 +2,7 @@
 <div uk-filter="target: .js-filter">
   {{#if this.filterCodes}}
   <ul class="uk-subnav uk-subnav-pill">
-    <li id="tagAll" class="uk-active filter-tag" uk-filter-control=""><a href="#">{{translate "FilterTagAllEvents"}}</a>
+    <li id="tagAll" class="uk-active filter-tag" uk-filter-control=""><a href="#">{{translate key="FilterTagAllEvents"}}</a>
     </li>
     {{#each this.filterCodes as |code|}}
     <li id="tag{{code.id}}" class="filter-tag" uk-filter-control=".tag{{code.id}}"><a
@@ -121,5 +121,5 @@
       </ul>
 </div>
 {{else}}
-{{translate "noResults"}}
+  {{translate key="noResults"}}
 {{/if}}
