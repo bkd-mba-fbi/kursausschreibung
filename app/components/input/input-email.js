@@ -1,9 +1,11 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
 import { formFieldError } from 'kursausschreibung/framework/form-helpers';
 import jQuery from 'jquery';
 
-export default Component.extend({
-  change() {
+export default class InputEmailComponent extends Component {
+  @action
+  handleChange() {
     // show an error message for duplicate e-mails
     const emailFields = jQuery('#subscriptionForm')
       .closest('form')
@@ -20,8 +22,10 @@ export default Component.extend({
         formFieldError(field, false);
       }
     });
-  },
-  keyUp() {
-    this.change();
-  },
-});
+  }
+
+  @action
+  handleKeyUp() {
+    this.handleChange();
+  }
+}
