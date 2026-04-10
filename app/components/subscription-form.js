@@ -1,7 +1,6 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { equal, gt } from '@ember/object/computed';
-import jQuery from 'jquery';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import {
   formatDate,
   getDMY,
@@ -11,87 +10,80 @@ import { setDataToSubmit } from 'kursausschreibung/framework/storage';
 import { getString } from 'kursausschreibung/framework/translate';
 import uikit from 'uikit';
 
-export default Component.extend({
-  useCompanyAddress: false,
-  enableInvoiceAddress: false,
-  paymentEnforced: false,
-  showAddressInputs: false,
-  showCompanyButtonOnly: false,
-
-  additionalPeopleCount: 0,
+export default class SubscriptionFormComponent extends Component {
+  @tracked useCompanyAddress = false;
+  @tracked additionalPeopleCount = 0;
 
   didInsertElement() {
-    this._super(...arguments);
+    super.didInsertElement(...arguments);
     window.kursausschreibung = window.kursausschreibung || {};
     window.kursausschreibung.component = this;
-  },
+  }
 
-  additionalPeople: computed('additionalPeopleCount', function () {
-    // create an array so handlebars can iterate over it
+  get additionalPeople() {
     let count = this.additionalPeopleCount;
     let array = [];
     for (let i = 0; i < count; i++) {
       array.push(i + 1);
     }
-
     return array;
-  }),
+  }
 
-  thereAreAdditionalPeople: gt('additionalPeopleCount', 0),
+  get thereAreAdditionalPeople() {
+    return this.additionalPeopleCount > 0;
+  }
 
-  showLoginHint: equal('userSettings.isLoggedIn', true),
+  get showLoginHint() {
+    return this.userSettings?.isLoggedIn === true;
+  }
 
-  actions: {
-    submit(event) {
-      event.preventDefault();
+  @action
+  submit(event) {
+    event.preventDefault();
+    subscribe(event.target, this);
+    this.subscribe();
+  }
 
-      subscribe(jQuery('form'), this);
-      this.subscribe();
-    },
+  @action
+  toggleCompanyAddress() {
+    if (this.enableInvoiceAddress && this.paymentEnforced) {
+      return;
+    }
+    this.useCompanyAddress = !this.useCompanyAddress;
+  }
 
-    useCompanyAddress() {
-      if (this.enableInvoiceAddress && this.paymentEnforced) {
-        return;
-      }
-      this.toggleProperty('useCompanyAddress');
-    },
+  @action
+  addPerson() {
+    if (this.event?.FreeSeats - 1 - this.additionalPeopleCount <= 0) {
+      uikit.modal.alert(getString('noSeatsAvailable'));
+      return;
+    }
+    this.additionalPeopleCount = this.additionalPeopleCount + 1;
+  }
 
-    addPerson() {
-      if (this.get('event.FreeSeats') - 1 - this.additionalPeopleCount <= 0) {
-        uikit.modal.alert(getString('noSeatsAvailable'));
-        return;
-      }
-
-      this.set('additionalPeopleCount', this.additionalPeopleCount + 1);
-    },
-
-    removePerson() {
-      const additionalPeopleCount = this.additionalPeopleCount;
-
-      if (additionalPeopleCount < 1) {
-        return;
-      }
-
-      const that = this;
-
-      uikit.modal
-        .confirm(getString('confirmDeletion'), {
-          labels: { ok: getString('yes'), cancel: getString('no') },
-        })
-        .then(function () {
-          that.set('additionalPeopleCount', additionalPeopleCount - 1);
-        });
-    },
-  },
-});
+  @action
+  removePerson() {
+    const additionalPeopleCount = this.additionalPeopleCount;
+    if (additionalPeopleCount < 1) {
+      return;
+    }
+    uikit.modal
+      .confirm(getString('confirmDeletion'), {
+        labels: { ok: getString('yes'), cancel: getString('no') },
+      })
+      .then(() => {
+        this.additionalPeopleCount = additionalPeopleCount - 1;
+      });
+  }
+}
 
 // this function subscribes a person to an event using the information
 // provided in the form
-function subscribe($form, self) {
-  let useCompanyAddress = self.get('useCompanyAddress') === true;
-  let eventId = self.get('event.Id');
-  let userSettings = self.get('userSettings');
-  let showCompanyButtonOnly = self.get('showCompanyButtonOnly');
+function subscribe(form, self) {
+  let useCompanyAddress = self.useCompanyAddress === true;
+  let eventId = self.event?.Id;
+  let userSettings = self.userSettings;
+  let showCompanyButtonOnly = self.showCompanyButtonOnly;
 
   // subscription
   let subscriptionData = {
@@ -100,15 +92,14 @@ function subscribe($form, self) {
     SubscriptionDetails: [],
   };
 
-  let assocSubscriptionData = getFieldSetData(
-    [],
-    $form.find('.subscription-detail-fields')
-  ); // for confirmation values
+  let subscriptionDetailFieldset = form.querySelector(
+    '.subscription-detail-fields'
+  );
+  let assocSubscriptionData = getFieldSetData([], subscriptionDetailFieldset);
 
-  $form
-    .find('.subscription-detail-fields')
-    .find('input, select, textarea')
-    .each((_, element) => {
+  subscriptionDetailFieldset
+    .querySelectorAll('input, select, textarea')
+    .forEach((element) => {
       let vssId = parseInt(element.name);
       let value = null;
 
@@ -213,22 +204,22 @@ function subscribe($form, self) {
     // main address
     addressData = getFieldSetData(
       addressProperties,
-      $form.find('.address-fields')
+      form.querySelector('.address-fields')
     );
 
     // company address
     companyAddressData = getFieldSetData(
       companyAddressProperties,
-      $form.find('.company-address-fields')
+      form.querySelector('.company-address-fields')
     );
 
     // set tableData for the main person
-    tableData.fields = getTableData(self.get('fields'), addressData);
+    tableData.fields = getTableData(self.fields, addressData);
 
     // set tableData for the company address
     if (useCompanyAddress) {
       tableData.companyFields = getTableData(
-        self.get('companyFields'),
+        self.companyFields,
         companyAddressData
       );
     }
@@ -236,20 +227,19 @@ function subscribe($form, self) {
 
   // set tableData for subscriptionDetails
   tableData.subscriptionDetailFields = getTableData(
-    self.get('subscriptionDetailFields'),
+    self.subscriptionDetailFields,
     assocSubscriptionData
   );
 
   // read addresses for additional people
-  additionalPeople = $form
-    .find('.additional-person-fields')
-    .toArray()
-    .map((fieldset) => getFieldSetData(addressProperties, $(fieldset)));
+  additionalPeople = Array.from(
+    form.querySelectorAll('.additional-person-fields')
+  ).map((fieldset) => getFieldSetData(addressProperties, fieldset));
 
   // set tableData for additional people
   tableData.additionalPeopleFields = additionalPeople.map((data, index) => ({
     index: index + 1,
-    data: getTableData(self.get('additionalPeopleFields'), data),
+    data: getTableData(self.additionalPeopleFields, data),
   }));
 
   // save the data to submit
@@ -267,14 +257,14 @@ function subscribe($form, self) {
 }
 
 // get data from a fieldset in the format expected by the REST-API
-function getFieldSetData(properties, $fieldset) {
+function getFieldSetData(properties, fieldset) {
   let data = {};
 
   properties.forEach((property) => (data[property] = null));
 
-  $fieldset
-    .find('input, select, textarea')
-    .each((_, element) => setProperties(data, element));
+  fieldset
+    .querySelectorAll('input, select, textarea')
+    .forEach((element) => setProperties(data, element));
 
   return data;
 }
