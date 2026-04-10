@@ -44,8 +44,8 @@
                     <div class="uk-margin">
                       <h2>{{translate key="language"}}</h2>
                       <ul class="uk-nav uk-nav-default">
-                        <li><a {{action "setLanguage" "de-CH"}}>{{translate key="german"}}</a></li>
-                        <li><a {{action "setLanguage" "fr-CH"}}>{{translate key="french"}}</a></li>
+                        <li><a {{on "click" (fn this.setLanguage "de-CH")}}>{{translate key="german"}}</a></li>
+                        <li><a {{on "click" (fn this.setLanguage "fr-CH")}}>{{translate key="french"}}</a></li>
                       </ul>
                     </div>
                   {{/if}}
@@ -60,8 +60,8 @@
               <a href="#" class="uk-icon-link" data-uk-icon="world">{{translate key="language"}} </a>
               <div data-uk-dropdown="mode: click">
                 <ul class="uk-list uk-link-text uk-margin-remove">
-                  <li><a href="#" {{action "setLanguage" "de-CH"}}>{{translate key="german"}}</a></li>
-                  <li><a href="#" {{action "setLanguage" "fr-CH"}}>{{translate key="french"}}</a></li>
+                  <li><a href="#" {{on "click" (fn this.setLanguage "de-CH")}}>{{translate key="german"}}</a></li>
+                  <li><a href="#" {{on "click" (fn this.setLanguage "fr-CH")}}>{{translate key="french"}}</a></li>
                 </ul>
               </div>
             </div>

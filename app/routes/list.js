@@ -1,8 +1,9 @@
 import Route from '@ember/routing/route';
+import { action } from '@ember/object';
 import { underscore } from '@ember/string';
 import uikit from 'uikit';
 
-export default Route.extend({
+export default class ListRoute extends Route {
   model(params) {
     let eventsByArea = this.modelFor('application');
 
@@ -16,15 +17,14 @@ export default Route.extend({
     }
 
     return eventsByArea.areas[params.area_of_education];
-  },
+  }
 
-  actions: {
-    didTransition() {
-      let modal = uikit.modal('#menu-modal');
+  @action
+  didTransition() {
+    let modal = uikit.modal('#menu-modal');
 
-      if (modal !== undefined) {
-        modal.hide();
-      }
-    },
-  },
-});
+    if (modal !== undefined) {
+      modal.hide();
+    }
+  }
+}

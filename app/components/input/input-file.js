@@ -1,4 +1,5 @@
 import Component from '@ember/component';
+import { action } from '@ember/object';
 import { getString } from 'kursausschreibung/framework/translate';
 import {
   removeFile,
@@ -16,19 +17,14 @@ function getElementIdFile(fieldId) {
   return 'file' + fieldId;
 }
 
-export default Component.extend({
+export default class InputFileComponent extends Component {
   change() {
     let elementIdFile = getElementIdFile(this.field.id);
     let inputFile = getInputFile(this.field.id);
     inputFile.imgDev = null;
-    let maxFileSizeMB = (this.get('field.maxFileSize') / (1024 * 1024)).toFixed(
-      2
-    );
+    let maxFileSizeMB = (this.field.maxFileSize / (1024 * 1024)).toFixed(2);
 
-    if (
-      inputFile.size > this.get('field.maxFileSize') &&
-      maxFileSizeMB !== '0.00'
-    ) {
+    if (inputFile.size > this.field.maxFileSize && maxFileSizeMB !== '0.00') {
       uikit.modal.alert(getString('FileSizeTooBig') + maxFileSizeMB + 'MB');
       removeFile(elementIdFile);
     } else if (
@@ -36,12 +32,12 @@ export default Component.extend({
       inputFile.type === ''
     ) {
       uikit.modal.alert(
-        getString('FileTypeNotAccept') + this.get('field.acceptFileType')
+        getString('FileTypeNotAccept') + this.field.acceptFileType
       );
       removeFile(elementIdFile);
     } else {
-      this.set('field.fileTypeLabel', inputFile.name);
-      this.set('field.fileObject', inputFile);
+      this.field.fileTypeLabel = inputFile.name;
+      this.field.fileObject = inputFile;
 
       let buttonClass = document.getElementById('fileBt' + this.field.id);
       buttonClass.classList.remove('required');
@@ -54,14 +50,14 @@ export default Component.extend({
       // Note: reading file is async
       reader.onload = () => {
         data = reader.result;
-        this.set('field.fileObject.data', data);
+        this.field.fileObject.data = data;
       };
 
       if (inputFile) {
         reader.readAsDataURL(inputFile);
       }
 
-      if (this.get('field.acceptFileType') === 'image/jpeg') {
+      if (this.field.acceptFileType === 'image/jpeg') {
         let fieldId = this.field.id;
         let buttonClassUpload = document.getElementById(
           'fileBtUpload' + fieldId
@@ -90,59 +86,58 @@ export default Component.extend({
       let field = this.field;
       vssDependency(inputFile, field);
     }
-  },
-  actions: {
-    deleteFile() {
-      let fieldId = this.field.id;
-      let elementIdFile = getElementIdFile(fieldId);
-      let buttonClassDel = document.getElementById('fileBtDel' + fieldId);
-      buttonClassDel.classList.add('uk-hidden');
+  }
 
-      if (this.get('field.options.required')) {
-        let buttonClass = document.getElementById('fileBt' + this.field.id);
-        buttonClass.classList.add('required');
-      }
+  @action
+  deleteFile() {
+    let fieldId = this.field.id;
+    let elementIdFile = getElementIdFile(fieldId);
+    let buttonClassDel = document.getElementById('fileBtDel' + fieldId);
+    buttonClassDel.classList.add('uk-hidden');
 
-      let imgClassDel = document.getElementById('img' + fieldId);
-      imgClassDel.classList.add('uk-hidden');
-      let imgClassUp = document.getElementById('fileBtUpload' + fieldId);
-      imgClassUp.classList.add('uk-hidden');
-      let imgFielDev = document.getElementById('imgDev' + fieldId);
-      imgFielDev.classList.add('uk-hidden');
-      removeFile(elementIdFile);
-      this.set(
-        'field.fileTypeLabel',
-        this.get('field.fileLabelBevorFileChoose')
-      );
+    if (this.field.options?.required) {
+      let buttonClass = document.getElementById('fileBt' + this.field.id);
+      buttonClass.classList.add('required');
+    }
 
-      jQuery('#img' + this.field.id).croppie('destroy');
-    },
-    uploadImage() {
-      let fieldId = this.field.id;
-      //on button click
-      let basic = jQuery('#img' + fieldId);
-      let inputFile = getInputFile(fieldId);
-      basic
-        .croppie('result', {
-          type: 'base64',
-          format: 'jpeg',
-          size: { width: '300', height: '400' },
-        })
-        .then(function (base64) {
-          // html is div (overflow hidden)
-          // with img positioned inside.
-          inputFile.imgDev = base64;
+    let imgClassDel = document.getElementById('img' + fieldId);
+    imgClassDel.classList.add('uk-hidden');
+    let imgClassUp = document.getElementById('fileBtUpload' + fieldId);
+    imgClassUp.classList.add('uk-hidden');
+    let imgFielDev = document.getElementById('imgDev' + fieldId);
+    imgFielDev.classList.add('uk-hidden');
+    removeFile(elementIdFile);
+    this.field.fileTypeLabel = this.field.fileLabelBevorFileChoose;
 
-          let imgFielDev = document.getElementById('imgDev' + fieldId);
-          imgFielDev.src = base64;
-          imgFielDev.classList.remove('uk-hidden');
-          let imgClassUp = document.getElementById('fileBtUpload' + fieldId);
-          imgClassUp.classList.add('uk-hidden');
-          let imgClassDel = document.getElementById('img' + fieldId);
-          imgClassDel.classList.add('uk-hidden');
+    jQuery('#img' + this.field.id).croppie('destroy');
+  }
 
-          jQuery('#img' + fieldId).croppie('destroy');
-        });
-    },
-  },
-});
+  @action
+  uploadImage() {
+    let fieldId = this.field.id;
+    //on button click
+    let basic = jQuery('#img' + fieldId);
+    let inputFile = getInputFile(fieldId);
+    basic
+      .croppie('result', {
+        type: 'base64',
+        format: 'jpeg',
+        size: { width: '300', height: '400' },
+      })
+      .then(function (base64) {
+        // html is div (overflow hidden)
+        // with img positioned inside.
+        inputFile.imgDev = base64;
+
+        let imgFielDev = document.getElementById('imgDev' + fieldId);
+        imgFielDev.src = base64;
+        imgFielDev.classList.remove('uk-hidden');
+        let imgClassUp = document.getElementById('fileBtUpload' + fieldId);
+        imgClassUp.classList.add('uk-hidden');
+        let imgClassDel = document.getElementById('img' + fieldId);
+        imgClassDel.classList.add('uk-hidden');
+
+        jQuery('#img' + fieldId).croppie('destroy');
+      });
+  }
+}
