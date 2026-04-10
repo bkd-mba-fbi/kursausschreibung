@@ -1,9 +1,9 @@
 {{#unless this.hideHeading}}
-  <h3 id="header-naviagtion-area" class="uk-margin-small">{{translate "kursCategoryHeader"}}</h3>
+  <h3 id="header-naviagtion-area" class="uk-margin-small">{{translate key="kursCategoryHeader"}}</h3>
 {{/unless}}
 <ul class="uk-nav uk-nav-default">
   <li>
-    <LinkTo @route="list.index">{{translate "overview"}}</LinkTo>
+    <LinkTo @route="list.index">{{translate key="overview"}}</LinkTo>
   </li>
   {{#each this.area.categoryKeys as |categoryKey|}}
     <li>

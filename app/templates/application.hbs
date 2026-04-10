@@ -34,7 +34,7 @@
               <div class="uk-modal-dialog">
                 <button class="uk-modal-close-full uk-close-large" type="button" data-uk-close></button>
                 <div class="uk-padding-large" data-uk-height-viewport>
-                  <h2>{{translate "navigation"}}</h2>
+                  <h2>{{translate key="navigation"}}</h2>
                   {{#each-in this.model.areas as |area data|}}
                     <div class="uk-margin">
                       {{area-navigation data}}
@@ -42,10 +42,10 @@
                   {{/each-in}}
                   {{#if this.showLanguageButton}}
                     <div class="uk-margin">
-                      <h2>{{translate "language"}}</h2>
+                      <h2>{{translate key="language"}}</h2>
                       <ul class="uk-nav uk-nav-default">
-                        <li><a {{action "setLanguage" "de-CH"}}>{{translate "german"}}</a></li>
-                        <li><a {{action "setLanguage" "fr-CH"}}>{{translate "french"}}</a></li>
+                        <li><a {{action "setLanguage" "de-CH"}}>{{translate key="german"}}</a></li>
+                        <li><a {{action "setLanguage" "fr-CH"}}>{{translate key="french"}}</a></li>
                       </ul>
                     </div>
                   {{/if}}
@@ -57,11 +57,11 @@
           {{! LANGUAGE BUTTON }}
           {{#if this.showLanguageButton}}
             <div class="uk-margin-right {{unless this.eventCategoryDropdown "uk-visible@m"}}">
-              <a href="#" class="uk-icon-link" data-uk-icon="world">{{translate "language"}} </a>
+              <a href="#" class="uk-icon-link" data-uk-icon="world">{{translate key="language"}} </a>
               <div data-uk-dropdown="mode: click">
                 <ul class="uk-list uk-link-text uk-margin-remove">
-                  <li><a href="#" {{action "setLanguage" "de-CH"}}>{{translate "german"}}</a></li>
-                  <li><a href="#" {{action "setLanguage" "fr-CH"}}>{{translate "french"}}</a></li>
+                  <li><a href="#" {{action "setLanguage" "de-CH"}}>{{translate key="german"}}</a></li>
+                  <li><a href="#" {{action "setLanguage" "fr-CH"}}>{{translate key="french"}}</a></li>
                 </ul>
               </div>
             </div>
@@ -91,27 +91,27 @@
 
       {{! LEGEND }}
       <div class="uk-margin uk-card uk-card-small uk-card-body">
-        <h2 id="header-legend" class="uk-h3 uk-card-title">{{translate "legend"}}</h2>
+        <h2 id="header-legend" class="uk-h3 uk-card-title">{{translate key="legend"}}</h2>
 
         <ul class="uk-list">
           <li class="uk-flex">
-            <span><StatusLamp @status="green" /></span><span>{{translate "greenLamp"}}</span></li>
+            <span><StatusLamp @status="green" /></span><span>{{translate key="greenLamp"}}</span></li>
           <li class="uk-flex">
-            <span><StatusLamp @status="chartreuse" /></span><span>{{translate "chartreuseLamp"}}</span></li>
+            <span><StatusLamp @status="chartreuse" /></span><span>{{translate key="chartreuseLamp"}}</span></li>
           <li class="uk-flex">
-            <span><StatusLamp @status="yellow" /></span><span>{{translate "yellowLamp"}}</span></li>
+            <span><StatusLamp @status="yellow" /></span><span>{{translate key="yellowLamp"}}</span></li>
           <li class="uk-flex">
-            <span><StatusLamp @status="red" /></span><span>{{translate "redLamp"}}</span></li>
+            <span><StatusLamp @status="red" /></span><span>{{translate key="redLamp"}}</span></li>
           <li class="uk-flex">
-            <span><StatusLamp @status="orange" /></span><span>{{translate "orangeLamp"}}</span></li>
+            <span><StatusLamp @status="orange" /></span><span>{{translate key="orangeLamp"}}</span></li>
         </ul>
       </div>
 
       {{! CONTACT }}
       {{#if this.showContact}}
         <div class="uk-margin uk-card uk-card-small uk-card-body">
-          <h2 id="header-contact" class="uk-h3 uk-card-title">{{translate "contact"}}</h2>
-          <p>{{translate "contactContent"}}</p>
+          <h2 id="header-contact" class="uk-h3 uk-card-title">{{translate key="contact"}}</h2>
+          <p>{{translate key="contactContent"}}</p>
         </div>
       {{/if}}
 
