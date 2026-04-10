@@ -1,7 +1,6 @@
 import { A } from '@ember/array';
 import { underscore } from '@ember/string';
 import EmberObject, { computed } from '@ember/object';
-import $ from 'jquery';
 import {
   getEvents,
   getEvent,
@@ -189,7 +188,7 @@ function addLocationsToEvents(eventLocations) {
 
     // don't overwrite the event-Id
     delete location.Id;
-    eventsById[eventId] = $.extend(eventsById[eventId], location);
+    eventsById[eventId] = Object.assign({}, eventsById[eventId], location);
   });
 }
 
