@@ -7,10 +7,10 @@
  */
 function setItem(key, value) {
   if (key === 'CLX.LoginToken') {
-    sessionStorage.setItem(key,JSON.stringify(value));
+    sessionStorage.setItem(key, JSON.stringify(value));
   } else {
     localStorage.setItem(key, JSON.stringify(value));
-  } 
+  }
 }
 
 /**
@@ -39,7 +39,7 @@ let [
   [getRefreshToken, setRefreshToken],
   [getTokenExpire, setTokenExpire],
   [getListViewGrid, setListViewGrid],
-  [getSortAs, setSortAs]
+  [getSortAs, setSortAs],
 ] = [
   'uiCulture',
   'CLX.LoginToken',
@@ -48,21 +48,27 @@ let [
   'listViewGrid',
   'sortAs',
   'kursausschreibung.dataToSubmit',
-].map(key => [getItem.bind(null, key), setItem.bind(null, key)]);
+].map((key) => [getItem.bind(null, key), setItem.bind(null, key)]);
 
 export {
-  getCulture, setCulture,
-  getAccessToken, setAccessToken,
-  getRefreshToken, setRefreshToken,
-  getTokenExpire, setTokenExpire, 
-  getListViewGrid, setListViewGrid,
-  getSortAs, setSortAs
+  getCulture,
+  setCulture,
+  getAccessToken,
+  setAccessToken,
+  getRefreshToken,
+  setRefreshToken,
+  getTokenExpire,
+  setTokenExpire,
+  getListViewGrid,
+  setListViewGrid,
+  getSortAs,
+  setSortAs,
 };
 
-export function getDataToSubmit(){
+export function getDataToSubmit() {
   return window.kursausschreibung.dataToSubmit;
 }
 
-export function setDataToSubmit(dataToSubmit){
+export function setDataToSubmit(dataToSubmit) {
   window.kursausschreibung.dataToSubmit = dataToSubmit;
 }

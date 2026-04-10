@@ -1,7 +1,12 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { equal, gt } from '@ember/object/computed';
 import jQuery from 'jquery';
-import { formatDate, getDMY, getYMD } from 'kursausschreibung/framework/date-helpers';
+import {
+  formatDate,
+  getDMY,
+  getYMD,
+} from 'kursausschreibung/framework/date-helpers';
 import { setDataToSubmit } from 'kursausschreibung/framework/storage';
 import { getString } from 'kursausschreibung/framework/translate';
 import uikit from 'uikit';
@@ -13,20 +18,17 @@ export default Component.extend({
   showAddressInputs: false,
   showCompanyButtonOnly: false,
 
-
-
   additionalPeopleCount: 0,
 
   didInsertElement() {
-  this._super(...arguments);
-  window.kursausschreibung = window.kursausschreibung || {};
-  window.kursausschreibung.component = this;
+    this._super(...arguments);
+    window.kursausschreibung = window.kursausschreibung || {};
+    window.kursausschreibung.component = this;
   },
-
 
   additionalPeople: computed('additionalPeopleCount', function () {
     // create an array so handlebars can iterate over it
-    let count = this.get('additionalPeopleCount');
+    let count = this.additionalPeopleCount;
     let array = [];
     for (let i = 0; i < count; i++) {
       array.push(i + 1);
@@ -35,42 +37,36 @@ export default Component.extend({
     return array;
   }),
 
-  thereAreAdditionalPeople: computed('additionalPeopleCount', function () {
-    return this.get('additionalPeopleCount') > 0;
-  }),
+  thereAreAdditionalPeople: gt('additionalPeopleCount', 0),
 
-  showLoginHint: computed('userSettings.isLoggedIn', function () {
-    return this.userSettings?.isLoggedIn === true;
-  }),
+  showLoginHint: equal('userSettings.isLoggedIn', true),
 
   actions: {
     submit(event) {
       event.preventDefault();
 
       subscribe(jQuery('form'), this);
-      this.get('subscribe')();
+      this.subscribe();
     },
 
     useCompanyAddress() {
-      if (this.get('enableInvoiceAddress') && this.get('paymentEnforced')) {
+      if (this.enableInvoiceAddress && this.paymentEnforced) {
         return;
       }
       this.toggleProperty('useCompanyAddress');
     },
 
-
-
     addPerson() {
-      if (this.get('event.FreeSeats') - 1 - this.get('additionalPeopleCount') <= 0) {
+      if (this.get('event.FreeSeats') - 1 - this.additionalPeopleCount <= 0) {
         uikit.modal.alert(getString('noSeatsAvailable'));
         return;
       }
 
-      this.set('additionalPeopleCount', this.get('additionalPeopleCount') + 1);
+      this.set('additionalPeopleCount', this.additionalPeopleCount + 1);
     },
 
     removePerson() {
-      const additionalPeopleCount = this.get('additionalPeopleCount');
+      const additionalPeopleCount = this.additionalPeopleCount;
 
       if (additionalPeopleCount < 1) {
         return;
@@ -78,16 +74,15 @@ export default Component.extend({
 
       const that = this;
 
-      uikit.modal.confirm(getString('confirmDeletion'),
-        {
-          labels:
-            { ok: getString('yes'), cancel: getString('no') }
-        }).then(function () {
+      uikit.modal
+        .confirm(getString('confirmDeletion'), {
+          labels: { ok: getString('yes'), cancel: getString('no') },
+        })
+        .then(function () {
           that.set('additionalPeopleCount', additionalPeopleCount - 1);
         });
-    }
-  }
-  
+    },
+  },
 });
 
 // this function subscribes a person to an event using the information
@@ -102,88 +97,172 @@ function subscribe($form, self) {
   let subscriptionData = {
     EventId: eventId,
     PersonId: null,
-    SubscriptionDetails: []
+    SubscriptionDetails: [],
   };
 
-  let assocSubscriptionData = getFieldSetData([], $form.find('.subscription-detail-fields')); // for confirmation values
+  let assocSubscriptionData = getFieldSetData(
+    [],
+    $form.find('.subscription-detail-fields')
+  ); // for confirmation values
 
-  $form.find('.subscription-detail-fields').find('input, select, textarea').each((_, element) => {
-    let vssId = parseInt(element.name);
-    let value = null;
+  $form
+    .find('.subscription-detail-fields')
+    .find('input, select, textarea')
+    .each((_, element) => {
+      let vssId = parseInt(element.name);
+      let value = null;
 
-    if (element.type === 'checkbox')
-      value = element.checked ? 'Ja' : 'Nein';
-    else if (element.type === 'file') 
-      value = element.files[0] !== undefined ? element.files[0].name :null;
-    else if (element.value !== '' && element.dataset.type === 'date')
-      value = getDMY(element.value); // this is the required format for subscriptionDetails
-    else if ((element.value !== '' && element.type !== 'radio') || element.checked)
-      value = element.value;
+      if (element.type === 'checkbox') value = element.checked ? 'Ja' : 'Nein';
+      else if (element.type === 'file')
+        value = element.files[0] !== undefined ? element.files[0].name : null;
+      else if (element.value !== '' && element.dataset.type === 'date')
+        value = getDMY(element.value);
+      // this is the required format for subscriptionDetails
+      else if (
+        (element.value !== '' && element.type !== 'radio') ||
+        element.checked
+      )
+        value = element.value;
 
-    if (value !== null)
-      subscriptionData.SubscriptionDetails.push({ VssId: vssId, Value: value });
-  });
+      if (value !== null)
+        subscriptionData.SubscriptionDetails.push({
+          VssId: vssId,
+          Value: value,
+        });
+    });
 
   //made a array of Files for upload to server
   let subscriptionFiles = [];
   for (const [key, value] of Object.entries(assocSubscriptionData)) {
     if (value instanceof Object) {
-      subscriptionFiles.push({IdVss: key, fileAsBase64: value.imgDev === null ? value.data : value.imgDev, name: value.name, size: value.size, type: value.type});
+      subscriptionFiles.push({
+        IdVss: key,
+        fileAsBase64: value.imgDev === null ? value.data : value.imgDev,
+        name: value.name,
+        size: value.size,
+        type: value.type,
+      });
     }
   }
 
   // values for dataToSubmit
-  let personId = userSettings.IdPerson, tableData = {}, addressData, companyAddressData, additionalPeople;
+  let personId = userSettings.IdPerson,
+    tableData = {},
+    addressData,
+    companyAddressData,
+    additionalPeople;
 
   const addressProperties = [
-    'Country', 'CountryId', 'FormOfAddress', 'FormOfAddressId', 'HomeCountry', 'HomeCountryId',
-    'Nationality', 'NationalityId', 'AddressLine1', 'AddressLine2', 'BillingAddress',
-    'Birthdate', 'CorrespondenceAddress', 'Email', 'Email2', 'FirstName', 'Gender', 'HomeTown',
-    'IsEmployee', 'LastName', 'Location', 'MiddleName', 'NativeLanguage', 'PhoneMobile', 'PhonePrivate',
-    'Profession', 'SocialSecurityNumber', 'StayPermit', 'StayPermitExpiry', 'Zip'
+    'Country',
+    'CountryId',
+    'FormOfAddress',
+    'FormOfAddressId',
+    'HomeCountry',
+    'HomeCountryId',
+    'Nationality',
+    'NationalityId',
+    'AddressLine1',
+    'AddressLine2',
+    'BillingAddress',
+    'Birthdate',
+    'CorrespondenceAddress',
+    'Email',
+    'Email2',
+    'FirstName',
+    'Gender',
+    'HomeTown',
+    'IsEmployee',
+    'LastName',
+    'Location',
+    'MiddleName',
+    'NativeLanguage',
+    'PhoneMobile',
+    'PhonePrivate',
+    'Profession',
+    'SocialSecurityNumber',
+    'StayPermit',
+    'StayPermitExpiry',
+    'Zip',
   ];
 
   const companyAddressProperties = [
-    'PersonId', 'AddressType', 'AddressTypeId', 'Country', 'CountryId', 'FormOfAddress', 'FormOfAddressId',
-    'AddressLine1', 'AddressLine2', 'Company', 'Department', 'FirstName', 'IsBilling', 'IsCorrespondence',
-    'LastName', 'Location', 'Remark', 'ValidFrom', 'ValidTo', 'Zip'
+    'PersonId',
+    'AddressType',
+    'AddressTypeId',
+    'Country',
+    'CountryId',
+    'FormOfAddress',
+    'FormOfAddressId',
+    'AddressLine1',
+    'AddressLine2',
+    'Company',
+    'Department',
+    'FirstName',
+    'IsBilling',
+    'IsCorrespondence',
+    'LastName',
+    'Location',
+    'Remark',
+    'ValidFrom',
+    'ValidTo',
+    'Zip',
   ];
 
   // read address and companyAddress if we don't know the personId yet
   if (showCompanyButtonOnly) {
-
     // main address
-    addressData = getFieldSetData(addressProperties, $form.find('.address-fields'));
+    addressData = getFieldSetData(
+      addressProperties,
+      $form.find('.address-fields')
+    );
 
     // company address
-    companyAddressData = getFieldSetData(companyAddressProperties, $form.find('.company-address-fields'));
+    companyAddressData = getFieldSetData(
+      companyAddressProperties,
+      $form.find('.company-address-fields')
+    );
 
     // set tableData for the main person
     tableData.fields = getTableData(self.get('fields'), addressData);
 
     // set tableData for the company address
     if (useCompanyAddress) {
-      tableData.companyFields = getTableData(self.get('companyFields'), companyAddressData);
+      tableData.companyFields = getTableData(
+        self.get('companyFields'),
+        companyAddressData
+      );
     }
   }
 
   // set tableData for subscriptionDetails
-  tableData.subscriptionDetailFields = getTableData(self.get('subscriptionDetailFields'), assocSubscriptionData);
+  tableData.subscriptionDetailFields = getTableData(
+    self.get('subscriptionDetailFields'),
+    assocSubscriptionData
+  );
 
   // read addresses for additional people
-  additionalPeople = $form.find('.additional-person-fields').toArray().map(fieldset =>
-    getFieldSetData(addressProperties, $(fieldset))
-  );
+  additionalPeople = $form
+    .find('.additional-person-fields')
+    .toArray()
+    .map((fieldset) => getFieldSetData(addressProperties, $(fieldset)));
 
   // set tableData for additional people
-  tableData.additionalPeopleFields = additionalPeople.map((data, index) =>
-    ({ index: index + 1, data: getTableData(self.get('additionalPeopleFields'), data) })
-  );
+  tableData.additionalPeopleFields = additionalPeople.map((data, index) => ({
+    index: index + 1,
+    data: getTableData(self.get('additionalPeopleFields'), data),
+  }));
 
   // save the data to submit
   setDataToSubmit({
-    personId, eventId, useCompanyAddress, addressData, companyAddressData, subscriptionData,
-    additionalPeople, tableData, subscriptionFiles
+    personId,
+    eventId,
+    useCompanyAddress,
+    addressData,
+    companyAddressData,
+    subscriptionData,
+    additionalPeople,
+    tableData,
+    subscriptionFiles,
   });
 }
 
@@ -191,9 +270,11 @@ function subscribe($form, self) {
 function getFieldSetData(properties, $fieldset) {
   let data = {};
 
-  properties.forEach(property => data[property] = null);
+  properties.forEach((property) => (data[property] = null));
 
-  $fieldset.find('input, select, textarea').each((_, element) => setProperties(data, element));
+  $fieldset
+    .find('input, select, textarea')
+    .each((_, element) => setProperties(data, element));
 
   return data;
 }
@@ -206,7 +287,8 @@ function setProperties(data, element) {
     // skip if there is no selection
     if (text === '') return;
 
-    data[element.name] = element.name === 'StayPermit' ? parseInt(element.value) : text;
+    data[element.name] =
+      element.name === 'StayPermit' ? parseInt(element.value) : text;
     data[element.name + 'Id'] = parseInt(element.value);
     return;
   }
@@ -230,7 +312,8 @@ function setProperties(data, element) {
   }
 
   if (element.type === 'file') {
-    data[element.name] =  element.files[0] !== undefined ? element.files[0] : null;
+    data[element.name] =
+      element.files[0] !== undefined ? element.files[0] : null;
     return;
   }
 
@@ -240,25 +323,23 @@ function setProperties(data, element) {
 // return a list of key-value pairs for the confirmation table
 function getTableData(fields, data) {
   return fields
-    .map(field => {
+    .map((field) => {
       let label = field.label;
       let value = data[field.id];
 
       // skip empty values
-      if (value === null || value === '' || value === undefined)
-        return null;
+      if (value === null || value === '' || value === undefined) return null;
 
       // localize true/false
       if (field.dataType === 'checkbox')
         value = getString(value ? 'yes' : 'no');
 
       // localize dates
-      if (field.dataType === 'date')
-        value = formatDate(value, 'LL');
-      
-      if (field.dataType === 'file')
-        value = value.name;
+      if (field.dataType === 'date') value = formatDate(value, 'LL');
+
+      if (field.dataType === 'file') value = value.name;
 
       return { label, value };
-    }).filter(field => field !== null);
+    })
+    .filter((field) => field !== null);
 }

@@ -7,7 +7,6 @@ import appConfig from './app-config';
  * @param {string} url the URL (defaults to current URL)
  */
 export function getParameterByName(name, url) {
-
   if (typeof url !== 'string') {
     url = window.location.href;
   }
@@ -29,13 +28,12 @@ export function getParameterByName(name, url) {
 }
 
 /**
- * set url params by name 
+ * set url params by name
  * @param {string} name the name of the parameter
  * @param {string} value the value of the parameter name
  * @param {string} url the URL (defaults to current URL)
  */
-export function setParameterByName(name,value, url) {
-  
+export function setParameterByName(name, value, url) {
   if (typeof url !== 'string') {
     url = window.location.href;
   }
@@ -46,13 +44,14 @@ export function setParameterByName(name,value, url) {
   let params = decodeURIComponent(url).split('?');
   let paramsLength = params.length;
   params = params.length === 3 ? params[1] + '?' + params[2] : params[1];
-  
-  if(params !== undefined) {
 
-    if(params.indexOf(name) >= 0) {
-      params = params.replace(name + '=' + getParameterByName(name,url), name +'='+ value);
-    }
-    else {
+  if (params !== undefined) {
+    if (params.indexOf(name) >= 0) {
+      params = params.replace(
+        name + '=' + getParameterByName(name, url),
+        name + '=' + value
+      );
+    } else {
       let newParam = '&';
       if (paramsLength > 2 && params.indexOf('?') > -1) {
         newParam = '&';
@@ -62,33 +61,32 @@ export function setParameterByName(name,value, url) {
         newParam = '?';
       }
 
-      params = params + newParam + name +'='+ value;
+      params = params + newParam + name + '=' + value;
     }
-     
   } else {
-    params = name +'='+ value;
+    params = name + '=' + value;
   }
-  
-  window.location.href =  url.split('?')[0] + '?' + params; 
+
+  window.location.href = url.split('?')[0] + '?' + params;
 }
 
 /**
  * It checks if the url starts with "http". If true change url to relative url
  * @param {string} url location url
  */
-export function getCorrectApiUrl(url){
-  if(url.indexOf('http') === 0) {
+export function getCorrectApiUrl(url) {
+  if (url.indexOf('http') === 0) {
     var apiUriSplitLength = appConfig.apiUrl.split('/').length;
     var getIndex = url.split('/')[apiUriSplitLength];
-    return url.substring(url.indexOf(getIndex),url.length); 
+    return url.substring(url.indexOf(getIndex), url.length);
   } else {
     return '..' + url;
   }
-} 
+}
 
 /**
  * Get the first term window.location.href split by #
  */
-export function getRootModulUrl(){
+export function getRootModulUrl() {
   return window.location.href.split('#')[0];
 }

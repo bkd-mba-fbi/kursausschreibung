@@ -8,6 +8,6 @@ export default Controller.extend({
     queryChanged() {
       // reset page
       this.set('page', 1);
-    }
-  }
+    },
+  },
 });

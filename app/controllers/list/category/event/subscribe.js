@@ -6,6 +6,6 @@ export default class subscribeController extends Controller {
   @service router;
   @action
   subscribe() {
-      this.router.transitionTo('list.category.event.confirmation');
-    }
-};
+    this.router.transitionTo('list.category.event.confirmation');
+  }
+}

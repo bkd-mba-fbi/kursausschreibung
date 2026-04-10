@@ -3,11 +3,27 @@ import { observer } from '@ember/object';
 import { getString } from 'kursausschreibung/framework/translate';
 
 const statuses = {
-  green: { tooltip: getString('greenLamp'), className: 'lamp-green', icon: 'pencil' },
-  chartreuse: { tooltip: getString('chartreuseLamp'), className: 'lamp-chartreuse', icon: 'check' },
-  yellow: { tooltip: getString('yellowLamp'), className: 'lamp-yellow', icon: 'clock' },
+  green: {
+    tooltip: getString('greenLamp'),
+    className: 'lamp-green',
+    icon: 'pencil',
+  },
+  chartreuse: {
+    tooltip: getString('chartreuseLamp'),
+    className: 'lamp-chartreuse',
+    icon: 'check',
+  },
+  yellow: {
+    tooltip: getString('yellowLamp'),
+    className: 'lamp-yellow',
+    icon: 'clock',
+  },
   red: { tooltip: getString('redLamp'), className: 'lamp-red', icon: 'close' },
-  orange: { tooltip: getString('orangeLamp'), className: 'lamp-orange', icon: 'ban' }
+  orange: {
+    tooltip: getString('orangeLamp'),
+    className: 'lamp-orange',
+    icon: 'ban',
+  },
 };
 
 export default Component.extend({
@@ -18,7 +34,7 @@ export default Component.extend({
   },
 
   statusChanged: observer('status', function () {
-    let status = statuses[this.get('status')];
+    let status = statuses[this.status];
 
     if (status !== undefined) {
       this.set('tooltip', status.tooltip);
@@ -28,7 +44,7 @@ export default Component.extend({
   }),
 
   tagName: 'span',
-  attributeBindings: ['tooltip:data-uk-tooltip',"icon:uk-icon"],
-  classNames: ['status-lamp','icon-lamp'],
-  classNameBindings: ['color']
+  attributeBindings: ['tooltip:data-uk-tooltip', 'icon:uk-icon'],
+  classNames: ['status-lamp', 'icon-lamp'],
+  classNameBindings: ['color'],
 });

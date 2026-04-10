@@ -1,7 +1,11 @@
 import Route from '@ember/routing/route';
 import uikit from 'uikit';
 import $ from 'jquery';
-import { init as initStore, getAllEvents, getEventById } from 'kursausschreibung/framework/store';
+import {
+  init as initStore,
+  getAllEvents,
+  getEventById,
+} from 'kursausschreibung/framework/store';
 import { getDataToSubmit } from 'kursausschreibung/framework/storage';
 import { autoCheckForLogin } from 'kursausschreibung/framework/login-helpers';
 import { setJsonLd } from '../framework/seo';
@@ -20,9 +24,13 @@ export default Route.extend({
 
         if (dataToSubmit !== undefined) {
           let event = getEventById(dataToSubmit.eventId);
-          this.replaceWith('list.category.event.confirmation', event.areaKey, event.categoryKey, event.Id);
+          this.replaceWith(
+            'list.category.event.confirmation',
+            event.areaKey,
+            event.categoryKey,
+            event.Id
+          );
         }
-
       })
       .catch(function (error) {
         // only log exceptions thrown here so the route still loads
@@ -37,5 +45,5 @@ export default Route.extend({
     let allEvents = getAllEvents();
     setJsonLd(allEvents);
     return allEvents;
-  }
+  },
 });

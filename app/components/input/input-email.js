@@ -5,8 +5,11 @@ import jQuery from 'jquery';
 export default Component.extend({
   change() {
     // show an error message for duplicate e-mails
-    const emailFields = jQuery('#subscriptionForm').closest('form').find('input[type="email"]').toArray();
-    const emailFieldValues = emailFields.map(field => field.value);
+    const emailFields = jQuery('#subscriptionForm')
+      .closest('form')
+      .find('input[type="email"]')
+      .toArray();
+    const emailFieldValues = emailFields.map((field) => field.value);
 
     emailFields.forEach((field, fieldIndex) => {
       const valueIndex = emailFieldValues.indexOf(field.value);
@@ -20,5 +23,5 @@ export default Component.extend({
   },
   keyUp() {
     this.change();
-  }
+  },
 });

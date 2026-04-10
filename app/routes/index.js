@@ -7,7 +7,10 @@ export default class permalink extends Route {
   beforeModel() {
     let applicationModel = this.modelFor('application');
 
-    if (applicationModel.areaKeys === undefined || applicationModel.areaKeys.length === 0) {
+    if (
+      applicationModel.areaKeys === undefined ||
+      applicationModel.areaKeys.length === 0
+    ) {
       if (isInitialized()) {
         // proceed to the index route
         return;

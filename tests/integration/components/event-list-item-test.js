@@ -5,26 +5,29 @@ import hbs from 'htmlbars-inline-precompile';
 
 // Matches settings.js: eventListTitle = "Designation", eventListFields = [SubscriptionFrom, LanguageOfInstruction, BuildingAddress, Location, Price]
 function makeEvent(overrides = {}) {
-  return Object.assign({
-    Id: 42,
-    filter: '',
-    status: 'green',
-    subtitle: null,
-    displayData: {
-      Designation: 'Introduction to Testing',
-      SubscriptionFrom: '01.03.2024',
-      LanguageOfInstruction: 'German',
-      BuildingAddress: 'Teststrasse 1',
-      Location: 'Bern',
-      Price: '120 CHF'
-    }
-  }, overrides);
+  return Object.assign(
+    {
+      Id: 42,
+      filter: '',
+      status: 'green',
+      subtitle: null,
+      displayData: {
+        Designation: 'Introduction to Testing',
+        SubscriptionFrom: '01.03.2024',
+        LanguageOfInstruction: 'German',
+        BuildingAddress: 'Teststrasse 1',
+        Location: 'Bern',
+        Price: '120 CHF',
+      },
+    },
+    overrides
+  );
 }
 
-module('Integration | Component | event-list-item', function(hooks) {
+module('Integration | Component | event-list-item', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('renders the event title in the heading', async function(assert) {
+  test('renders the event title in the heading', async function (assert) {
     this.set('event', makeEvent());
 
     await render(hbs`{{event-list-item event=this.event}}`);
@@ -36,7 +39,7 @@ module('Integration | Component | event-list-item', function(hooks) {
     );
   });
 
-  test('renders event fields from displayData as table rows', async function(assert) {
+  test('renders event fields from displayData as table rows', async function (assert) {
     this.set('event', makeEvent());
 
     await render(hbs`{{event-list-item event=this.event}}`);
@@ -53,7 +56,7 @@ module('Integration | Component | event-list-item', function(hooks) {
     );
   });
 
-  test('renders subtitle badge when subtitle is present', async function(assert) {
+  test('renders subtitle badge when subtitle is present', async function (assert) {
     this.set('event', makeEvent({ subtitle: 'Noch Plätze frei' }));
 
     await render(hbs`{{event-list-item event=this.event}}`);
@@ -65,11 +68,14 @@ module('Integration | Component | event-list-item', function(hooks) {
     );
   });
 
-  test('does not render subtitle badge when subtitle is null', async function(assert) {
+  test('does not render subtitle badge when subtitle is null', async function (assert) {
     this.set('event', makeEvent({ subtitle: null }));
 
     await render(hbs`{{event-list-item event=this.event}}`);
 
-    assert.notOk(find('.uk-label-warning'), 'no subtitle badge when subtitle is absent');
+    assert.notOk(
+      find('.uk-label-warning'),
+      'no subtitle badge when subtitle is absent'
+    );
   });
 });

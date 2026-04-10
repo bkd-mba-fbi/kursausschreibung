@@ -7,13 +7,13 @@ export default Component.extend({
     this._super(...arguments);
 
     let id = this.get('field.id');
-    let options = this.get('field.options').options.map(option => option.Value);
+    let options = this.field.options.options.map((option) => option.Value);
 
-    jQuery('#vss'+ id).typeahead(
+    jQuery('#vss' + id).typeahead(
       {
         hint: true,
         highlight: true,
-        minLength: 0
+        minLength: 0,
       },
       {
         limit: 10,
@@ -21,10 +21,13 @@ export default Component.extend({
           query = query.trim().toLowerCase();
 
           callback(
-            options.filter(option => option.toLowerCase().indexOf(query) !== -1)
+            options.filter(
+              (option) => option.toLowerCase().indexOf(query) !== -1
+            )
           );
-        }
-      });
+        },
+      }
+    );
   },
 
   willDestroyElement() {
@@ -33,8 +36,8 @@ export default Component.extend({
   },
 
   focusOut() {
-    let field = this.get('field');
-    let currentValue = document.getElementById('vss'+field.id).value;
-    vssDependency(currentValue,field);
-  }
+    let field = this.field;
+    let currentValue = document.getElementById('vss' + field.id).value;
+    vssDependency(currentValue, field);
+  },
 });

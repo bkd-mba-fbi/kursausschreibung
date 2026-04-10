@@ -11,22 +11,25 @@ function makeField(id, label = id, dataType = 'string') {
     options: {
       required: false,
       disabled: false,
-      hidden: ''
-    }
+      hidden: '',
+    },
   };
 }
 
 function makeEvent(overrides = {}) {
-  return Object.assign({
-    Id: 101,
-    FreeSeats: 5
-  }, overrides);
+  return Object.assign(
+    {
+      Id: 101,
+      FreeSeats: 5,
+    },
+    overrides
+  );
 }
 
-module('Integration | Component | subscription-form', function(hooks) {
+module('Integration | Component | subscription-form', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('renders form shell with submit control', async function(assert) {
+  test('renders form shell with submit control', async function (assert) {
     this.set('event', makeEvent());
     this.set('subscribe', () => {});
     this.set('fields', []);
@@ -49,7 +52,7 @@ module('Integration | Component | subscription-form', function(hooks) {
     assert.ok(find('input[type="submit"]'), 'submit button is rendered');
   });
 
-  test('renders address fields when showAddressInputs is true', async function(assert) {
+  test('renders address fields when showAddressInputs is true', async function (assert) {
     this.set('event', makeEvent());
     this.set('subscribe', () => {});
     this.set('fields', [makeField('FirstName', 'Vorname')]);
@@ -70,10 +73,14 @@ module('Integration | Component | subscription-form', function(hooks) {
     `);
 
     assert.ok(find('fieldset.address-fields'), 'address fieldset is shown');
-    assert.equal(findAll('fieldset.address-fields .uk-form-label').length, 1, 'address field is rendered');
+    assert.equal(
+      findAll('fieldset.address-fields .uk-form-label').length,
+      1,
+      'address field is rendered'
+    );
   });
 
-  test('shows login hint when user is logged in', async function(assert) {
+  test('shows login hint when user is logged in', async function (assert) {
     this.set('event', makeEvent());
     this.set('subscribe', () => {});
     this.set('fields', []);
@@ -94,10 +101,13 @@ module('Integration | Component | subscription-form', function(hooks) {
       }}
     `);
 
-    assert.ok(find('.uk-text-warning'), 'login hint is visible for logged-in users');
+    assert.ok(
+      find('.uk-text-warning'),
+      'login hint is visible for logged-in users'
+    );
   });
 
-  test('shows add person button when allowMultiplePeople is enabled', async function(assert) {
+  test('shows add person button when allowMultiplePeople is enabled', async function (assert) {
     this.set('event', makeEvent({ FreeSeats: 4 }));
     this.set('subscribe', () => {});
     this.set('fields', []);
@@ -117,7 +127,10 @@ module('Integration | Component | subscription-form', function(hooks) {
       }}
     `);
 
-    assert.ok(this.element.textContent.includes('Person'), 'multiple-person area is rendered');
+    assert.ok(
+      this.element.textContent.includes('Person'),
+      'multiple-person area is rendered'
+    );
     assert.ok(find('button.uk-button-default'), 'add person button is present');
   });
 });

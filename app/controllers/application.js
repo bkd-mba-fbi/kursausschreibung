@@ -16,6 +16,6 @@ export default Controller.extend({
   actions: {
     setLanguage(language) {
       setLanguage(language);
-    }
-  }
+    },
+  },
 });

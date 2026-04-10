@@ -4,19 +4,22 @@ import { render, find, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 function makeArea(overrides = {}) {
-  return Object.assign({
-    categoryKeys: ['cat-1', 'cat-2'],
-    categories: {
-      'cat-1': { name: 'Informatik' },
-      'cat-2': { name: 'Führung' }
-    }
-  }, overrides);
+  return Object.assign(
+    {
+      categoryKeys: ['cat-1', 'cat-2'],
+      categories: {
+        'cat-1': { name: 'Informatik' },
+        'cat-2': { name: 'Führung' },
+      },
+    },
+    overrides
+  );
 }
 
-module('Integration | Component | area-navigation', function(hooks) {
+module('Integration | Component | area-navigation', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('renders the category heading', async function(assert) {
+  test('renders the category heading', async function (assert) {
     this.set('area', makeArea());
 
     await render(hbs`{{area-navigation this.area}}`);
@@ -28,7 +31,7 @@ module('Integration | Component | area-navigation', function(hooks) {
     );
   });
 
-  test('renders the overview link', async function(assert) {
+  test('renders the overview link', async function (assert) {
     this.set('area', makeArea());
 
     await render(hbs`{{area-navigation this.area}}`);
@@ -41,7 +44,7 @@ module('Integration | Component | area-navigation', function(hooks) {
     );
   });
 
-  test('renders one link per category', async function(assert) {
+  test('renders one link per category', async function (assert) {
     this.set('area', makeArea());
 
     await render(hbs`{{area-navigation this.area}}`);
@@ -49,25 +52,38 @@ module('Integration | Component | area-navigation', function(hooks) {
     const links = findAll('ul.uk-nav a');
     // first link is "overview", then one per category
     assert.equal(links.length, 3, 'renders overview + 2 category links');
-    assert.ok(links[1].textContent.includes('Informatik'), 'first category name appears');
-    assert.ok(links[2].textContent.includes('Führung'), 'second category name appears');
+    assert.ok(
+      links[1].textContent.includes('Informatik'),
+      'first category name appears'
+    );
+    assert.ok(
+      links[2].textContent.includes('Führung'),
+      'second category name appears'
+    );
   });
 
-  test('hides heading when hideHeading is true', async function(assert) {
+  test('hides heading when hideHeading is true', async function (assert) {
     this.set('area', makeArea());
 
     await render(hbs`{{area-navigation this.area hideHeading=true}}`);
 
-    assert.notOk(find('h3'), 'heading is not rendered when hideHeading is true');
+    assert.notOk(
+      find('h3'),
+      'heading is not rendered when hideHeading is true'
+    );
     assert.ok(find('ul.uk-nav'), 'nav list is still rendered');
   });
 
-  test('renders only overview link when area has no categories', async function(assert) {
+  test('renders only overview link when area has no categories', async function (assert) {
     this.set('area', makeArea({ categoryKeys: [], categories: {} }));
 
     await render(hbs`{{area-navigation this.area}}`);
 
     const links = findAll('ul.uk-nav a');
-    assert.equal(links.length, 1, 'only the overview link renders when there are no categories');
+    assert.equal(
+      links.length,
+      1,
+      'only the overview link renders when there are no categories'
+    );
   });
 });

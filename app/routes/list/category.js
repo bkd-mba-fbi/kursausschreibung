@@ -11,7 +11,7 @@ export default class category extends Route {
     params.category = underscore(params.category);
 
     // check if category exists
-    if (!(categories.hasOwnProperty(params.category))) {
+    if (!categories.hasOwnProperty(params.category)) {
       this.router.transitionTo('list');
       return;
     }

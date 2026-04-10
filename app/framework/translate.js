@@ -45,7 +45,6 @@ export function getString(key, placeholderValues = []) {
     });
 
     return string;
-
   } catch (ex) {
     console.error('translate ERROR:', ex); // eslint-disable-line no-console
     return '<span style="color:red;">error in translation.</span>';

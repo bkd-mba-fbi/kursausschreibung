@@ -18,8 +18,8 @@ module.exports = function (environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-      rootElement: '#kursausschreibung-root'
-    }
+      rootElement: '#kursausschreibung-root',
+    },
   };
 
   if (environment === 'development') {

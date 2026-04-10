@@ -4,19 +4,22 @@ import { render, find, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 function makeEvent(overrides = {}) {
-  return Object.assign({
-    title: 'Schulung Grundlagen',
-    texts: [{ memo: 'Einführungskurs' }]
-  }, overrides);
+  return Object.assign(
+    {
+      title: 'Schulung Grundlagen',
+      texts: [{ memo: 'Einführungskurs' }],
+    },
+    overrides
+  );
 }
 
-module('Integration | Component | event-list-search', function(hooks) {
+module('Integration | Component | event-list-search', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('yields all events when query is empty', async function(assert) {
+  test('yields all events when query is empty', async function (assert) {
     this.set('events', [
       makeEvent({ title: 'Schulung Grundlagen' }),
-      makeEvent({ title: 'Führung Intensiv' })
+      makeEvent({ title: 'Führung Intensiv' }),
     ]);
     this.set('onQueryChanged', () => {});
 
@@ -28,13 +31,17 @@ module('Integration | Component | event-list-search', function(hooks) {
       {{/event-list-search}}
     `);
 
-    assert.equal(findAll('.result-item').length, 2, 'all events are yielded initially');
+    assert.equal(
+      findAll('.result-item').length,
+      2,
+      'all events are yielded initially'
+    );
   });
 
-  test('renders search input and sort dropdown', async function(assert) {
+  test('renders search input and sort dropdown', async function (assert) {
     this.set('events', [
       makeEvent({ title: 'Schulung Grundlagen' }),
-      makeEvent({ title: 'Führung Intensiv' })
+      makeEvent({ title: 'Führung Intensiv' }),
     ]);
     this.set('onQueryChanged', () => {});
 
@@ -50,7 +57,7 @@ module('Integration | Component | event-list-search', function(hooks) {
     assert.ok(find('#sortList'), 'sort dropdown is rendered');
   });
 
-  test('shows empty-state message when no events are provided', async function(assert) {
+  test('shows empty-state message when no events are provided', async function (assert) {
     this.set('events', []);
     this.set('onQueryChanged', () => {});
 
@@ -62,7 +69,11 @@ module('Integration | Component | event-list-search', function(hooks) {
       {{/event-list-search}}
     `);
 
-    assert.equal(findAll('.result-item').length, 0, 'no result items are yielded');
+    assert.equal(
+      findAll('.result-item').length,
+      0,
+      'no result items are yielded'
+    );
     assert.ok(
       this.element.textContent.toLowerCase().includes('keine kurse'),
       'empty-state text is rendered'

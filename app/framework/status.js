@@ -8,8 +8,7 @@ import settings from './settings';
  * @param {function} defaultImplementation the default implementation
  */
 function createStatusCallback(settingsValue, defaultImplementation) {
-  if (typeof settingsValue === 'function')
-    return settingsValue;
+  if (typeof settingsValue === 'function') return settingsValue;
 
   return defaultImplementation;
 }
@@ -20,19 +19,24 @@ let isGreen = createStatusCallback(settings.lampIsGreen, function (event) {
     event.AllowSubscriptionInternetByStatus &&
     event.TypeOfSubscription === 4 &&
     isInSubscriptionRange(event) &&
-    ((event.FreeSeats > 0) && ((event.MaxParticipants - event.FreeSeats) < event.MinParticipants) || event.EventTypeId === 1)
+    ((event.FreeSeats > 0 &&
+      event.MaxParticipants - event.FreeSeats < event.MinParticipants) ||
+      event.EventTypeId === 1)
   );
 });
 
-let isChartreuse = createStatusCallback(settings.lampIsChartreuse, function (event) {
-  return (
-    event.AllowSubscriptionInternetByStatus &&
-    event.TypeOfSubscription === 4 &&
-    isInSubscriptionRange(event) &&
-    event.FreeSeats > 0 &&
-    (event.MaxParticipants - event.FreeSeats) >= event.MinParticipants
-  );
-});
+let isChartreuse = createStatusCallback(
+  settings.lampIsChartreuse,
+  function (event) {
+    return (
+      event.AllowSubscriptionInternetByStatus &&
+      event.TypeOfSubscription === 4 &&
+      isInSubscriptionRange(event) &&
+      event.FreeSeats > 0 &&
+      event.MaxParticipants - event.FreeSeats >= event.MinParticipants
+    );
+  }
+);
 
 let isYellow = createStatusCallback(settings.lampIsYellow, function (event) {
   return (

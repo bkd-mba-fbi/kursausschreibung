@@ -23,4 +23,4 @@ export default class event extends Route {
 
     return event;
   }
-};
+}

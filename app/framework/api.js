@@ -17,10 +17,15 @@ let accessToken = null;
  * @param {object} data data for POST and PUT calls
  * @param {boolean} file for file upload change data and contentType
  */
-function ajax(method, relativeUrl, readableError = true, data = null, file = false) {
-  if (accessToken === null)
-    accessToken = getAccessToken();
-  
+function ajax(
+  method,
+  relativeUrl,
+  readableError = true,
+  data = null,
+  file = false
+) {
+  if (accessToken === null) accessToken = getAccessToken();
+
   if (file === false) {
     data = data !== null ? JSON.stringify(data, null, '\t') : undefined;
   }
@@ -28,17 +33,18 @@ function ajax(method, relativeUrl, readableError = true, data = null, file = fal
   let promise = $.ajax({
     method: method,
     dataType: 'json',
-    contentType: method === 'GET' ? 'text/javascript' : file ? false : 'application/json',
+    contentType:
+      method === 'GET' ? 'text/javascript' : file ? false : 'application/json',
     processData: false,
     data: data,
     url: appConfig.apiUrl + '/' + relativeUrl,
 
     // convert empty response to valid JSON
-    dataFilter: data => data === '' ? 'null' : data,
+    dataFilter: (data) => (data === '' ? 'null' : data),
 
     headers: {
-      'Authorization': `Bearer ${accessToken}`
-    }
+      Authorization: `Bearer ${accessToken}`,
+    },
   });
 
   if (readableError) {
@@ -124,7 +130,7 @@ export function getSubscriptionDetails(eventId) {
  * get subscriptionDetailDependencies of an event
  * @param {number} eventId the id of the event
  */
- export function getSubscriptionDetailDependencies(eventId) {
+export function getSubscriptionDetailDependencies(eventId) {
   return get('SubscriptionDetailDependencies/?idEvent=' + eventId);
 }
 
@@ -148,7 +154,7 @@ export function getDropDownItems(type) {
   }
 
   return get('DropDownItems/' + type).then(
-    response => (dropDownItems[type] = response)
+    (response) => (dropDownItems[type] = response)
   );
 }
 
@@ -197,40 +203,49 @@ export function postSubscription(data) {
  * Post Files to SubscriptionDetails
  * @param {object} data of the subscription files
  * @param {image} image des files Base64Codierung
- * @returns 
+ * @returns
  */
-export function postSubscriptionDetailsFiles(data,file) {
-  return new Promise(resolve => post('SubscriptionDetails/files', data)
-  .then((_data, _status, xhr) => { resolve([xhr]); }))
-  .then(([xhr]) => { // xhr is in an array so it gets correctly passed along
-    let locationHeader = xhr.getResponseHeader('location');
-    let arrayBuffer = base64ToArrayBuffer(file.fileAsBase64.substring(file.fileAsBase64.indexOf('base64,')+7,file.fileAsBase64.length));
-    return put(getCorrectApiUrl(locationHeader), arrayBuffer, true);
+export function postSubscriptionDetailsFiles(data, file) {
+  return new Promise((resolve) =>
+    post('SubscriptionDetails/files', data).then((_data, _status, xhr) => {
+      resolve([xhr]);
+    })
+  )
+    .then(([xhr]) => {
+      // xhr is in an array so it gets correctly passed along
+      let locationHeader = xhr.getResponseHeader('location');
+      let arrayBuffer = base64ToArrayBuffer(
+        file.fileAsBase64.substring(
+          file.fileAsBase64.indexOf('base64,') + 7,
+          file.fileAsBase64.length
+        )
+      );
+      return put(getCorrectApiUrl(locationHeader), arrayBuffer, true);
+    })
+    .catch((error) => {
+      if (error instanceof Error) {
+        console.error(error); // eslint-disable-line no-console
+      }
 
-  }).catch(error => {
-
-    if (error instanceof Error) {
-      console.error(error); // eslint-disable-line no-console
-    }
-
-    let message = '';
-    try {
-      message = error.responseJSON.Issues[0].Message;
-    } catch (exception) {
-      message = window.kursausschreibung.subscriptionFilesUploadFailed = getString('subscriptionFilesUploadFailed');
-    }
-    throw { message: message };
-  });
+      let message = '';
+      try {
+        message = error.responseJSON.Issues[0].Message;
+      } catch (exception) {
+        message = window.kursausschreibung.subscriptionFilesUploadFailed =
+          getString('subscriptionFilesUploadFailed');
+      }
+      throw { message: message };
+    });
 }
 /**
- * https://stackoverflow.com/questions/21797299/convert-base64-string-to-arraybuffer 
+ * https://stackoverflow.com/questions/21797299/convert-base64-string-to-arraybuffer
  */
 function base64ToArrayBuffer(base64) {
   var binary_string = window.atob(base64);
   var len = binary_string.length;
   var bytes = new Uint8Array(len);
   for (var i = 0; i < len; i++) {
-      bytes[i] = binary_string.charCodeAt(i);
+    bytes[i] = binary_string.charCodeAt(i);
   }
   return bytes.buffer;
 }

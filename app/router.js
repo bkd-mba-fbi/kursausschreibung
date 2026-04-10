@@ -1,7 +1,10 @@
 import EmberRouter from '@ember/routing/router';
 import config from './config/environment';
 import $ from 'jquery';
-import { scrollToTimeout, setOffsetStickyHeader } from 'kursausschreibung/framework/scroll-helpers';
+import {
+  scrollToTimeout,
+  setOffsetStickyHeader,
+} from 'kursausschreibung/framework/scroll-helpers';
 
 let rootElement = $(config.APP.rootElement).get(0);
 
@@ -9,12 +12,12 @@ const Router = EmberRouter.extend({
   location: config.locationType,
   rootURL: config.rootURL,
 
-  init(){
-    this.on('routeDidChange', transition => {
+  init() {
+    this.on('routeDidChange', (transition) => {
       this._super(...arguments);
 
       var subscriptionProcessId = 'subscriptionProcess';
-  
+
       setInterval(function () {
         if (document.getElementById(subscriptionProcessId) !== null) {
           setOffsetStickyHeader(subscriptionProcessId);
@@ -23,15 +26,21 @@ const Router = EmberRouter.extend({
 
       if (this.currentPath === 'list.category.event.subscribe') {
         scrollToTimeout(subscriptionProcessId);
-      } else if (this.currentPath === 'list.category.index' && screen.width <= 960) {
+      } else if (
+        this.currentPath === 'list.category.index' &&
+        screen.width <= 960
+      ) {
         scrollToTimeout('headerCategory');
-      } else if (this.currentPath === 'list.category.event.index' && screen.width <= 960) {
+      } else if (
+        this.currentPath === 'list.category.event.index' &&
+        screen.width <= 960
+      ) {
         scrollToTimeout('eventList');
       } else if (this.currentPath !== 'list.index') {
         scrollToTimeout(rootElement.id);
       }
     });
-  }
+  },
 });
 
 Router.map(function () {

@@ -9,23 +9,26 @@ const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = function (defaults) {
   let app = new EmberApp(defaults, {
-
     // see: https://github.com/ember-cli/ember-cli-uglify
     'ember-cli-terser': {
       enabled: true,
-      exclude: ['appConfig.js', 'settings.js', 'locale/de-CH.js', 'locale/fr-CH.js'],
+      exclude: [
+        'appConfig.js',
+        'settings.js',
+        'locale/de-CH.js',
+        'locale/fr-CH.js',
+      ],
       // Tell broccoli-terser-sourcemap to not add sourcemap URLs
-      hiddenSourceMap: true
-    }, 
+      hiddenSourceMap: true,
+    },
     emberCliConcat: {
       js: {
-        concat: true
+        concat: true,
       },
       css: {
-        concat: true
-      }
-    }
-
+        concat: true,
+      },
+    },
   });
 
   // Use `app.import` to add additional libraries to the generated
@@ -50,11 +53,9 @@ module.exports = function (defaults) {
   app.import('vendor/shims/uikit.js');
 
   // date-fns
-  ['parseISO', 'format', 'locale/de', 'locale/fr'].forEach(module =>
+  ['parseISO', 'format', 'locale/de', 'locale/fr'].forEach((module) =>
     app.import(`node_modules/date-fns/${module}/index.js`, {
-      using: [
-        { transformation: 'cjs', as: `date-fns/${module}` }
-      ]
+      using: [{ transformation: 'cjs', as: `date-fns/${module}` }],
     })
   );
 

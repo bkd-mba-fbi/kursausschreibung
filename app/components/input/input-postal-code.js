@@ -3,24 +3,25 @@ import { debounce } from '@ember/runloop';
 import { getPostalCodes } from 'kursausschreibung/framework/api';
 import jQuery from 'jquery';
 
-
 export default Component.extend({
   didInsertElement() {
     this._super(...arguments);
 
     const fetchPostalCodes = (query, asyncResults) => {
-      getPostalCodes(query).then(response => asyncResults(response));
+      getPostalCodes(query).then((response) => asyncResults(response));
     };
 
-    let elementId = '#'+this.elementId
+    let elementId = '#' + this.elementId;
     let $typeahead = jQuery(elementId).children(0);
-    let $locationFields = jQuery(elementId).closest('fieldset').find('input[name="Location"]');
+    let $locationFields = jQuery(elementId)
+      .closest('fieldset')
+      .find('input[name="Location"]');
 
     $typeahead.typeahead(
       {
         hint: true,
         highlight: true,
-        minLength: 2
+        minLength: 2,
       },
       {
         async: true,
@@ -30,9 +31,11 @@ export default Component.extend({
         },
         displayKey: 'Code',
         templates: {
-          suggestion: object => `<div>${object.Code} ${object.Location}</div>`
-        }
-      });
+          suggestion: (object) =>
+            `<div>${object.Code} ${object.Location}</div>`,
+        },
+      }
+    );
 
     $typeahead.on('typeahead:select', (_event, suggestion) =>
       $locationFields.val(suggestion.Location)
@@ -42,5 +45,5 @@ export default Component.extend({
   willDestroyElement() {
     jQuery('.typeaheadZip').typeahead('destroy');
     this._super(...arguments);
-  }
+  },
 });

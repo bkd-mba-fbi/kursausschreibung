@@ -25,6 +25,6 @@ export default Route.extend({
       if (modal !== undefined) {
         modal.hide();
       }
-    }
-  }
+    },
+  },
 });

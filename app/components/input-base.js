@@ -5,7 +5,7 @@ export default Component.extend({
   tagName: 'div',
   classNames: 'uk-width-1-1',
 
-  componentType: computed('field.dataType', function () {
+  componentType: computed('field.{dataType,id}', function () {
     let dataType = this.get('field.dataType');
 
     // provide typeahead functionality for postal codes (see issue #75)
@@ -16,5 +16,5 @@ export default Component.extend({
     }
 
     return 'input/input-' + dataType;
-  })
+  }),
 });

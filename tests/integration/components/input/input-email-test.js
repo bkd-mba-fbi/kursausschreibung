@@ -4,16 +4,19 @@ import { render, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 function makeField(overrides = {}) {
-  return Object.assign({
-    id: 'Email',
-    options: { required: false, disabled: false, autocomplete: 'email' }
-  }, overrides);
+  return Object.assign(
+    {
+      id: 'Email',
+      options: { required: false, disabled: false, autocomplete: 'email' },
+    },
+    overrides
+  );
 }
 
-module('Integration | Component | input/input-email', function(hooks) {
+module('Integration | Component | input/input-email', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('renders an email input with the field name', async function(assert) {
+  test('renders an email input with the field name', async function (assert) {
     this.set('field', makeField());
     await render(hbs`{{input/input-email field=this.field}}`);
 
@@ -22,8 +25,13 @@ module('Integration | Component | input/input-email', function(hooks) {
     assert.equal(input.getAttribute('name'), 'Email', 'name matches field id');
   });
 
-  test('renders as disabled when field.options.disabled is true', async function(assert) {
-    this.set('field', makeField({ options: { required: false, disabled: true, autocomplete: 'email' } }));
+  test('renders as disabled when field.options.disabled is true', async function (assert) {
+    this.set(
+      'field',
+      makeField({
+        options: { required: false, disabled: true, autocomplete: 'email' },
+      })
+    );
     await render(hbs`{{input/input-email field=this.field}}`);
 
     assert.ok(find('input[type="email"]:disabled'), 'email input is disabled');

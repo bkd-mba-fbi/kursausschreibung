@@ -2,8 +2,11 @@
 
 import { Promise } from 'rsvp';
 import {
-  getAccessToken, setAccessToken, getTokenExpire,
-  setTokenExpire, setRefreshToken
+  getAccessToken,
+  setAccessToken,
+  getTokenExpire,
+  setTokenExpire,
+  setRefreshToken,
 } from './storage';
 import appConfig from './app-config';
 import { getParameterByName } from './url-helpers';
@@ -17,7 +20,10 @@ function isLoggedIn() {
   let accessToken = getAccessToken();
   let tokenExpire = getTokenExpire();
 
-  if (accessToken === null || (tokenExpire !== null && Date.now() >= tokenExpire)) {
+  if (
+    accessToken === null ||
+    (tokenExpire !== null && Date.now() >= tokenExpire)
+  ) {
     return false;
   }
 
@@ -29,7 +35,10 @@ function isLoggedIn() {
   let payload = parseJWT(accessToken);
 
   // only return true if instanceId and culture are correct
-  return appConfig.instanceId === payload.instance_id && payload.culture_info === getLanguage();
+  return (
+    appConfig.instanceId === payload.instance_id &&
+    payload.culture_info === getLanguage()
+  );
 }
 
 /**
@@ -73,11 +82,10 @@ export function autoCheckForLogin() {
       clientId: appConfig.clientId,
       redirectUrl: location.href,
       culture_info: getLanguage(),
-      application_scope: appConfig.applicationScope
+      application_scope: appConfig.applicationScope,
     });
 
-    let url = `${appConfig.oauthUrl}/Authorization/${
-      appConfig.instanceId}/Token?${params}`;
+    let url = `${appConfig.oauthUrl}/Authorization/${appConfig.instanceId}/Token?${params}`;
 
     location.replace(url);
   } else {
@@ -85,5 +93,5 @@ export function autoCheckForLogin() {
     location.reload();
   }
 
-  return new Promise(() => { }); // never resolve so no error-message gets shown
+  return new Promise(() => {}); // never resolve so no error-message gets shown
 }
