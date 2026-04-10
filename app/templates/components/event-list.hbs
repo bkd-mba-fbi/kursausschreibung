@@ -1,7 +1,9 @@
 <EventListSearch @queryChanged={{this.handleQueryChanged}} @events={{this.events}} as |filteredEvents|>
   <ListPagination @page={{this.page}} @items={{filteredEvents}} @route={{this.route}} as |eventsOnCurrentPage|>
     {{#each eventsOnCurrentPage as |event|}}
-      <EventListItem @event={{event}} />
+      <li class="filter-tags {{event.filter}}">
+        <EventListItem @event={{event}} />
+      </li>
     {{/each}}
   </ListPagination>
 </EventListSearch>

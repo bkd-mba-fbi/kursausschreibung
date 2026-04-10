@@ -1,11 +1,11 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
 import { vssDependency } from 'kursausschreibung/framework/form-helpers';
 import { htmlSafe } from '@ember/template';
 
-export default Component.extend({
-  dropdownOptions: computed('field.options.options.[]', function () {
-    let options = this.field.options.options;
+export default class InputDropdownComponent extends Component {
+  get dropdownOptions() {
+    let options = this.args.field.options.options;
     let dropdownOptions = '';
     options.forEach((option) => {
       dropdownOptions =
@@ -17,15 +17,14 @@ export default Component.extend({
         '</option>';
     });
     return htmlSafe(dropdownOptions);
-  }),
+  }
 
-  change() {
-    let field = this.field;
+  @action
+  handleChange() {
+    let field = this.args.field;
     let currentValue = null;
 
-    document
-      .getElementById(this.elementId)
-      .children[0].classList.remove('required');
+    document.getElementById('vss' + field.id).classList.remove('required');
 
     document.getElementsByName(field.id).forEach((input) => {
       if (field.options.showAsRadioButtons) {
@@ -64,5 +63,5 @@ export default Component.extend({
           element.required = needsCompany;
         });
     }
-  },
-});
+  }
+}
