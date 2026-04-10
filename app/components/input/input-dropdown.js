@@ -1,10 +1,10 @@
 import Component from '@ember/component';
+import { computed } from '@ember/object';
 import { vssDependency } from 'kursausschreibung/framework/form-helpers';
 import { htmlSafe } from '@ember/template';
 
 export default Component.extend({
-  willRender() {
-    this._super(...arguments);
+  dropdownOptions: computed('field.options.options.[]', function () {
     let options = this.field.options.options;
     let dropdownOptions = '';
     options.forEach((option) => {
@@ -16,8 +16,8 @@ export default Component.extend({
         option.Value +
         '</option>';
     });
-    this.set('dropdownOptions', htmlSafe(dropdownOptions));
-  },
+    return htmlSafe(dropdownOptions);
+  }),
 
   change() {
     let field = this.field;

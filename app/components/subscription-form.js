@@ -14,8 +14,8 @@ export default class SubscriptionFormComponent extends Component {
   @tracked useCompanyAddress = false;
   @tracked additionalPeopleCount = 0;
 
-  didInsertElement() {
-    super.didInsertElement(...arguments);
+  constructor() {
+    super(...arguments);
     window.kursausschreibung = window.kursausschreibung || {};
     window.kursausschreibung.component = this;
   }
