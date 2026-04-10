@@ -1,19 +1,17 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+import { modifier } from 'ember-modifier';
 import { debounce } from '@ember/runloop';
 import { getPostalCodes } from 'kursausschreibung/framework/api';
 import jQuery from 'jquery';
 
-export default Component.extend({
-  didInsertElement() {
-    this._super(...arguments);
-
+export default class InputPostalCodeComponent extends Component {
+  setupTypeahead = modifier((element) => {
     const fetchPostalCodes = (query, asyncResults) => {
       getPostalCodes(query).then((response) => asyncResults(response));
     };
 
-    let elementId = '#' + this.elementId;
-    let $typeahead = jQuery(elementId).children(0);
-    let $locationFields = jQuery(elementId)
+    let $typeahead = jQuery(element);
+    let $locationFields = $typeahead
       .closest('fieldset')
       .find('input[name="Location"]');
 
@@ -37,13 +35,13 @@ export default Component.extend({
       }
     );
 
-    $typeahead.on('typeahead:select', (_event, suggestion) =>
-      $locationFields.val(suggestion.Location)
-    );
-  },
+    let handleSelect = (_event, suggestion) =>
+      $locationFields.val(suggestion.Location);
+    $typeahead.on('typeahead:select', handleSelect);
 
-  willDestroyElement() {
-    jQuery('.typeaheadZip').typeahead('destroy');
-    this._super(...arguments);
-  },
-});
+    return () => {
+      $typeahead.off('typeahead:select', handleSelect);
+      $typeahead.typeahead('destroy');
+    };
+  });
+}

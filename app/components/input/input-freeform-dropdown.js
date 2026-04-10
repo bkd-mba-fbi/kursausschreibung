@@ -1,15 +1,15 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
+import { modifier } from 'ember-modifier';
 import { vssDependency } from 'kursausschreibung/framework/form-helpers';
 import jQuery from 'jquery';
 
-export default Component.extend({
-  didInsertElement() {
-    this._super(...arguments);
+export default class InputFreeformDropdownComponent extends Component {
+  setupTypeahead = modifier((element) => {
+    let options = this.args.field.options.options.map((option) => option.Value);
+    let $element = jQuery(element);
 
-    let id = this.field.id;
-    let options = this.field.options.options.map((option) => option.Value);
-
-    jQuery('#vss' + id).typeahead(
+    $element.typeahead(
       {
         hint: true,
         highlight: true,
@@ -28,16 +28,16 @@ export default Component.extend({
         },
       }
     );
-  },
 
-  willDestroyElement() {
-    jQuery('.typeahead').typeahead('destroy');
-    this._super(...arguments);
-  },
+    return () => {
+      $element.typeahead('destroy');
+    };
+  });
 
-  focusOut() {
-    let field = this.field;
-    let currentValue = document.getElementById('vss' + field.id).value;
+  @action
+  handleFocusOut(event) {
+    let field = this.args.field;
+    let currentValue = event.target.value;
     vssDependency(currentValue, field);
-  },
-});
+  }
+}
