@@ -9,7 +9,7 @@ module('Integration | Component | twitter-feed', function (hooks) {
   test('renders a timeline link for the provided username', async function (assert) {
     this.set('username', 'emberjs');
 
-    await render(hbs`{{twitter-feed this.username}}`);
+    await render(hbs`<TwitterFeed @username={{this.username}} />`);
 
     let link = find('a.twitter-timeline');
     assert.ok(link, 'timeline anchor is rendered');
@@ -27,7 +27,7 @@ module('Integration | Component | twitter-feed', function (hooks) {
   test('renders the twitter widget script', async function (assert) {
     this.set('username', 'emberjs');
 
-    await render(hbs`{{twitter-feed this.username}}`);
+    await render(hbs`<TwitterFeed @username={{this.username}} />`);
 
     let script = find('script[src="https://platform.twitter.com/widgets.js"]');
     assert.ok(script, 'twitter widget script is present');
