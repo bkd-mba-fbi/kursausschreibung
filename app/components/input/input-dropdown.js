@@ -5,7 +5,7 @@ import { htmlSafe } from '@ember/template';
 export default Component.extend({
   willRender() {
     this._super(...arguments);
-    let options = this.get('field.options.options');
+    let options = this.field.options.options;
     let dropdownOptions = '';
     options.forEach((option) => {
       dropdownOptions =

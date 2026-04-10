@@ -6,7 +6,7 @@ export default Component.extend({
   didInsertElement() {
     this._super(...arguments);
 
-    let id = this.get('field.id');
+    let id = this.field.id;
     let options = this.field.options.options.map((option) => option.Value);
 
     jQuery('#vss' + id).typeahead(

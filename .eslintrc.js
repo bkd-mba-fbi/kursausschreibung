@@ -26,7 +26,6 @@ module.exports = {
     'ember/no-classic-classes': 'off',
     'ember/no-classic-components': 'off',
     'ember/no-component-lifecycle-hooks': 'off',
-    'ember/no-get': 'off',
     'ember/no-jquery': 'off',
     'ember/require-tagless-components': 'off',
     'no-dupe-keys': 'off',
