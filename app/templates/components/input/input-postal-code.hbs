@@ -1,2 +1,8 @@
 <input class="uk-input typeaheadZip" type="text" name={{@field.id}} required={{@field.options.required}}
-  autocomplete={{@field.options.autocomplete}} disabled={{@field.options.disabled}} placeholder={{@field.placeholder}} {{this.setupTypeahead}}>
+  autocomplete={{@field.options.autocomplete}} disabled={{@field.options.disabled}} placeholder={{@field.placeholder}} list={{concat "postal-code-options-" @field.id}} {{on "input" this.handleInput}} {{on "change" this.handleChange}}>
+
+<datalist id={{concat "postal-code-options-" @field.id}}>
+  {{#each this.suggestions as |item|}}
+    <option value={{item.Code}}>{{item.Code}} {{item.Location}}</option>
+  {{/each}}
+</datalist>

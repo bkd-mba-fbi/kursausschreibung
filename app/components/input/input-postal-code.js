@@ -1,47 +1,49 @@
 import Component from '@glimmer/component';
-import { modifier } from 'ember-modifier';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import { debounce } from '@ember/runloop';
 import { getPostalCodes } from 'kursausschreibung/framework/api';
-import jQuery from 'jquery';
 
 export default class InputPostalCodeComponent extends Component {
-  setupTypeahead = modifier((element) => {
-    const fetchPostalCodes = (query, asyncResults) => {
-      getPostalCodes(query).then((response) => asyncResults(response));
-    };
+  @tracked suggestions = [];
 
-    let $typeahead = jQuery(element);
-    let $locationFields = $typeahead
-      .closest('fieldset')
-      .find('input[name="Location"]');
+  @action
+  handleInput(event) {
+    const query = event.target.value?.trim() ?? '';
 
-    $typeahead.typeahead(
-      {
-        hint: true,
-        highlight: true,
-        minLength: 2,
-      },
-      {
-        async: true,
-        limit: 10,
-        source: (query, _syncResults, asyncResults) => {
-          debounce(null, fetchPostalCodes, query, asyncResults, 200);
-        },
-        displayKey: 'Code',
-        templates: {
-          suggestion: (object) =>
-            `<div>${object.Code} ${object.Location}</div>`,
-        },
-      }
+    if (query.length < 2) {
+      this.suggestions = [];
+      return;
+    }
+
+    debounce(this, this.fetchSuggestions, query, 200);
+  }
+
+  fetchSuggestions(query) {
+    getPostalCodes(query)
+      .then((response) => {
+        this.suggestions = Array.isArray(response) ? response : [];
+      })
+      .catch(() => {
+        this.suggestions = [];
+      });
+  }
+
+  @action
+  handleChange(event) {
+    const code = event.target.value;
+    const selected = this.suggestions.find(
+      (suggestion) => String(suggestion.Code) === String(code)
     );
 
-    let handleSelect = (_event, suggestion) =>
-      $locationFields.val(suggestion.Location);
-    $typeahead.on('typeahead:select', handleSelect);
+    if (!selected) {
+      return;
+    }
 
-    return () => {
-      $typeahead.off('typeahead:select', handleSelect);
-      $typeahead.typeahead('destroy');
-    };
-  });
+    const fieldset = event.target.closest('fieldset');
+    const locationField = fieldset?.querySelector('input[name="Location"]');
+    if (locationField) {
+      locationField.value = selected.Location;
+    }
+  }
 }
