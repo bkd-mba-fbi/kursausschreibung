@@ -6,7 +6,6 @@ import {
   vssDependency,
 } from 'kursausschreibung/framework/form-helpers';
 import uikit from 'uikit';
-import jQuery from 'jquery';
 
 function getInputFile(fieldId) {
   let elementIdFile = getElementIdFile(fieldId);
@@ -17,12 +16,83 @@ function getElementIdFile(fieldId) {
   return 'file' + fieldId;
 }
 
+function getPreviewElement(fieldId) {
+  return document.getElementById('imgCrop' + fieldId);
+}
+
+function resetImageUi(fieldId) {
+  let previewContainer = document.getElementById('img' + fieldId);
+  let previewImage = getPreviewElement(fieldId);
+  let uploadButton = document.getElementById('fileBtUpload' + fieldId);
+  let finalImage = document.getElementById('imgDev' + fieldId);
+
+  previewContainer?.classList.add('uk-hidden');
+  uploadButton?.classList.add('uk-hidden');
+  finalImage?.classList.add('uk-hidden');
+
+  if (previewImage) {
+    previewImage.removeAttribute('src');
+  }
+}
+
+function cropImageToBase64(imageSource) {
+  return new Promise((resolve, reject) => {
+    let image = new Image();
+    image.onload = () => {
+      let canvas = document.createElement('canvas');
+      let targetWidth = 300;
+      let targetHeight = 400;
+      let targetRatio = targetWidth / targetHeight;
+      let sourceRatio = image.width / image.height;
+      let sourceWidth = image.width;
+      let sourceHeight = image.height;
+      let sourceX = 0;
+      let sourceY = 0;
+
+      if (sourceRatio > targetRatio) {
+        sourceWidth = image.height * targetRatio;
+        sourceX = (image.width - sourceWidth) / 2;
+      } else {
+        sourceHeight = image.width / targetRatio;
+        sourceY = (image.height - sourceHeight) / 2;
+      }
+
+      canvas.width = targetWidth;
+      canvas.height = targetHeight;
+
+      let context = canvas.getContext('2d');
+      context.drawImage(
+        image,
+        sourceX,
+        sourceY,
+        sourceWidth,
+        sourceHeight,
+        0,
+        0,
+        targetWidth,
+        targetHeight
+      );
+
+      resolve(canvas.toDataURL('image/jpeg'));
+    };
+    image.onerror = reject;
+    image.src = imageSource;
+  });
+}
+
 export default class InputFileComponent extends Component {
+  previewUrl = null;
+
   @action
   handleChange() {
     let field = this.args.field;
     let elementIdFile = getElementIdFile(field.id);
     let inputFile = getInputFile(field.id);
+
+    if (!inputFile) {
+      return;
+    }
+
     inputFile.imgDev = null;
     let maxFileSizeMB = (field.maxFileSize / (1024 * 1024)).toFixed(2);
 
@@ -66,15 +136,14 @@ export default class InputFileComponent extends Component {
 
         let imgField = document.getElementById('img' + fieldId);
         imgField.classList.remove('uk-hidden');
+        let previewImage = getPreviewElement(fieldId);
 
-        var basic = jQuery('#img' + field.id).croppie({
-          viewport: { width: 300, height: 400 },
-          boundary: { width: 350, height: 450 },
-        });
+        if (this.previewUrl) {
+          URL.revokeObjectURL(this.previewUrl);
+        }
 
-        basic.croppie('bind', {
-          url: URL.createObjectURL(inputFile),
-        });
+        this.previewUrl = URL.createObjectURL(inputFile);
+        previewImage.src = this.previewUrl;
       }
 
       uikit.notification({
@@ -109,35 +178,39 @@ export default class InputFileComponent extends Component {
     removeFile(elementIdFile);
     field.fileTypeLabel = field.fileLabelBevorFileChoose;
 
-    jQuery('#img' + field.id).croppie('destroy');
+    if (this.previewUrl) {
+      URL.revokeObjectURL(this.previewUrl);
+      this.previewUrl = null;
+    }
+
+    resetImageUi(fieldId);
   }
 
   @action
-  uploadImage() {
+  async uploadImage() {
     let fieldId = this.args.field.id;
-    //on button click
-    let basic = jQuery('#img' + fieldId);
     let inputFile = getInputFile(fieldId);
-    basic
-      .croppie('result', {
-        type: 'base64',
-        format: 'jpeg',
-        size: { width: '300', height: '400' },
-      })
-      .then(function (base64) {
-        // html is div (overflow hidden)
-        // with img positioned inside.
-        inputFile.imgDev = base64;
 
-        let imgFielDev = document.getElementById('imgDev' + fieldId);
-        imgFielDev.src = base64;
-        imgFielDev.classList.remove('uk-hidden');
-        let imgClassUp = document.getElementById('fileBtUpload' + fieldId);
-        imgClassUp.classList.add('uk-hidden');
-        let imgClassDel = document.getElementById('img' + fieldId);
-        imgClassDel.classList.add('uk-hidden');
+    if (!inputFile || !this.previewUrl) {
+      return;
+    }
 
-        jQuery('#img' + fieldId).croppie('destroy');
-      });
+    let base64 = await cropImageToBase64(this.previewUrl);
+    inputFile.imgDev = base64;
+
+    let imgFielDev = document.getElementById('imgDev' + fieldId);
+    imgFielDev.src = base64;
+    imgFielDev.classList.remove('uk-hidden');
+
+    let imgClassUp = document.getElementById('fileBtUpload' + fieldId);
+    imgClassUp.classList.add('uk-hidden');
+
+    let previewContainer = document.getElementById('img' + fieldId);
+    previewContainer.classList.add('uk-hidden');
+
+    if (this.previewUrl) {
+      URL.revokeObjectURL(this.previewUrl);
+      this.previewUrl = null;
+    }
   }
 }

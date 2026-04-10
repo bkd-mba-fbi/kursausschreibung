@@ -66,12 +66,5 @@ module.exports = {
         'qunit/no-assert-equal': 'off',
       },
     },
-    {
-      // temporary jQuery exceptions for plugin-bound code paths and legacy API behavior
-      files: ['app/components/input/input-file.js'],
-      rules: {
-        'ember/no-jquery': 'off',
-      },
-    },
   ],
 };
