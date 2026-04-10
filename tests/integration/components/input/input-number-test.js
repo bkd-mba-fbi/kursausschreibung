@@ -39,9 +39,6 @@ module('Integration | Component | input/input-number', function (hooks) {
     );
     await render(hbs`{{input/input-number field=this.field}}`);
 
-    assert.ok(
-      find('input[type="number"][required]'),
-      'number input is required'
-    );
+    assert.dom('input[type="number"][required]').exists('number input is required');
   });
 });

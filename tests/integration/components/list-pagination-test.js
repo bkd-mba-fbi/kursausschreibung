@@ -28,12 +28,8 @@ module('Integration | Component | list-pagination', function (hooks) {
       {{/list-pagination}}
     `);
 
-    assert.equal(
-      findAll('.page-item').length,
-      10,
-      'first page yields 10 items'
-    );
-    assert.ok(find('.uk-pagination'), 'pagination controls are rendered');
+    assert.dom('.page-item').exists({ count: 10 }, 'first page yields 10 items');
+    assert.dom('.uk-pagination').exists('pagination controls are rendered');
   });
 
   test('yields second page remainder items', async function (assert) {
@@ -49,10 +45,6 @@ module('Integration | Component | list-pagination', function (hooks) {
       {{/list-pagination}}
     `);
 
-    assert.equal(
-      findAll('.page-item').length,
-      2,
-      'second page yields remaining 2 items'
-    );
+    assert.dom('.page-item').exists({ count: 2 }, 'second page yields remaining 2 items');
   });
 });

@@ -31,10 +31,7 @@ module('Integration | Component | input/input-freeform-dropdown', function (hook
 
     const input = find('input.typeahead');
     assert.ok(input, 'typeahead text input is rendered');
-    assert.ok(
-      input.classList.contains('typeahead'),
-      'input has typeahead class'
-    );
+    assert.dom(input).hasClass('typeahead', 'input has typeahead class');
   });
 
   test('renders placeholder from field', async function (assert) {

@@ -35,6 +35,6 @@ module('Integration | Component | input/input-textarea', function (hooks) {
     );
     await render(hbs`{{input/input-textarea field=this.field}}`);
 
-    assert.ok(find('textarea:disabled'), 'textarea is disabled');
+    assert.dom('textarea').isDisabled('textarea is disabled');
   });
 });

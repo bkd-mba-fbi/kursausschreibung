@@ -48,8 +48,8 @@ module('Integration | Component | subscription-form', function (hooks) {
       }}
     `);
 
-    assert.ok(find('form#subscriptionForm'), 'subscription form is rendered');
-    assert.ok(find('input[type="submit"]'), 'submit button is rendered');
+    assert.dom('form#subscriptionForm').exists('subscription form is rendered');
+    assert.dom('input[type="submit"]').exists('submit button is rendered');
   });
 
   test('renders address fields when showAddressInputs is true', async function (assert) {
@@ -72,12 +72,8 @@ module('Integration | Component | subscription-form', function (hooks) {
       }}
     `);
 
-    assert.ok(find('fieldset.address-fields'), 'address fieldset is shown');
-    assert.equal(
-      findAll('fieldset.address-fields .uk-form-label').length,
-      1,
-      'address field is rendered'
-    );
+    assert.dom('fieldset.address-fields').exists('address fieldset is shown');
+    assert.dom('fieldset.address-fields .uk-form-label').exists({ count: 1 }, 'address field is rendered');
   });
 
   test('shows login hint when user is logged in', async function (assert) {
@@ -101,10 +97,7 @@ module('Integration | Component | subscription-form', function (hooks) {
       }}
     `);
 
-    assert.ok(
-      find('.uk-text-warning'),
-      'login hint is visible for logged-in users'
-    );
+    assert.dom('.uk-text-warning').exists('login hint is visible for logged-in users');
   });
 
   test('shows add person button when allowMultiplePeople is enabled', async function (assert) {
@@ -131,6 +124,6 @@ module('Integration | Component | subscription-form', function (hooks) {
       this.element.textContent.includes('Person'),
       'multiple-person area is rendered'
     );
-    assert.ok(find('button.uk-button-default'), 'add person button is present');
+    assert.dom('button.uk-button-default').exists('add person button is present');
   });
 });

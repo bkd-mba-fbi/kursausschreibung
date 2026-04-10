@@ -34,9 +34,6 @@ module('Integration | Component | input/input-telephone', function (hooks) {
     );
     await render(hbs`{{input/input-telephone field=this.field}}`);
 
-    assert.ok(
-      find('input[type="tel"]:disabled'),
-      'telephone input is disabled'
-    );
+    assert.dom('input[type="tel"]').isDisabled('telephone input is disabled');
   });
 });

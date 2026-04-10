@@ -24,10 +24,7 @@ module('Integration | Component | remaining-seats-badge', function (hooks) {
 
     let badge = find('.uk-label');
     assert.ok(badge, 'badge is rendered');
-    assert.ok(
-      badge.classList.contains('uk-label-warning'),
-      'badge uses warning variant'
-    );
+    assert.dom(badge).hasClass('uk-label-warning', 'badge uses warning variant');
     assert.ok(
       this.element.textContent.includes('8'),
       'badge shows the seat count'
@@ -40,10 +37,7 @@ module('Integration | Component | remaining-seats-badge', function (hooks) {
     await render(hbs`{{remaining-seats-badge event=this.event}}`);
 
     let badge = find('.uk-label');
-    assert.ok(
-      badge.classList.contains('uk-label-danger'),
-      'badge uses danger variant'
-    );
+    assert.dom(badge).hasClass('uk-label-danger', 'badge uses danger variant');
   });
 
   test('hides badge when FreeSeats is null', async function (assert) {
@@ -51,6 +45,6 @@ module('Integration | Component | remaining-seats-badge', function (hooks) {
 
     await render(hbs`{{remaining-seats-badge event=this.event}}`);
 
-    assert.notOk(find('.uk-label'), 'no badge is shown for null FreeSeats');
+    assert.dom('.uk-label').doesNotExist('no badge is shown for null FreeSeats');
   });
 });

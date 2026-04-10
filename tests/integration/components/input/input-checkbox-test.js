@@ -38,7 +38,7 @@ module('Integration | Component | input/input-checkbox', function (hooks) {
     );
     await render(hbs`{{input/input-checkbox field=this.field}}`);
 
-    assert.ok(find('input[type="checkbox"]:disabled'), 'checkbox is disabled');
+    assert.dom('input[type="checkbox"]').isDisabled('checkbox is disabled');
   });
 
   test('renders as required when field.options.required is true', async function (assert) {
@@ -50,6 +50,6 @@ module('Integration | Component | input/input-checkbox', function (hooks) {
     );
     await render(hbs`{{input/input-checkbox field=this.field}}`);
 
-    assert.ok(find('input[type="checkbox"][required]'), 'checkbox is required');
+    assert.dom('input[type="checkbox"][required]').exists('checkbox is required');
   });
 });

@@ -31,11 +31,7 @@ module('Integration | Component | event-list-search', function (hooks) {
       {{/event-list-search}}
     `);
 
-    assert.equal(
-      findAll('.result-item').length,
-      2,
-      'all events are yielded initially'
-    );
+    assert.dom('.result-item').exists({ count: 2 }, 'all events are yielded initially');
   });
 
   test('renders search input and sort dropdown', async function (assert) {
@@ -53,8 +49,8 @@ module('Integration | Component | event-list-search', function (hooks) {
       {{/event-list-search}}
     `);
 
-    assert.ok(find('#searchEvents'), 'search input is rendered');
-    assert.ok(find('#sortList'), 'sort dropdown is rendered');
+    assert.dom('#searchEvents').exists('search input is rendered');
+    assert.dom('#sortList').exists('sort dropdown is rendered');
   });
 
   test('shows empty-state message when no events are provided', async function (assert) {
@@ -69,11 +65,7 @@ module('Integration | Component | event-list-search', function (hooks) {
       {{/event-list-search}}
     `);
 
-    assert.equal(
-      findAll('.result-item').length,
-      0,
-      'no result items are yielded'
-    );
+    assert.dom('.result-item').doesNotExist('no result items are yielded');
     assert.ok(
       this.element.textContent.toLowerCase().includes('keine kurse'),
       'empty-state text is rendered'

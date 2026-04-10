@@ -43,8 +43,8 @@ module('Integration | Component | event-list', function (hooks) {
       }}
     `);
 
-    assert.ok(find('#searchEvents'), 'search input is rendered');
-    assert.ok(find('#sortList'), 'sort dropdown is rendered');
+    assert.dom('#searchEvents').exists('search input is rendered');
+    assert.dom('#sortList').exists('sort dropdown is rendered');
   });
 
   test('renders titles for each event on the first page', async function (assert) {

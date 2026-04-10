@@ -38,6 +38,6 @@ module('Integration | Component | input/input-date', function (hooks) {
     );
     await render(hbs`{{input/input-date field=this.field}}`);
 
-    assert.ok(find('input[type="date"][required]'), 'date input is required');
+    assert.dom('input[type="date"][required]').exists('date input is required');
   });
 });

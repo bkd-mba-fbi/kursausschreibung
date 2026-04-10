@@ -34,6 +34,6 @@ module('Integration | Component | input/input-email', function (hooks) {
     );
     await render(hbs`{{input/input-email field=this.field}}`);
 
-    assert.ok(find('input[type="email"]:disabled'), 'email input is disabled');
+    assert.dom('input[type="email"]').isDisabled('email input is disabled');
   });
 });

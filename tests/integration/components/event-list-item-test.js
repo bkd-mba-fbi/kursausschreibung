@@ -32,7 +32,7 @@ module('Integration | Component | event-list-item', function (hooks) {
 
     await render(hbs`{{event-list-item event=this.event}}`);
 
-    assert.ok(find('h3'), 'a heading element is rendered');
+    assert.dom('h3').exists('a heading element is rendered');
     assert.ok(
       this.element.textContent.includes('Introduction to Testing'),
       'event title from displayData.Designation appears in the heading'
@@ -61,7 +61,7 @@ module('Integration | Component | event-list-item', function (hooks) {
 
     await render(hbs`{{event-list-item event=this.event}}`);
 
-    assert.ok(find('.uk-label-warning'), 'subtitle badge element exists');
+    assert.dom('.uk-label-warning').exists('subtitle badge element exists');
     assert.ok(
       this.element.textContent.includes('Noch Plätze frei'),
       'subtitle text is rendered inside the badge'
@@ -73,9 +73,6 @@ module('Integration | Component | event-list-item', function (hooks) {
 
     await render(hbs`{{event-list-item event=this.event}}`);
 
-    assert.notOk(
-      find('.uk-label-warning'),
-      'no subtitle badge when subtitle is absent'
-    );
+    assert.dom('.uk-label-warning').doesNotExist('no subtitle badge when subtitle is absent');
   });
 });

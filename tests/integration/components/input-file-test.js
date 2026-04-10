@@ -43,10 +43,7 @@ module('Integration | Component | input-file', function (hooks) {
 
     const btn = find('button.uk-button-default');
     assert.ok(btn, 'upload button is rendered');
-    assert.notOk(
-      btn.classList.contains('required'),
-      'button has no required class'
-    );
+    assert.dom(btn).hasNoClass('required', 'button has no required class');
   });
 
   test('renders a required upload button when field is required', async function (assert) {
@@ -59,6 +56,6 @@ module('Integration | Component | input-file', function (hooks) {
 
     const btn = find('button.uk-button-default');
     assert.ok(btn, 'upload button is rendered');
-    assert.ok(btn.classList.contains('required'), 'button has required class');
+    assert.dom(btn).hasClass('required', 'button has required class');
   });
 });

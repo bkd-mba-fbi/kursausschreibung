@@ -16,14 +16,8 @@ module('Integration | Component | input-base', function (hooks) {
 
     await render(hbs`{{input-base field=this.field}}`);
 
-    assert.ok(
-      find('label[for="Email"]'),
-      'label is rendered with matching for attribute'
-    );
-    assert.ok(
-      find('input[name="Email"]'),
-      'string input subcomponent is rendered'
-    );
+    assert.dom('label[for="Email"]').exists('label is rendered with matching for attribute');
+    assert.dom('input[name="Email"]').exists('string input subcomponent is rendered');
   });
 
   test('renders a legend for legend fields', async function (assert) {
@@ -36,7 +30,7 @@ module('Integration | Component | input-base', function (hooks) {
 
     await render(hbs`{{input-base field=this.field}}`);
 
-    assert.ok(find('legend.uk-legend'), 'legend is rendered');
-    assert.notOk(find('input'), 'no input is rendered for legend entries');
+    assert.dom('legend.uk-legend').exists('legend is rendered');
+    assert.dom('input').doesNotExist('no input is rendered for legend entries');
   });
 });
