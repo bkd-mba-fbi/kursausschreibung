@@ -1,5 +1,6 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import { modifier } from 'ember-modifier';
 import {
   getParameterByName,
   setParameterByName,
@@ -28,19 +29,19 @@ function filterParam(getParam) {
 }
 
 export default class EventListComponent extends Component {
-  didRender() {
-    super.didRender(...arguments);
+  syncFilter = modifier(() => {
     filterParam(true);
-  }
+  });
 
-  click() {
+  @action
+  handleClick() {
     filterParam(false);
   }
 
   @action
   handleQueryChanged(query) {
-    if (typeof this.queryChanged === 'function') {
-      this.queryChanged(query);
+    if (typeof this.args.queryChanged === 'function') {
+      this.args.queryChanged(query);
     }
   }
 }

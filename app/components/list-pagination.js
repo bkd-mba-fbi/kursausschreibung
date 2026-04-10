@@ -1,5 +1,6 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import { modifier } from 'ember-modifier';
 import settings from 'kursausschreibung/framework/settings';
 import { displayAsGrid } from 'kursausschreibung/framework/gui-helpers';
 import { getListViewGrid } from 'kursausschreibung/framework/storage';
@@ -9,46 +10,46 @@ let n = 2;
 
 export default class ListPaginationComponent extends Component {
   get lastPage() {
-    let filter = this.items.filter((item) => item.codes instanceof Array);
+    let filter = this.args.items.filter((item) => item.codes instanceof Array);
     return filter.length > 0
       ? 1
-      : Math.ceil(this.items.length / settings.itemsPerPage);
+      : Math.ceil(this.args.items.length / settings.itemsPerPage);
   }
 
   get isFirstPage() {
-    return this.page === 1;
+    return this.args.page === 1;
   }
 
   get isLastPage() {
-    return this.page === this.lastPage;
+    return this.args.page === this.lastPage;
   }
 
   get nextPage() {
-    return this.page + 1;
+    return this.args.page + 1;
   }
 
   get previousPage() {
-    return this.page - 1;
+    return this.args.page - 1;
   }
 
   get showFirst() {
-    return this.page > 1 + n;
+    return this.args.page > 1 + n;
   }
 
   get showLast() {
-    return this.page < this.lastPage - n;
+    return this.args.page < this.lastPage - n;
   }
 
   get showLeftDots() {
-    return this.page > n + 2;
+    return this.args.page > n + 2;
   }
 
   get showRightDots() {
-    return this.page < this.lastPage - (n + 1);
+    return this.args.page < this.lastPage - (n + 1);
   }
 
   get pages() {
-    let page = this.page;
+    let page = this.args.page;
     let lastPage = this.lastPage;
 
     let min = page - n >= 1 ? page - n : 1;
@@ -64,11 +65,11 @@ export default class ListPaginationComponent extends Component {
   }
 
   get itemsOnCurrentPage() {
-    let page = this.page;
-    let filter = this.items.filter((item) => item.codes instanceof Array);
+    let page = this.args.page;
+    let filter = this.args.items.filter((item) => item.codes instanceof Array);
     return filter.length > 0
-      ? this.items
-      : this.items.slice(
+      ? this.args.items
+      : this.args.items.slice(
           settings.itemsPerPage * (page - 1),
           settings.itemsPerPage * page
         );
@@ -116,10 +117,9 @@ export default class ListPaginationComponent extends Component {
     return false;
   }
 
-  didRender() {
-    super.didRender(...arguments);
+  applyGridView = modifier(() => {
     var listViewGrid = getListViewGrid();
     listViewGrid = listViewGrid === null ? settings.displayGrid : listViewGrid;
     displayAsGrid(listViewGrid);
-  }
+  });
 }
