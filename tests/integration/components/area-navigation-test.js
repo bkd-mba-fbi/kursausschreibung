@@ -22,7 +22,7 @@ module('Integration | Component | area-navigation', function (hooks) {
   test('renders the category heading', async function (assert) {
     this.set('area', makeArea());
 
-    await render(hbs`{{area-navigation this.area}}`);
+    await render(hbs`<AreaNavigation @area={{this.area}} />`);
 
     assert
       .dom('h3#header-naviagtion-area')
@@ -36,7 +36,7 @@ module('Integration | Component | area-navigation', function (hooks) {
   test('renders the overview link', async function (assert) {
     this.set('area', makeArea());
 
-    await render(hbs`{{area-navigation this.area}}`);
+    await render(hbs`<AreaNavigation @area={{this.area}} />`);
 
     const links = findAll('ul.uk-nav a');
     assert.ok(links.length > 0, 'nav contains at least one link');
@@ -49,7 +49,7 @@ module('Integration | Component | area-navigation', function (hooks) {
   test('renders one link per category', async function (assert) {
     this.set('area', makeArea());
 
-    await render(hbs`{{area-navigation this.area}}`);
+    await render(hbs`<AreaNavigation @area={{this.area}} />`);
 
     const links = findAll('ul.uk-nav a');
     // first link is "overview", then one per category
@@ -67,7 +67,9 @@ module('Integration | Component | area-navigation', function (hooks) {
   test('hides heading when hideHeading is true', async function (assert) {
     this.set('area', makeArea());
 
-    await render(hbs`{{area-navigation this.area hideHeading=true}}`);
+    await render(
+      hbs`<AreaNavigation @area={{this.area}} @hideHeading={{true}} />`
+    );
 
     assert
       .dom('h3')
@@ -78,7 +80,7 @@ module('Integration | Component | area-navigation', function (hooks) {
   test('renders only overview link when area has no categories', async function (assert) {
     this.set('area', makeArea({ categoryKeys: [], categories: {} }));
 
-    await render(hbs`{{area-navigation this.area}}`);
+    await render(hbs`<AreaNavigation @area={{this.area}} />`);
 
     const links = findAll('ul.uk-nav a');
     assert.equal(

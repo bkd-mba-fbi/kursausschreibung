@@ -1,13 +1,13 @@
-{{#unless this.hideHeading}}
+{{#unless @hideHeading}}
   <h3 id="header-naviagtion-area" class="uk-margin-small">{{translate key="kursCategoryHeader"}}</h3>
 {{/unless}}
 <ul class="uk-nav uk-nav-default">
   <li>
     <LinkTo @route="list.index">{{translate key="overview"}}</LinkTo>
   </li>
-  {{#each this.area.categoryKeys as |categoryKey|}}
+  {{#each @area.categoryKeys as |categoryKey|}}
     <li>
-      <LinkTo @route="list.category" @model={{categoryKey}}>{{get (get this.area.categories categoryKey) "name"}}</LinkTo>
+      <LinkTo @route="list.category" @model={{categoryKey}}>{{get (get @area.categories categoryKey) "name"}}</LinkTo>
   </li>
   {{/each}}
 </ul>
