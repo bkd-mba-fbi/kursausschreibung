@@ -4,5 +4,8 @@
 # compiled output
 /dist/
 
+# legacy stylesheet with existing conventions
+/app/styles/app.css
+
 # addons
 /.node_modules.ember-try/

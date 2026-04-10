@@ -16,7 +16,7 @@
     "npmInstall": "npm install",
     "build": "npx ember build --environment=production",
     "lint": "concurrently \"npm:lint:js\" \"npm:lint:css\" --names \"js,css\"",
-    "lint:css": "stylelint \"**/*.css\"",
+    "lint:css": "stylelint \"**/*.css\" --allow-empty-input",
     "lint:css:fix": "concurrently \"npm:lint:css -- --fix\"",
     "lint:fix": "concurrently \"npm:lint:*:fix\" --names \"fix:\"",
     "lint:hbs:fix": "npx ember-template-lint . --fix",

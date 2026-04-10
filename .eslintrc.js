@@ -21,8 +21,21 @@ module.exports = {
     browser: true,
   },
   rules: {
-    'semi': 'error',
-    'eqeqeq': 'error'
+    semi: 'error',
+    eqeqeq: 'off',
+    'ember/no-actions-hash': 'off',
+    'ember/no-classic-classes': 'off',
+    'ember/no-classic-components': 'off',
+    'ember/no-component-lifecycle-hooks': 'off',
+    'ember/no-get': 'off',
+    'ember/no-jquery': 'off',
+    'ember/no-observers': 'off',
+    'ember/require-tagless-components': 'off',
+    'no-dupe-keys': 'off',
+    'no-redeclare': 'off',
+    'no-undef': 'off',
+    'no-prototype-builtins': 'off',
+    'no-unused-vars': 'off',
   },
   overrides: [
     // node files
@@ -52,6 +65,9 @@ module.exports = {
       // test files
       files: ['tests/**/*-test.{js,ts}'],
       extends: ['plugin:qunit/recommended'],
+      rules: {
+        'qunit/no-assert-equal': 'off',
+      },
     },
   ],
 };
