@@ -129,11 +129,10 @@ function invoiceDependencyCheck(vssId, dependency) {
   const button = document.querySelector('button[name="useCompanyAddress"]');
   const fieldset = document.querySelector('.company-address-fields');
 
-  if (!comp || !button || !fieldset || !comp.get('enableInvoiceAddress'))
-    return;
+  if (!comp || !button || !fieldset || !comp.args?.enableInvoiceAddress) return;
   if (vssId === SUBSCRIPTION_DETAIL_INVOICE_ADRESS && dependency) {
-    comp.set('paymentEnforced', true);
-    comp.set('useCompanyAddress', true);
+    comp.paymentEnforced = true;
+    comp.useCompanyAddress = true;
     button.disabled = true;
     fieldset.hidden = false;
     fieldset.disabled = false;
@@ -141,13 +140,13 @@ function invoiceDependencyCheck(vssId, dependency) {
       .querySelectorAll('input, select, textarea')
       .forEach((el) => (el.required = true));
   } else {
-    comp.set('paymentEnforced', false);
-    comp.set('useCompanyAddress', false);
+    comp.paymentEnforced = false;
+    comp.useCompanyAddress = false;
     button.disabled = false;
     fieldset.hidden = true;
     fieldset.disabled = true;
 
-    const fields = comp.get('companyFields') || [];
+    const fields = comp.args?.companyFields || [];
     // für jedes Input/Select/Textarea
     fieldset.querySelectorAll('input, select, textarea').forEach((el) => {
       // finde das zugehörige Field-Objekt nach dem Name-Attribut

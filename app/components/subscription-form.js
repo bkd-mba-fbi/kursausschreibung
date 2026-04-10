@@ -1,4 +1,4 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import {
@@ -13,9 +13,10 @@ import uikit from 'uikit';
 export default class SubscriptionFormComponent extends Component {
   @tracked useCompanyAddress = false;
   @tracked additionalPeopleCount = 0;
+  @tracked paymentEnforced = false;
 
-  constructor() {
-    super(...arguments);
+  constructor(owner, args) {
+    super(owner, args);
     window.kursausschreibung = window.kursausschreibung || {};
     window.kursausschreibung.component = this;
   }
@@ -34,19 +35,19 @@ export default class SubscriptionFormComponent extends Component {
   }
 
   get showLoginHint() {
-    return this.userSettings?.isLoggedIn === true;
+    return this.args.userSettings?.isLoggedIn === true;
   }
 
   @action
   submit(event) {
     event.preventDefault();
     subscribe(event.target, this);
-    this.subscribe();
+    this.args.subscribe?.();
   }
 
   @action
   toggleCompanyAddress() {
-    if (this.enableInvoiceAddress && this.paymentEnforced) {
+    if (this.args.enableInvoiceAddress && this.paymentEnforced) {
       return;
     }
     this.useCompanyAddress = !this.useCompanyAddress;
@@ -54,7 +55,7 @@ export default class SubscriptionFormComponent extends Component {
 
   @action
   addPerson() {
-    if (this.event?.FreeSeats - 1 - this.additionalPeopleCount <= 0) {
+    if (this.args.event?.FreeSeats - 1 - this.additionalPeopleCount <= 0) {
       uikit.modal.alert(getString('noSeatsAvailable'));
       return;
     }
@@ -81,9 +82,9 @@ export default class SubscriptionFormComponent extends Component {
 // provided in the form
 function subscribe(form, self) {
   let useCompanyAddress = self.useCompanyAddress === true;
-  let eventId = self.event?.Id;
-  let userSettings = self.userSettings;
-  let showCompanyButtonOnly = self.showCompanyButtonOnly;
+  let eventId = self.args.event?.Id;
+  let userSettings = self.args.userSettings;
+  let showCompanyButtonOnly = self.args.showCompanyButtonOnly;
 
   // subscription
   let subscriptionData = {
@@ -214,12 +215,12 @@ function subscribe(form, self) {
     );
 
     // set tableData for the main person
-    tableData.fields = getTableData(self.fields, addressData);
+    tableData.fields = getTableData(self.args.fields, addressData);
 
     // set tableData for the company address
     if (useCompanyAddress) {
       tableData.companyFields = getTableData(
-        self.companyFields,
+        self.args.companyFields,
         companyAddressData
       );
     }
@@ -227,7 +228,7 @@ function subscribe(form, self) {
 
   // set tableData for subscriptionDetails
   tableData.subscriptionDetailFields = getTableData(
-    self.subscriptionDetailFields,
+    self.args.subscriptionDetailFields,
     assocSubscriptionData
   );
 
@@ -239,7 +240,7 @@ function subscribe(form, self) {
   // set tableData for additional people
   tableData.additionalPeopleFields = additionalPeople.map((data, index) => ({
     index: index + 1,
-    data: getTableData(self.additionalPeopleFields, data),
+    data: getTableData(self.args.additionalPeopleFields, data),
   }));
 
   // save the data to submit
