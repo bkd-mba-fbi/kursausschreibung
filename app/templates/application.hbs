@@ -15,7 +15,7 @@
           </li>
           {{#if this.eventCategoryDropdown}}
             <div data-uk-dropdown>
-              {{area-navigation (get this.model.areas areaKey) hideHeading=true}}
+              <AreaNavigation @area={{get this.model.areas areaKey}} @hideHeading={{true}} />
             </div>
           {{/if}}
         {{/each}}
@@ -37,7 +37,7 @@
                   <h2>{{translate key="navigation"}}</h2>
                   {{#each-in this.model.areas as |area data|}}
                     <div class="uk-margin">
-                      {{area-navigation data}}
+                      <AreaNavigation @area={{data}} />
                     </div>
                   {{/each-in}}
                   {{#if this.showLanguageButton}}
@@ -118,7 +118,7 @@
       {{! TWEETS }}
       {{#if this.twitterHandle}}
         <div class="uk-margin uk-card uk-card-small uk-card-body uk-visible@l">
-          {{twitter-feed twitterHandle}}
+          <TwitterFeed @username={{this.twitterHandle}} />
         </div>
       {{/if}}
     </div>
