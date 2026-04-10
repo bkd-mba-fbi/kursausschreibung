@@ -1,10 +1,12 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
 import { vssDependency } from 'kursausschreibung/framework/form-helpers';
 
-export default Component.extend({
-  change() {
-    let field = this.field;
-    let currentValue = document.getElementById('vss' + field.id).checked;
+export default class InputCheckboxComponent extends Component {
+  @action
+  handleChange(event) {
+    const field = this.args.field;
+    const currentValue = event.target.checked;
     vssDependency(currentValue, field);
-  },
-});
+  }
+}
