@@ -35,12 +35,12 @@ module('Integration | Component | event-list', function (hooks) {
     this.set('queryChanged', () => {});
 
     await render(hbs`
-      {{event-list
-        events=this.events
-        page=this.page
-        route=this.route
-        queryChanged=this.queryChanged
-      }}
+      <EventList
+        @events={{this.events}}
+        @page={{this.page}}
+        @route={{this.route}}
+        @queryChanged={{this.queryChanged}}
+      />
     `);
 
     assert.dom('#searchEvents').exists('search input is rendered');
@@ -77,12 +77,12 @@ module('Integration | Component | event-list', function (hooks) {
     this.set('queryChanged', () => {});
 
     await render(hbs`
-      {{event-list
-        events=this.events
-        page=this.page
-        route=this.route
-        queryChanged=this.queryChanged
-      }}
+      <EventList
+        @events={{this.events}}
+        @page={{this.page}}
+        @route={{this.route}}
+        @queryChanged={{this.queryChanged}}
+      />
     `);
 
     assert.ok(

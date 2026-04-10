@@ -1,4 +1,5 @@
 import Component from '@ember/component';
+import { action } from '@ember/object';
 import {
   getParameterByName,
   setParameterByName,
@@ -26,17 +27,20 @@ function filterParam(getParam) {
   }
 }
 
-export default Component.extend({
-  actions: {
-    queryChanged(query) {
-      this.queryChanged(query);
-    },
-  },
+export default class EventListComponent extends Component {
   didRender() {
-    this._super(...arguments);
+    super.didRender(...arguments);
     filterParam(true);
-  },
+  }
+
   click() {
     filterParam(false);
-  },
-});
+  }
+
+  @action
+  handleQueryChanged(query) {
+    if (typeof this.queryChanged === 'function') {
+      this.queryChanged(query);
+    }
+  }
+}
