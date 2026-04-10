@@ -10,12 +10,7 @@ import {
   getEventTexts,
   getEventCodes,
 } from './api';
-import {
-  isGreen,
-  isChartreuse,
-  isYellow,
-  isRed
-} from './status';
+import { isGreen, isChartreuse, isYellow, isRed } from './status';
 import ObjectProxy from '@ember/object/proxy';
 import {
   formatDate,

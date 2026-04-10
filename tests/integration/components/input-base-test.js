@@ -16,8 +16,12 @@ module('Integration | Component | input-base', function (hooks) {
 
     await render(hbs`{{input-base field=this.field}}`);
 
-    assert.dom('label[for="Email"]').exists('label is rendered with matching for attribute');
-    assert.dom('input[name="Email"]').exists('string input subcomponent is rendered');
+    assert
+      .dom('label[for="Email"]')
+      .exists('label is rendered with matching for attribute');
+    assert
+      .dom('input[name="Email"]')
+      .exists('string input subcomponent is rendered');
   });
 
   test('renders a legend for legend fields', async function (assert) {

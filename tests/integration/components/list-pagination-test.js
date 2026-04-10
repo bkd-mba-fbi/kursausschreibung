@@ -28,7 +28,9 @@ module('Integration | Component | list-pagination', function (hooks) {
       {{/list-pagination}}
     `);
 
-    assert.dom('.page-item').exists({ count: 10 }, 'first page yields 10 items');
+    assert
+      .dom('.page-item')
+      .exists({ count: 10 }, 'first page yields 10 items');
     assert.dom('.uk-pagination').exists('pagination controls are rendered');
   });
 
@@ -45,6 +47,8 @@ module('Integration | Component | list-pagination', function (hooks) {
       {{/list-pagination}}
     `);
 
-    assert.dom('.page-item').exists({ count: 2 }, 'second page yields remaining 2 items');
+    assert
+      .dom('.page-item')
+      .exists({ count: 2 }, 'second page yields remaining 2 items');
   });
 });

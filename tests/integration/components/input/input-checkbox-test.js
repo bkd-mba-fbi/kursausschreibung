@@ -50,6 +50,8 @@ module('Integration | Component | input/input-checkbox', function (hooks) {
     );
     await render(hbs`{{input/input-checkbox field=this.field}}`);
 
-    assert.dom('input[type="checkbox"][required]').exists('checkbox is required');
+    assert
+      .dom('input[type="checkbox"][required]')
+      .exists('checkbox is required');
   });
 });

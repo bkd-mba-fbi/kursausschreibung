@@ -73,6 +73,8 @@ module('Integration | Component | event-list-item', function (hooks) {
 
     await render(hbs`{{event-list-item event=this.event}}`);
 
-    assert.dom('.uk-label-warning').doesNotExist('no subtitle badge when subtitle is absent');
+    assert
+      .dom('.uk-label-warning')
+      .doesNotExist('no subtitle badge when subtitle is absent');
   });
 });

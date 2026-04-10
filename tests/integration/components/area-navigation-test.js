@@ -24,7 +24,9 @@ module('Integration | Component | area-navigation', function (hooks) {
 
     await render(hbs`{{area-navigation this.area}}`);
 
-    assert.dom('h3#header-naviagtion-area').exists('heading element is rendered');
+    assert
+      .dom('h3#header-naviagtion-area')
+      .exists('heading element is rendered');
     assert.ok(
       this.element.textContent.includes('Kategorie'),
       'heading shows translated "kursCategoryHeader" text'
@@ -67,7 +69,9 @@ module('Integration | Component | area-navigation', function (hooks) {
 
     await render(hbs`{{area-navigation this.area hideHeading=true}}`);
 
-    assert.dom('h3').doesNotExist('heading is not rendered when hideHeading is true');
+    assert
+      .dom('h3')
+      .doesNotExist('heading is not rendered when hideHeading is true');
     assert.dom('ul.uk-nav').exists('nav list is still rendered');
   });
 

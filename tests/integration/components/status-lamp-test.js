@@ -13,7 +13,9 @@ module('Integration | Component | status-lamp', function (hooks) {
 
     let lamp = find('span.status-lamp');
     assert.ok(lamp, 'status lamp element is rendered');
-    assert.dom(lamp).hasClass('lamp-green', 'green status adds lamp-green class');
+    assert
+      .dom(lamp)
+      .hasClass('lamp-green', 'green status adds lamp-green class');
     assert.ok(
       lamp.getAttribute('data-uk-tooltip')?.length > 0,
       'tooltip attribute is set'
@@ -33,7 +35,9 @@ module('Integration | Component | status-lamp', function (hooks) {
     this.set('status', 'red');
 
     let lamp = find('span.status-lamp');
-    assert.dom(lamp).hasClass('lamp-red', 'status change updates class to lamp-red');
+    assert
+      .dom(lamp)
+      .hasClass('lamp-red', 'status change updates class to lamp-red');
     assert.equal(
       lamp.getAttribute('uk-icon'),
       'close',

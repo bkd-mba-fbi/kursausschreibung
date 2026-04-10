@@ -31,7 +31,9 @@ module('Integration | Component | event-list-search', function (hooks) {
       {{/event-list-search}}
     `);
 
-    assert.dom('.result-item').exists({ count: 2 }, 'all events are yielded initially');
+    assert
+      .dom('.result-item')
+      .exists({ count: 2 }, 'all events are yielded initially');
   });
 
   test('renders search input and sort dropdown', async function (assert) {

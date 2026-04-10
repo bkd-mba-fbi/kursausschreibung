@@ -73,7 +73,9 @@ module('Integration | Component | subscription-form', function (hooks) {
     `);
 
     assert.dom('fieldset.address-fields').exists('address fieldset is shown');
-    assert.dom('fieldset.address-fields .uk-form-label').exists({ count: 1 }, 'address field is rendered');
+    assert
+      .dom('fieldset.address-fields .uk-form-label')
+      .exists({ count: 1 }, 'address field is rendered');
   });
 
   test('shows login hint when user is logged in', async function (assert) {
@@ -97,7 +99,9 @@ module('Integration | Component | subscription-form', function (hooks) {
       }}
     `);
 
-    assert.dom('.uk-text-warning').exists('login hint is visible for logged-in users');
+    assert
+      .dom('.uk-text-warning')
+      .exists('login hint is visible for logged-in users');
   });
 
   test('shows add person button when allowMultiplePeople is enabled', async function (assert) {
@@ -124,6 +128,8 @@ module('Integration | Component | subscription-form', function (hooks) {
       this.element.textContent.includes('Person'),
       'multiple-person area is rendered'
     );
-    assert.dom('button.uk-button-default').exists('add person button is present');
+    assert
+      .dom('button.uk-button-default')
+      .exists('add person button is present');
   });
 });

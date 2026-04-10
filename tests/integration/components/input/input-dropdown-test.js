@@ -56,7 +56,9 @@ module('Integration | Component | input/input-dropdown', function (hooks) {
     );
     await render(hbs`{{input/input-dropdown field=this.field}}`);
 
-    assert.dom('input[type="radio"]').exists({ count: 2 }, 'one radio per option');
+    assert
+      .dom('input[type="radio"]')
+      .exists({ count: 2 }, 'one radio per option');
     assert.dom('select').doesNotExist('no select element in radio mode');
   });
 });

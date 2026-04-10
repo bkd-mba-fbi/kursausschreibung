@@ -34,7 +34,9 @@ module('Integration | Component | input/input-string', function (hooks) {
     this.set('field', makeField({ placeholder: 'Max' }));
     await render(hbs`{{input/input-string field=this.field}}`);
 
-    assert.dom('input[type="text"]').hasAttribute('placeholder', 'Max', 'placeholder is rendered');
+    assert
+      .dom('input[type="text"]')
+      .hasAttribute('placeholder', 'Max', 'placeholder is rendered');
   });
 
   test('renders as disabled when field.options.disabled is true', async function (assert) {
