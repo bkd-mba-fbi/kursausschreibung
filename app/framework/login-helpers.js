@@ -11,7 +11,6 @@ import {
 import appConfig from './app-config';
 import { getParameterByName } from './url-helpers';
 import { getLanguage } from './translate';
-import $ from 'jquery';
 
 /**
  * return true if there is a valid token in the localStorage
@@ -78,12 +77,12 @@ export function autoCheckForLogin() {
 
   if (appConfig.useAutoLogin === true) {
     // get a new token from the OAuth server
-    let params = $.param({
+    let params = new URLSearchParams({
       clientId: appConfig.clientId,
       redirectUrl: location.href,
       culture_info: getLanguage(),
       application_scope: appConfig.applicationScope,
-    });
+    }).toString();
 
     let url = `${appConfig.oauthUrl}/Authorization/${appConfig.instanceId}/Token?${params}`;
 

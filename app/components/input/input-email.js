@@ -11,7 +11,9 @@ export default class InputEmailComponent extends Component {
       return;
     }
 
-    const emailFields = Array.from(form.querySelectorAll('input[type="email"]'));
+    const emailFields = Array.from(
+      form.querySelectorAll('input[type="email"]')
+    );
     const emailFieldValues = emailFields.map((field) => field.value);
 
     emailFields.forEach((field, fieldIndex) => {

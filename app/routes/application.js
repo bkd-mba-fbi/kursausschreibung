@@ -1,6 +1,5 @@
 import Route from '@ember/routing/route';
 import uikit from 'uikit';
-import $ from 'jquery';
 import {
   init as initStore,
   getAllEvents,
@@ -41,7 +40,7 @@ export default Route.extend({
 
   model() {
     // remove loader
-    $('#kursausschreibung-loading').remove();
+    document.getElementById('kursausschreibung-loading')?.remove();
     let allEvents = getAllEvents();
     setJsonLd(allEvents);
     return allEvents;

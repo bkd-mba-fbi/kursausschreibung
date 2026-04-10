@@ -1,12 +1,11 @@
 import EmberRouter from '@ember/routing/router';
 import config from './config/environment';
-import $ from 'jquery';
 import {
   scrollToTimeout,
   setOffsetStickyHeader,
 } from 'kursausschreibung/framework/scroll-helpers';
 
-let rootElement = $(config.APP.rootElement).get(0);
+let rootElementId = (config.APP.rootElement || '').replace(/^#/, '');
 
 const Router = EmberRouter.extend({
   location: config.locationType,
@@ -37,7 +36,7 @@ const Router = EmberRouter.extend({
       ) {
         scrollToTimeout('eventList');
       } else if (this.currentPath !== 'list.index') {
-        scrollToTimeout(rootElement.id);
+        scrollToTimeout(rootElementId);
       }
     });
   },
