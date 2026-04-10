@@ -1,6 +1,5 @@
 /* loosely based on the CLX framework */
 
-import $ from 'jquery';
 import { getCulture, setCulture } from './storage';
 import appConfig from './app-config';
 
@@ -56,7 +55,7 @@ export function getString(key, placeholderValues = []) {
  */
 function detectLanguage() {
   // first priority: html lang attribute
-  let htmlLang = $('html').attr('lang');
+  let htmlLang = document.documentElement.lang;
 
   if (htmlLang === 'de') {
     return 'de-CH';
