@@ -6,7 +6,7 @@
     </li>
     {{#each this.filterCodes as |code|}}
     <li id="tag{{code.id}}" class="filter-tag" uk-filter-control=".tag{{code.id}}"><a
-        href="#{{code.Code}}" {{action "cancelNav"}}>{{code.Code}}</a></li>
+        href="#{{code.Code}}" {{on "click" this.cancelNav}}>{{code.Code}}</a></li>
     {{/each}}
   </ul>
   {{/if}}
@@ -63,8 +63,8 @@
       </ul>
     </div>
     <div class="uk-text-right uk-width-expand@m">
-      <button id="bt-list" type="button" {{action "list" }} uk-icon="icon: list"></button>
-      <button id="bt-grid" type="button" {{action "grid" }} uk-icon="icon: grid"></button>
+      <button id="bt-list" type="button" {{on "click" this.list}} uk-icon="icon: list"></button>
+      <button id="bt-grid" type="button" {{on "click" this.grid}} uk-icon="icon: grid"></button>
     </div>
   </div>
   <ul id="list-cards" class="uk-list uk-list-divider js-filter">
