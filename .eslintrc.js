@@ -72,7 +72,6 @@ module.exports = {
         'app/components/input/input-file.js',
         'app/components/input/input-freeform-dropdown.js',
         'app/components/input/input-postal-code.js',
-        'app/framework/api.js',
       ],
       rules: {
         'ember/no-jquery': 'off',

@@ -1,6 +1,5 @@
 /* loosely based on the CLX framework */
 
-import $ from 'jquery';
 import appConfig from './app-config';
 import { getAccessToken } from './storage';
 import { Promise } from 'rsvp';
@@ -26,46 +25,74 @@ function ajax(
 ) {
   if (accessToken === null) accessToken = getAccessToken();
 
-  if (file === false) {
-    data = data !== null ? JSON.stringify(data, null, '\t') : undefined;
+  let headers = {
+    Authorization: `Bearer ${accessToken}`,
+  };
+
+  let body;
+  if (method !== 'GET' && data !== null) {
+    if (file) {
+      body = data;
+    } else {
+      headers['Content-Type'] = 'application/json';
+      body = JSON.stringify(data, null, '\t');
+    }
   }
 
-  let promise = $.ajax({
-    method: method,
-    dataType: 'json',
-    contentType:
-      method === 'GET' ? 'text/javascript' : file ? false : 'application/json',
-    processData: false,
-    data: data,
-    url: appConfig.apiUrl + '/' + relativeUrl,
+  return fetch(appConfig.apiUrl + '/' + relativeUrl, {
+    method,
+    headers,
+    body,
+  })
+    .then(async (response) => {
+      let text = await response.text();
+      let parsed = null;
 
-    // convert empty response to valid JSON
-    dataFilter: (data) => (data === '' ? 'null' : data),
+      if (text !== '') {
+        try {
+          parsed = JSON.parse(text);
+        } catch (_error) {
+          parsed = text;
+        }
+      }
 
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+      if (!response.ok) {
+        throw {
+          status: response.status,
+          responseJSON: parsed,
+        };
+      }
 
-  if (readableError) {
-    promise = promise.catch(() => {
-      throw new Error(`${method}-request to ${relativeUrl} failed`); // human-readable error
+      return {
+        data: parsed,
+        headers: response.headers,
+        status: response.status,
+      };
+    })
+    .catch((error) => {
+      if (readableError) {
+        throw new Error(`${method}-request to ${relativeUrl} failed`); // human-readable error
+      }
+      throw error;
     });
-  }
-
-  return promise;
 }
 
 function post(relativeUrl, data) {
-  return ajax('POST', relativeUrl, false, data);
+  return ajax('POST', relativeUrl, false, data).then(
+    (response) => response.data
+  );
 }
 
 function put(relativeUrl, data, file = false) {
-  return ajax('PUT', relativeUrl, false, data, file);
+  return ajax('PUT', relativeUrl, false, data, file).then(
+    (response) => response.data
+  );
 }
 
 function get(relativeUrl, readableError) {
-  return ajax('GET', relativeUrl, readableError);
+  return ajax('GET', relativeUrl, readableError).then(
+    (response) => response.data
+  );
 }
 
 /**
@@ -171,7 +198,7 @@ export function getPostalCodes(code) {
  * @param {object} data data of the person
  */
 export function postPerson(data) {
-  return post('Persons/', data);
+  return ajax('POST', 'Persons/', false, data);
 }
 
 /**
@@ -206,14 +233,9 @@ export function postSubscription(data) {
  * @returns
  */
 export function postSubscriptionDetailsFiles(data, file) {
-  return new Promise((resolve) =>
-    post('SubscriptionDetails/files', data).then((_data, _status, xhr) => {
-      resolve([xhr]);
-    })
-  )
-    .then(([xhr]) => {
-      // xhr is in an array so it gets correctly passed along
-      let locationHeader = xhr.getResponseHeader('location');
+  return ajax('POST', 'SubscriptionDetails/files', false, data)
+    .then((response) => {
+      let locationHeader = response.headers.get('location');
       let arrayBuffer = base64ToArrayBuffer(
         file.fileAsBase64.substring(
           file.fileAsBase64.indexOf('base64,') + 7,

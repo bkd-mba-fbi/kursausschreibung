@@ -170,14 +170,9 @@ function createPerson(addressData) {
     if (addressData[key] === null) delete addressData[key];
   });
 
-  return new Promise((resolve) =>
-    postPerson(addressData).then((_data, _status, xhr) => {
-      resolve([xhr]);
-    })
-  ).then(([xhr]) => {
-    // xhr is in an array so it gets correctly passed along
-    let duplicateHeader = xhr.getResponseHeader('x-duplicate');
-    let locationHeader = xhr.getResponseHeader('location');
+  return postPerson(addressData).then((response) => {
+    let duplicateHeader = response.headers.get('x-duplicate');
+    let locationHeader = response.headers.get('location');
 
     if (duplicateHeader === null && locationHeader === null) {
       throw new Error(
