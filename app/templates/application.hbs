@@ -80,12 +80,12 @@
 
       {{! LOGO }}
       {{#if this.logoImage}}
-        {{#if logoLink}}
-          <a target="_blank" href={{logoLink}}>
-            <img class="uk-margin" src={{logoImage}}>
+        {{#if this.logoLink}}
+          <a target="_blank" href={{this.logoLink}}>
+            <img class="uk-margin" src={{this.logoImage}}>
           </a>
         {{else}}
-          <img class="uk-margin" src={{logoImage}}>
+          <img class="uk-margin" src={{this.logoImage}}>
         {{/if}}
       {{/if}}
 
