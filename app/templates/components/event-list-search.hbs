@@ -1,13 +1,13 @@
 <div class="uk-grid uk-margin">
   <div class="uk-search uk-search-default uk-width-2-3@s">
     <span data-uk-search-icon></span>
-    <input id="searchEvents" class="uk-search-input" type="search" placeholder={{translate key="search"}} value={{this.query}}>  
+    <input id="searchEvents" class="uk-search-input" type="search" placeholder={{translate key="search"}} value={{this.query}} {{on "keyup" this.handleKeyUp}}>
     {{#if this.query}}
-      <button class="search-clear" type="button" uk-close {{action "clearSearch"}}></button>
+      <button class="search-clear" type="button" uk-close {{on "click" this.clearSearch}}></button>
     {{/if}}
   </div>
       <div class="uk-width-1-3@s">
-      <select id="sortList" onchange={{action "sortBy" value="target.value"}} class="uk-select" aria-label="Select">
+      <select id="sortList" {{on "change" this.handleSortByChange}} class="uk-select" aria-label="Select">
         {{this.sortOptions}}
       </select>
     </div>

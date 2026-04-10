@@ -1,5 +1,6 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import {
   setParameterByName,
   getParameterByName,
@@ -20,15 +21,11 @@ function match(value, query) {
   return typeof value === 'string' && value.toLowerCase().indexOf(query) !== -1;
 }
 
-export default Component.extend({
-  query: getParameterByName('search'),
-  didReceiveAttrs() {
-    this._super(...arguments);
-    this.set('filteredEvents', this.events);
-    this.send('queryChanged');
-  },
+export default class EventListSearchComponent extends Component {
+  @tracked query = getParameterByName('search');
+  @tracked filteredEvents = null;
 
-  sortOptions: computed(function () {
+  get sortOptions() {
     let options = '';
 
     if (settings.sortOptions === undefined) {
@@ -47,10 +44,16 @@ export default Component.extend({
     }
 
     return htmlSafe(options);
-  }),
+  }
+
+  didReceiveAttrs() {
+    super.didReceiveAttrs(...arguments);
+    this.filteredEvents = this.events;
+    this.updateFilteredEvents();
+  }
 
   didRender() {
-    this._super(...arguments);
+    super.didRender(...arguments);
     if (config.environment === 'test') {
       return;
     }
@@ -59,50 +62,49 @@ export default Component.extend({
     if (sortList) {
       sortList.value = getSortAs();
     }
-  },
+  }
 
-  filteredEvents: null,
-
-  keyUp() {
-    this.set('query', document.getElementById('searchEvents').value);
+  @action
+  handleKeyUp(event) {
+    this.query = event.target.value;
     if (config.environment !== 'test') {
       setParameterByName('search', this.query);
     }
-    this.send('queryChanged');
-  },
+    this.updateFilteredEvents();
+  }
 
-  actions: {
-    clearSearch() {
-      this.set('query', '');
-      if (config.environment !== 'test') {
-        setParameterByName('search', '');
-      }
-    },
+  @action
+  clearSearch() {
+    this.query = '';
+    if (config.environment !== 'test') {
+      setParameterByName('search', '');
+    }
+    this.updateFilteredEvents();
+  }
 
-    queryChanged() {
-      let query = this.query;
-      query = query === null ? '' : query.toLowerCase();
-      // don't filter the events when the query is empty
-      if (query === '') {
-        this.set('filteredEvents', this.events);
-        return;
-      }
+  @action
+  handleSortByChange(event) {
+    sortAs(event.target.value);
+  }
 
-      this.set(
-        'filteredEvents',
-        this.events
-          // search the query string in event-properties and memo-texts
-          .filter(
-            (event) =>
-              Object.keys(event).some((key) => match(event[key], query)) ||
-              event.texts.some((text) => match(text.memo, query))
-          )
-      );
+  updateFilteredEvents() {
+    let query = this.query;
+    query = query === null ? '' : query.toLowerCase();
+    // don't filter the events when the query is empty
+    if (query === '') {
+      this.filteredEvents = this.events;
+    } else {
+      this.filteredEvents = this.events
+        // search the query string in event-properties and memo-texts
+        .filter(
+          (event) =>
+            Object.keys(event).some((key) => match(event[key], query)) ||
+            event.texts.some((text) => match(text.memo, query))
+        );
+    }
 
+    if (typeof this.queryChanged === 'function') {
       this.queryChanged(query);
-    },
-    sortBy(value) {
-      sortAs(value);
-    },
-  },
-});
+    }
+  }
+}
