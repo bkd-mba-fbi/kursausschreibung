@@ -42,21 +42,27 @@ export default Component.extend({
       let needsCompany =
         currentValue === '4000197' || currentValue === '4000198';
 
-      let $btn = jQuery('button[name="useCompanyAddress"]');
+      let companyAddressButton = document.querySelector(
+        'button[name="useCompanyAddress"]'
+      );
 
       // if we “need” company‐address but the button is still disabled, click it
-      if (needsCompany && $btn.prop('disabled')) {
-        $btn.click();
+      if (needsCompany && companyAddressButton?.disabled) {
+        companyAddressButton.click();
       }
       // if we no longer “need” the company address but it’s currently shown, click to hide it
-      else if (!needsCompany && !$btn.prop('disabled')) {
-        $btn.click();
+      else if (!needsCompany && companyAddressButton?.disabled === false) {
+        companyAddressButton.click();
       }
 
       // finally toggle “required” on all inputs inside the fieldset
-      jQuery('.company-address-fields')
-        .find('input, select, textarea')
-        .prop('required', needsCompany);
+      document
+        .querySelectorAll(
+          '.company-address-fields input, .company-address-fields select, .company-address-fields textarea'
+        )
+        .forEach((element) => {
+          element.required = needsCompany;
+        });
     }
   },
 });
