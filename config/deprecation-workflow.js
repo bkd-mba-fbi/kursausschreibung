@@ -10,5 +10,5 @@ self.deprecationWorkflow.config = {
     },
     { handler: 'throw', matchId: 'this-property-fallback' },
   ],
-  throwOnUnhandled: false,
+  throwOnUnhandled: true,
 };
