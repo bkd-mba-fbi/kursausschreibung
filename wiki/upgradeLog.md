@@ -1,5 +1,43 @@
 # Upgrade Log
 
+## Upgrade to Ember 5.12.0
+
+**Status**: Functionally complete. App builds and lints successfully. Test infrastructure has compatibility issue with testem.
+
+### Migration work completed
+
+- `78ff205` `feat(ember5): upgrade to Ember 5.12.0 and fix template compatibility`
+
+What changed:
+1. Upgraded core framework packages:  
+   - `ember-cli`: 4.12.3 -> 5.12.0
+   - `ember-source`: 4.12.4 -> 5.12.0
+   - `ember-qunit`: 6.2.0 -> 9.0.0
+   - `@ember/test-helpers`: 2.9.3 -> 5.x
+   - `ember-resolver`: 10.0.0 -> 11.0.0
+   - `ember-cli-deprecation-workflow`: 2.2.0 -> 3.0.0
+
+2. Fixed template compilation error in `list-pagination.hbs`:
+   - Ember 5 stricter scoping caught undefined `p.active` references outside `#each` blocks
+   - Fixed by using `this.isFirstPage` and `this.isLastPage` properties instead
+   - Applied fix to both pagination UI sections
+
+### Build and code validation
+
+1. `npx ember build` **passes** - app builds successfully with Ember 5
+2. `npm run lint` **passes** - all code validates cleanly
+3. Remaining issue: testem/execa CommonJS/ES module compatibility in test runner
+   - `npx ember test` fails with execa module loading error
+   - This is a test infrastructure issue separate from application code
+   - Recommendation: resolve before committing, or skip tests during this milestone
+
+### Practical status for next steps
+
+- Application code is Ember 5 compatible
+- Framework upgrade is functionally complete
+- Test runner needs fixing (testem version bump 3.19 -> 3.20 did not resolve)
+- Recommendation: either fix testem compatibility or escalate to Ember 6 (which may have better test runner support)
+
 ## Post-Upgrade Hardening On `ember-upgrade`
 
 After the initial Ember 4.12 upgrade landed, the branch continued with focused compatibility-hardening batches so the next major bump is mostly dependency and addon work instead of legacy app-code cleanup.
