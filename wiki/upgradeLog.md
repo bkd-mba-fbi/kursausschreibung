@@ -37,6 +37,32 @@ What changed:
 2. Pinned testem with npm overrides for Node 18 compatibility during Ember 5 stabilization:
   - `"overrides": { "testem": "3.18.0" }`
 
+### Dev server startup fix applied
+
+Root cause:
+
+1. `npm run start` failed with:
+  - `TypeError: Cannot read properties of undefined (reading 'replace')`
+2. Stack trace pointed to:
+  - `ember-cli-inject-live-reload/lib/index.js` in `serverMiddleware`
+3. This addon is legacy and conflicts with the current Ember CLI 5 serve pipeline.
+
+Fix:
+
+1. Removed `ember-cli-inject-live-reload` from devDependencies.
+2. Regenerated lockfile.
+
+Why this is safe:
+
+1. Ember CLI already provides live-reload behavior for `ember serve` without this addon.
+2. The addon only injected reload middleware and is no longer required for standard development workflow.
+
+Validation after fix:
+
+1. `npm run start` now boots and serves on localhost.
+2. `npm run lint` passes.
+3. `npx ember test` passes (77/77).
+
 ### Practical status for next steps
 
 - Application and tests are running on Ember 5 with Node 18
