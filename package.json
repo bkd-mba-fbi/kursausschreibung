@@ -35,7 +35,7 @@
     "@ember/jquery": "^1.1.0",
     "@ember/optional-features": "^2.1.0",
     "@ember/string": "^3.0.1",
-    "@ember/test-helpers": "^5.x",
+    "@ember/test-helpers": "^5.4.1",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
     "concurrently": "^8.0.1",
@@ -74,13 +74,15 @@
     "stylelint": "^15.4.0",
     "stylelint-config-standard": "^32.0.0",
     "stylelint-prettier": "^3.0.0",
-    "testem": "^3.20.0",
     "tracked-built-ins": "^3.1.1",
     "uikit": "^3.5.5",
     "webpack": "^5.78.0"
   },
   "engines": {
     "node": "14.* || 16.* || >= 18"
+  },
+  "overrides": {
+    "testem": "3.18.0"
   },
   "dependencies": {
     "croppie": "^2.6.5"

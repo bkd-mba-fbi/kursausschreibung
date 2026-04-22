@@ -2,7 +2,7 @@
 
 ## Upgrade to Ember 5.12.0
 
-**Status**: Functionally complete. App builds and lints successfully. Test infrastructure has compatibility issue with testem.
+**Status**: Complete and validated on Node 18 for the Ember 4 -> 5 step.
 
 ### Migration work completed
 
@@ -26,17 +26,22 @@ What changed:
 
 1. `npx ember build` **passes** - app builds successfully with Ember 5
 2. `npm run lint` **passes** - all code validates cleanly
-3. Remaining issue: testem/execa CommonJS/ES module compatibility in test runner
-   - `npx ember test` fails with execa module loading error
-   - This is a test infrastructure issue separate from application code
-   - Recommendation: resolve before committing, or skip tests during this milestone
+3. `npx ember test` **passes** (77/77)
+4. `npm run test` gate is healthy again after test bootstrap and testem compatibility fixes
+
+### Test runner compatibility fix applied
+
+1. Added explicit test loading in `tests/test-helper.js` for `ember-qunit` 9:
+  - `import { loadTests } from 'ember-qunit/test-loader';`
+  - `loadTests();`
+2. Pinned testem with npm overrides for Node 18 compatibility during Ember 5 stabilization:
+  - `"overrides": { "testem": "3.18.0" }`
 
 ### Practical status for next steps
 
-- Application code is Ember 5 compatible
-- Framework upgrade is functionally complete
-- Test runner needs fixing (testem version bump 3.19 -> 3.20 did not resolve)
-- Recommendation: either fix testem compatibility or escalate to Ember 6 (which may have better test runner support)
+- Application and tests are running on Ember 5 with Node 18
+- Framework upgrade is complete for this stage
+- Next stage can now focus on Ember 6 preparation, including planned Node 20 transition
 
 ## Post-Upgrade Hardening On `ember-upgrade`
 
