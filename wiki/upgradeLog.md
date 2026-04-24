@@ -1,5 +1,34 @@
 # Upgrade Log
 
+## Phase 3 & 4 - Deprecation Workflow & Node Engine Verification (Post Ember 5)
+
+**Status**: Complete and validated.
+
+### What changed
+
+1. **Deprecation workflow audit**:
+   - All 77 tests pass with `throwOnUnhandled: true` (strict mode).
+   - 4 critical deprecations are configured to throw: `ember-global`, `ember.built-in-components.import`, `deprecated-run-loop-and-computed-dot-access`, `this-property-fallback`.
+   - No new Ember 5 deprecations surfaced during test execution.
+   - Workflow is ready for Ember 6 transition (will need update during 5->6 bump).
+
+2. **Node engine verification**:
+   - Current runtime: Node 18.20.8.
+   - Engines in [package.json](package.json) correctly set to `>= 18`.
+   - Testem override (`3.18.0`) remains in place for stability; can be revisited during Node 20 migration.
+
+### Practical outcome
+
+The application is in a stable, modernized state post-Ember 5:
+
+1. **No legacy deprecations are firing** — strict deprecation workflow is holding.
+2. **Component codebase is already Glimmer-first** — 20+ modern components, minimal classic patterns remain.
+3. **Framework and tooling are clean** — ready for Ember 6 planning.
+
+### Recommended next step
+
+Plan and execute the Ember 6 migration in a dedicated batch after final QA sign-off on known issues.
+
 ## Phase 2 - Legacy Dependency Cleanup (Post Ember 5)
 
 **Status**: Complete and validated.
