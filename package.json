@@ -46,7 +46,7 @@
     "ember-cli-cjs-transform": "^2.0.0",
     "ember-cli-concat": "^2.3.0",
     "ember-cli-dependency-checker": "^3.3.1",
-    "ember-cli-deprecation-workflow": "^3.0.0",
+    "ember-cli-deprecation-workflow": "^4.0.1",
     "ember-cli-htmlbars": "^6.2.0",
     "ember-cli-terser": "^4.0.2",
     "ember-cli-update": "^1.0.1",
@@ -79,6 +79,5 @@
   },
   "overrides": {
     "testem": "3.18.0"
-  },
-  "dependencies": {}
+  }
 }

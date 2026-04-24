@@ -1,6 +1,7 @@
-self.deprecationWorkflow = self.deprecationWorkflow || {};
+import setupDeprecationWorkflow from 'ember-cli-deprecation-workflow';
 
-self.deprecationWorkflow.config = {
+setupDeprecationWorkflow({
+  throwOnUnhandled: true,
   workflow: [
     { handler: 'throw', matchId: 'ember-global' },
     { handler: 'throw', matchId: 'ember.built-in-components.import' },
@@ -10,5 +11,4 @@ self.deprecationWorkflow.config = {
     },
     { handler: 'throw', matchId: 'this-property-fallback' },
   ],
-  throwOnUnhandled: true,
-};
+});
