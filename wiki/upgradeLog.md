@@ -1,5 +1,43 @@
 # Upgrade Log
 
+## Phase 2 - Legacy Dependency Cleanup (Post Ember 5)
+
+**Status**: Complete and validated.
+
+### What changed
+
+1. Removed legacy runtime and addon dependencies that are no longer used:
+  - `@ember/jquery`
+  - `corejs-typeahead`
+  - `ember-fetch`
+  - `croppie`
+2. Removed obsolete build imports from [ember-cli-build.js](ember-cli-build.js):
+  - `corejs-typeahead/dist/typeahead.jquery.js`
+  - `croppie/croppie.js`
+  - `croppie/croppie.css`
+3. Removed stale typeahead plugin CSS wrappers/styles from [app/styles/app.css](app/styles/app.css) (`.twitter-typeahead`, `.tt-*`).
+4. Tightened Node engine declaration in [package.json](package.json) from `14.* || 16.* || >= 18` to `>= 18`.
+5. Regenerated lockfile after dependency removals.
+
+### Why this is safe
+
+1. App API transport already uses native `fetch` in [app/framework/api.js](app/framework/api.js).
+2. Typeahead behavior is already implemented via plain input/modifier patterns, not plugin decoration.
+3. Image upload flow was previously migrated to native preview/canvas handling.
+
+### Validation
+
+1. `npm install` completed with lockfile refresh.
+2. `npm run lint` passes.
+3. `npx ember test` passes (`77/77`).
+
+### Notes for next phase
+
+1. Known functional issues remain outside this cleanup scope:
+  - language switch requires refresh and yields empty page afterward,
+  - category click in Veranstaltungsthemen is currently not working.
+2. These are tracked in [wiki/known-issues.md](wiki/known-issues.md) and should be handled during the remaining upgrade stream before final QA sign-off.
+
 ## Upgrade to Ember 5.12.0
 
 **Status**: Complete and validated on Node 18 for the Ember 4 -> 5 step.

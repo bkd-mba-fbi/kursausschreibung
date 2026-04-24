@@ -1,0 +1,2 @@
+- Language Switch doesn't work when clicked. Refresh required. And after refresh page is empty.
+- Click on Categories (Jugendliche, Erwachsene, etc.) on Veranstaltungsthemen doesn't work
