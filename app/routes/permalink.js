@@ -1,6 +1,6 @@
 import Route from '@ember/routing/route';
 import { getEventById } from 'kursausschreibung/framework/store';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 
 export default class permalink extends Route {
   @service router;

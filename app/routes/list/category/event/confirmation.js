@@ -16,7 +16,7 @@ import { autoCheckForLogin } from 'kursausschreibung/framework/login-helpers';
 import settings from 'kursausschreibung/framework/settings';
 import { SUBSCRIPTION_DETAIL_ALLOW_MULTIPLE_PEOPLE } from 'kursausschreibung/framework/api';
 import { getString } from 'kursausschreibung/framework/translate';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 
 export default class confirmation extends Route {
   @service router;
