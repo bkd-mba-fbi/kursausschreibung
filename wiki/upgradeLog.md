@@ -1,5 +1,42 @@
 # Upgrade Log
 
+## Upgrade to Ember 6.12.0
+
+**Status**: Complete and validated on current branch state.
+
+### Commits in this batch
+
+- `ba6737b` `chore(deps): bump Ember core packages to 6.12`
+- `b787965` `fix(test-bootstrap): load test modules via requirejs in classic build`
+- `613023f` `refactor(deprecations): switch inject-as-service imports to service`
+- `aa2dd84` `chore(deprecation-workflow): silence addon barrel-file warning`
+
+### What changed
+
+1. Bumped framework/tooling dependencies for Ember 6:
+   - `ember-cli` -> `^6.12.0`
+   - `ember-source` -> `~6.12.0`
+   - `ember-cli-babel` -> `^8.3.1`
+   - `ember-resolver` -> `^13.2.0`
+   - `ember-page-title` -> `^9.0.3`
+2. Updated test bootstrapping for this classic app setup:
+   - `tests/test-helper.js` now loads only `*-test` modules via `requirejs.entries`.
+3. Removed Ember 6 deprecated service import style across route/controller files:
+   - replaced `import { inject as service } from '@ember/service'` with `import { service } from '@ember/service'`.
+4. Kept strict deprecation mode and added a narrow silence rule for addon-internal noise:
+   - silences `ember-cli-deprecation-workflow` v4.0.1 internal barrel-import message variants.
+
+### Validation
+
+1. `npm run lint` passes.
+2. `npx ember test` passes (77/77).
+3. `npx ember build` passes.
+
+### Notes
+
+1. `using-amd-bundles` deprecation warnings still appear in builds/tests.
+2. This warning is expected for the current classic AMD setup and is an Ember 7 concern, not a blocker for Ember 6.
+
 ## Phase 3 & 4 - Deprecation Workflow & Node Engine Verification (Post Ember 5)
 
 **Status**: Complete and validated.
