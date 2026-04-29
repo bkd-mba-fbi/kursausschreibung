@@ -9,6 +9,12 @@
     3. Expected: page reloads immediately, labels switch to French, and URL route slug is French (for example `#/formation` / `#/thèmes_des_manifestations`).
     4. Switch back to DE.
     5. Expected: labels and route slug switch back to German equivalents.
+    - **How fixed in code (commits):**
+     1. `2a509db` — language click handling and reload behavior hardened:
+       - `app/controllers/application.js`: language action now receives the click event and calls `preventDefault()`.
+       - `app/framework/translate.js`: reload changed to `window.location.reload()` to force a real refresh.
+     2. `0f59b59` — route fallback crash fixed for translated/invalid slugs:
+       - `app/routes/list.js`: replaced invalid `this.replaceWith('/')` usage with `this.router.transitionTo('index')`.
 - ~~Click on Categories (Jugendliche, Erwachsene, etc.) on Veranstaltungsthemen doesn't work~~ **Fixed** (ember-upgrade branch, 2026-04-29)
   - **What was broken:** On Veranstaltungsthemen, clicking filter pills like *Jugendliche* / *Erwachsene* appeared to do nothing.
   - **Root cause (technical):**
@@ -21,6 +27,12 @@
     3. Expected: active pill changes and list content updates immediately.
     4. Expected: URL query parameter `?filter=...` updates accordingly.
     5. Verify one language switch afterwards still preserves correct behavior.
+    - **How fixed in code (commits):**
+     1. `0f59b59` — UIkit filter clicks restored:
+       - `app/components/list-pagination.js`: removed `stopPropagation()` from filter click handler so UIkit receives click events.
+       - `app/components/list-pagination.hbs`: applied same safe click handling to `Alle` link (`cancelNav`) while preventing hash jump.
+     2. `4a3d3bc` (supporting fix) — category route links in `AreaNavigation` use explicit route models compatible with Ember 6:
+       - `app/components/area-navigation.hbs`: `LinkTo` now passes explicit `@models`.
 - ~~Form can't be submitted~~ **Fixed** (ember-upgrade branch, 2026-04-29)
   - **What was broken:** Clicking the submit button on the subscription form did nothing — no confirmation page appeared, no error message.
   - **Root cause (technical):** Two bugs introduced during the Ember upgrade:
@@ -32,3 +44,7 @@
     3. Click the subscribe/submit button.
     4. Expected: the page transitions to the confirmation step showing the filled-in data.
     5. Verify this for both the **logged-in** flow (address section hidden) and the **anonymous/guest** flow (address section visible).
+  - **How fixed in code (commit):**
+    1. `c01d85e` — submit path stabilized for both guest and logged-in flows:
+       - `app/routes/list/category/event/subscribe.js`: corrected `showCompanyButtonOnly` logic.
+       - `app/components/subscription-form.js`: added null guard in `getFieldSetData` when optional fieldsets are not rendered.
