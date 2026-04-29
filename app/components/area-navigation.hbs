@@ -6,8 +6,10 @@
     <LinkTo @route="list.index">{{translate key="overview"}}</LinkTo>
   </li>
   {{#each @area.categoryKeys as |categoryKey|}}
-    <li>
-      <LinkTo @route="list.category" @models={{array @areaKey categoryKey}}>{{get (get @area.categories categoryKey) "name"}}</LinkTo>
-  </li>
+      {{#let (array @area.key categoryKey) as |models|}}
+      <li>
+        <LinkTo @route="list.category" @models={{models}}>{{get (get @area.categories categoryKey) "name"}}</LinkTo>
+      </li>
+      {{/let}}
   {{/each}}
 </ul>

@@ -6,6 +6,7 @@ import hbs from 'htmlbars-inline-precompile';
 function makeArea(overrides = {}) {
   return Object.assign(
     {
+      key: 'test-area',
       categoryKeys: ['cat-1', 'cat-2'],
       categories: {
         'cat-1': { name: 'Informatik' },
