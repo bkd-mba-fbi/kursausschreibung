@@ -299,12 +299,7 @@ export default Route.extend({
       addTranslations(formFields.companyFields || [])
     );
     controller.set('showAddressInputs', !model.userSettings.isLoggedIn);
-    controller.set(
-      'showCompanyButtonOnly',
-      !model.userSettings.isLoggedIn ||
-        model.userSettings.isLoggedIn ||
-        model.enableInvoiceAddress
-    );
+    controller.set('showCompanyButtonOnly', !model.userSettings.isLoggedIn);
 
     controller.set('subscriptionDetailFields', model.subscriptionDetailFields);
 

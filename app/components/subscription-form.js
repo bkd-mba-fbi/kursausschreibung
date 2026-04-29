@@ -263,6 +263,11 @@ function getFieldSetData(properties, fieldset) {
 
   properties.forEach((property) => (data[property] = null));
 
+  // Some fieldsets are intentionally not rendered depending on login state.
+  if (!fieldset) {
+    return data;
+  }
+
   fieldset
     .querySelectorAll('input, select, textarea')
     .forEach((element) => setProperties(data, element));
