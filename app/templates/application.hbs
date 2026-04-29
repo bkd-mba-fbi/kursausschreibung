@@ -15,7 +15,7 @@
           </li>
           {{#if this.eventCategoryDropdown}}
             <div data-uk-dropdown>
-              <AreaNavigation @area={{get this.model.areas areaKey}} @areaKey={{areaKey}} @hideHeading={{true}} />
+              <AreaNavigation @area={{get this.model.areas areaKey}} @hideHeading={{true}} />
             </div>
           {{/if}}
         {{/each}}
@@ -37,7 +37,7 @@
                   <h2>{{translate key="navigation"}}</h2>
                   {{#each-in this.model.areas as |area data|}}
                     <div class="uk-margin">
-                      <AreaNavigation @area={{data}} @areaKey={{area}} />
+                      <AreaNavigation @area={{data}} />
                     </div>
                   {{/each-in}}
                   {{#if this.showLanguageButton}}

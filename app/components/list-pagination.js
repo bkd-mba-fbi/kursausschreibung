@@ -113,8 +113,6 @@ export default class ListPaginationComponent extends Component {
   @action
   cancelNav(e) {
     e?.preventDefault?.();
-    e?.stopPropagation?.();
-    return false;
   }
 
   applyGridView = modifier(() => {

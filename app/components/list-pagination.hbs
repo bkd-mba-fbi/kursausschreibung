@@ -2,7 +2,7 @@
 <div {{this.applyGridView}} uk-filter="target: .js-filter">
   {{#if this.filterCodes}}
   <ul class="uk-subnav uk-subnav-pill">
-    <li id="tagAll" class="uk-active filter-tag" uk-filter-control=""><a href="#">{{translate key="FilterTagAllEvents"}}</a>
+    <li id="tagAll" class="uk-active filter-tag" uk-filter-control=""><a href="#" {{on "click" this.cancelNav}}>{{translate key="FilterTagAllEvents"}}</a>
     </li>
     {{#each this.filterCodes as |code|}}
     <li id="tag{{code.id}}" class="filter-tag" uk-filter-control=".tag{{code.id}}"><a
