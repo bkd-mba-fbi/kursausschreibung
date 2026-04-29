@@ -22,7 +22,7 @@ export function setLanguage(newLanguage) {
   setCulture(newLanguage);
 
   if (newLanguage !== getLanguage()) {
-    window.location.assign(location.href);
+    window.location.reload();
   }
 }
 

@@ -15,7 +15,8 @@ export default class ApplicationController extends Controller {
   rightWidth = rightWidth;
 
   @action
-  setLanguage(language) {
+  setLanguage(language, event) {
+    event?.preventDefault();
     setLanguage(language);
   }
 }
