@@ -7,7 +7,7 @@
   </li>
   {{#each @area.categoryKeys as |categoryKey|}}
     <li>
-      <LinkTo @route="list.category" @model={{categoryKey}}>{{get (get @area.categories categoryKey) "name"}}</LinkTo>
+      <LinkTo @route="list.category" @models={{array @areaKey categoryKey}}>{{get (get @area.categories categoryKey) "name"}}</LinkTo>
   </li>
   {{/each}}
 </ul>
