@@ -207,15 +207,3 @@ Expected:
 During test runs, you may still see deprecations about component template resolving.
 
 This is expected at current stage and is planned for follow-up modernization before or during Ember 6 hardening.
-
-## Suggested QA Sign-Off Format
-
-For each section above, record:
-
-1. Passed / Failed
-2. Environment and browser
-3. Event ID or data used
-4. Screenshot or error snippet for failures
-5. Repro steps for failures
-
-This will make follow-up fixes fast and auditable.
