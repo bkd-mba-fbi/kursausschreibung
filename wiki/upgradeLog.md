@@ -1,5 +1,88 @@
 # Upgrade Log
 
+## npm audit Security Fixes (May 2026)
+
+**Status**: Completed and validated.
+
+### Commits in this batch
+
+- `e4afacc` `fix: address high/critical npm audit findings`
+
+### What was fixed
+
+Reduced vulnerability count from **115 → 102 vulnerabilities** (13 resolved) by targeting production-facing and actively used dev tools:
+
+**Via `npm audit fix` (safe, non-breaking):**
+1. `handlebars` (**critical**) — prevented JavaScript injection via AST type confusion and prototype pollution leading to XSS through partial template injection
+2. `fast-uri` (**high**) — fixed path traversal via percent-encoded dot segments and host confusion attacks
+3. `flatted` (**high**) — fixed unbounded recursion DoS in `parse()` and prototype pollution
+4. `lodash.template` (**high**) — fixed command injection via `_.template` imports key names
+5. `picomatch` (**high**) — fixed method injection in POSIX character classes and ReDoS via extglob quantifiers
+6. `ansi-html` (**high**) — fixed uncontrolled resource consumption
+7. `@babel/plugin-transform-modules-systemjs` (**high**) — eliminated arbitrary code generation when compiling malicious input
+8. `minimatch` (**high**) — fixed multiple ReDoS vulnerabilities
+9. Plus 6 moderate findings (`@babel/helpers`, `cross-spawn`, `debug`, `postcss`, `extend`, `stringstream`)
+
+**Via targeted package upgrades:**
+1. `ember-cli-update` **^1.0.1 → ^3.0.1** — major version bump removes a large subset of the old vulnerable dependency subtree that was bundled in v1
+2. `rollup` **override to ^4.22.4** (in `package.json` overrides) — fixed:
+   - `GHSA-gcx4-mw62-g8wm` (DOM clobbering gadget in bundled scripts leading to XSS, **high**)
+   - `GHSA-mw96-cpmx-2vgc` (arbitrary file write via path traversal, **high**)
+   - Verified compatible: all 77 tests pass with rollup@4
+
+### What was NOT fixed and why
+
+**1. `npm/node_modules/**` vulnerability subtree** (~30 high/critical findings)
+
+Dependency chain: `ember-cli-update@3.0.1` → `boilerplate-update@2.1.1` → `npx@10.2.2` bundles `npm@5.1.0` (a standalone npm copy from ~2018) with ancient, unfixable dependencies: `hawk`, `request`, `hoek`, `fstream`, `semver@2`, `ini`, `ansi-regex@3`, etc.
+
+**Why not fixed:**
+- npm audit suggests fixing by downgrading `ember-cli-update` to `0.34.13` — a **major regression** of the upgrade tooling itself
+- The only way to eliminate these would be to remove `ember-cli-update` entirely (not viable for an active Ember codebase)
+
+**Risk assessment: zero in practice**
+- These code paths are **never executed in CI or production**
+- They only run when a developer manually invokes `npx ember-cli-update` locally to upgrade the Ember framework version
+- `npx` is a legacy package; modern npm workflows no longer use it
+
+**2. `tmp ≤0.2.3`** (symlink attack, GHSA-52f5-9888-hmc6, high)
+
+**Why not fixed:**
+- There is **no newer version of `tmp` on npm** — the package is abandoned/orphaned
+- No override or upgrade path exists
+
+**Risk assessment: negligible**
+- Only used during build toolchain's temporary directory creation
+- Exploitation requires attacker to already have **local filesystem access** on the developer's machine
+- Not a network or CI supply chain vector
+
+**3. `diff` in `@ember-tooling/blueprint-model`** (jsdiff DoS, GHSA-73rr-hh4g-fpgx, high)
+
+Dependency chain: `ember-cli` → `@ember-tooling/blueprint-model` → `diff@6-8.0.2`
+
+**Why not fixed:**
+- npm audit suggests downgrading `ember-cli` from `^6.12.0` to `6.6.0` — a **major regression**
+- Only reasonable fix would be to fork/patch `@ember-tooling/blueprint-model` (too invasive)
+
+**Risk assessment: very low**
+- DoS can only be triggered by passing a **maliciously crafted diff string** to Ember CLI's blueprint scaffolding tools
+- Blueprint commands (`ember generate component foo`) are only run locally by developers
+- Not a vector in automated builds, CI, or templated scaffolding workflows
+
+### Validation
+
+1. `npm run test` passes (77/77 integration + unit tests).
+2. `npm run lint` passes.
+3. `npm audit` shows remaining 102 vulnerabilities, with 90+ in the unfixable `node_modules/npm/` and `node_modules/npx/` subtrees (dev-toolchain only).
+
+### Practical outcome
+
+1. **Production-facing risk is substantially reduced**: all actionable critical/high findings in actively used code paths have been addressed.
+2. **Dev-toolchain risk is documented and scoped**: the remaining high-severity findings are in abandoned or deeply bundled dependencies that only execute outside of CI/production pipelines.
+3. **Framework stability is maintained**: rollup@4 override is verified compatible with all current build and test tooling.
+
+---
+
 ## Post-Ember-6 Modernization Follow-up (May 2026)
 
 **Status**: Completed and validated.

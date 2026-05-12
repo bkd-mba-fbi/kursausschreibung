@@ -14,6 +14,7 @@
 - Ran `npm audit`.
 - Checked Walid's modernization checklist.
 - Re-ran Ember tests after each migration batch.
+- Documented remaining "unfixable" audit findings in [upgradeLog.md](upgradeLog.md).
 
 ## Behavior changes
 - Typeahead plugin behavior was removed and replaced with native input handling.
