@@ -1,7 +1,7 @@
 import Route from '@ember/routing/route';
 
-export default Route.extend({
+export default class ListCategoryEventIndexRoute extends Route {
   model() {
     return this.modelFor('list.category.event');
-  },
-});
+  }
+}

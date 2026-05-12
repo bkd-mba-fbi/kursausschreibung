@@ -5,7 +5,7 @@ let badgeFreeSeatsEnabled =
   typeof settings.badgeFreeSeats === 'object' &&
   settings.badgeFreeSeats.enabled === true;
 
-export default Controller.extend({
-  showBreadcrumbs: settings.showBreadcrumbs,
-  badgeFreeSeatsEnabled,
-});
+export default class ListCategoryEventIndexController extends Controller {
+  showBreadcrumbs = settings.showBreadcrumbs;
+  badgeFreeSeatsEnabled = badgeFreeSeatsEnabled;
+}

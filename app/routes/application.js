@@ -9,7 +9,7 @@ import { getDataToSubmit } from 'kursausschreibung/framework/storage';
 import { autoCheckForLogin } from 'kursausschreibung/framework/login-helpers';
 import { setJsonLd } from '../framework/seo';
 
-export default Route.extend({
+export default class ApplicationRoute extends Route {
   beforeModel() {
     // set uikit scope
     uikit.container = '.uk-scope';
@@ -31,12 +31,12 @@ export default Route.extend({
           );
         }
       })
-      .catch(function (error) {
+      .catch((error) => {
         // only log exceptions thrown here so the route still loads
         // uninitialized modules will throw an error later
         console.error('FATAL error while initializing the module: ', error); // eslint-disable-line no-console
       });
-  },
+  }
 
   model() {
     // remove loader
@@ -44,5 +44,5 @@ export default Route.extend({
     let allEvents = getAllEvents();
     setJsonLd(allEvents);
     return allEvents;
-  },
-});
+  }
+}

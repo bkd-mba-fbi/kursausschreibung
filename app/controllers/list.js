@@ -1,10 +1,10 @@
 import Controller from '@ember/controller';
 import settings from 'kursausschreibung/framework/settings';
 
-export default Controller.extend({
-  eventCategoryDropdown: settings.eventCategoryDropdown,
+export default class ListController extends Controller {
+  eventCategoryDropdown = settings.eventCategoryDropdown;
 
-  centerWidth: (() => {
+  centerWidth = (() => {
     let displayLeft = settings.eventCategoryDropdown !== true;
     let displayRight = settings.displayRightSide;
 
@@ -18,5 +18,5 @@ export default Controller.extend({
     if (displayLeft) return 'uk-width-3-4@m';
 
     return 'uk-width-3-4@l';
-  })(),
-});
+  })();
+}

@@ -185,7 +185,7 @@ function getFormFields(settings, eventTypeId, eventCategoryId) {
   return settings.formFields.default;
 }
 
-export default Route.extend({
+export default class ListCategoryEventSubscribeRoute extends Route {
   model(_params, transition) {
     let model = this.modelFor('list.category.event');
 
@@ -280,10 +280,10 @@ export default Route.extend({
         }
       )
       .then(() => model);
-  },
+  }
 
   setupController(controller, model) {
-    this._super(...arguments);
+    super.setupController(...arguments);
 
     const formFields = getFormFields(
       settings,
@@ -310,5 +310,5 @@ export default Route.extend({
       'additionalPeopleFields',
       model.allowMultiplePeople ? addTranslations(peopleFields) : peopleFields
     );
-  },
-});
+  }
+}
