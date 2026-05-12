@@ -49,7 +49,7 @@
     "ember-cli-deprecation-workflow": "^4.0.1",
     "ember-cli-htmlbars": "^6.2.0",
     "ember-cli-terser": "^4.0.2",
-    "ember-cli-update": "^1.0.1",
+    "ember-cli-update": "^3.0.1",
     "ember-compatibility-helpers": "^1.2.7",
     "ember-load-initializers": "^2.1.2",
     "ember-modifier": "^4.1.0",
@@ -78,6 +78,7 @@
     "node": ">= 18"
   },
   "overrides": {
-    "testem": "3.18.0"
+    "testem": "3.18.0",
+    "rollup": "^4.22.4"
   }
 }
