@@ -33,11 +33,11 @@
 
 ## Current Repository Status
 
-This section reflects the current state of the `ember-upgrade` branch after the Ember 4 preparation work already completed in this repo.
+This section reflects the current state of the `ember-upgrade` branch after the Ember 4 -> 5 -> 6 upgrade stream completed in this repo.
 
 ### Completed hardening work
 
-1. Full test suite is green: `npx ember test` passes with 78/78 tests.
+1. Full test suite is green: `npx ember test` passes with 77/77 tests.
 2. Lint is green: `npm run lint` passes.
 3. `ember/no-component-lifecycle-hooks` is enabled and clean.
 4. `ember/no-jquery` is enabled and clean.
@@ -52,21 +52,20 @@ This section reflects the current state of the `ember-upgrade` branch after the 
 
 ### Practical meaning for the next upgrade step
 
-For this repo, the Ember 4 preparation phase is no longer mainly about framework-internal cleanup. The next highest-value work is:
+For this repo, framework major upgrades are complete through Ember 6. The next highest-value work is:
 
-1. verify Node version alignment for the actual 4 -> 5 step,
-2. audit addon compatibility for Ember 5,
-3. run `ember-cli-update --compare-only` for the chosen Ember 5 target,
-4. perform the version bump only after dependency compatibility is reviewed.
+1. dependency/tooling modernization in isolated PRs (for example UIKit latest patch, Prettier 3),
+2. build pipeline modernization planning (Embroider/Vite) as a separate project,
+3. continued behavior smoke validation for high-risk flows.
 
 ### Updated decision rule for this branch
 
-Treat Ember 4 readiness for this repo as already achieved on the current branch because:
+Treat Ember 6 readiness for this repo as achieved on the current branch because:
 
 1. automated tests are green,
 2. compatibility lint rules are enabled and passing,
 3. classic/jQuery-heavy application code has been substantially removed,
-4. remaining work is now mostly dependency/addon and framework-version compatibility work.
+4. remaining work is now mostly dependency/tooling and build-modernization work.
 
 
 ## Version Bump Workflow Matrix
@@ -77,7 +76,7 @@ Use this matrix as the concrete playbook per bump. It highlights what changes be
 | --- | --- | --- | --- | --- | --- |
 | 3.28 -> 4.x | Deprecation-first. Clear 3.x deprecations before bumping framework. | Move to Node 16+ (recommend pinning Node 18 for smoother later bumps). | Full use of ember-cli-deprecation-workflow: capture, silence baseline, then throw one category at a time. | npm install; ember test --server; deprecationWorkflow.flushDeprecations() in browser; ember test; npm run start; npx ember-cli-update --to 4.12.0 --compare-only; npx ember-cli-update --to 4.12.0; npm install; ember test | Full test suite green, critical smoke flow green, major 3.x deprecations resolved or explicitly triaged. |
 | 4.x -> 5.x | Compatibility-first. Focus on addon compatibility and framework API removals introduced after 4.x. | Node 18 LTS recommended for this step. | Keep deprecation-workflow active, but shift to throwOnUnhandled to prevent new debt while upgrading addons. | npm install; ember test; npm run start; npx ember-cli-update --to latest; npm install; ember test; ember test --filter "Integration | Component | subscription-form" | Tests green, key addons upgraded/replaced, no blocker runtime errors in core user journeys. |
-| 5.x -> 6.x | Stabilization-first. Finish code modernization and dependency alignment before optional build changes. | Node 20 LTS recommended for this step. | Keep strict mode: treat new deprecations as regressions, continue one-category fixes only when needed. | npm install; ember test; npm run start; npx ember-cli-update --to latest; npm install; ember test; ember test --filter "Unit | Route | list" | Tests green, smoke flow green, dependency graph stable, no unresolved high-impact deprecations. |
+| 5.x -> 6.x | Stabilization-first. Finish code modernization and dependency alignment before optional build changes. | Node 18+ (repo currently pinned to 18). | Keep strict mode: treat new deprecations as regressions, continue one-category fixes only when needed. | npm install; ember test; npm run start; npx ember-cli-update --to latest; npm install; ember test; ember test --filter "Unit | Route | list" | Tests green, smoke flow green, dependency graph stable, no unresolved high-impact deprecations. |
 | 6.x -> build modernization (optional) | Separate project. Do not bundle with framework major upgrades. | Use Node version supported by chosen build stack (Embroider/Vite) at that time. | Optional. Keep only as guardrail for future regressions. | ember test; npm run start; then run dedicated Embroider/Vite migration commands in a separate branch/workstream. | Functional behavior unchanged after build migration, same test and smoke baseline preserved. |
 
 Notes:
@@ -95,7 +94,7 @@ This section is the explicit rule set for this repo.
 | Baseline cleanup before Ember 4 | Ember 3.28.x | `^2` | Node 16 first, then move to Node 18 during late cleanup | Start on current supported Node for 3.28, then switch to Node 18 before the actual 4.x bump so post-bump debugging happens on the target runtime. |
 | After bump to Ember 4 | Ember 4.x | keep existing version if stable, otherwise move to `^3` | Node 18 LTS | Immediately after the 4.x upgrade branch is compiling and tests run, ensure Node 18 is pinned in local + CI. |
 | Preparing Ember 5 bump | Ember 4.x -> 5.x | `^3` (or `^4` only if repo/toolchain is compatible) | Node 18 LTS | Keep Node 18 throughout the 4->5 transition to reduce moving parts. |
-| Preparing Ember 6 bump | Ember 5.x -> 6.x | `^4` | Node 20 LTS | Change Node only after the app is stable on latest 5.x and before starting the 6.x bump work. |
+| Preparing Ember 6 bump | Ember 5.x -> 6.x | `^4` | Node 18+ (currently 18 in this repo) | Keep Node pinned consistently across local and CI during the bump; evaluate Node 20 later as a separate modernization step. |
 
 Practical policy:
 
@@ -110,7 +109,7 @@ node -v
 npm -v
 ```
 
-If your team uses `.nvmrc` or Volta, update that file at the phase boundary (Node 18 before/at Ember 4 work, Node 20 before Ember 6 work).
+If your team uses `.nvmrc` or Volta, update that file at phase boundaries and keep CI aligned to the same version.
 
 
 # Upgrade Strategy
@@ -413,6 +412,47 @@ ember test --filter "Integration | Component | subscription-form"
 ember test --filter "Unit | Route | list"
 ```
 
+## Phase 7: Upgrade To Ember 5 (Completed)
+
+This phase is complete on `ember-upgrade`.
+
+What was done:
+
+1. Upgraded framework/tooling to Ember 5-compatible versions.
+2. Stabilized test bootstrapping for the current classic app setup.
+3. Fixed stricter template/runtime compatibility issues found during the bump.
+4. Revalidated build, lint, and tests before moving on.
+
+Validation outcomes:
+
+1. `npx ember build` passes.
+2. `npm run lint` passes.
+3. `npx ember test` passes.
+
+Reference details:
+
+1. [upgradeLog.md](upgradeLog.md) section "Upgrade to Ember 5.12.0".
+
+## Phase 8: Upgrade To Ember 6 (Completed)
+
+This phase is complete on `ember-upgrade`.
+
+What was done:
+
+1. Upgraded core Ember packages to 6.12.x.
+2. Applied deprecation-driven cleanup needed for Ember 6 compatibility.
+3. Kept classic build compatibility while documenting Ember 7-related legacy AMD warning as follow-up work.
+
+Validation outcomes:
+
+1. `npx ember build` passes.
+2. `npm run lint` passes.
+3. `npx ember test` passes.
+
+Reference details:
+
+1. [upgradeLog.md](upgradeLog.md) section "Upgrade to Ember 6.12.0".
+
 
 ## Concrete Command Checklist
 
@@ -459,11 +499,11 @@ ember test
 
 ## Decision Rule
 
-We should treat Ember 4 readiness as achieved when:
+We should treat framework-major readiness as achieved through Ember 6 on this branch when:
 
-1. the app boots cleanly
-2. the full test suite is green
-3. the major 3.x deprecation categories have been worked down through the deprecation-workflow loop above
-4. the post-upgrade run is debug work, not blind discovery work
+1. the app boots cleanly,
+2. the full test suite is green,
+3. Ember 5 and Ember 6 upgrade validations are documented and reproducible,
+4. remaining work is explicitly non-framework (tooling/dependency/build modernization).
 
-That is the practical purpose of the workflow: identify and shrink the unknowns before the major version bump.
+That is the practical purpose of this workflow: reduce unknowns before each major bump, then isolate post-upgrade modernization in separate tracks.

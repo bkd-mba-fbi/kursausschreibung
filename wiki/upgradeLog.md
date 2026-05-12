@@ -1,5 +1,48 @@
 # Upgrade Log
 
+## Post-Ember-6 Modernization Follow-up (May 2026)
+
+**Status**: Completed and validated.
+
+### Commits in this batch
+
+- `b6083dc` `ci modernization`
+- `eb534c4` `.extend migration`
+- `c9b0ee4` `get set computed migration`
+
+### What changed
+
+1. CI/runtime alignment cleanup:
+  - removed legacy `.travis.yml`.
+  - aligned GitHub Actions Node version to 18 in workflow files.
+2. Remaining classic route/controller class patterns were migrated:
+  - replaced `Route.extend(...)` / `Controller.extend(...)` with native classes in the remaining app files.
+3. Remaining legacy property/computed patterns in migrated paths were modernized:
+  - removed legacy `get/set/computed` usage in the upgraded route/store paths.
+  - switched to direct property access and native getters in those paths.
+
+### Validation
+
+1. `npx ember test` passes (77/77) after each batch.
+
+### Practical outcome
+
+1. Post-Ember-6 cleanup is materially complete for class/property modernization in app code.
+2. CI configuration now matches the repo Node engine baseline.
+
+## Remaining Work (Not Yet Implemented)
+
+These items are intentionally tracked as separate follow-up tracks and were not bundled into framework-major upgrade commits.
+
+1. Build pipeline modernization (Embroider/Vite planning and rollout).
+  - Reason: high-impact architecture change; should be isolated from framework-major stabilization.
+2. UIKit upgrade to latest 3.x patch.
+  - Reason: can introduce UI regressions and needs focused visual/smoke verification.
+3. Prettier 3 upgrade.
+  - Reason: broad formatting churn; better in a dedicated tooling PR to keep behavioral diffs reviewable.
+4. Optional Node 20 adoption.
+  - Reason: non-blocking for current Ember 6 baseline; should be done as a controlled runtime/tooling step.
+
 ## Upgrade to Ember 6.12.0
 
 **Status**: Complete and validated on current branch state.
