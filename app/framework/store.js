@@ -1,6 +1,5 @@
 import { A } from '@ember/array';
 import { underscore } from '@ember/string';
-import EmberObject, { computed } from '@ember/object';
 import {
   getEvents,
   getEvent,
@@ -448,8 +447,10 @@ function putIntoAssocArrays(event) {
  * @param {object} event event returned by the API
  */
 function createEmberObject(event) {
-  return EmberObject.extend({
-    status: computed('FreeSeats', function () {
+  return {
+    ...event,
+
+    get status() {
       if (isGreen(this, isInSubscriptionRange)) {
         return 'green';
       }
@@ -466,24 +467,22 @@ function createEmberObject(event) {
       }
 
       return 'orange';
-    }),
+    },
 
-    canDoSubscription: computed('status', function () {
-      let status = this.status;
+    get canDoSubscription() {
       return (
         typeof settings.canDoSubscription === 'object' &&
-        settings.canDoSubscription[status] === true
+        settings.canDoSubscription[this.status] === true
       );
-    }),
+    },
 
     update() {
       // only update FreeSeats for now
-      let that = this;
-      return getEvent(this.Id).then(function (updatedEvent) {
-        that.set('FreeSeats', updatedEvent.FreeSeats);
+      return getEvent(this.Id).then((updatedEvent) => {
+        this.FreeSeats = updatedEvent.FreeSeats;
       });
     },
-  }).create(event);
+  };
 }
 
 /**

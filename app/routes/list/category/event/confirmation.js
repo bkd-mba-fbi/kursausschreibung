@@ -51,7 +51,7 @@ export default class confirmation extends Route {
       })
       .then(() => {
         // make sure it's still possible to subscribe to the event
-        if (event.get('canDoSubscription') === false) {
+        if (event.canDoSubscription === false) {
           throw new Error("it's no longer possible to subscribe to this event");
         }
 
@@ -104,7 +104,7 @@ export default class confirmation extends Route {
       .then(() => {
         return {
           tableData: tableData,
-          statusIsRed: event.get('status') === 'red',
+          statusIsRed: event.status === 'red',
         };
       })
       .catch((error) => {

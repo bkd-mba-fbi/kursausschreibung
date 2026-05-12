@@ -1,5 +1,4 @@
 import { A } from '@ember/array';
-import { get, set } from '@ember/object';
 import Route from '@ember/routing/route';
 import {
   getDropDownItems,
@@ -153,13 +152,13 @@ function addTranslations(fields) {
         let key = detail.options.placeholderKey
           ? detail.options.placeholderKey
           : 'form' + detail.id + 'Placeholder';
-        set(detail, 'placeholder', getString(key));
+        detail.placeholder = getString(key);
       }
       if (detail.options.showHint === true) {
         let key = detail.options.hintKey
           ? detail.options.hintKey
           : 'form' + detail.id + 'Hint';
-        set(detail, 'hint', getString(key));
+        detail.hint = getString(key);
       }
     }
   });
@@ -193,7 +192,7 @@ export default class ListCategoryEventSubscribeRoute extends Route {
       transition.abort();
     }
 
-    if (model.get('canDoSubscription') === false) {
+    if (model.canDoSubscription === false) {
       transition.abort();
       return;
     }
@@ -233,20 +232,16 @@ export default class ListCategoryEventSubscribeRoute extends Route {
             );
           }
 
-          set(model, 'allowMultiplePeople', allowMultiplePeople);
-          set(model, 'enableInvoiceAddress', enableInvoiceAddress);
+          model.allowMultiplePeople = allowMultiplePeople;
+          model.enableInvoiceAddress = enableInvoiceAddress;
 
           userSettings.isLoggedIn = userSettings.IdPerson !== 0;
-          set(model, 'userSettings', userSettings);
+          model.userSettings = userSettings;
 
           const sortedDetails = A(subscriptionDetails).sortBy('Sort');
-          set(
-            model,
-            'subscriptionDetailFields',
-            addSubscriptionDetailDependencies(
-              subscriptionDetailDependencies,
-              getSubscriptionDetailFields(sortedDetails)
-            )
+          model.subscriptionDetailFields = addSubscriptionDetailDependencies(
+            subscriptionDetailDependencies,
+            getSubscriptionDetailFields(sortedDetails)
           );
 
           const formFields = getFormFields(
@@ -291,24 +286,20 @@ export default class ListCategoryEventSubscribeRoute extends Route {
       model.EventCategoryId
     );
 
-    controller.set('fields', addTranslations(formFields.addressFields));
+    controller.fields = addTranslations(formFields.addressFields);
 
-    controller.set('enableInvoiceAddress', model.enableInvoiceAddress === true);
-    controller.set(
-      'companyFields',
-      addTranslations(formFields.companyFields || [])
-    );
-    controller.set('showAddressInputs', !model.userSettings.isLoggedIn);
-    controller.set('showCompanyButtonOnly', !model.userSettings.isLoggedIn);
+    controller.enableInvoiceAddress = model.enableInvoiceAddress === true;
+    controller.companyFields = addTranslations(formFields.companyFields || []);
+    controller.showAddressInputs = !model.userSettings.isLoggedIn;
+    controller.showCompanyButtonOnly = !model.userSettings.isLoggedIn;
 
-    controller.set('subscriptionDetailFields', model.subscriptionDetailFields);
+    controller.subscriptionDetailFields = model.subscriptionDetailFields;
 
-    controller.set('allowMultiplePeople', model.allowMultiplePeople);
+    controller.allowMultiplePeople = model.allowMultiplePeople;
     const peopleFields =
       formFields.additionalPeopleFields || formFields.addressFields;
-    controller.set(
-      'additionalPeopleFields',
-      model.allowMultiplePeople ? addTranslations(peopleFields) : peopleFields
-    );
+    controller.additionalPeopleFields = model.allowMultiplePeople
+      ? addTranslations(peopleFields)
+      : peopleFields;
   }
 }
