@@ -1,5 +1,12 @@
 # Upgrade Summary (Demo)
 
+In short:
+- Upgrade is done
+- Short demo of results, especially behavior changes
+- How can we  have a review and merge into dev?
+- Build tool modernization is open
+- renovate & dependabot: How can one of this tools help staying current? Which fits better?
+
 ## What I did
 - Followed the upgrade process in [upgrade.md](upgrade.md):
   - Write tests
@@ -22,6 +29,7 @@
 - Related regressions found during upgrade were fixed (language switch reliability and category filter clicks).
 
 ## Developer-facing changes
+- Tip: Work through an Ember 6 tutorial
 - [behavior-change-test-guide.md](behavior-change-test-guide.md)
 - Framework jump: Ember 3.28.6 -> Ember 6.12.x.
 - Implemented tests. Run them with `npm run test`.
@@ -55,3 +63,9 @@
 - Remaining dependency modernization:
   - UIKit update: potential UI regressions, move to dedicated PR.
   - Prettier 3: broad formatting churn, move to dedicated PR.
+
+# Pull Request
+- Should I integrate changes from master to ember-upgrade branch?
+- Should I continue or do a PR?
+- Pull request into which branch? Who does review how?
+- What happens after merge? After approval Kai could do build tooling modernization
