@@ -3,6 +3,16 @@
 In short:
 - Upgrade is done
 - Short demo of results, especially behavior changes
+  - old
+  ```
+  cd C:\repos\kursausschreibung-ember3
+  ember serve
+  ```
+  - new
+  ```
+  cd C:\repos\kursausschreibung
+  npm run start
+  ```
 - How can we  have a review and merge into dev?
 - Build tool modernization is open
 - renovate & dependabot: How can one of this tools help staying current? Which fits better?
@@ -32,6 +42,7 @@ In short:
 - Tip: Work through an Ember 6 tutorial
 - [behavior-change-test-guide.md](behavior-change-test-guide.md)
 - Framework jump: Ember 3.28.6 -> Ember 6.12.x.
+- Added npm scripts to not rely on ember installed globally. Run dev serve with `npm run start`
 - Implemented tests. Run them with `npm run test`.
 - Core modernization completed:
   - 0 remaining Route/Controller `.extend` definitions in app code.
@@ -70,3 +81,7 @@ In short:
 - Pull request into which branch? Who does review how?
 - What happens after merge?
   - GitHub Action: Should work, changed to node 18
+
+# TODO
+- Clean up separate worktree
+`git -C C:/repos/kursausschreibung worktree remove C:/repos/kursausschreibung-ember3`
