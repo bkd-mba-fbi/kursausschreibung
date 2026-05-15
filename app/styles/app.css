@@ -1,5 +1,3 @@
-@import './cropper.css';
-
 :root{
   --mainColor: #1e87f0;
 }
@@ -254,3 +252,109 @@
 .uk-scope .uk-breadcrumb {
   font-size: .875rem !important;
 }
+
+
+/* Cropper.js v2 modal.
+  Keep these rules in app.css: a separate cropper.css file was loaded unreliably
+  in the running app, which caused the modal wrapper to fall back to static flow. */
+.crop-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 20000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.crop-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(15, 18, 24, 0.7);
+}
+
+.crop-modal__panel {
+  position: relative;
+  width: min(720px, calc(100vw - 48px));
+  max-height: calc(100vh - 48px);
+  padding: 20px;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  overflow: auto;
+}
+
+.crop-modal__header {
+  margin-bottom: 4px;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.crop-modal__hint {
+  margin: 0 0 12px;
+  color: #555;
+}
+
+.crop-modal__canvas {
+  width: min(350px, 100%);
+  height: min(450px, calc(100vh - 260px));
+  min-height: 300px;
+  margin: 0 auto;
+  border: 1px solid #d8dde6;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f7f9fc;
+}
+
+.crop-modal__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.crop-modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+cropper-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+cropper-image {
+  touch-action: none;
+}
+*** Delete File: c:\repos\kursausschreibung\app\styles\cropper.css
+*** Add File: c:\repos\kursausschreibung\wiki\cropperjs-modal.md
+# Cropper.js Modal Notes
+
+This project uses Cropper.js v2 for image uploads in `app/components/input/input-file.js`.
+
+## Current UX
+
+- Selecting a JPEG opens a crop modal immediately.
+- The user confirms the crop in the modal.
+- After confirmation, the form shows a small thumbnail and a delete button.
+- The upload control is hidden while an image is present and reappears after delete.
+
+## Why the modal CSS lives in `app/styles/app.css`
+
+The modal wrapper styles must load with the main application stylesheet.
+During the Ember upgrade, keeping these rules in a separate `cropper.css` file led to
+runtime cases where the modal wrapper styles were not applied reliably. When that
+happened, the cropper appeared inline and pushed surrounding form fields around.
+
+Keeping the cropper modal rules in `app/styles/app.css` avoids that failure mode and
+ensures the modal stays `position: fixed` above the page.
+
+## Cropper.js v2 notes
+
+- Cropper.js v2 is web-component based.
+- The crop UI is configured through the `template` option, not the legacy v1 options.
+- The cropped result is produced with `getCropperSelection().$toCanvas(...)`.
+- `initial-coverage` is intentionally smaller than `1` so resize handles are visible.

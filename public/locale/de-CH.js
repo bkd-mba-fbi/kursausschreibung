@@ -121,7 +121,14 @@ window.kursausschreibung.locale['de-CH'] = {
   fileTypePD: 'PDF-Datei hochladen',
   fileTypePF: 'Bilddatei hochladen',
   fileTypePFInfo:
-    'Sie können das Bild im Rahmen zentrieren und zoomen. Anschliessend klicken Sie auf ',
+    'Nach der Auswahl wird ein Dialog zum Zuschneiden des Bildes geöffnet.',
+  cropModalTitle: 'Bild zuschneiden',
+  cropModalHint:
+    'Wählen Sie den gewünschten Bildausschnitt und bestätigen Sie.',
+  cropModalCancel: 'Abbrechen',
+  cropModalConfirm: 'Übernehmen',
+  cropModalPreviewAlt: 'Vorschau Bildausschnitt',
+  cropUploadedPreviewAlt: 'Hochgeladenes Bild',
   FileSizeTooBig: 'Die Datei ist zu gross. Zugelassen sind maximal ',
   FileTypeNotAccept:
     'Dieser Dateityp wird nicht akzeptiert. <br>Akzeptiert wird: ',

@@ -119,7 +119,14 @@ window.kursausschreibung.locale['fr-CH'] = {
   fileTypePD: 'Télécharger un fichier PDF',
   fileTypePF: 'Télécharger un fichier image',
   fileTypePFInfo:
-    "Vous pouvez centrer et zoomer l'image dans le cadre. Cliquez ensuite sur ",
+    "Après la sélection, une fenêtre de recadrage de l'image s'ouvre.",
+  cropModalTitle: "Recadrer l'image",
+  cropModalHint:
+    "Choisissez la zone d'image souhaitée puis confirmez.",
+  cropModalCancel: 'Annuler',
+  cropModalConfirm: 'Appliquer',
+  cropModalPreviewAlt: 'Aperçu du cadrage',
+  cropUploadedPreviewAlt: 'Image téléchargée',
   FileSizeTooBig: 'Le fichier est trop volumineux. Est autorisé un maximum de ',
   FileTypeNotAccept: "Ce type de fichier n'est pas accepté. <br>Est accepté : ",
   FileImageResolution:

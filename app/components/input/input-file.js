@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import { getString } from 'kursausschreibung/framework/translate';
 import {
   removeFile,
@@ -31,11 +32,9 @@ function destroyCropper(component) {
 function resetImageUi(fieldId) {
   let previewContainer = document.getElementById('img' + fieldId);
   let previewImage = getPreviewElement(fieldId);
-  let uploadButton = document.getElementById('fileBtUpload' + fieldId);
   let finalImage = document.getElementById('imgDev' + fieldId);
 
   previewContainer?.classList.add('uk-hidden');
-  uploadButton?.classList.add('uk-hidden');
   finalImage?.classList.add('uk-hidden');
 
   if (previewImage) {
@@ -46,6 +45,10 @@ function resetImageUi(fieldId) {
 export default class InputFileComponent extends Component {
   cropper = null;
   previewUrl = null;
+  @tracked isUploadControlVisible = true;
+  @tracked isCropModalOpen = false;
+  @tracked isCropCanvasVisible = false;
+  @tracked isUploadConfirmVisible = false;
 
   @action
   handleChange() {
@@ -74,7 +77,7 @@ export default class InputFileComponent extends Component {
       field.fileObject = inputFile;
 
       let buttonClass = document.getElementById('fileBt' + field.id);
-      buttonClass.classList.remove('required');
+      buttonClass?.classList.remove('required');
       let buttonClassDel = document.getElementById('fileBtDel' + field.id);
       buttonClassDel.classList.remove('uk-hidden');
 
@@ -91,15 +94,14 @@ export default class InputFileComponent extends Component {
         reader.readAsDataURL(inputFile);
       }
 
-      if (field.acceptFileType === 'image/jpeg') {
-        let fieldId = field.id;
-        let buttonClassUpload = document.getElementById(
-          'fileBtUpload' + fieldId
-        );
-        buttonClassUpload.classList.remove('uk-hidden');
+      let acceptsJpeg = (field.acceptFileType || '').includes('image/jpeg');
 
-        let imgField = document.getElementById('img' + fieldId);
-        imgField.classList.remove('uk-hidden');
+      if (acceptsJpeg && inputFile.type === 'image/jpeg') {
+        let fieldId = field.id;
+        this.isUploadConfirmVisible = true;
+        this.isCropCanvasVisible = true;
+        this.isCropModalOpen = true;
+
         let previewImage = getPreviewElement(fieldId);
 
         if (this.previewUrl) {
@@ -121,7 +123,7 @@ export default class InputFileComponent extends Component {
                   <cropper-image rotatable scalable translatable></cropper-image>
                   <cropper-shade hidden></cropper-shade>
                   <cropper-handle action="select" plain></cropper-handle>
-                  <cropper-selection initial-coverage="1" aspect-ratio="0.75" movable resizable>
+                  <cropper-selection initial-coverage="0.80" aspect-ratio="0.75" movable resizable>
                     <cropper-grid role="grid" bordered covered></cropper-grid>
                     <cropper-crosshair centered></cropper-crosshair>
                     <cropper-handle action="move" theme-color="rgba(255, 255, 255, 0.35)"></cropper-handle>
@@ -153,7 +155,10 @@ export default class InputFileComponent extends Component {
   }
 
   @action
-  deleteFile() {
+  deleteFile(event) {
+    event?.preventDefault();
+    event?.stopPropagation();
+
     let field = this.args.field;
     let fieldId = field.id;
     let elementIdFile = getElementIdFile(fieldId);
@@ -162,13 +167,14 @@ export default class InputFileComponent extends Component {
 
     if (field.options?.required) {
       let buttonClass = document.getElementById('fileBt' + field.id);
-      buttonClass.classList.add('required');
+      buttonClass?.classList.add('required');
     }
 
-    let imgClassDel = document.getElementById('img' + fieldId);
-    imgClassDel.classList.add('uk-hidden');
-    let imgClassUp = document.getElementById('fileBtUpload' + fieldId);
-    imgClassUp.classList.add('uk-hidden');
+    this.isUploadControlVisible = true;
+    this.isCropCanvasVisible = false;
+    this.isUploadConfirmVisible = false;
+    this.isCropModalOpen = false;
+
     let imgFielDev = document.getElementById('imgDev' + fieldId);
     imgFielDev.classList.add('uk-hidden');
     removeFile(elementIdFile);
@@ -185,7 +191,18 @@ export default class InputFileComponent extends Component {
   }
 
   @action
-  async uploadImage() {
+  cancelCrop(event) {
+    event?.preventDefault();
+    event?.stopPropagation();
+
+    this.deleteFile();
+  }
+
+  @action
+  async uploadImage(event) {
+    event?.preventDefault();
+    event?.stopPropagation();
+
     let fieldId = this.args.field.id;
     let inputFile = getInputFile(fieldId);
 
@@ -212,11 +229,10 @@ export default class InputFileComponent extends Component {
     imgFielDev.src = base64;
     imgFielDev.classList.remove('uk-hidden');
 
-    let imgClassUp = document.getElementById('fileBtUpload' + fieldId);
-    imgClassUp.classList.add('uk-hidden');
-
-    let previewContainer = document.getElementById('img' + fieldId);
-    previewContainer.classList.add('uk-hidden');
+    this.isUploadControlVisible = false;
+    this.isUploadConfirmVisible = false;
+    this.isCropCanvasVisible = false;
+    this.isCropModalOpen = false;
 
     if (this.previewUrl) {
       URL.revokeObjectURL(this.previewUrl);
