@@ -1,8 +1,42 @@
-<input class="uk-input typeaheadZip" type="text" name={{@field.id}} required={{@field.options.required}}
-  autocomplete={{@field.options.autocomplete}} disabled={{@field.options.disabled}} placeholder={{@field.placeholder}} list={{concat "postal-code-options-" @field.id}} {{on "input" this.handleInput}} {{on "change" this.handleChange}}>
+<div class="postal-code-combobox">
+  <input
+    id={{this.inputId}}
+    class="uk-input postal-code-combobox__input"
+    type="text"
+    name={{@field.id}}
+    required={{@field.options.required}}
+    autocomplete={{@field.options.autocomplete}}
+    disabled={{@field.options.disabled}}
+    placeholder={{@field.placeholder}}
+    role="combobox"
+    aria-autocomplete="list"
+    aria-expanded={{if this.isOpen "true" "false"}}
+    aria-controls={{this.listId}}
+    aria-activedescendant={{this.activeSuggestionId}}
+    value={{this.query}}
+    {{on "input" this.handleInput}}
+    {{on "change" this.handleChange}}
+    {{on "keydown" this.handleKeyDown}}
+    {{on "focus" this.handleFocus}}
+    {{on "blur" this.handleBlur}}
+  >
 
-<datalist id={{concat "postal-code-options-" @field.id}}>
-  {{#each this.suggestions as |item|}}
-    <option value={{item.Code}}>{{item.Code}} {{item.Location}}</option>
-  {{/each}}
-</datalist>
+  {{#if this.isOpen}}
+    <div id={{this.listId}} class="postal-code-combobox__list" role="listbox">
+      {{#each this.suggestions as |item index|}}
+        <button
+          id={{concat this.listId "-" index}}
+          type="button"
+          class="postal-code-combobox__option {{if (this.isActiveSuggestion index) "is-active"}}"
+          role="option"
+          aria-selected={{if (this.isActiveSuggestion index) "true" "false"}}
+          data-suggestion-index={{index}}
+          {{on "mousedown" this.handleSuggestionMouseDown}}
+        >
+          <span class="postal-code-combobox__zip">{{item.Code}}</span>
+          <span class="postal-code-combobox__location">{{item.Location}}</span>
+        </button>
+      {{/each}}
+    </div>
+  {{/if}}
+</div>

@@ -34,8 +34,9 @@ In short:
 - Documented remaining "unfixable" audit findings in [upgradeLog.md](upgradeLog.md).
 
 ## Behavior changes
-- Typeahead plugin behavior was removed and replaced with native input handling.
-- Image clipper flow (Croppie) was removed and replaced with native preview/canvas processing.
+- Typeahead plugin behavior was removed. PLZ field now uses a custom Glimmer combobox: debounced async lookup, keyboard-navigable dropdown, fills both PLZ and Ort on selection. No addon dependency.
+- Image clipper flow (Croppie / jQuery) was removed and replaced with Cropper.js v2: web-component based crop modal that opens on JPEG selection, supports resize/move, and produces a canvas-processed result. Non-JPEG files skip the modal entirely.
+  - Why do we crop and why do we only support jp?
 - Related regressions found during upgrade were fixed (language switch reliability and category filter clicks).
 
 ## Developer-facing changes

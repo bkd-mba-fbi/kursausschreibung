@@ -98,41 +98,54 @@ Expected:
 
 What changed:
 
-1. jQuery typeahead was replaced with native input behavior and async suggestions.
+1. jQuery typeahead was replaced with a custom Glimmer combobox (no addon dependency).
+2. Suggestions appear in a styled dropdown list under the PLZ field as the user types.
+3. Selecting a suggestion fills both the PLZ field and the Ort/Location field.
 
 Steps:
 
-1. Enter at least 2 digits of postal code.
-2. Select a suggested code (if suggestions are present).
-3. Change to another code.
+1. Enter at least 2 characters of a postal code.
+2. Wait briefly for the suggestion list to appear.
+3. Select a suggestion by clicking or using arrow keys + Enter.
+4. Verify the Location field is filled automatically.
+5. Clear the PLZ field and confirm the Location field is also cleared.
+6. Type a different prefix and select a new suggestion.
 
 Expected:
 
-1. Suggestions appear for valid prefixes.
-2. Location field auto-populates correctly for selected code.
-3. No stale location value remains after changing code.
+1. Suggestions appear for valid prefixes after a short debounce.
+2. Location field auto-populates correctly for the selected code.
+3. No stale location value remains after changing or clearing the code.
+4. Keyboard navigation (ArrowDown/Up, Enter, Escape) works as expected.
+5. Clicking outside the dropdown closes it without selecting.
 
 ### 6. File upload and image processing
 
 What changed:
 
-1. Croppie and jQuery image flow were replaced with native preview and canvas processing.
+1. Croppie (jQuery plugin) was removed and replaced with Cropper.js v2 (web-component based, no jQuery).
+2. When a JPEG is selected a crop modal opens immediately with a fixed-aspect crop region.
+3. The user confirms or cancels the crop in the modal before the file is attached to the form.
+4. Non-JPEG files and non-image files skip the crop step entirely.
 
 Steps:
 
-1. Upload allowed non-image file type where supported.
-2. Upload JPEG where image workflow is enabled.
-3. Verify preview appears.
-4. Use upload/confirm image action.
-5. Delete selected file.
-6. Try invalid type and oversized file.
+1. Upload an allowed non-image file type where supported; confirm no crop modal appears.
+2. Upload a JPEG where the image workflow is enabled.
+3. Verify the crop modal opens with the image and resize handles visible.
+4. Adjust the crop region and confirm; verify the processed thumbnail appears.
+5. Delete the selected file using the delete button.
+6. Re-upload a JPEG and cancel the crop; confirm the file is cleared.
+7. Try an invalid file type and an oversized file.
 
 Expected:
 
-1. File name label updates correctly.
-2. JPEG preview and processed image preview behave correctly.
-3. Delete resets control state and required marker behavior.
-4. Type/size rejection messages still appear.
+1. File name label updates correctly for non-image uploads.
+2. Crop modal opens for JPEG, stays fixed above the page (not inline).
+3. Confirmed crop produces a processed thumbnail; original object URL is released.
+4. Cancel clears the file and resets the control back to its empty state.
+5. Delete resets control state and required marker behavior.
+6. File type and size rejection alerts still appear.
 
 ## API and Confirmation Checks
 

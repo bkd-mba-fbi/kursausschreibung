@@ -1,4 +1,4 @@
-:root{
+:root {
   --mainColor: #1e87f0;
 }
 
@@ -29,8 +29,7 @@
   overflow-wrap: break-word;
 }
 
-
-.uk-scope #list-cards>li:hover {
+.uk-scope #list-cards > li:hover {
   display: block;
   background: #fcfcfc;
 }
@@ -55,7 +54,7 @@
   left: unset !important;
 }
 
-.uk-scope .icon-lamp{
+.uk-scope .icon-lamp {
   color: white;
 }
 
@@ -107,6 +106,50 @@
   resize: vertical;
 }
 
+.uk-scope .postal-code-combobox {
+  position: relative;
+}
+
+.uk-scope .postal-code-combobox__list {
+  position: absolute;
+  z-index: 50;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  max-height: 15rem;
+  overflow-y: auto;
+  border: 1px solid #cfd6e4;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 12px 30px rgba(15, 18, 24, 0.12);
+}
+
+.uk-scope .postal-code-combobox__option {
+  display: flex;
+  width: 100%;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.uk-scope .postal-code-combobox__option:hover,
+.uk-scope .postal-code-combobox__option.is-active {
+  background: #eaf3ff;
+}
+
+.uk-scope .postal-code-combobox__zip {
+  min-width: 4.5rem;
+  font-weight: 600;
+}
+
+.uk-scope .postal-code-combobox__location {
+  color: #4f5b6c;
+}
+
 .uk-scope #subscriptionProcess {
   padding: 20px 0 20px 0;
   border-bottom: 1px solid #e5e5e5;
@@ -137,7 +180,7 @@
   margin-bottom: 5px;
 }
 
-.uk-scope #list-cards{
+.uk-scope #list-cards {
   margin-left: auto;
 }
 
@@ -147,7 +190,6 @@
 
 /* mobile */
 @media (max-width: 959px) {
-
   .uk-scope ol.steps {
     font-size: 14px;
   }
@@ -170,11 +212,10 @@
   .uk-scope .uk-navbar-nav > li > a {
     padding: 0 10px;
   }
-  .uk-scope #subscriptionWithLoginURL{
+  .uk-scope #subscriptionWithLoginURL {
     margin-top: 10px;
     margin-left: 0px;
   }
-
 }
 
 /* process steps */
@@ -250,9 +291,8 @@
 }
 
 .uk-scope .uk-breadcrumb {
-  font-size: .875rem !important;
+  font-size: 0.875rem !important;
 }
-
 
 /* Cropper.js v2 modal.
   Keep these rules in app.css: a separate cropper.css file was loaded unreliably
@@ -329,32 +369,3 @@ cropper-canvas {
 cropper-image {
   touch-action: none;
 }
-*** Delete File: c:\repos\kursausschreibung\app\styles\cropper.css
-*** Add File: c:\repos\kursausschreibung\wiki\cropperjs-modal.md
-# Cropper.js Modal Notes
-
-This project uses Cropper.js v2 for image uploads in `app/components/input/input-file.js`.
-
-## Current UX
-
-- Selecting a JPEG opens a crop modal immediately.
-- The user confirms the crop in the modal.
-- After confirmation, the form shows a small thumbnail and a delete button.
-- The upload control is hidden while an image is present and reappears after delete.
-
-## Why the modal CSS lives in `app/styles/app.css`
-
-The modal wrapper styles must load with the main application stylesheet.
-During the Ember upgrade, keeping these rules in a separate `cropper.css` file led to
-runtime cases where the modal wrapper styles were not applied reliably. When that
-happened, the cropper appeared inline and pushed surrounding form fields around.
-
-Keeping the cropper modal rules in `app/styles/app.css` avoids that failure mode and
-ensures the modal stays `position: fixed` above the page.
-
-## Cropper.js v2 notes
-
-- Cropper.js v2 is web-component based.
-- The crop UI is configured through the `template` option, not the legacy v1 options.
-- The cropped result is produced with `getCropperSelection().$toCanvas(...)`.
-- `initial-coverage` is intentionally smaller than `1` so resize handles are visible.
