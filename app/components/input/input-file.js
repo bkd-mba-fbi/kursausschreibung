@@ -5,6 +5,7 @@ import {
   removeFile,
   vssDependency,
 } from 'kursausschreibung/framework/form-helpers';
+import Cropper from 'cropperjs';
 import uikit from 'uikit';
 
 function getInputFile(fieldId) {
@@ -18,6 +19,13 @@ function getElementIdFile(fieldId) {
 
 function getPreviewElement(fieldId) {
   return document.getElementById('imgCrop' + fieldId);
+}
+
+function destroyCropper(component) {
+  if (component.cropper) {
+    component.cropper.destroy();
+    component.cropper = null;
+  }
 }
 
 function resetImageUi(fieldId) {
@@ -35,52 +43,8 @@ function resetImageUi(fieldId) {
   }
 }
 
-function cropImageToBase64(imageSource) {
-  return new Promise((resolve, reject) => {
-    let image = new Image();
-    image.onload = () => {
-      let canvas = document.createElement('canvas');
-      let targetWidth = 300;
-      let targetHeight = 400;
-      let targetRatio = targetWidth / targetHeight;
-      let sourceRatio = image.width / image.height;
-      let sourceWidth = image.width;
-      let sourceHeight = image.height;
-      let sourceX = 0;
-      let sourceY = 0;
-
-      if (sourceRatio > targetRatio) {
-        sourceWidth = image.height * targetRatio;
-        sourceX = (image.width - sourceWidth) / 2;
-      } else {
-        sourceHeight = image.width / targetRatio;
-        sourceY = (image.height - sourceHeight) / 2;
-      }
-
-      canvas.width = targetWidth;
-      canvas.height = targetHeight;
-
-      let context = canvas.getContext('2d');
-      context.drawImage(
-        image,
-        sourceX,
-        sourceY,
-        sourceWidth,
-        sourceHeight,
-        0,
-        0,
-        targetWidth,
-        targetHeight
-      );
-
-      resolve(canvas.toDataURL('image/jpeg'));
-    };
-    image.onerror = reject;
-    image.src = imageSource;
-  });
-}
-
 export default class InputFileComponent extends Component {
+  cropper = null;
   previewUrl = null;
 
   @action
@@ -142,8 +106,40 @@ export default class InputFileComponent extends Component {
           URL.revokeObjectURL(this.previewUrl);
         }
 
+        destroyCropper(this);
+
         this.previewUrl = URL.createObjectURL(inputFile);
         previewImage.src = this.previewUrl;
+
+        previewImage.addEventListener(
+          'load',
+          () => {
+            // https://fengyuanchen.github.io/cropperjs/api/
+            this.cropper = new Cropper(previewImage, {
+              template: `
+                <cropper-canvas>
+                  <cropper-image rotatable scalable translatable></cropper-image>
+                  <cropper-shade hidden></cropper-shade>
+                  <cropper-handle action="select" plain></cropper-handle>
+                  <cropper-selection initial-coverage="1" aspect-ratio="0.75" movable resizable>
+                    <cropper-grid role="grid" bordered covered></cropper-grid>
+                    <cropper-crosshair centered></cropper-crosshair>
+                    <cropper-handle action="move" theme-color="rgba(255, 255, 255, 0.35)"></cropper-handle>
+                    <cropper-handle action="n-resize"></cropper-handle>
+                    <cropper-handle action="e-resize"></cropper-handle>
+                    <cropper-handle action="s-resize"></cropper-handle>
+                    <cropper-handle action="w-resize"></cropper-handle>
+                    <cropper-handle action="ne-resize"></cropper-handle>
+                    <cropper-handle action="nw-resize"></cropper-handle>
+                    <cropper-handle action="se-resize"></cropper-handle>
+                    <cropper-handle action="sw-resize"></cropper-handle>
+                  </cropper-selection>
+                </cropper-canvas>
+              `,
+            });
+          },
+          { once: true }
+        );
       }
 
       uikit.notification({
@@ -183,6 +179,8 @@ export default class InputFileComponent extends Component {
       this.previewUrl = null;
     }
 
+    destroyCropper(this);
+
     resetImageUi(fieldId);
   }
 
@@ -191,11 +189,23 @@ export default class InputFileComponent extends Component {
     let fieldId = this.args.field.id;
     let inputFile = getInputFile(fieldId);
 
-    if (!inputFile || !this.previewUrl) {
+    if (!inputFile || !this.cropper) {
       return;
     }
 
-    let base64 = await cropImageToBase64(this.previewUrl);
+    let cropperSelection = this.cropper.getCropperSelection();
+
+    if (!cropperSelection) {
+      return;
+    }
+
+    let canvas = await cropperSelection.$toCanvas({
+      width: 300,
+      height: 400,
+    });
+
+    let base64 = canvas.toDataURL('image/jpeg');
+
     inputFile.imgDev = base64;
 
     let imgFielDev = document.getElementById('imgDev' + fieldId);
@@ -212,5 +222,7 @@ export default class InputFileComponent extends Component {
       URL.revokeObjectURL(this.previewUrl);
       this.previewUrl = null;
     }
+
+    destroyCropper(this);
   }
 }

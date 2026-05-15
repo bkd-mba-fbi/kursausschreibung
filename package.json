@@ -38,6 +38,7 @@
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
     "concurrently": "^8.0.1",
+    "cropperjs": "^2.1.1",
     "date-fns": "^2.15.0",
     "ember-auto-import": "^2.8.1",
     "ember-cli": "^6.12.0",
