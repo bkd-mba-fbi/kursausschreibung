@@ -193,6 +193,11 @@ function addLessonsToEvents(lessons) {
     }
     
   });
+
+    Object.values(eventsById).forEach(function (event) {
+    event.lessons.sort((a, b) => new Date(a.DateTimeFrom) - new Date(b.DateTimeFrom));
+    event.lessonsCollaps = event.lessons.length > settings.howManyLessonsShow;
+  });
 }
 
 
