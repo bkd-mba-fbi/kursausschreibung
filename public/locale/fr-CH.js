@@ -121,8 +121,7 @@ window.kursausschreibung.locale['fr-CH'] = {
   fileTypePFInfo:
     "Après la sélection, une fenêtre de recadrage de l'image s'ouvre.",
   cropModalTitle: "Recadrer l'image",
-  cropModalHint:
-    "Choisissez la zone d'image souhaitée puis confirmez.",
+  cropModalHint: "Choisissez la zone d'image souhaitée puis confirmez.",
   cropModalCancel: 'Annuler',
   cropModalConfirm: 'Appliquer',
   cropModalPreviewAlt: 'Aperçu du cadrage',

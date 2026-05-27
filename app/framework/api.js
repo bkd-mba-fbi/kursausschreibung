@@ -17,7 +17,13 @@ let accessToken = null;
  * @param {object} data data for POST and PUT calls
  * @param {boolean} file for file upload change data and contentType
  */
-function ajax(method, relativeUrl, readableError = true, data = null, file = false) {
+function ajax(
+  method,
+  relativeUrl,
+  readableError = true,
+  data = null,
+  file = false
+) {
   autoCheckForLogin();
   accessToken = getAccessToken();
 

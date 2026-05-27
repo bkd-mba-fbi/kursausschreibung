@@ -25,12 +25,17 @@ module('Integration | Component | input/input-postal-code', function (hooks) {
     this.set('field', makeField());
     await render(hbs`{{input/input-postal-code field=this.field}}`);
 
-    const input = find('input.typeaheadZip');
+    const input = find('input.postal-code-combobox__input');
     assert.ok(input, 'postal code input is rendered');
     assert.equal(
       input.getAttribute('type'),
       'text',
       'postal code input uses text type'
+    );
+    assert.equal(
+      input.getAttribute('name'),
+      'ZipCode',
+      'postal code input uses field id as name'
     );
   });
 
@@ -38,8 +43,12 @@ module('Integration | Component | input/input-postal-code', function (hooks) {
     this.set('field', makeField({ placeholder: '8000' }));
     await render(hbs`{{input/input-postal-code field=this.field}}`);
 
-    // Typeahead.js may strip placeholder from the decorated input; verify the element exists.
-    const el = find('input.typeaheadZip') || find('.tt-input');
-    assert.ok(el, 'postal code typeahead element exists');
+    const input = find('input.postal-code-combobox__input');
+    assert.ok(input, 'postal code input exists');
+    assert.equal(
+      input.getAttribute('placeholder'),
+      '8000',
+      'postal code input renders placeholder'
+    );
   });
 });
