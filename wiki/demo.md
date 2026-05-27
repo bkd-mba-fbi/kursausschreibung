@@ -77,9 +77,8 @@ In short:
   - Prettier 3: broad formatting churn, move to dedicated PR.
 
 # Pull Request
-- Should I integrate changes from master to ember-upgrade branch?
-- Should I continue or do a PR?
-- Pull request into which branch? Who does review how?
+- Should I integrate changes from dev to ember-upgrade branch?
+- PR to DEV
 - What happens after merge?
   - GitHub Action: Should work, changed to node 18
 
