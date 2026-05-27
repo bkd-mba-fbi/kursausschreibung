@@ -5,6 +5,7 @@ import { getAccessToken } from './storage';
 import { Promise } from 'rsvp';
 import { getCorrectApiUrl } from './url-helpers';
 import { getString } from 'kursausschreibung/framework/translate';
+import { autoCheckForLogin } from './login-helpers';
 
 let accessToken = null;
 
@@ -16,14 +17,9 @@ let accessToken = null;
  * @param {object} data data for POST and PUT calls
  * @param {boolean} file for file upload change data and contentType
  */
-function ajax(
-  method,
-  relativeUrl,
-  readableError = true,
-  data = null,
-  file = false
-) {
-  if (accessToken === null) accessToken = getAccessToken();
+function ajax(method, relativeUrl, readableError = true, data = null, file = false) {
+  autoCheckForLogin();
+  accessToken = getAccessToken();
 
   let headers = {
     Authorization: `Bearer ${accessToken}`,
