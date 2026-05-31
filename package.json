@@ -76,7 +76,7 @@
     "webpack": "^5.78.0"
   },
   "engines": {
-    "node": ">= 18"
+    "node": ">= 20"
   },
   "overrides": {
     "testem": "3.18.0",
