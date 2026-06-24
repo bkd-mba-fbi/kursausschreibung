@@ -24,6 +24,16 @@ function makeEvent(overrides = {}) {
 module('Integration | Component | event-details-table', function (hooks) {
   setupRenderingTest(hooks);
 
+  hooks.beforeEach(function () {
+    window.kursausschreibung = window.kursausschreibung || {};
+    window.kursausschreibung.settings = window.kursausschreibung.settings || {};
+    Object.assign(window.kursausschreibung.settings, {
+      eventDetailsFields: ['DateFrom', 'DateTo', 'Leadership', 'BuildingAddress', 'Price'],
+      eventDetailsTitle: 'Designation',
+      showEventText: true,
+    });
+  });
+
   test('renders detail rows from configured event fields', async function (assert) {
     this.set('event', makeEvent());
 

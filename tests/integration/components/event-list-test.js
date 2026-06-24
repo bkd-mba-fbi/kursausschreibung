@@ -28,6 +28,17 @@ function makeEvent(overrides = {}) {
 module('Integration | Component | event-list', function (hooks) {
   setupRenderingTest(hooks);
 
+  hooks.beforeEach(function () {
+    window.kursausschreibung = window.kursausschreibung || {};
+    window.kursausschreibung.settings = window.kursausschreibung.settings || {};
+    Object.assign(window.kursausschreibung.settings, {
+      eventListFields: ['SubscriptionFrom', 'LanguageOfInstruction', 'BuildingAddress', 'Location', 'Price'],
+      eventListTitle: 'Designation',
+      itemsPerPage: 10,
+      displayGrid: false,
+    });
+  });
+
   test('renders search and sort controls', async function (assert) {
     this.set('events', []);
     this.set('page', 1);

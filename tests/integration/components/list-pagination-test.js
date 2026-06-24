@@ -15,17 +15,26 @@ function makeItems(count) {
 module('Integration | Component | list-pagination', function (hooks) {
   setupRenderingTest(hooks);
 
+  hooks.beforeEach(function () {
+    window.kursausschreibung = window.kursausschreibung || {};
+    window.kursausschreibung.settings = window.kursausschreibung.settings || {};
+    Object.assign(window.kursausschreibung.settings, {
+      itemsPerPage: 10,
+      displayGrid: false,
+    });
+  });
+
   test('yields first page items according to settings.itemsPerPage', async function (assert) {
     this.set('items', makeItems(12));
     this.set('page', 1);
     this.set('route', 'index');
 
     await render(hbs`
-      {{#list-pagination items=this.items page=this.page route=this.route as |eventsOnCurrentPage|}}
+      <ListPagination @items={{this.items}} @page={{this.page}} @route={{this.route}} as |eventsOnCurrentPage|>
         {{#each eventsOnCurrentPage as |event|}}
           <li class="page-item">{{event.title}}</li>
         {{/each}}
-      {{/list-pagination}}
+      </ListPagination>
     `);
 
     assert
@@ -40,11 +49,11 @@ module('Integration | Component | list-pagination', function (hooks) {
     this.set('route', 'index');
 
     await render(hbs`
-      {{#list-pagination items=this.items page=this.page route=this.route as |eventsOnCurrentPage|}}
+      <ListPagination @items={{this.items}} @page={{this.page}} @route={{this.route}} as |eventsOnCurrentPage|>
         {{#each eventsOnCurrentPage as |event|}}
           <li class="page-item">{{event.title}}</li>
         {{/each}}
-      {{/list-pagination}}
+      </ListPagination>
     `);
 
     assert

@@ -27,6 +27,15 @@ function makeEvent(overrides = {}) {
 module('Integration | Component | event-list-item', function (hooks) {
   setupRenderingTest(hooks);
 
+  hooks.beforeEach(function () {
+    window.kursausschreibung = window.kursausschreibung || {};
+    window.kursausschreibung.settings = window.kursausschreibung.settings || {};
+    Object.assign(window.kursausschreibung.settings, {
+      eventListFields: ['SubscriptionFrom', 'LanguageOfInstruction', 'BuildingAddress', 'Location', 'Price'],
+      eventListTitle: 'Designation',
+    });
+  });
+
   test('renders the event title in the heading', async function (assert) {
     this.set('event', makeEvent());
 
