@@ -28,7 +28,13 @@ module('Integration | Component | event-details-table', function (hooks) {
     window.kursausschreibung = window.kursausschreibung || {};
     window.kursausschreibung.settings = window.kursausschreibung.settings || {};
     Object.assign(window.kursausschreibung.settings, {
-      eventDetailsFields: ['DateFrom', 'DateTo', 'Leadership', 'BuildingAddress', 'Price'],
+      eventDetailsFields: [
+        'DateFrom',
+        'DateTo',
+        'Leadership',
+        'BuildingAddress',
+        'Price',
+      ],
       eventDetailsTitle: 'Designation',
       showEventText: true,
     });

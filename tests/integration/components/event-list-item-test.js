@@ -31,7 +31,13 @@ module('Integration | Component | event-list-item', function (hooks) {
     window.kursausschreibung = window.kursausschreibung || {};
     window.kursausschreibung.settings = window.kursausschreibung.settings || {};
     Object.assign(window.kursausschreibung.settings, {
-      eventListFields: ['SubscriptionFrom', 'LanguageOfInstruction', 'BuildingAddress', 'Location', 'Price'],
+      eventListFields: [
+        'SubscriptionFrom',
+        'LanguageOfInstruction',
+        'BuildingAddress',
+        'Location',
+        'Price',
+      ],
       eventListTitle: 'Designation',
     });
   });
