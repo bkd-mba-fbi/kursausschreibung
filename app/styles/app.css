@@ -150,6 +150,40 @@
   color: #4f5b6c;
 }
 
+.uk-scope .freeform-typeahead {
+  position: relative;
+}
+
+.uk-scope .freeform-typeahead__menu {
+  position: absolute;
+  z-index: 50;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  max-height: 15rem;
+  overflow-y: auto;
+  border: 1px solid #cfd6e4;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 12px 30px rgba(15, 18, 24, 0.12);
+}
+
+.uk-scope .freeform-typeahead__suggestion {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.uk-scope .freeform-typeahead__suggestion:hover,
+.uk-scope .freeform-typeahead__suggestion.is-active {
+  background: #eaf3ff;
+}
+
 .uk-scope #subscriptionProcess {
   padding: 20px 0 20px 0;
   border-bottom: 1px solid #e5e5e5;

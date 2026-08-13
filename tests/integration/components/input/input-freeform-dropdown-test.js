@@ -1,6 +1,12 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, find } from '@ember/test-helpers';
+import {
+  render,
+  find,
+  findAll,
+  fillIn,
+  triggerEvent,
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 function makeField(overrides = {}) {
@@ -43,6 +49,39 @@ module(
       // Typeahead.js may clear placeholder on the decorated input; check the hint mirror instead.
       const el = find('input.typeahead') || find('.tt-input');
       assert.ok(el, 'typeahead input element exists');
+    });
+
+    test('shows matching suggestions while typing', async function (assert) {
+      this.set('field', makeField());
+      await render(hbs`{{input/input-freeform-dropdown field=this.field}}`);
+      await fillIn('input.typeahead', 'ber');
+
+      assert.deepEqual(
+        findAll('.freeform-typeahead__suggestion').map((el) =>
+          el.textContent.trim()
+        ),
+        ['Bern']
+      );
+    });
+
+    test('applies a suggestion when it is clicked', async function (assert) {
+      this.set('field', makeField());
+      await render(hbs`{{input/input-freeform-dropdown field=this.field}}`);
+      await fillIn('input.typeahead', 'ber');
+      await triggerEvent('.freeform-typeahead__suggestion', 'mousedown');
+
+      assert.dom('input.typeahead').hasValue('Bern');
+      assert.dom('.freeform-typeahead__menu').doesNotExist();
+    });
+
+    // it's a combobox, free text has to survive
+    test('keeps a value that is not in the options', async function (assert) {
+      this.set('field', makeField());
+      await render(hbs`{{input/input-freeform-dropdown field=this.field}}`);
+      await fillIn('input.typeahead', 'Freitext');
+      await triggerEvent('input.typeahead', 'focusout');
+
+      assert.dom('input.typeahead').hasValue('Freitext');
     });
   }
 );
