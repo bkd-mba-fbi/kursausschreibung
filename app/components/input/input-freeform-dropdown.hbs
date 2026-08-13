@@ -1,2 +1,37 @@
-<input id="vss{{@field.id}}" class="uk-input typeahead" type="text" name={{@field.id}} required={{@field.options.required}}
-  autocomplete={{@field.options.autocomplete}} disabled={{@field.options.disabled}} placeholder={{@field.placeholder}} {{on "focusout" this.handleFocusOut}}>
+<div class="freeform-combobox">
+  <input
+    id="vss{{@field.id}}"
+    class="uk-input typeahead freeform-combobox__input"
+    type="text"
+    name={{@field.id}}
+    required={{@field.options.required}}
+    autocomplete={{@field.options.autocomplete}}
+    disabled={{@field.options.disabled}}
+    placeholder={{@field.placeholder}}
+    role="combobox"
+    aria-autocomplete="list"
+    aria-expanded={{if this.isOpen "true" "false"}}
+    aria-controls={{this.listId}}
+    aria-activedescendant={{this.activeSuggestionId}}
+    {{on "input" this.handleInput}}
+    {{on "keydown" this.handleKeyDown}}
+    {{on "focus" this.handleFocus}}
+    {{on "focusout" this.handleFocusOut}}
+  >
+
+  {{#if this.isOpen}}
+    <div id={{this.listId}} class="freeform-combobox__list" role="listbox">
+      {{#each this.suggestions as |item index|}}
+        <button
+          id={{concat this.listId "-" index}}
+          type="button"
+          class="freeform-combobox__option {{if (this.isActiveSuggestion index) "is-active"}}"
+          role="option"
+          aria-selected={{if (this.isActiveSuggestion index) "true" "false"}}
+          data-suggestion-index={{index}}
+          {{on "mousedown" this.handleSuggestionMouseDown}}
+        >{{item}}</button>
+      {{/each}}
+    </div>
+  {{/if}}
+</div>
