@@ -1,6 +1,5 @@
 /* loosely based on the CLX framework */
 
-import $ from 'jquery';
 import { getCulture, setCulture } from './storage';
 import appConfig from './app-config';
 
@@ -23,7 +22,7 @@ export function setLanguage(newLanguage) {
   setCulture(newLanguage);
 
   if (newLanguage !== getLanguage()) {
-    window.location.assign(location.href);
+    window.location.reload();
   }
 }
 
@@ -45,7 +44,6 @@ export function getString(key, placeholderValues = []) {
     });
 
     return string;
-
   } catch (ex) {
     console.error('translate ERROR:', ex); // eslint-disable-line no-console
     return '<span style="color:red;">error in translation.</span>';
@@ -57,7 +55,7 @@ export function getString(key, placeholderValues = []) {
  */
 function detectLanguage() {
   // first priority: html lang attribute
-  let htmlLang = $('html').attr('lang');
+  let htmlLang = document.documentElement.lang;
 
   if (htmlLang === 'de') {
     return 'de-CH';

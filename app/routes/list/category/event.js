@@ -1,7 +1,7 @@
 import Route from '@ember/routing/route';
 import { underscore } from '@ember/string';
 import store from 'kursausschreibung/framework/store';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 
 export default class event extends Route {
   @service router;
@@ -23,4 +23,4 @@ export default class event extends Route {
 
     return event;
   }
-};
+}

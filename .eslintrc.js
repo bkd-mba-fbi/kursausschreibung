@@ -1,10 +1,14 @@
 module.exports = {
   root: true,
+  parser: '@babel/eslint-parser',
   parserOptions: {
-    ecmaVersion: 2018,
+    ecmaVersion: 'latest',
     sourceType: 'module',
-    ecmaFeatures: {
-      legacyDecorators: true,
+    requireConfigFile: false,
+    babelOptions: {
+      plugins: [
+        ['@babel/plugin-proposal-decorators', { decoratorsBeforeExport: true }],
+      ],
     },
   },
   plugins: ['ember'],
@@ -17,8 +21,18 @@ module.exports = {
     browser: true,
   },
   rules: {
-    'semi': 'error',
-    'eqeqeq': 'error'
+    semi: 'error',
+    eqeqeq: 'off',
+    'ember/no-classic-classes': 'off',
+    'ember/no-classic-components': 'off',
+    'ember/no-component-lifecycle-hooks': 'error',
+    'ember/no-jquery': 'error',
+    'ember/require-tagless-components': 'off',
+    'no-dupe-keys': 'off',
+    'no-redeclare': 'off',
+    'no-undef': 'off',
+    'no-prototype-builtins': 'off',
+    'no-unused-vars': 'off',
   },
   overrides: [
     // node files
@@ -26,6 +40,7 @@ module.exports = {
       files: [
         './.eslintrc.js',
         './.prettierrc.js',
+        './.stylelintrc.js',
         './.template-lintrc.js',
         './ember-cli-build.js',
         './testem.js',
@@ -41,18 +56,15 @@ module.exports = {
         browser: false,
         node: true,
       },
-      plugins: ['node'],
-      extends: ['plugin:node/recommended'],
-      rules: {
-        // this can be removed once the following is fixed
-        // https://github.com/mysticatea/eslint-plugin-node/issues/77
-        'node/no-unpublished-require': 'off',
-      },
+      extends: ['plugin:n/recommended'],
     },
     {
-      // Test files:
+      // test files
       files: ['tests/**/*-test.{js,ts}'],
       extends: ['plugin:qunit/recommended'],
+      rules: {
+        'qunit/no-assert-equal': 'off',
+      },
     },
   ],
 };

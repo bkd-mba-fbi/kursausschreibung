@@ -1,0 +1,15 @@
+<div class="freeform-typeahead">
+  <input id="vss{{@field.id}}" class="uk-input typeahead" type="text" name={{@field.id}} required={{@field.options.required}}
+    autocomplete={{@field.options.autocomplete}} disabled={{@field.options.disabled}} placeholder={{@field.placeholder}}
+    {{on "input" this.handleInput}} {{on "focus" this.handleFocus}} {{on "keydown" this.handleKeyDown}} {{on "focusout" this.handleFocusOut}}>
+
+  {{#if this.isOpen}}
+    <div class="freeform-typeahead__menu">
+      {{#each this.suggestions as |suggestion index|}}
+        <button type="button" tabindex="-1" data-index={{index}}
+          class="freeform-typeahead__suggestion {{if (this.isActive index) "is-active"}}"
+          {{on "mousedown" this.handleSuggestionMouseDown}}>{{suggestion}}</button>
+      {{/each}}
+    </div>
+  {{/if}}
+</div>

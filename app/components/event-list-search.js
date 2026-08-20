@@ -1,90 +1,94 @@
-import Component from '@ember/component';
-import { oneWay } from '@ember/object/computed';
-import { observer } from '@ember/object';
-import { setParameterByName, getParameterByName } from 'kursausschreibung/framework/url-helpers';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
+import { modifier } from 'ember-modifier';
+import {
+  setParameterByName,
+  getParameterByName,
+} from 'kursausschreibung/framework/url-helpers';
 import { sortAs } from '../framework/gui-helpers';
 import { getSortAs } from '../framework/storage';
 import settings from '../framework/settings';
 import { getString } from '../framework/translate';
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
+import config from '../config/environment';
 
 // tests if a query matches a value
 function match(value, query) {
-  
   if (typeof value === 'object' && value !== null) {
     value = Object.values(value).join('|');
-  } 
-    
-  return (
-    typeof value === 'string' &&
-    value.toLowerCase().indexOf(query) !== -1
-  );
+  }
+
+  return typeof value === 'string' && value.toLowerCase().indexOf(query) !== -1;
 }
 
-export default Component.extend({
-  query: getParameterByName('search'),
-  // update the filtered events when the events change
-  eventsChanged: observer('events', function () {
-    this.send('queryChanged');
-  }),
-   
-  willRender() {
-    //only on first page. filter eventcode
-    if  (this.get('parentView').page === 1){
-      this.send('queryChanged');
-    }
-    
+export default class EventListSearchComponent extends Component {
+  @tracked query = getParameterByName('search');
+
+  get sortOptions() {
     let options = '';
-    if(settings.sortOptions === undefined) {
-      options = '<option value=error>configure key sortoptions array in settings</option>';
+
+    if (settings.sortOptions === undefined) {
+      options =
+        '<option value=error>configure key sortoptions array in settings</option>';
     } else {
-      settings.sortOptions.forEach(option => {
-        options = options + '<option value='+option+'>'+getString("sort"+option)+'</option>';
-      }); 
+      settings.sortOptions.forEach((option) => {
+        options =
+          options +
+          '<option value=' +
+          option +
+          '>' +
+          getString('sort' + option) +
+          '</option>';
+      });
     }
-    this.set('sortOptions',htmlSafe(options));
-  }, 
 
-  didRender() {
-    document.getElementById('sortList').value = getSortAs();
-  },
+    return htmlSafe(options);
+  }
 
-  filteredEvents: oneWay('events'),
-
-  keyUp(){
-    this.set('query',document.getElementById('searchEvents').value)
-    setParameterByName('search',this.get('query'));
-    this.send('queryChanged');
-  },
-
-  actions: {
-    clearSearch() {
-      this.set('query','');
-      setParameterByName('search','');
-    },
-
-    queryChanged() {
-      let query = this.get('query');
-      query = query === null ? '' : query.toLowerCase();
-      // don't filter the events when the query is empty
-      if (query === '') {
-        this.set('filteredEvents', this.get('events'));
-        return;
-      }
-
-      this.set('filteredEvents', this.get('events')
-        // search the query string in event-properties and memo-texts
-        .filter(event => (
-          Object.keys(event).some(key => match(event[key], query)) ||
-          event.texts.some(text => match(text.memo, query))
-        ))
-      );
-
-      this.get('queryChanged')(query);
-    },
-    sortBy(value) {
-      sortAs(value);
+  get filteredEvents() {
+    let events = this.args.events ?? [];
+    let query = (this.query ?? '').toLowerCase();
+    if (!query) {
+      return events;
     }
-  },
+    return events.filter(
+      (event) =>
+        Object.keys(event).some((key) => match(event[key], query)) ||
+        event.texts.some((text) => match(text.memo, query))
+    );
+  }
 
-});
+  syncSort = modifier((element) => {
+    if (config.environment !== 'test') {
+      element.value = getSortAs();
+    }
+  });
+
+  @action
+  handleKeyUp(event) {
+    this.query = event.target.value;
+    if (config.environment !== 'test') {
+      setParameterByName('search', this.query);
+    }
+    if (typeof this.args.queryChanged === 'function') {
+      this.args.queryChanged(this.query);
+    }
+  }
+
+  @action
+  clearSearch() {
+    this.query = '';
+    if (config.environment !== 'test') {
+      setParameterByName('search', '');
+    }
+    if (typeof this.args.queryChanged === 'function') {
+      this.args.queryChanged('');
+    }
+  }
+
+  @action
+  handleSortByChange(event) {
+    sortAs(event.target.value);
+  }
+}

@@ -1,26 +1,40 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | input/input-textarea', function(hooks) {
+function makeField(overrides = {}) {
+  return Object.assign(
+    {
+      id: 'Remarks',
+      placeholder: '',
+      options: { required: false, disabled: false, autocomplete: 'off' },
+    },
+    overrides
+  );
+}
+
+module('Integration | Component | input/input-textarea', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
+  test('renders a textarea with the field name', async function (assert) {
+    this.set('field', makeField());
+    await render(hbs`{{input/input-textarea field=this.field}}`);
 
-    await render(hbs`{{input/input-textarea}}`);
+    const ta = find('textarea');
+    assert.ok(ta, 'textarea is rendered');
+    assert.equal(ta.getAttribute('name'), 'Remarks', 'name matches field id');
+  });
 
-    assert.equal(this.element.textContent.trim(), '');
+  test('renders as disabled when field.options.disabled is true', async function (assert) {
+    this.set(
+      'field',
+      makeField({
+        options: { required: false, disabled: true, autocomplete: 'off' },
+      })
+    );
+    await render(hbs`{{input/input-textarea field=this.field}}`);
 
-    // Template block usage:
-    await render(hbs`
-      {{#input/input-textarea}}
-        template block text
-      {{/input/input-textarea}}
-    `);
-
-    assert.equal(this.element.textContent.trim(), 'template block text');
+    assert.dom('textarea').isDisabled('textarea is disabled');
   });
 });

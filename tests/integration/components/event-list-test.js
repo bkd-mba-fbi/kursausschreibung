@@ -1,26 +1,114 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | event-list', function(hooks) {
+function makeEvent(overrides = {}) {
+  return Object.assign(
+    {
+      Id: 1,
+      status: 'green',
+      filter: '',
+      subtitle: null,
+      codes: null,
+      texts: [{ memo: '' }],
+      displayData: {
+        Designation: 'Test Event',
+        SubscriptionFrom: '01.01.2025',
+        LanguageOfInstruction: 'Deutsch',
+        BuildingAddress: 'Teststrasse 1',
+        Location: 'Bern',
+        Price: '100 CHF',
+      },
+    },
+    overrides
+  );
+}
+
+module('Integration | Component | event-list', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
+  hooks.beforeEach(function () {
+    window.kursausschreibung = window.kursausschreibung || {};
+    window.kursausschreibung.settings = window.kursausschreibung.settings || {};
+    Object.assign(window.kursausschreibung.settings, {
+      eventListFields: [
+        'SubscriptionFrom',
+        'LanguageOfInstruction',
+        'BuildingAddress',
+        'Location',
+        'Price',
+      ],
+      eventListTitle: 'Designation',
+      itemsPerPage: 10,
+      displayGrid: false,
+    });
+  });
 
-    await render(hbs`{{event-list}}`);
+  test('renders search and sort controls', async function (assert) {
+    this.set('events', []);
+    this.set('page', 1);
+    this.set('route', 'list.index');
+    this.set('queryChanged', () => {});
 
-    assert.equal(this.element.textContent.trim(), '');
-
-    // Template block usage:
     await render(hbs`
-      {{#event-list}}
-        template block text
-      {{/event-list}}
+      <EventList
+        @events={{this.events}}
+        @page={{this.page}}
+        @route={{this.route}}
+        @queryChanged={{this.queryChanged}}
+      />
     `);
 
-    assert.equal(this.element.textContent.trim(), 'template block text');
+    assert.dom('#searchEvents').exists('search input is rendered');
+    assert.dom('#sortList').exists('sort dropdown is rendered');
+  });
+
+  test('renders titles for each event on the first page', async function (assert) {
+    this.set('events', [
+      makeEvent({
+        Id: 11,
+        displayData: {
+          Designation: 'Kurs Alpha',
+          SubscriptionFrom: '01.01.2025',
+          LanguageOfInstruction: 'Deutsch',
+          BuildingAddress: 'A',
+          Location: 'Bern',
+          Price: '100 CHF',
+        },
+      }),
+      makeEvent({
+        Id: 12,
+        displayData: {
+          Designation: 'Kurs Beta',
+          SubscriptionFrom: '02.01.2025',
+          LanguageOfInstruction: 'Deutsch',
+          BuildingAddress: 'B',
+          Location: 'Bern',
+          Price: '120 CHF',
+        },
+      }),
+    ]);
+    this.set('page', 1);
+    this.set('route', 'list.index');
+    this.set('queryChanged', () => {});
+
+    await render(hbs`
+      <EventList
+        @events={{this.events}}
+        @page={{this.page}}
+        @route={{this.route}}
+        @queryChanged={{this.queryChanged}}
+      />
+    `);
+
+    assert.ok(
+      this.element.textContent.includes('Kurs Alpha'),
+      'first event title is rendered'
+    );
+    assert.ok(
+      this.element.textContent.includes('Kurs Beta'),
+      'second event title is rendered'
+    );
   });
 });

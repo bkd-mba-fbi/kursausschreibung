@@ -14,7 +14,7 @@ const formats = {
     L: 'dd.MM.yyyy',
     LL: 'EEEEEE, d. MMMM yyyy',
     LLL: 'EEEEEE, d. MMMM yyyy HH:mm',
-    LLLL: 'EEEE, d. MMMM yyyy HH:mm'
+    LLLL: 'EEEE, d. MMMM yyyy HH:mm',
   },
 
   'fr-CH': {
@@ -23,8 +23,8 @@ const formats = {
     L: 'dd.MM.yyyy',
     LL: 'EEEEEE, d MMMM yyyy',
     LLL: 'EEEEEE, d MMMM yyyy HH:mm',
-    LLLL: 'EEEE d MMMM yyyy HH:mm'
-  }
+    LLLL: 'EEEE d MMMM yyyy HH:mm',
+  },
 };
 
 const language = getLanguage();
@@ -36,14 +36,14 @@ const locale = language === 'de-CH' ? de : fr;
  * @param {string} formatString format or longDateFormat from moment.js
  */
 export function formatDate(date, formatString = '') {
-  if (date === null)
-    return null;
+  if (date === null) return null;
 
-  if (typeof date === 'string')
-    date = parseISO(date);
+  if (typeof date === 'string') date = parseISO(date);
 
-  formatString = formatString in formats[language] ?
-    formats[language][formatString] : formatString;
+  formatString =
+    formatString in formats[language]
+      ? formats[language][formatString]
+      : formatString;
 
   return format(date, formatString, { locale });
 }
@@ -60,8 +60,10 @@ export function isInSubscriptionRange(event) {
   if (event.SubscriptionFrom === null)
     return now.getTime() < event.SubscriptionTo.getTime();
 
-  return event.SubscriptionFrom.getTime() < now.getTime() &&
-    now.getTime() < event.SubscriptionTo.getTime();
+  return (
+    event.SubscriptionFrom.getTime() < now.getTime() &&
+    now.getTime() < event.SubscriptionTo.getTime()
+  );
 }
 
 /**
@@ -74,7 +76,10 @@ export function eventStarted(event) {
   if (event.DateFrom === null) {
     return true;
   }
-  let date = event.DateFrom <= event.SubscriptionDateTo ? event.SubscriptionDateTo : event.DateFrom;
+  let date =
+    event.DateFrom <= event.SubscriptionDateTo
+      ? event.SubscriptionDateTo
+      : event.DateFrom;
   return parseISO(date).getTime() >= now.getTime();
 }
 
@@ -91,7 +96,10 @@ export function eventEnded(event) {
     return false;
   }
 
-  dateTo = dateTo.search(repalcePattern) > 0 ? dateTo.replace(repalcePattern,event.TimeTo) : dateTo;
+  dateTo =
+    dateTo.search(repalcePattern) > 0
+      ? dateTo.replace(repalcePattern, event.TimeTo)
+      : dateTo;
   return parseISO(dateTo).getTime() <= now.getTime();
 }
 
@@ -103,7 +111,7 @@ export function eventEnded(event) {
  */
 export function combineDate(dateString, timeString) {
   try {
-    let [hours, minutes] = timeString.split(':').map(str => parseInt(str));
+    let [hours, minutes] = timeString.split(':').map((str) => parseInt(str));
     let date = parseISO(dateString);
     date.setHours(hours, minutes);
     return date;
@@ -141,7 +149,9 @@ export function getDMY(dateString) {
  * @param {string} dateString the date to convert
  */
 export function getYMD(dateString) {
-  return isDMY(dateString) ? dateString.split('.').reverse().join('-') : formatDate(dateString, 'yyyy-MM-dd');
+  return isDMY(dateString)
+    ? dateString.split('.').reverse().join('-')
+    : formatDate(dateString, 'yyyy-MM-dd');
 }
 
 /**
@@ -149,7 +159,9 @@ export function getYMD(dateString) {
  * @param {string} dateString the date to convert
  */
 export function getDateTimeForIcs(dateString) {
-  return dateString.replace(new RegExp('-', 'g'), '/').replace(new RegExp('T', 'g'), ' ');
+  return dateString
+    .replace(new RegExp('-', 'g'), '/')
+    .replace(new RegExp('T', 'g'), ' ');
 }
 
 /**
@@ -157,6 +169,6 @@ export function getDateTimeForIcs(dateString) {
  * @param {string} dateString YYYY-MM-DD
  */
 
-export function dateGreaterNow(date){
-    return parseISO(date) > Date.now() ? true : false;
+export function dateGreaterNow(date) {
+  return parseISO(date) > Date.now() ? true : false;
 }
