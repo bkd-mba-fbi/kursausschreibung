@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  
+
   <title>Kursausschreibung</title>
   <meta charset="utf-8">
 
@@ -11,9 +11,23 @@
   <meta name="mobile-ready" content="yes" id="mobile-indicator" />
   <meta name="Description" content="Kursmodul">
   <!-- MODULE head configuration -->
-  
-<meta name="kursausschreibung/config/environment" content="%7B%22modulePrefix%22%3A%22kursausschreibung%22%2C%22environment%22%3A%22production%22%2C%22rootURL%22%3A%22%22%2C%22locationType%22%3A%22hash%22%2C%22EmberENV%22%3A%7B%22FEATURES%22%3A%7B%7D%2C%22EXTEND_PROTOTYPES%22%3A%7B%22Date%22%3Afalse%7D%2C%22_APPLICATION_TEMPLATE_WRAPPER%22%3Afalse%2C%22_JQUERY_INTEGRATION%22%3Afalse%2C%22_TEMPLATE_ONLY_GLIMMER_COMPONENTS%22%3Atrue%7D%2C%22APP%22%3A%7B%22rootElement%22%3A%22%23kursausschreibung-root%22%2C%22name%22%3A%22kursausschreibung%22%2C%22version%22%3A%223.3.4%2B928748de%22%7D%2C%22exportApplicationGlobal%22%3Afalse%7D" />
-  <meta name="kursausschreibung/config/environment" content="%7B%22modulePrefix%22%3A%22kursausschreibung%22%2C%22environment%22%3A%22development%22%2C%22rootURL%22%3A%22%22%2C%22locationType%22%3A%22hash%22%2C%22EmberENV%22%3A%7B%22FEATURES%22%3A%7B%7D%2C%22EXTEND_PROTOTYPES%22%3A%7B%22Date%22%3Afalse%7D%7D%2C%22APP%22%3A%7B%22rootElement%22%3A%22%23kursausschreibung-root%22%2C%22name%22%3A%22kursausschreibung%22%2C%22version%22%3A%223.3.1%2Bfeef2e77%22%7D%2C%22exportApplicationGlobal%22%3Atrue%7D" />
+  <meta name="kursausschreibung/config/environment" content="%7B%22modulePrefix%22%3A%22kursausschreibung%22%2C%22environment%22%3A%22production%22%2C%22rootURL%22%3A%22%22%2C%22locationType%22%3A%22hash%22%2C%22exportApplicationGlobal%22%3Afalse%2C%22EmberENV%22%3A%7B%22EXTEND_PROTOTYPES%22%3Afalse%2C%22FEATURES%22%3A%7B%7D%2C%22_APPLICATION_TEMPLATE_WRAPPER%22%3Afalse%2C%22_JQUERY_INTEGRATION%22%3Afalse%2C%22_TEMPLATE_ONLY_GLIMMER_COMPONENTS%22%3Atrue%7D%2C%22APP%22%3A%7B%22rootElement%22%3A%22%23kursausschreibung-root%22%2C%22name%22%3A%22kursausschreibung%22%2C%22version%22%3A%223.3.4%2B8c543ecf%22%7D%7D" />
+  <meta name="{{modulePrefix}}/config/environment" content="var prefix = 'kursausschreibung';
+try {
+  var metaName = prefix + '/config/environment';
+  var rawConfig = document.querySelector('meta[name="' + metaName + '"]').getAttribute('content');
+  var config = JSON.parse(decodeURIComponent(rawConfig));
+
+  var exports = { 'default': config };
+
+  Object.defineProperty(exports, '__esModule', { value: true });
+
+  return exports;
+}
+catch(err) {
+  throw new Error('Could not read config from meta tag with name "' + metaName + '".');
+}
+" />
 
   <!-- CSS -->
   <link rel="stylesheet" href="assets/app.css">
@@ -28,16 +42,18 @@
 
   <!-- JS -->
   <script src="assets/vendor.js"></script>
+<script src="/assets/chunk.608.77c0c9b41e7f886dbec5.js"></script>
+<script src="/assets/chunk.524.d973f386519d92e1af1b.js"></script>
   <script src="assets/kursausschreibung.js"></script>
   <!-- MODULE head configuration -->
 
   <!--Interne Fortbildung exclude-->
   <script>
-    var i; 
-    var niveau = []; 
+    var i;
+    var niveau = [];
     for (i = 1; i < 2000; i++) {
         niveau.push(i);
-    } 
+    }
     window.kursausschreibung.settings.initialListFilters.eventLevelIds = niveau;
   </script>
   <style>
