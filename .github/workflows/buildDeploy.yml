@@ -35,6 +35,9 @@ jobs:
         (cd dist; zip --move --recurse-paths kursausschreibung.zip *)
         mv README.md dist
         mv dist/kursausschreibung.zip latest/
+        # ember-auto-import emits chunks with absolute /assets/ paths.
+        # Rewrite them relative so the app can be served from a subdirectory.
+        sed -i 's|src="/assets/|src="assets/|g' latest/index.html
 
     - name: Deploy latest 🚀
       uses: JamesIves/github-pages-deploy-action@4.1.4
