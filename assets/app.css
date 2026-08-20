@@ -12523,11 +12523,15 @@ iframe.uk-cover {
 
 .uk-scope .details-table td:last-child,
 .uk-scope .confirmation-table td:last-child {
-  /* pre-wrap keeps the line breaks from the event data, but makes the cell
-     claim the width of its longest line. Without the hard wrap and the width
-     constraint the table grows past its grid column and the content runs
-     under the legend. */
   white-space: pre-wrap;
+}
+
+/* pre-wrap makes the cell claim the width of its longest line, which grows
+   the table past its grid column and pushes content under the legend.
+   Excludes the card list, where the cells are display: block and a max-width
+   would collapse them to zero and break every word. */
+.uk-scope .details-table td:last-child,
+.uk-scope .confirmation-table td:last-child {
   overflow-wrap: break-word;
   max-width: 0;
   width: 100%;
@@ -12665,6 +12669,10 @@ iframe.uk-cover {
 
 .uk-scope .card-list .event-list-item .details-table td {
   display: block;
+  /* The cells are block level here, so the width constraint used for the
+     detail view would collapse them to zero and break every word. */
+  max-width: none;
+  width: auto;
 }
 
 /* mobile */
