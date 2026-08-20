@@ -85,14 +85,7 @@
 
 .uk-scope .details-table td:last-child,
 .uk-scope .confirmation-table td:last-child {
-  /* pre-wrap keeps the line breaks from the event data, but makes the cell
-     claim the width of its longest line. Without the hard wrap and the width
-     constraint the table grows past its grid column and the content runs
-     under the legend. */
   white-space: pre-wrap;
-  overflow-wrap: break-word;
-  max-width: 0;
-  width: 100%;
 }
 
 .uk-scope .details-table td {
