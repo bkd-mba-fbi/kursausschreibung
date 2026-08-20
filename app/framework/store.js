@@ -1,11 +1,23 @@
 import { A } from '@ember/array';
 import { underscore } from '@ember/string';
-import EmberObject, { computed } from '@ember/object';
-import $ from 'jquery';
-import { getEvents, getEvent, getLessons, getEventLocations, getEventTexts, getEventCodes } from './api';
+import {
+  getEvents,
+  getEvent,
+  getLessons,
+  getEventLocations,
+  getEventTexts,
+  getEventCodes,
+} from './api';
 import { isGreen, isChartreuse, isYellow, isRed } from './status';
 import ObjectProxy from '@ember/object/proxy';
-import { formatDate, combineDate, isInSubscriptionRange, removeMinutes, eventStarted, eventEnded } from './date-helpers';
+import {
+  formatDate,
+  combineDate,
+  isInSubscriptionRange,
+  removeMinutes,
+  eventStarted,
+  eventEnded,
+} from './date-helpers';
 import { all } from 'rsvp';
 import settings from './settings';
 import { getLanguage, getString } from './translate';
@@ -59,15 +71,14 @@ export function init() {
     getLessons(),
     getEventLocations(),
     getEventTexts(language),
-    getEventCodes()
-  ]).then(function ([events, lessons, eventLocations, eventTexts, eventCodes]) {   
-
-     // filter events
+    getEventCodes(),
+  ]).then(function ([events, lessons, eventLocations, eventTexts, eventCodes]) {
+    // filter events
     events = filterEvents(events, language, eventCodes);
 
     // sort events
     var sortAs = getSortAs();
-    if(sortAs === null) {
+    if (sortAs === null) {
       if (settings.sortEventList !== null) {
         events = A(events).sortBy(settings.sortEventList);
       }
@@ -92,11 +103,18 @@ export function init() {
 
     // sort areaKeys
     eventsByArea.areaKeys = Object.keys(eventsByArea.areas).sort();
-    eventsByArea.moreOneAreaKeys = eventsByArea.areaKeys.length === 1 && settings.eventCategoryDropdown === false ? false : true;
+    eventsByArea.moreOneAreaKeys =
+      eventsByArea.areaKeys.length === 1 &&
+      settings.eventCategoryDropdown === false
+        ? false
+        : true;
 
     // sort categoryKeys
-    eventsByArea.areaKeys.forEach(area =>
-      eventsByArea.areas[area].categoryKeys = Object.keys(eventsByArea.areas[area].categories).sort()
+    eventsByArea.areaKeys.forEach(
+      (area) =>
+        (eventsByArea.areas[area].categoryKeys = Object.keys(
+          eventsByArea.areas[area].categories
+        ).sort())
     );
 
     initialized = true;
@@ -125,7 +143,7 @@ function addTextsToEvents(eventTexts, language) {
       text = eventsById[textItem.EventId].texts[textItem.Number] = {
         label: null,
         memo: null,
-        id: textItem.Number
+        id: textItem.Number,
       };
     }
 
@@ -134,8 +152,11 @@ function addTextsToEvents(eventTexts, language) {
 
   // if the 13th event text is an url it is used to subscribe to the event
   // see: https://github.com/bkd-mba-fbi/kursausschreibung/issues/67
-  eventsById.forEach(event => {
-    if (event.texts.length >= 14 && /^https?:\/\/[^ ]+$/.test(event.texts[13].memo)) {
+  eventsById.forEach((event) => {
+    if (
+      event.texts.length >= 14 &&
+      /^https?:\/\/[^ ]+$/.test(event.texts[13].memo)
+    ) {
       event.externalSubscriptionURL = event.texts[13].memo;
       event.texts[13].memo = null;
     } else {
@@ -145,10 +166,10 @@ function addTextsToEvents(eventTexts, language) {
 
   // remove texts with empty label or memo
   eventsById.forEach(
-    event =>
-      event.texts = event.texts.filter(
-        text => text.label !== null && text.memo !== null
-      )
+    (event) =>
+      (event.texts = event.texts.filter(
+        (text) => text.label !== null && text.memo !== null
+      ))
   );
 }
 
@@ -166,7 +187,7 @@ function addLocationsToEvents(eventLocations) {
 
     // don't overwrite the event-Id
     delete location.Id;
-    eventsById[eventId] = $.extend(eventsById[eventId], location);
+    eventsById[eventId] = Object.assign({}, eventsById[eventId], location);
   });
 }
 
@@ -175,7 +196,6 @@ function addLocationsToEvents(eventLocations) {
  * @param {object[]} lessons lessons returned by the API
  */
 function addLessonsToEvents(lessons) {
-
   lessons.forEach(function (lesson) {
     if (!eventsById.hasOwnProperty(lesson.EventId)) {
       return;
@@ -186,43 +206,46 @@ function addLessonsToEvents(lessons) {
     lesson.TimeTo = formatDate(lesson.DateTimeTo, 'LT');
 
     eventsById[lesson.EventId].lessons.push(lesson);
-    if (eventsById[lesson.EventId].lessons.length > settings.howManyLessonsShow) {
+    if (
+      eventsById[lesson.EventId].lessons.length > settings.howManyLessonsShow
+    ) {
       eventsById[lesson.EventId].lessonsCollaps = true;
     } else {
       eventsById[lesson.EventId].lessonsCollaps = false;
     }
-    
   });
 
-    Object.values(eventsById).forEach(function (event) {
-    event.lessons.sort((a, b) => new Date(a.DateTimeFrom) - new Date(b.DateTimeFrom));
+  Object.values(eventsById).forEach(function (event) {
+    event.lessons.sort(
+      (a, b) => new Date(a.DateTimeFrom) - new Date(b.DateTimeFrom)
+    );
     event.lessonsCollaps = event.lessons.length > settings.howManyLessonsShow;
   });
 }
-
 
 /**
  * add Codes to events
  * @param {object[]} eventCodes eventCodes returned by the API
  */
- function addCodesToEvents(eventCodes) {
-
+function addCodesToEvents(eventCodes) {
   // add all codes to event
   let prefix = 'FilterTag';
   let filterCodes = [];
   let codeIds = [];
   eventCodes.forEach(function (code) {
-
-    if (codeIds.find(ids => ids === code.CodeId) === undefined) {
+    if (codeIds.find((ids) => ids === code.CodeId) === undefined) {
       codeIds.push(code.CodeId);
-      let codeName = getString(prefix+code.CodeId).indexOf('<span style="color:red;">Key not found:') >= 0 ? code.Code : getString(prefix+code.CodeId);
-      filterCodes.push({id: code.CodeId, Code: codeName }); 
-    }  
-
+      let codeName =
+        getString(prefix + code.CodeId).indexOf(
+          '<span style="color:red;">Key not found:'
+        ) >= 0
+          ? code.Code
+          : getString(prefix + code.CodeId);
+      filterCodes.push({ id: code.CodeId, Code: codeName });
+    }
   });
 
   eventCodes.forEach(function (code) {
-    
     if (!eventsById.hasOwnProperty(code.EventId)) {
       return;
     }
@@ -230,16 +253,17 @@ function addLessonsToEvents(lessons) {
     if (eventsById[code.EventId].codes === undefined) {
       eventsById[code.EventId].codes = [];
     }
-    
+
     eventsById[code.EventId].codes.push(code);
 
     // adds filter tag
     let filter = eventsById[code.EventId].filter;
-    eventsById[code.EventId].filter = filter === undefined ? 'tag'+code.CodeId : filter + ' tag'+code.CodeId;
+    eventsById[code.EventId].filter =
+      filter === undefined
+        ? 'tag' + code.CodeId
+        : filter + ' tag' + code.CodeId;
     eventsById[code.EventId].allfilterCodes = filterCodes;
-
   });
-
 }
 
 /**
@@ -252,56 +276,84 @@ function filterEvents(events, language, eventCodes) {
 
   // backwards compatibility fallback for single hostId filter
   if (settings.hostIds instanceof Array) {
-    events = events.filter(event => settings.hostIds.indexOf(event.HostId) !== -1);
+    events = events.filter(
+      (event) => settings.hostIds.indexOf(event.HostId) !== -1
+    );
   }
   // or use initialListFilters array
   else if (settings.initialListFilters instanceof Object) {
     if (settings.initialListFilters.hostIds instanceof Array) {
-      events = events.filter(event => settings.initialListFilters.hostIds.indexOf(event.HostId) !== -1);
+      events = events.filter(
+        (event) =>
+          settings.initialListFilters.hostIds.indexOf(event.HostId) !== -1
+      );
     }
 
     if (settings.initialListFilters.eventCategoryIds instanceof Array) {
-      events = events.filter(event => settings.initialListFilters.eventCategoryIds.indexOf(event.EventCategoryId) !== -1);
+      events = events.filter(
+        (event) =>
+          settings.initialListFilters.eventCategoryIds.indexOf(
+            event.EventCategoryId
+          ) !== -1
+      );
     }
 
     if (settings.initialListFilters.eventLevelIds instanceof Array) {
-      events = events.filter(event => settings.initialListFilters.eventLevelIds.indexOf(event.EventLevelId) !== -1);
+      events = events.filter(
+        (event) =>
+          settings.initialListFilters.eventLevelIds.indexOf(
+            event.EventLevelId
+          ) !== -1
+      );
     }
 
     if (settings.initialListFilters.eventTypeIds instanceof Array) {
-      events = events.filter(event => settings.initialListFilters.eventTypeIds.indexOf(event.EventTypeId) !== -1);
+      events = events.filter(
+        (event) =>
+          settings.initialListFilters.eventTypeIds.indexOf(
+            event.EventTypeId
+          ) !== -1
+      );
     }
 
     if (settings.initialListFilters.statusIds instanceof Array) {
-      events = events.filter(event => settings.initialListFilters.statusIds.indexOf(event.StatusId) !== -1);
+      events = events.filter(
+        (event) =>
+          settings.initialListFilters.statusIds.indexOf(event.StatusId) !== -1
+      );
     }
-    
+
     if (settings.initialListFilters.codeIds instanceof Array) {
-      eventCodes = eventCodes.filter(code => settings.initialListFilters.codeIds.indexOf(code.CodeId) !== -1);
+      eventCodes = eventCodes.filter(
+        (code) =>
+          settings.initialListFilters.codeIds.indexOf(code.CodeId) !== -1
+      );
       let codes = [];
-      eventCodes.forEach(eventcode => {
+      eventCodes.forEach((eventcode) => {
         codes.push(eventcode.EventId);
-      });  
-      events = events.filter(event => codes.indexOf(event.Id) !== -1);
+      });
+      events = events.filter((event) => codes.indexOf(event.Id) !== -1);
     }
-    
   }
 
   // filter out events with non-matching LanguageOfInstruction
   if (settings.languageOfInstructionFilter) {
-    events = events.filter(event => event.LanguageOfInstruction === 'Bilingue' ||
-      (event.LanguageOfInstruction === "1" && language === 'de-CH') ||
-      (event.LanguageOfInstruction === 'Deutsch' && language === 'de-CH') ||
-      (event.LanguageOfInstruction === "2" && language === 'en-US') ||
-      (event.LanguageOfInstruction === 'Französisch' && language === 'en-US'));
+    events = events.filter(
+      (event) =>
+        event.LanguageOfInstruction === 'Bilingue' ||
+        (event.LanguageOfInstruction === '1' && language === 'de-CH') ||
+        (event.LanguageOfInstruction === 'Deutsch' && language === 'de-CH') ||
+        (event.LanguageOfInstruction === '2' && language === 'en-US') ||
+        (event.LanguageOfInstruction === 'Französisch' && language === 'en-US')
+    );
   }
 
   if (settings.showStartedEvents) {
     // Filter out events which have not ended yet
-    events = events.filter(event => !eventEnded(event));
+    events = events.filter((event) => !eventEnded(event));
   } else {
     // Default behaviour, filter out events which have started
-    events = events.filter(event => eventStarted(event));
+    events = events.filter((event) => eventStarted(event));
   }
 
   return events;
@@ -314,7 +366,6 @@ function filterEvents(events, language, eventCodes) {
  * @param {object} event event returned by the API
  */
 function prepareEvent(event) {
-
   // add properties to the events
   addPropertiesToEvent(event);
 
@@ -326,7 +377,8 @@ function prepareEvent(event) {
 
   //event subtitle when > inside string
   let eventSubtitle = event.Designation.split(settings.eventSubtitle);
-  event.Designation = eventSubtitle.length > 1  ? eventSubtitle[0] : event.Designation;
+  event.Designation =
+    eventSubtitle.length > 1 ? eventSubtitle[0] : event.Designation;
   event.subtitle = eventSubtitle.length > 1 ? eventSubtitle[1] : null;
 
   // create an ember-object of the event
@@ -347,7 +399,7 @@ function putIntoAssocArrays(event) {
 
   // area
   let areaName = event.AreaOfEducation;
-  let areaKey = event.areaKey = underscore(areaName);
+  let areaKey = (event.areaKey = underscore(areaName));
 
   if (!eventsByArea.areas.hasOwnProperty(areaKey)) {
     eventsByArea.areas[areaKey] = {
@@ -355,31 +407,45 @@ function putIntoAssocArrays(event) {
       key: areaKey,
       events: [],
       categories: {},
-      categoryKeys: []
+      categoryKeys: [],
     };
   }
   eventsByArea.areas[areaKey].events.push(event);
 
   // category (in area)
   let categoryName = event.EventCategory;
-  let categoryKey = event.categoryKey = underscore(categoryName);
-  categoryKey = event.categoryKey = categoryKey.replaceAll('.','_'); 
+  let categoryKey = (event.categoryKey = underscore(categoryName));
+  categoryKey = event.categoryKey = categoryKey.replaceAll('.', '_');
 
   if (!eventsByArea.areas[areaKey].categories.hasOwnProperty(categoryKey)) {
     eventsByArea.areas[areaKey].categories[categoryKey] = {
       name: categoryName,
       key: categoryKey,
-      events: []
+      events: [],
     };
   }
   eventsByArea.areas[areaKey].categories[categoryKey].events.push(event);
 
   //settings subscriptionWithLoginURL
   if (settings.subscriptionWithLoginURL !== null) {
-  let loginUrl = settings.subscriptionWithLoginURL.indexOf('#') > 0 ? settings.subscriptionWithLoginURL.split('#')[0] : settings.subscriptionWithLoginURL;
-  event.subscriptionWithLoginURL = settings.subscriptionWithLoginURL === null ? null : encodeURI(loginUrl+ '#/' + areaKey + '/'+categoryKey +'/'+event.Id+'/subscribe');
+    let loginUrl =
+      settings.subscriptionWithLoginURL.indexOf('#') > 0
+        ? settings.subscriptionWithLoginURL.split('#')[0]
+        : settings.subscriptionWithLoginURL;
+    event.subscriptionWithLoginURL =
+      settings.subscriptionWithLoginURL === null
+        ? null
+        : encodeURI(
+            loginUrl +
+              '#/' +
+              areaKey +
+              '/' +
+              categoryKey +
+              '/' +
+              event.Id +
+              '/subscribe'
+          );
   }
-
 }
 
 /**
@@ -388,9 +454,10 @@ function putIntoAssocArrays(event) {
  * @param {object} event event returned by the API
  */
 function createEmberObject(event) {
-  return EmberObject.extend({
+  return {
+    ...event,
 
-    status: computed('FreeSeats', function () {
+    get status() {
       if (isGreen(this, isInSubscriptionRange)) {
         return 'green';
       }
@@ -401,29 +468,28 @@ function createEmberObject(event) {
 
       if (isYellow(this, isInSubscriptionRange)) {
         return 'yellow';
-
       }
       if (isRed(this, isInSubscriptionRange)) {
         return 'red';
       }
 
       return 'orange';
-    }),
+    },
 
-    canDoSubscription: computed('status', function () {
-      let status = this.get('status');
-      return (typeof settings.canDoSubscription === 'object' &&
-        settings.canDoSubscription[status] === true);
-    }),
+    get canDoSubscription() {
+      return (
+        typeof settings.canDoSubscription === 'object' &&
+        settings.canDoSubscription[this.status] === true
+      );
+    },
 
     update() {
       // only update FreeSeats for now
-      let that = this;
-      return getEvent(this.get('Id')).then(function (updatedEvent) {
-        that.set('FreeSeats', updatedEvent.FreeSeats);
+      return getEvent(this.Id).then((updatedEvent) => {
+        this.FreeSeats = updatedEvent.FreeSeats;
       });
-    }
-  }).create(event);
+    },
+  };
 }
 
 /**
@@ -447,7 +513,8 @@ function addDisplayData(event) {
     SubscriptionFrom: formatDate(event.SubscriptionFrom, 'LLL'),
     SubscriptionTo: formatDate(event.SubscriptionTo, 'LLL'),
 
-    Price: event.Price === 0.0000 || event.Price === null ? null : 'CHF ' + event.Price
+    Price:
+      event.Price === 0.0 || event.Price === null ? null : 'CHF ' + event.Price,
   });
 }
 
@@ -467,17 +534,33 @@ function addPropertiesToEvent(event) {
   fillEmptyDates(event);
 
   // combine date and time
-  event.SubscriptionFrom = event.SubscriptionDateFrom === null ? null : combineDate(event.SubscriptionDateFrom, event.SubscriptionTimeFrom);
-  event.SubscriptionTo = event.SubscriptionDateTo === null ? null : combineDate(event.SubscriptionDateTo, event.SubscriptionTimeTo);
-  event.From = event.DateFrom === null ? null : combineDate(event.DateFrom, event.TimeFrom);
-  event.To = event.DateTo === null ? null : combineDate(event.DateTo, event.TimeTo);
+  event.SubscriptionFrom =
+    event.SubscriptionDateFrom === null
+      ? null
+      : combineDate(event.SubscriptionDateFrom, event.SubscriptionTimeFrom);
+  event.SubscriptionTo =
+    event.SubscriptionDateTo === null
+      ? null
+      : combineDate(event.SubscriptionDateTo, event.SubscriptionTimeTo);
+  event.From =
+    event.DateFrom === null
+      ? null
+      : combineDate(event.DateFrom, event.TimeFrom);
+  event.To =
+    event.DateTo === null ? null : combineDate(event.DateTo, event.TimeTo);
 
-  event.SubscriptionDateFrom = event.SubscriptionDateFromIsNull ? null : event.SubscriptionDateFrom;
-  event.SubscriptionDateTo = event.SubscriptionDateToIsNull ? null : event.SubscriptionDateTo;
+  event.SubscriptionDateFrom = event.SubscriptionDateFromIsNull
+    ? null
+    : event.SubscriptionDateFrom;
+  event.SubscriptionDateTo = event.SubscriptionDateToIsNull
+    ? null
+    : event.SubscriptionDateTo;
 
   // add event.Time
   if (typeof event.TimeFrom === 'string' && typeof event.TimeTo === 'string') {
-    event.Time = `${removeMinutes(event.TimeFrom)} - ${removeMinutes(event.TimeTo)}`;
+    event.Time = `${removeMinutes(event.TimeFrom)} - ${removeMinutes(
+      event.TimeTo
+    )}`;
   }
 }
 /**
@@ -492,20 +575,20 @@ function addPropertiesToEvent(event) {
  * @param {object} event event returned by the API
  */
 function fillEmptyDates(event) {
-
   let now = new Date();
   let yesterday = new Date().setDate(now.getDate() - 1);
   let datePast = format(yesterday, 'yyyy-MM-dd');
   now.setDate(now.getDate() + 7);
   let dateNow = format(now, 'yyyy-MM-dd');
 
-  event.SubscriptionDateFromIsNull = event.SubscriptionDateFrom === null ? true : false;
+  event.SubscriptionDateFromIsNull =
+    event.SubscriptionDateFrom === null ? true : false;
   event.SubscriptionDateFrom = event.SubscriptionDateFrom || datePast;
-  event.SubscriptionDateToIsNull = event.SubscriptionDateTo === null ? true : false;
+  event.SubscriptionDateToIsNull =
+    event.SubscriptionDateTo === null ? true : false;
   event.SubscriptionDateTo = event.SubscriptionDateTo || dateNow;
   event.SubscriptionTimeFrom = event.SubscriptionTimeFrom || '00:00:01';
   event.SubscriptionTimeTo = event.SubscriptionTimeTo || '23:59:59';
-
 }
 
 /**
@@ -513,7 +596,6 @@ function fillEmptyDates(event) {
  * @param {object} event event returned by the API
  */
 function setLanguageEventFromIntToString(event) {
-
   if (event.LanguageOfInstruction === '2') {
     event.LanguageOfInstruction = getString('french');
   } else if (event.LanguageOfInstruction === '1') {

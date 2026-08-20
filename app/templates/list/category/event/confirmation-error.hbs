@@ -2,7 +2,7 @@
   <li class="step1">
     <span>
       <span class="stepIcon" uk-icon="icon: file-edit; ratio: 1.5"></span>
-      <span class="stepText">{{translate "personalData"}}</span>
+      <span class="stepText">{{translate key="personalData"}}</span>
     </span>
   </li>
 
@@ -13,13 +13,13 @@
   <li class="step2 current">
     <span>
       <span class="stepIcon" uk-icon="icon: file-text; ratio: 1.5"></span>
-      <span class="stepText">{{translate "confirmation"}}</span>
+      <span class="stepText">{{translate key="confirmation"}}</span>
     </span>
   </li>
 </ol>
-<span class="uk-display-block uk-margin-top">{{translate "errorMessage"}}</span>
-<span class="uk-display-block uk-margin-top uk-text-meta technical-reason">{{translate "subscriptionFailed"}}
+<span class="uk-display-block uk-margin-top">{{translate key="errorMessage"}}</span>
+<span class="uk-display-block uk-margin-top uk-text-meta technical-reason">{{translate key="subscriptionFailed"}}
   {{this.model.message}}</span>
 <div class="uk-margin">
-  <LinkTo @route="list.category.event.subscribe" class="uk-button uk-button-default uk-float-right">{{translate "backToSubscripton"}}</LinkTo>
+  <LinkTo @route="list.category.event.subscribe" class="uk-button uk-button-default uk-float-right">{{translate key="backToSubscripton"}}</LinkTo>
 </div>

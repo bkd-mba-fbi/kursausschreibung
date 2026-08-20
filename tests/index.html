@@ -2,17 +2,17 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Kursausschreibung Tests</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     {{content-for "head"}}
     {{content-for "test-head"}}
+  <meta name="{{modulePrefix}}/config/environment" content="{{content-for 'config-module'}}" />
 
-    <link rel="stylesheet" href="{{rootURL}}assets/vendor.css">
-    <link rel="stylesheet" href="{{rootURL}}assets/kursausschreibung.css">
-    <link rel="stylesheet" href="{{rootURL}}assets/test-support.css">
+    <link rel="stylesheet" href="/assets/vendor.css">
+    <link rel="stylesheet" href="/assets/kursausschreibung.css">
+    <link rel="stylesheet" href="/assets/test-support.css">
 
     {{content-for "head-footer"}}
     {{content-for "test-head-footer"}}
@@ -29,10 +29,18 @@
     </div>
 
     <script src="/testem.js" integrity="" data-embroider-ignore></script>
-    <script src="{{rootURL}}assets/vendor.js"></script>
-    <script src="{{rootURL}}assets/test-support.js"></script>
-    <script src="{{rootURL}}assets/kursausschreibung.js"></script>
-    <script src="{{rootURL}}assets/tests.js"></script>
+    <script>
+      var EmberENV = window.EmberENV || {};
+      window.EmberENV = EmberENV;
+    </script>
+    <script src="/settings.js"></script>
+    <script src="/appConfig.js"></script>
+    <script src="/locale/de-CH.js"></script>
+    <script src="/locale/fr-CH.js"></script>
+    <script src="/assets/vendor.js"></script>
+    <script src="/assets/test-support.js"></script>
+    <script src="/assets/kursausschreibung.js"></script>
+    <script src="/assets/tests.js"></script>
 
     {{content-for "body-footer"}}
     {{content-for "test-body-footer"}}

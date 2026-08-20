@@ -1,5 +1,5 @@
 import Route from '@ember/routing/route';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { underscore } from '@ember/string';
 
 export default class category extends Route {
@@ -11,7 +11,7 @@ export default class category extends Route {
     params.category = underscore(params.category);
 
     // check if category exists
-    if (!(categories.hasOwnProperty(params.category))) {
+    if (!categories.hasOwnProperty(params.category)) {
       this.router.transitionTo('list');
       return;
     }

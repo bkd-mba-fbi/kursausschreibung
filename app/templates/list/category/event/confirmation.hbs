@@ -3,7 +3,7 @@
   <li class="step1">
     <span>
       <span class="stepIcon" data-uk-icon="icon: file-edit; ratio: 1.5"></span>
-      <span class="stepText">{{translate "personalData"}}</span>
+      <span class="stepText">{{translate key="personalData"}}</span>
     </span>
   </li>
 
@@ -14,26 +14,26 @@
   <li class="step2 current">
     <span>
       <span class="stepIcon" data-uk-icon="icon: file-text; ratio: 1.5"></span>
-      <span class="stepText">{{translate "confirmation"}}</span>
+      <span class="stepText">{{translate key="confirmation"}}</span>
     </span>
   </li>
 </ol>
 <h2>
   {{#if this.model.statusIsRed}}
-    {{translate "thankYouWaitingList"}}
+    {{translate key="thankYouWaitingList"}}
   {{else}}
-    {{translate "thankYou"}}
+    {{translate key="thankYou"}}
   {{/if}}
 </h2>
 
-<p>{{translate "youWillReceiveAConfirmationEMail"}}</p>
+<p>{{translate key="youWillReceiveAConfirmationEMail"}}</p>
 
-<p>{{translate "officeAddress"}}</p>
+<p>{{translate key="officeAddress"}}</p>
 
 {{#if this.model.tableData.fields}}
-  <h2>{{translate "yourDetails"}}</h2>
+  <h2>{{translate key="yourDetails"}}</h2>
 
-  <h3 class="uk-h3">{{translate "addressFields"}}</h3>
+  <h3 class="uk-h3">{{translate key="addressFields"}}</h3>
   <table class="uk-table uk-table-striped uk-margin confirmation-table">
     {{#each this.model.tableData.fields as |field|}}
       <tr>
@@ -45,7 +45,7 @@
 {{/if}}
 
 {{#if this.model.tableData.companyFields}}
-  <h3 class="uk-h3">{{translate "companyFields"}}</h3>
+  <h3 class="uk-h3">{{translate key="companyFields"}}</h3>
   <table class="uk-table uk-table-striped uk-margin confirmation-table">
     {{#each this.model.tableData.companyFields as |companyField|}}
       <tr>
@@ -57,7 +57,7 @@
 {{/if}}
 
 {{#if this.model.tableData.subscriptionDetailFields}}
-  <h3 class="uk-h3">{{translate "subscriptionDetailFields"}}</h3>
+  <h3 class="uk-h3">{{translate key="subscriptionDetailFields"}}</h3>
   <div id="subscriptionFilesUploadFailed" class="uk-text-danger"></div>
   <table class="uk-table uk-table-striped uk-margin confirmation-table">
     {{#each this.model.tableData.subscriptionDetailFields as |subscriptionDetailField|}}
@@ -70,7 +70,7 @@
 {{/if}}
 
 {{#each this.model.tableData.additionalPeopleFields as |person|}}
-  <h3 class="uk-h3">{{translate "person"}} {{person.index}}</h3>
+  <h3 class="uk-h3">{{translate key="person"}} {{person.index}}</h3>
   <table class="uk-table uk-table-striped uk-margin confirmation-table">
     {{#each person.data as |personField|}}
       <tr>
@@ -82,7 +82,7 @@
 {{/each}}
 
 <div class="uk-margin">
- <LinkTo @route="list.category" class="uk-button uk-button-default uk-float-left">{{translate "backToCourses"}}</LinkTo>
+ <LinkTo @route="list.category" class="uk-button uk-button-default uk-float-left">{{translate key="backToCourses"}}</LinkTo>
 </div>
 <script>
   setInterval(function(){

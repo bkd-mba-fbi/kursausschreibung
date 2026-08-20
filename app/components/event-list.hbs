@@ -1,0 +1,11 @@
+<div {{this.syncFilter}} {{on "click" this.handleClick}}>
+  <EventListSearch @queryChanged={{this.handleQueryChanged}} @events={{@events}} as |filteredEvents|>
+    <ListPagination @page={{@page}} @items={{filteredEvents}} @route={{@route}} as |eventsOnCurrentPage|>
+      {{#each eventsOnCurrentPage as |event|}}
+        <li class="filter-tags {{event.filter}}">
+          <EventListItem @event={{event}} />
+        </li>
+      {{/each}}
+    </ListPagination>
+  </EventListSearch>
+</div>

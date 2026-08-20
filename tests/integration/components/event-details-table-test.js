@@ -1,26 +1,79 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | event-details-table', function(hooks) {
+function makeEvent(overrides = {}) {
+  return Object.assign(
+    {
+      displayData: {
+        Designation: 'Schulung Test',
+        DateFrom: '01.04.2024',
+        DateTo: '02.04.2024',
+        Leadership: 'Max Muster',
+        BuildingAddress: 'Musterweg 1',
+        Price: '120 CHF',
+      },
+      texts: [{ label: 'Hinweis', memo: 'Bitte pünktlich erscheinen' }],
+      lessonsCollaps: false,
+    },
+    overrides
+  );
+}
+
+module('Integration | Component | event-details-table', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
+  hooks.beforeEach(function () {
+    window.kursausschreibung = window.kursausschreibung || {};
+    window.kursausschreibung.settings = window.kursausschreibung.settings || {};
+    Object.assign(window.kursausschreibung.settings, {
+      eventDetailsFields: [
+        'DateFrom',
+        'DateTo',
+        'Leadership',
+        'BuildingAddress',
+        'Price',
+      ],
+      eventDetailsTitle: 'Designation',
+      showEventText: true,
+    });
+  });
 
-    await render(hbs`{{event-details-table}}`);
+  test('renders detail rows from configured event fields', async function (assert) {
+    this.set('event', makeEvent());
 
-    assert.equal(this.element.textContent.trim(), '');
+    await render(hbs`{{event-details-table event=this.event}}`);
 
-    // Template block usage:
-    await render(hbs`
-      {{#event-details-table}}
-        template block text
-      {{/event-details-table}}
-    `);
+    let rows = findAll('table.details-table tr');
+    assert.ok(rows.length > 0, 'renders at least one detail row');
+    assert.ok(
+      this.element.textContent.includes('Max Muster'),
+      'leadership value is rendered'
+    );
+    assert.ok(
+      this.element.textContent.includes('120 CHF'),
+      'price value is rendered'
+    );
+  });
 
-    assert.equal(this.element.textContent.trim(), 'template block text');
+  test('renders event text rows when event texts are present', async function (assert) {
+    this.set(
+      'event',
+      makeEvent({
+        texts: [{ label: 'Wichtig', memo: 'Unterlagen mitbringen' }],
+      })
+    );
+
+    await render(hbs`{{event-details-table event=this.event}}`);
+
+    assert.ok(
+      this.element.textContent.includes('Wichtig'),
+      'text label is rendered'
+    );
+    assert.ok(
+      this.element.textContent.includes('Unterlagen mitbringen'),
+      'text memo is rendered'
+    );
   });
 });

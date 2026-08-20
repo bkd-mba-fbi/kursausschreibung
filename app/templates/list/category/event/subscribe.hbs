@@ -13,7 +13,7 @@
   <li class="step1 current">
     <span>
       <span class="stepIcon" data-uk-icon="icon: file-edit; ratio: 1.5"></span>
-      <span class="stepText">{{translate "personalData"}}</span>
+      <span class="stepText">{{translate key="personalData"}}</span>
     </span>
   </li>
 
@@ -24,21 +24,21 @@
   <li class="step2">
     <span>
       <span class="stepIcon" data-uk-icon="icon: file-text; ratio: 1.5"></span>
-      <span class="stepText">{{translate "confirmation"}}</span>
+      <span class="stepText">{{translate key="confirmation"}}</span>
     </span>
   </li>
 </ol>
 
 {{! FORM }}
-<SubscriptionForm 
-  @event={{this.model}} 
-  @fields={{this.fields}} 
-  @companyFields={{this.companyFields}} 
-  @enableInvoiceAddress={{this.enableInvoiceAddress}} 
-  @subscriptionDetailFields={{this.subscriptionDetailFields}} 
-  @allowMultiplePeople={{this.allowMultiplePeople}} 
-  @additionalPeopleFields={{this.additionalPeopleFields}} 
+<SubscriptionForm
+  @event={{this.model}}
+  @fields={{this.fields}}
+  @companyFields={{this.companyFields}}
+  @enableInvoiceAddress={{this.enableInvoiceAddress}}
+  @subscriptionDetailFields={{this.subscriptionDetailFields}}
+  @allowMultiplePeople={{this.allowMultiplePeople}}
+  @additionalPeopleFields={{this.additionalPeopleFields}}
   @userSettings={{this.model.userSettings}}
   @showAddressInputs={{this.showAddressInputs}}
   @showCompanyButtonOnly={{this.showCompanyButtonOnly}}
-  @subscribe={{action "subscribe"}} />
+  @subscribe={{fn this.subscribe}} />

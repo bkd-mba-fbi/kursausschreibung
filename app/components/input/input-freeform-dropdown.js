@@ -1,40 +1,101 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import { vssDependency } from 'kursausschreibung/framework/form-helpers';
-import jQuery from 'jquery';
 
-export default Component.extend({
-  didInsertElement() {
-    this._super(...arguments);
+// same behaviour as the jquery typeahead used before the ember upgrade:
+// limit 10, minLength 0, match anywhere, case insensitive (see issue #222)
+const LIMIT = 10;
 
-    let id = this.get('field.id');
-    let options = this.get('field.options').options.map(option => option.Value);
+export default class InputFreeformDropdownComponent extends Component {
+  @tracked suggestions = [];
+  @tracked isOpen = false;
+  @tracked activeIndex = -1;
 
-    jQuery('#vss'+ id).typeahead(
-      {
-        hint: true,
-        highlight: true,
-        minLength: 0
-      },
-      {
-        limit: 10,
-        source: (query, callback) => {
-          query = query.trim().toLowerCase();
-
-          callback(
-            options.filter(option => option.toLowerCase().indexOf(query) !== -1)
-          );
-        }
-      });
-  },
-
-  willDestroyElement() {
-    jQuery('.typeahead').typeahead('destroy');
-    this._super(...arguments);
-  },
-
-  focusOut() {
-    let field = this.get('field');
-    let currentValue = document.getElementById('vss'+field.id).value;
-    vssDependency(currentValue,field);
+  get options() {
+    return (this.args.field?.options?.options ?? []).map(
+      (option) => option.Value
+    );
   }
-});
+
+  @action
+  isActive(index) {
+    return index === this.activeIndex;
+  }
+
+  open(value) {
+    let query = String(value ?? '')
+      .trim()
+      .toLowerCase();
+
+    this.suggestions = this.options
+      .filter((option) => String(option).toLowerCase().indexOf(query) !== -1)
+      .slice(0, LIMIT);
+    this.activeIndex = -1;
+    this.isOpen = this.suggestions.length > 0;
+  }
+
+  @action
+  handleInput(event) {
+    this.open(event.target.value);
+  }
+
+  @action
+  handleFocus(event) {
+    this.open(event.target.value);
+  }
+
+  @action
+  handleKeyDown(event) {
+    if (event.key === 'Escape') {
+      this.close();
+    } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+      event.preventDefault();
+      if (!this.isOpen) this.open(event.target.value);
+      if (this.suggestions.length === 0) return;
+
+      let last = this.suggestions.length - 1;
+      this.activeIndex =
+        event.key === 'ArrowDown'
+          ? (this.activeIndex + 1) % this.suggestions.length
+          : this.activeIndex <= 0
+          ? last
+          : this.activeIndex - 1;
+    } else if (event.key === 'Enter' && this.activeIndex !== -1) {
+      event.preventDefault();
+      this.select(this.suggestions[this.activeIndex]);
+    }
+  }
+
+  @action
+  handleSuggestionMouseDown(event) {
+    // keep the focus so focusout doesn't close the list before the click lands
+    event.preventDefault();
+    this.select(this.suggestions[Number(event.currentTarget.dataset.index)]);
+  }
+
+  // the form reads element.value from the dom on submit, so write it there
+  select(suggestion) {
+    if (suggestion === undefined) return;
+
+    let input = document.getElementById(`vss${this.args.field.id}`);
+    if (input) {
+      input.value = suggestion;
+      input.focus();
+    }
+
+    this.close();
+    vssDependency(String(suggestion), this.args.field);
+  }
+
+  close() {
+    this.isOpen = false;
+    this.activeIndex = -1;
+  }
+
+  @action
+  handleFocusOut(event) {
+    this.close();
+    vssDependency(event.target.value, this.args.field);
+  }
+}

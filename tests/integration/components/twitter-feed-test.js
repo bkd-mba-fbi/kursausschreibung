@@ -1,26 +1,35 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | twitter-feed', function(hooks) {
+module('Integration | Component | twitter-feed', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
+  test('renders a timeline link for the provided username', async function (assert) {
+    this.set('username', 'emberjs');
 
-    await render(hbs`{{twitter-feed}}`);
+    await render(hbs`<TwitterFeed @username={{this.username}} />`);
 
-    assert.equal(this.element.textContent.trim(), '');
+    let link = find('a.twitter-timeline');
+    assert.ok(link, 'timeline anchor is rendered');
+    assert.equal(
+      link.getAttribute('href'),
+      'https://twitter.com/emberjs',
+      'uses the username in href'
+    );
+    assert.ok(
+      link.textContent.includes('Tweets by emberjs'),
+      'link text includes username'
+    );
+  });
 
-    // Template block usage:
-    await render(hbs`
-      {{#twitter-feed}}
-        template block text
-      {{/twitter-feed}}
-    `);
+  test('renders the twitter widget script', async function (assert) {
+    this.set('username', 'emberjs');
 
-    assert.equal(this.element.textContent.trim(), 'template block text');
+    await render(hbs`<TwitterFeed @username={{this.username}} />`);
+
+    let script = find('script[src="https://platform.twitter.com/widgets.js"]');
+    assert.ok(script, 'twitter widget script is present');
   });
 });

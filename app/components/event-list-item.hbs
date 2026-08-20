@@ -1,0 +1,25 @@
+<div class="filter-tags {{@event.filter}}">
+<LinkTo @route="permalink" @model={{@event.Id}} class="event-list-item uk-link-reset">
+  <h3 class="uk-margin-small">
+    <span class="uk-flex">
+      <span><StatusLamp @status={{@event.status}} /></span>
+      <span>{{get @event.displayData this.title}}</span>
+    </span>
+  </h3>
+  {{#if @event.subtitle}}
+  <span class="uk-label uk-label-warning uk-margin-small">{{@event.subtitle}}</span>
+  {{/if}}
+  <table class="details-table">
+    <tbody>
+      {{#each this.fields as |field|}}
+        {{#if (get @event.displayData field.key)}}
+          <tr>
+            <td>{{{field.name}}}</td>
+            <td>{{{get @event.displayData field.key}}}</td>
+          </tr>
+        {{/if}}
+      {{/each}}
+    </tbody>
+  </table>
+</LinkTo>
+</div>

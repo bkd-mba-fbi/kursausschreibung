@@ -1,0 +1,15 @@
+{{#unless @hideHeading}}
+  <h3 id="header-naviagtion-area" class="uk-margin-small">{{translate key="kursCategoryHeader"}}</h3>
+{{/unless}}
+<ul class="uk-nav uk-nav-default">
+  <li>
+    <LinkTo @route="list.index">{{translate key="overview"}}</LinkTo>
+  </li>
+  {{#each @area.categoryKeys as |categoryKey|}}
+      {{#let (array @area.key categoryKey) as |models|}}
+      <li>
+        <LinkTo @route="list.category" @models={{models}}>{{get (get @area.categories categoryKey) "name"}}</LinkTo>
+      </li>
+      {{/let}}
+  {{/each}}
+</ul>

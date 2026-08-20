@@ -16,7 +16,7 @@
   </span>
 </h2>
 {{#if this.model.subtitle}}
-<span class="uk-label uk-label-warning uk-margin-small">{{model.subtitle}}</span>
+<span class="uk-label uk-label-warning uk-margin-small">{{this.model.subtitle}}</span>
 {{/if}}
 <EventDetailsTable @event={{this.model}} />
 
@@ -24,9 +24,9 @@
   <div class="uk-margin">
     <a href={{this.model.externalSubscriptionURL}} class="uk-button uk-button-primary uk-float-left subscribe-button"
       target="_blank" rel="noopener">
-      {{translate "subscribe"}}
+      {{translate key="subscribe"}}
     </a>
-   <LinkTo @route="list.category" class="uk-button uk-button-default uk-float-right">{{translate "back"}}</LinkTo>
+   <LinkTo @route="list.category" class="uk-button uk-button-default uk-float-right">{{translate key="back"}}</LinkTo>
   </div>
 {{else}}
   {{#if this.badgeFreeSeatsEnabled}}
@@ -34,17 +34,17 @@
   {{/if}}
   <div class="uk-margin">
     {{#if this.model.canDoSubscription}}
-      <LinkTo @route="list.category.event.subscribe" data-uk-tooltip={{translate (concat this.model.status "Lamp")}} class="uk-button uk-button-primary uk-float-left subscribe-button">{{translate "subscribe"}}</LinkTo>   
+      <LinkTo @route="list.category.event.subscribe" data-uk-tooltip={{translate key=(concat this.model.status "Lamp")}} class="uk-button uk-button-primary uk-float-left subscribe-button">{{translate key="subscribe"}}</LinkTo>
     {{else}}
-      <button data-uk-tooltip={{translate (concat this.model.status "Lamp")}} disabled class="uk-button uk-button-primary uk-float-left subscribe-button">{{translate "subscribe"}}</button> 
+      <button data-uk-tooltip={{translate key=(concat this.model.status "Lamp")}} disabled class="uk-button uk-button-primary uk-float-left subscribe-button">{{translate key="subscribe"}}</button>
     {{/if}}
-    <LinkTo @route="list.category" class="uk-button uk-button-default uk-float-right">{{translate "back"}}</LinkTo>
+    <LinkTo @route="list.category" class="uk-button uk-button-default uk-float-right">{{translate key="back"}}</LinkTo>
   </div>
   {{#if this.model.subscriptionWithLoginURL}}
-    {{#if this.model.canDoSubscription }}    
+    {{#if this.model.canDoSubscription }}
     <div class="uk-margin">
       <a id="subscriptionWithLoginURL" href={{this.model.subscriptionWithLoginURL}}  target="_blank" rel="noopener" class="uk-button uk-button-primary uk-float-left subscribeWithLogin-button"
-        data-uk-tooltip={{translate (concat this.model.status "Lamp")}} >{{translate "subscribeWithLogin"}}</a>
+        data-uk-tooltip={{translate key=(concat this.model.status "Lamp")}} >{{translate key="subscribeWithLogin"}}</a>
     </div>
     {{/if}}
   {{/if}}

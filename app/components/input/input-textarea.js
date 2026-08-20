@@ -1,10 +1,12 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
 import { vssDependency } from 'kursausschreibung/framework/form-helpers';
 
-export default Component.extend({
-    focusOut() {
-        let field = this.get('field');
-        let currentValue = document.getElementById('vss'+field.id).value;
-        vssDependency(currentValue,field);
-    }
-});
+export default class InputTextareaComponent extends Component {
+  @action
+  handleFocusOut(event) {
+    const field = this.args.field;
+    const currentValue = event.target.value;
+    vssDependency(currentValue, field);
+  }
+}

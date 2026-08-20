@@ -1,8 +1,12 @@
 import Route from '@ember/routing/route';
+import { action } from '@ember/object';
+import { service } from '@ember/service';
 import { underscore } from '@ember/string';
 import uikit from 'uikit';
 
-export default Route.extend({
+export default class ListRoute extends Route {
+  @service router;
+
   model(params) {
     let eventsByArea = this.modelFor('application');
 
@@ -11,20 +15,19 @@ export default Route.extend({
 
     // check if area of education exists
     if (!eventsByArea.areas.hasOwnProperty(params.area_of_education)) {
-      this.replaceWith('/');
+      this.router.transitionTo('index');
       return;
     }
 
     return eventsByArea.areas[params.area_of_education];
-  },
+  }
 
-  actions: {
-    didTransition() {
-      let modal = uikit.modal('#menu-modal');
+  @action
+  didTransition() {
+    let modal = uikit.modal('#menu-modal');
 
-      if (modal !== undefined) {
-        modal.hide();
-      }
+    if (modal !== undefined) {
+      modal.hide();
     }
   }
-});
+}
