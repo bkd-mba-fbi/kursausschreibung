@@ -1,6 +1,9 @@
 import EmberRouter from '@ember/routing/router';
 import config from './config/environment';
-import { scrollToTimeout } from 'kursausschreibung/framework/scroll-helpers';
+import {
+  scrollToTimeout,
+  setOffsetStickyHeader,
+} from 'kursausschreibung/framework/scroll-helpers';
 
 let rootElementId = (config.APP.rootElement || '').replace(/^#/, '');
 
@@ -13,6 +16,12 @@ const Router = EmberRouter.extend({
       this._super(...arguments);
 
       var subscriptionProcessId = 'subscriptionProcess';
+
+      setInterval(function () {
+        if (document.getElementById(subscriptionProcessId) !== null) {
+          setOffsetStickyHeader(subscriptionProcessId);
+        }
+      }, 1000);
 
       if (this.currentPath === 'list.category.event.subscribe') {
         scrollToTimeout(subscriptionProcessId);
