@@ -38,12 +38,6 @@ jobs:
         # ember-auto-import emits chunks with absolute /assets/ paths.
         # Rewrite them relative so the app can be served from a subdirectory.
         sed -i 's|src="/assets/|src="assets/|g' latest/index.html
-        # ember-cli-concat only concatenates vendor.js and the app bundle, so
-        # the ember-auto-import chunk (which defines ember-resolver among
-        # others) is missing from assets/app.js. Consumers embed that single
-        # file, so rebuild it in the load order index.html uses.
-        CHUNK=$(grep -oE 'assets/chunk\.[^"]+\.js' latest/index.html | head -1)
-        cat latest/assets/vendor.js "latest/$CHUNK" latest/assets/kursausschreibung.js > latest/assets/app.js
 
     - name: Deploy latest 🚀
       uses: JamesIves/github-pages-deploy-action@4.1.4
