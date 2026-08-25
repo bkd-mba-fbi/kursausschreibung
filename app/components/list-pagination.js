@@ -115,7 +115,11 @@ export default class ListPaginationComponent extends Component {
     e?.preventDefault?.();
   }
 
-  applyGridView = modifier(() => {
+  // The argument is never read. It makes the modifier depend on the list so
+  // that it re-runs after every render, the way didRender() used to. Without
+  // it the modifier would only run on insert and the grid classes would be
+  // missing after switching categories.
+  applyGridView = modifier((element, [items]) => {
     var listViewGrid = getListViewGrid();
     listViewGrid = listViewGrid === null ? settings.displayGrid : listViewGrid;
     displayAsGrid(listViewGrid);
