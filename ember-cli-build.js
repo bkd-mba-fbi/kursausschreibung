@@ -6,6 +6,7 @@ const { execSync } = require('child_process');
 const { join } = require('path');
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
+const webpack = require('webpack');
 
 module.exports = function (defaults) {
   let app = new EmberApp(defaults, {
