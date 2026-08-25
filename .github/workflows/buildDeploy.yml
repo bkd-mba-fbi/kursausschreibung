@@ -37,7 +37,7 @@ jobs:
         # the ember-auto-import chunk (which defines ember-resolver among
         # others) is missing from assets/app.js. Consumers embed that single
         # file, so rebuild it in the load order index.html uses.
-        CHUNK=$(grep -oE 'assets/chunk\.[^"]+\.js' latest/index.html | head -1)
+        CHUNK=$(grep -oE 'assets/chunk\.[^"]+\.js' dist/index.html | head -1)
         cat dist/assets/vendor.js "dist/$CHUNK" dist/assets/kursausschreibung.js > dist/assets/app.js
         cp LICENSE README.md dist
         cp -a dist/. latest/
