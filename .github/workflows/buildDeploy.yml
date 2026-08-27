@@ -30,14 +30,21 @@ jobs:
       run: |
         npm install
         npm run build
+        # ember-auto-import emits chunks with absolute /assets/ paths.
+        # Rewrite them relative so the app can be served from a subdirectory.
+        sed -i 's|src="/assets/|src="assets/|g' dist/index.html
+        # ember-cli-concat only concatenates vendor.js and the app bundle, so
+        # the ember-auto-import chunk (which defines ember-resolver among
+        # others) is missing from assets/app.js. Consumers embed that single
+        # file, so rebuild it in the load order index.html uses.
+        CHUNK=$(grep -oE 'assets/chunk\.[^"]+\.js' dist/index.html | head -1)
+        cat dist/assets/vendor.js "dist/$CHUNK" dist/assets/kursausschreibung.js > dist/assets/app.js
         cp LICENSE README.md dist
         cp -a dist/. latest/
         (cd dist; zip --move --recurse-paths kursausschreibung.zip *)
         mv README.md dist
         mv dist/kursausschreibung.zip latest/
-        # ember-auto-import emits chunks with absolute /assets/ paths.
-        # Rewrite them relative so the app can be served from a subdirectory.
-        sed -i 's|src="/assets/|src="assets/|g' latest/index.html
+        
 
     - name: Deploy latest 🚀
       uses: JamesIves/github-pages-deploy-action@4.1.4
