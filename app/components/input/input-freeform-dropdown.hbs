@@ -8,7 +8,8 @@
       {{#each this.suggestions as |suggestion index|}}
         <button type="button" tabindex="-1" data-index={{index}}
           class="freeform-typeahead__suggestion {{if (this.isActive index) "is-active"}}"
-          {{on "mousedown" this.handleSuggestionMouseDown}}>{{suggestion}}</button>
+          {{on "mousedown" this.handleSuggestionMouseDown}}>{{suggestion.pre}}<strong
+            class="freeform-typeahead__match">{{suggestion.match}}</strong>{{suggestion.post}}</button>
       {{/each}}
     </div>
   {{/if}}

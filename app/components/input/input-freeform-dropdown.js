@@ -30,9 +30,27 @@ export default class InputFreeformDropdownComponent extends Component {
 
     this.suggestions = this.options
       .filter((option) => String(option).toLowerCase().indexOf(query) !== -1)
-      .slice(0, LIMIT);
+      .slice(0, LIMIT)
+      .map((option) => this.highlight(option, query));
     this.activeIndex = -1;
     this.isOpen = this.suggestions.length > 0;
+  }
+
+  // split the option so the matching part can be rendered bold
+  highlight(option, query) {
+    let value = String(option);
+    let index = query.length === 0 ? -1 : value.toLowerCase().indexOf(query);
+
+    if (index === -1) {
+      return { value, pre: value, match: '', post: '' };
+    }
+
+    return {
+      value,
+      pre: value.slice(0, index),
+      match: value.slice(index, index + query.length),
+      post: value.slice(index + query.length),
+    };
   }
 
   @action
@@ -63,7 +81,7 @@ export default class InputFreeformDropdownComponent extends Component {
           : this.activeIndex - 1;
     } else if (event.key === 'Enter' && this.activeIndex !== -1) {
       event.preventDefault();
-      this.select(this.suggestions[this.activeIndex]);
+      this.select(this.suggestions[this.activeIndex]?.value);
     }
   }
 
@@ -71,7 +89,9 @@ export default class InputFreeformDropdownComponent extends Component {
   handleSuggestionMouseDown(event) {
     // keep the focus so focusout doesn't close the list before the click lands
     event.preventDefault();
-    this.select(this.suggestions[Number(event.currentTarget.dataset.index)]);
+    this.select(
+      this.suggestions[Number(event.currentTarget.dataset.index)]?.value
+    );
   }
 
   // the form reads element.value from the dom on submit, so write it there
