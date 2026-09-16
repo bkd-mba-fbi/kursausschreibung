@@ -6,10 +6,24 @@ const { execSync } = require('child_process');
 const { join } = require('path');
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
+const webpack = require('webpack');
 
 module.exports = function (defaults) {
   let app = new EmberApp(defaults, {
     // see: https://github.com/ember-cli/ember-cli-uglify
+    // The app is embedded by consumers as a single assets/app.js (see
+    // emberCliConcat below). ember-auto-import would emit separate webpack
+    // chunks that ember-cli-concat does not know about, so those modules
+    // would be missing at runtime. Force webpack into a single chunk.
+    autoImport: {
+      webpack: {
+        optimization: {
+          splitChunks: false,
+          runtimeChunk: false,
+        },
+        plugins: [new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 })],
+      },
+    },
     'ember-cli-terser': {
       enabled: true,
       exclude: [
