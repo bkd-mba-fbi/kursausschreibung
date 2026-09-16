@@ -56,7 +56,7 @@ window.kursausschreibung.settings = {
   // show event-text on the details-route (optional)
   "showEventText": true,
 
-  
+
   // configure how many lessons show. if count of lessons > howManyLessonsShow lessons will be collaps
   "howManyLessonsShow": 5,
 
@@ -199,16 +199,13 @@ window.kursausschreibung.settings = {
               "dataType": "string",
               "options": { "required": true, "autocomplete": "family-name", "showPlaceholder": true }
             },
-            { "id": "Email2", 
+            { "id": "Email2",
               "dataType": "email",
               "options": { "required": true, "autocomplete": "family-name", "showPlaceholder": true }
             }
-          ]       
+          ]
       }
   },
-
-  // set this to true to add a button to change the langauge (optional)
-  "showLanguageButton": true,
 
   // callback functions for status-lamps (optional)
   // these get executed in order to determine the status of an event
@@ -248,8 +245,14 @@ window.kursausschreibung.settings = {
 	"personDefaultValue": {"CountryId": "CH"
   },
 
+  // set this to true to add a button to change the langauge (optional)
+  "showLanguageButton": true,
+
   // set this to true to only show events with matching language (optional)
   "languageOfInstructionFilter": false,
+
+  // event IDs that are shown in both languages (expects array also if one value, [123]) (optional)
+  bilingualEventIds: [],
 
   // Header Offset for scrolling
   "headerOffset": 133,
