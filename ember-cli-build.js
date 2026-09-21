@@ -61,17 +61,9 @@ module.exports = function (defaults) {
   // uikit css
   app.import('node_modules/uikit/dist/css/uikit.css');
 
-  // uikit js
-  app.import('node_modules/uikit/dist/js/uikit.js');
-  app.import('node_modules/uikit/dist/js/uikit-icons.js');
-  app.import('vendor/shims/uikit.js');
-
-  // date-fns
-  ['parseISO', 'format', 'locale/de', 'locale/fr'].forEach((module) =>
-    app.import(`node_modules/date-fns/${module}/index.js`, {
-      using: [{ transformation: 'cjs', as: `date-fns/${module}` }],
-    })
-  );
+  // uikit, uikit-icons and date-fns are resolved from `import` statements in
+  // the app by ember-auto-import. Importing them here as well would ship them
+  // twice and requires AMD shims that Embroider cannot follow (see #236).
 
   return app.toTree();
 };

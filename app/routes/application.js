@@ -1,5 +1,6 @@
 import Route from '@ember/routing/route';
 import uikit from 'uikit';
+import uikitIcons from 'uikit/dist/js/uikit-icons';
 import {
   init as initStore,
   getAllEvents,
@@ -11,6 +12,10 @@ import { setJsonLd } from '../framework/seo';
 
 export default class ApplicationRoute extends Route {
   beforeModel() {
+    // register the icon plugin (previously an `app.import` relying on the
+    // global UIkit instance)
+    uikit.use(uikitIcons);
+
     // set uikit scope
     uikit.container = '.uk-scope';
 
