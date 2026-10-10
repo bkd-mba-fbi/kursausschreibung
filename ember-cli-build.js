@@ -30,7 +30,9 @@ module.exports = function (defaults) {
         'appConfig.js',
         'settings.js',
         'locale/de-CH.js',
+        'locale/de-CH-custom.js',
         'locale/fr-CH.js',
+        'locale/fr-CH-custom.js',
       ],
       // Tell broccoli-terser-sourcemap to not add sourcemap URLs
       hiddenSourceMap: true,
