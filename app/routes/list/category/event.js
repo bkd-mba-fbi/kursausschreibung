@@ -1,12 +1,12 @@
 import Route from '@ember/routing/route';
 import { underscore } from '@ember/string';
-import store from 'kursausschreibung/framework/store';
+import { getEventById } from 'kursausschreibung/framework/store';
 import { service } from '@ember/service';
 
 export default class event extends Route {
   @service router;
   model(params) {
-    let event = store.getEventById(params.event_id);
+    let event = getEventById(params.event_id);
 
     // check if event exists in area and category
     let areaKey = underscore(this.paramsFor('list').area_of_education);

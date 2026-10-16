@@ -12,22 +12,26 @@
   <meta name="Description" content="Kursmodul">
   <!-- MODULE head configuration -->
   {{content-for "head"}}
-  <meta name="{{modulePrefix}}/config/environment" content="{{content-for 'config-module'}}" />
 
   <!-- CSS -->
-  <link rel="stylesheet" href="{{rootURL}}assets/app.css">
+  <link rel="stylesheet" href="/@embroider/virtual/vendor.css">
+  <link rel="stylesheet" href="./app/styles/app.css">
 
   <!-- configuration -->
-  <script src="{{rootURL}}settings.js"></script>
-  <script src="{{rootURL}}appConfig.js"></script>
+  <script src="settings.js"></script>
+  <script src="appConfig.js"></script>
 
   <!-- locale -->
-  <script src="{{rootURL}}locale/de-CH.js"></script>
-  <script src="{{rootURL}}locale/fr-CH.js"></script>
+  <script src="locale/de-CH.js"></script>
+  <script src="locale/fr-CH.js"></script>
 
-  <!-- JS -->
-  <script src="{{rootURL}}assets/vendor.js"></script>
-  <script src="{{rootURL}}assets/kursausschreibung.js"></script>
+  <!-- JS (EmberENV is prepended to assets/app.js via the banner in vite.config.mjs) -->
+  <script type="module">
+      import Application from './app/app';
+      import environment from './app/config/environment';
+
+      Application.create(environment.APP);
+    </script>
   <!-- MODULE head configuration -->
 
   <!--Interne Fortbildung exclude-->
@@ -96,7 +100,7 @@
   {{content-for "body"}}
 
   <!-- HEADER -->
-  <div class="header steps uk-margin-bottom uk-sticky"" style=" z-index: 980;" uk-sticky="offset: 0; bottom: #top">
+  <div class="header steps uk-margin-bottom uk-sticky" style="z-index: 980;" uk-sticky="offset: 0; bottom: #top">
      <!-- Generator: Adobe Illustrator 23.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="Kanton_Bern" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
 y="0px" viewBox="0 0 150.24 87.31" style="enable-background:new 0 0 150.24 87.31;" xml:space="preserve">

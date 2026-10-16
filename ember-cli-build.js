@@ -1,49 +1,14 @@
 'use strict';
 
-const homedir = require('os').homedir();
-const { existsSync, readFileSync, mkdirSync, copyFileSync } = require('fs');
-const { execSync } = require('child_process');
-const { join } = require('path');
-
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
-const webpack = require('webpack');
+const { compatBuild } = require('@embroider/compat');
 
-module.exports = function (defaults) {
-  let app = new EmberApp(defaults, {
-    // see: https://github.com/ember-cli/ember-cli-uglify
-    // The app is embedded by consumers as a single assets/app.js (see
-    // emberCliConcat below). ember-auto-import would emit separate webpack
-    // chunks that ember-cli-concat does not know about, so those modules
-    // would be missing at runtime. Force webpack into a single chunk.
-    autoImport: {
-      webpack: {
-        optimization: {
-          splitChunks: false,
-          runtimeChunk: false,
-        },
-        plugins: [new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 })],
-      },
-    },
-    'ember-cli-terser': {
-      enabled: true,
-      exclude: [
-        'appConfig.js',
-        'settings.js',
-        'locale/de-CH.js',
-        'locale/fr-CH.js',
-      ],
-      // Tell broccoli-terser-sourcemap to not add sourcemap URLs
-      hiddenSourceMap: true,
-    },
-    emberCliConcat: {
-      js: {
-        concat: true,
-      },
-      css: {
-        concat: true,
-      },
-    },
-  });
+module.exports = async function (defaults) {
+  const { buildOnce } = await import('@embroider/vite');
+
+  // Bundling (single app.js/app.css, minification, file names) is configured
+  // in vite.config.mjs. The former webpack/terser/concat options are gone.
+  let app = new EmberApp(defaults, {});
 
   // Use `app.import` to add additional libraries to the generated
   // output files.
@@ -65,5 +30,5 @@ module.exports = function (defaults) {
   // the app by ember-auto-import. Importing them here as well would ship them
   // twice and requires AMD shims that Embroider cannot follow (see #236).
 
-  return app.toTree();
+  return compatBuild(app, buildOnce);
 };
