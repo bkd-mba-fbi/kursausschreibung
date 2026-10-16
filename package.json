@@ -14,7 +14,7 @@
   },
   "scripts": {
     "npmInstall": "npm install",
-    "build": "npx ember build --environment=production",
+    "build": "vite build",
     "lint": "concurrently \"npm:lint:js\" \"npm:lint:css\" --names \"js,css\"",
     "lint:css": "stylelint \"**/*.css\" --allow-empty-input",
     "lint:css:fix": "concurrently \"npm:lint:css -- --fix\"",
@@ -22,8 +22,8 @@
     "lint:hbs:fix": "npx ember-template-lint . --fix",
     "lint:js": "npx eslint . --cache",
     "lint:js:fix": "npx eslint . --fix",
-    "start": "npx ember serve",
-    "test:ember": "npx ember test",
+    "start": "vite",
+    "test:ember": "vite build --mode development && ember test --path dist",
     "test": "concurrently \"npm:lint\" \"npm:test:ember\" --names \"lint,test\""
   },
   "ember": {
@@ -32,26 +32,32 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.21.3",
     "@babel/plugin-proposal-decorators": "^7.21.0",
+    "@babel/plugin-transform-runtime": "^7.29.0",
     "@ember/optional-features": "^2.1.0",
-    "@ember/string": "^3.0.1",
+    "@ember/string": "^4.0.1",
     "@ember/test-helpers": "^5.4.1",
+    "@embroider/compat": "^4.1.17",
+    "@embroider/config-meta-loader": "^1.0.0",
+    "@embroider/core": "^4.4.7",
+    "@embroider/legacy-inspector-support": "^0.1.3",
+    "@embroider/vite": "^1.7.2",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
+    "@rollup/plugin-babel": "^7.0.0",
+    "babel-plugin-ember-template-compilation": "^3.1.0",
     "concurrently": "^8.0.1",
     "cropperjs": "^2.1.1",
     "date-fns": "^2.15.0",
+    "decorator-transforms": "^2.3.1",
     "ember-auto-import": "^2.8.1",
     "ember-cli": "^6.12.0",
-    "ember-cli-app-version": "^6.0.0",
     "ember-cli-babel": "^8.3.1",
     "ember-cli-concat": "^2.3.0",
-    "ember-cli-dependency-checker": "^3.3.1",
     "ember-cli-deprecation-workflow": "^4.0.1",
     "ember-cli-htmlbars": "^6.2.0",
-    "ember-cli-terser": "^4.0.2",
     "ember-cli-update": "^3.0.1",
     "ember-compatibility-helpers": "^1.2.7",
-    "ember-load-initializers": "^2.1.2",
+    "ember-load-initializers": "^3.0.1",
     "ember-modifier": "^4.1.0",
     "ember-page-title": "^9.0.3",
     "ember-qunit": "^9.0.0",
@@ -63,7 +69,6 @@
     "eslint-plugin-n": "^15.7.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-qunit": "^7.3.4",
-    "loader.js": "^4.7.0",
     "prettier": "^2.8.7",
     "qunit": "^2.19.4",
     "qunit-dom": "^2.0.0",
@@ -72,7 +77,7 @@
     "stylelint-prettier": "^3.0.0",
     "tracked-built-ins": "^3.1.1",
     "uikit": "^3.5.5",
-    "webpack": "^5.78.0"
+    "vite": "^8.0.10"
   },
   "engines": {
     "node": ">= 20"
@@ -80,5 +85,9 @@
   "overrides": {
     "testem": "3.18.0",
     "rollup": "^4.22.4"
+  },
+  "exports": {
+    "./tests/*": "./tests/*",
+    "./*": "./app/*"
   }
 }
