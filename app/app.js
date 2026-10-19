@@ -11,14 +11,15 @@ import compatModules from '@embroider/virtual/compat-modules';
 // read OAuth token and restore URL
 checkToken();
 
-const App = Application.extend({
-  modulePrefix: config.modulePrefix,
-  podModulePrefix: config.podModulePrefix,
+export default class App extends Application {
+  modulePrefix = config.modulePrefix;
+  podModulePrefix = config.podModulePrefix;
   // Embroider has no AMD registry (requirejs.entries) anymore: hand the
   // resolver the statically known modules instead.
-  Resolver: Resolver.withModules(compatModules),
-});
+  Resolver = Resolver.withModules(compatModules);
+  // lets the ember-inspector browser extension find ember-source modules
+  // in an embroider build (see @embroider/legacy-inspector-support)
+  inspector = setupInspector(this);
+}
 
 loadInitializers(App, config.modulePrefix, compatModules);
-
-export default App;
