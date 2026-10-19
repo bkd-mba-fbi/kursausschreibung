@@ -8,11 +8,10 @@
 
     {{content-for "head"}}
     {{content-for "test-head"}}
-  <meta name="{{modulePrefix}}/config/environment" content="{{content-for 'config-module'}}" />
 
-    <link rel="stylesheet" href="/assets/vendor.css">
-    <link rel="stylesheet" href="/assets/kursausschreibung.css">
-    <link rel="stylesheet" href="/assets/test-support.css">
+    <link rel="stylesheet" href="/@embroider/virtual/vendor.css">
+    <link rel="stylesheet" href="/@embroider/virtual/test-support.css">
+    <link rel="stylesheet" href="../app/styles/app.css">
 
     {{content-for "head-footer"}}
     {{content-for "test-head-footer"}}
@@ -29,20 +28,18 @@
     </div>
 
     <script src="/testem.js" integrity="" data-embroider-ignore></script>
-    <script>
-      var EmberENV = window.EmberENV || {};
-      window.EmberENV = EmberENV;
-    </script>
     <script src="/settings.js"></script>
     <script src="/appConfig.js"></script>
     <script src="/locale/de-CH.js"></script>
     <script src="/locale/fr-CH.js"></script>
-    <script src="/assets/vendor.js"></script>
-    <script src="/assets/test-support.js"></script>
-    <script src="/assets/kursausschreibung.js"></script>
-    <script src="/assets/tests.js"></script>
+    <script src="/@embroider/virtual/vendor.js"></script>
+    <script src="/@embroider/virtual/test-support.js"></script>
+    <script type="module">
+      import { start } from './test-helper.js';
+      import.meta.glob('./**/*-test.js', { eager: true });
+      start();
+    </script>
 
     {{content-for "body-footer"}}
-    
   </body>
 </html>

@@ -117,7 +117,7 @@ Dependency chain: `ember-cli` → `@ember-tooling/blueprint-model` → `diff@6-8
 
 These items are intentionally tracked as separate follow-up tracks and were not bundled into framework-major upgrade commits.
 
-1. Build pipeline modernization (Embroider/Vite planning and rollout).
+1. ~~Build pipeline modernization (Embroider/Vite planning and rollout).~~ Done 2026-10 (#236, #221): Embroider + Vite, single `assets/app.js` / `assets/app.css`, see `vite.config.mjs` and README.
   - Reason: high-impact architecture change; should be isolated from framework-major stabilization.
 2. UIKit upgrade to latest 3.x patch.
   - Reason: can introduce UI regressions and needs focused visual/smoke verification.

@@ -5,8 +5,8 @@ import config from './config/environment';
 import { checkToken } from 'kursausschreibung/framework/login-helpers';
 import './deprecation-workflow';
 
-import setupInspector from "@embroider/legacy-inspector-support/ember-source-4.12";
-import compatModules from "@embroider/virtual/compat-modules";
+import setupInspector from '@embroider/legacy-inspector-support/ember-source-4.12';
+import compatModules from '@embroider/virtual/compat-modules';
 
 // read OAuth token and restore URL
 checkToken();
