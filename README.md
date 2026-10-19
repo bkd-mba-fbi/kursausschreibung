@@ -47,9 +47,20 @@ For one reason or another, some people can't connect to the registry via HTTPS. 
 * `npm config set registry http://registry.npmjs.org/`
 * `npm config set strict-ssl false`
 
+### Windows (all developers building on Windows)
+
+Without this the build fails with `EPERM: operation not permitted, symlink`. Do it once per machine, administrator rights required:
+
+1. Open PowerShell as administrator (right click → "Run as administrator").
+2. Run: `reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock" /t REG_DWORD /f /v AllowDevelopmentWithoutDevLicense /d 1`
+   (this is Windows "Developer Mode", same as Settings → For developers → Developer Mode).
+3. Open a normal PowerShell and run `npm run build`.
+
+Also required for accounts in the Administrators group: UAC removes the symlink right in normal shells. Sources: [Microsoft: enable Developer Mode via PowerShell](https://learn.microsoft.com/en-us/windows/advanced-settings/developer-mode) (the command above), [Ember CLI Windows appendix](https://cli.emberjs.com/release/appendix/windows/) (why symlinks are needed).
+
 ## Running / Development
 
-* `ember serve`
+* `npm start` (Vite dev server)
 * Visit your app at [http://localhost:4200](http://localhost:4200).
 * Visit your tests at [http://localhost:4200/tests](http://localhost:4200/tests).
 
@@ -57,10 +68,10 @@ For one reason or another, some people can't connect to the registry via HTTPS. 
 
 Make use of the many generators for code, try `ember help generate` for more details
 
-### Running Tests (tests not yet implemented)
+### Running Tests
 
-* `ember test`
-* `ember test --server`
+* `npm run test:ember` (builds with Vite, then runs the suite in headless Chrome)
+* `npm test` (lint + tests, same as CI)
 
 ### Linting
 
@@ -69,8 +80,8 @@ Make use of the many generators for code, try `ember help generate` for more det
 
 ### Building
 
-* `ember build` (development)
-* `ember build --environment production` (production)
+* `npm run build` (production: exactly `dist/assets/app.js` and `dist/assets/app.css`, see `vite.config.mjs`)
+* `npx vite build --mode development` (unminified, with tests)
 
 ## Further Reading / Useful Links
 

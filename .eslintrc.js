@@ -6,6 +6,10 @@ module.exports = {
     sourceType: 'module',
     requireConfigFile: false,
     babelOptions: {
+      // do not load babel.config.mjs: its plugins are async and meant for
+      // the Vite build, eslint parses synchronously
+      configFile: false,
+      babelrc: false,
       plugins: [
         ['@babel/plugin-proposal-decorators', { decoratorsBeforeExport: true }],
       ],
