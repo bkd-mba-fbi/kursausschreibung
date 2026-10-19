@@ -10,7 +10,7 @@ function makeField(overrides = {}) {
       placeholder: '',
       options: { required: false, disabled: false, autocomplete: 'given-name' },
     },
-    overrides
+    overrides,
   );
 }
 
@@ -26,7 +26,7 @@ module('Integration | Component | input/input-string', function (hooks) {
     assert.equal(
       input.getAttribute('name'),
       'FirstName',
-      'name matches field id'
+      'name matches field id',
     );
   });
 
@@ -44,7 +44,7 @@ module('Integration | Component | input/input-string', function (hooks) {
       'field',
       makeField({
         options: { required: false, disabled: true, autocomplete: 'off' },
-      })
+      }),
     );
     await render(hbs`{{input/input-string field=this.field}}`);
 

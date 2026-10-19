@@ -13,7 +13,7 @@ function makeArea(overrides = {}) {
         'cat-2': { name: 'Führung' },
       },
     },
-    overrides
+    overrides,
   );
 }
 
@@ -30,7 +30,7 @@ module('Integration | Component | area-navigation', function (hooks) {
       .exists('heading element is rendered');
     assert.ok(
       this.element.textContent.includes('Kategorie'),
-      'heading shows translated "kursCategoryHeader" text'
+      'heading shows translated "kursCategoryHeader" text',
     );
   });
 
@@ -43,7 +43,7 @@ module('Integration | Component | area-navigation', function (hooks) {
     assert.ok(links.length > 0, 'nav contains at least one link');
     assert.ok(
       links[0].textContent.includes('Übersicht'),
-      'first link is the translated overview link'
+      'first link is the translated overview link',
     );
   });
 
@@ -57,11 +57,11 @@ module('Integration | Component | area-navigation', function (hooks) {
     assert.equal(links.length, 3, 'renders overview + 2 category links');
     assert.ok(
       links[1].textContent.includes('Informatik'),
-      'first category name appears'
+      'first category name appears',
     );
     assert.ok(
       links[2].textContent.includes('Führung'),
-      'second category name appears'
+      'second category name appears',
     );
   });
 
@@ -69,7 +69,7 @@ module('Integration | Component | area-navigation', function (hooks) {
     this.set('area', makeArea());
 
     await render(
-      hbs`<AreaNavigation @area={{this.area}} @hideHeading={{true}} />`
+      hbs`<AreaNavigation @area={{this.area}} @hideHeading={{true}} />`,
     );
 
     assert
@@ -87,7 +87,7 @@ module('Integration | Component | area-navigation', function (hooks) {
     assert.equal(
       links.length,
       1,
-      'only the overview link renders when there are no categories'
+      'only the overview link renders when there are no categories',
     );
   });
 });

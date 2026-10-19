@@ -28,7 +28,7 @@ export function setJsonLd(allEvents) {
           type: 'CourseInstance',
           courseMode: 'Blended',
           courseWorkload: millisecondsToISO8601Duration(
-            Math.abs(event.From - event.To)
+            Math.abs(event.From - event.To),
           ),
         },
       ];

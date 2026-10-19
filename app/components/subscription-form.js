@@ -94,7 +94,7 @@ function subscribe(form, self) {
   };
 
   let subscriptionDetailFieldset = form.querySelector(
-    '.subscription-detail-fields'
+    '.subscription-detail-fields',
   );
   let assocSubscriptionData = getFieldSetData([], subscriptionDetailFieldset);
 
@@ -205,13 +205,13 @@ function subscribe(form, self) {
     // main address
     addressData = getFieldSetData(
       addressProperties,
-      form.querySelector('.address-fields')
+      form.querySelector('.address-fields'),
     );
 
     // company address
     companyAddressData = getFieldSetData(
       companyAddressProperties,
-      form.querySelector('.company-address-fields')
+      form.querySelector('.company-address-fields'),
     );
 
     // set tableData for the main person
@@ -221,7 +221,7 @@ function subscribe(form, self) {
     if (useCompanyAddress) {
       tableData.companyFields = getTableData(
         self.args.companyFields,
-        companyAddressData
+        companyAddressData,
       );
     }
   }
@@ -229,12 +229,12 @@ function subscribe(form, self) {
   // set tableData for subscriptionDetails
   tableData.subscriptionDetailFields = getTableData(
     self.args.subscriptionDetailFields,
-    assocSubscriptionData
+    assocSubscriptionData,
   );
 
   // read addresses for additional people
   additionalPeople = Array.from(
-    form.querySelectorAll('.additional-person-fields')
+    form.querySelectorAll('.additional-person-fields'),
   ).map((fieldset) => getFieldSetData(addressProperties, fieldset));
 
   // set tableData for additional people

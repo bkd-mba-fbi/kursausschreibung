@@ -35,7 +35,7 @@ let isChartreuse = createStatusCallback(
       event.FreeSeats > 0 &&
       event.MaxParticipants - event.FreeSeats >= event.MinParticipants
     );
-  }
+  },
 );
 
 let isYellow = createStatusCallback(settings.lampIsYellow, function (event) {

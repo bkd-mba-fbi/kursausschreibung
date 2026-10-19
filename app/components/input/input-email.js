@@ -12,7 +12,7 @@ export default class InputEmailComponent extends Component {
     }
 
     const emailFields = Array.from(
-      form.querySelectorAll('input[type="email"]')
+      form.querySelectorAll('input[type="email"]'),
     );
     const emailFieldValues = emailFields.map((field) => field.value);
 

@@ -16,11 +16,11 @@ module('Integration | Component | twitter-feed', function (hooks) {
     assert.equal(
       link.getAttribute('href'),
       'https://twitter.com/emberjs',
-      'uses the username in href'
+      'uses the username in href',
     );
     assert.ok(
       link.textContent.includes('Tweets by emberjs'),
-      'link text includes username'
+      'link text includes username',
     );
   });
 

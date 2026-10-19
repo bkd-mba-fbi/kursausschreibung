@@ -32,7 +32,7 @@ export default class ApplicationRoute extends Route {
             'list.category.event.confirmation',
             event.areaKey,
             event.categoryKey,
-            event.Id
+            event.Id,
           );
         }
       })

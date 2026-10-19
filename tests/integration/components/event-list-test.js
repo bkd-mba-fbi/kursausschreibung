@@ -21,7 +21,7 @@ function makeEvent(overrides = {}) {
         Price: '100 CHF',
       },
     },
-    overrides
+    overrides,
   );
 }
 
@@ -104,11 +104,11 @@ module('Integration | Component | event-list', function (hooks) {
 
     assert.ok(
       this.element.textContent.includes('Kurs Alpha'),
-      'first event title is rendered'
+      'first event title is rendered',
     );
     assert.ok(
       this.element.textContent.includes('Kurs Beta'),
-      'second event title is rendered'
+      'second event title is rendered',
     );
   });
 });

@@ -22,7 +22,7 @@ function makeEvent(overrides = {}) {
       Id: 101,
       FreeSeats: 5,
     },
-    overrides
+    overrides,
   );
 }
 
@@ -126,7 +126,7 @@ module('Integration | Component | subscription-form', function (hooks) {
 
     assert.ok(
       this.element.textContent.includes('Person'),
-      'multiple-person area is rendered'
+      'multiple-person area is rendered',
     );
     assert
       .dom('button.uk-button-default')

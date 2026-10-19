@@ -9,7 +9,7 @@ function makeEvent(overrides = {}) {
       title: 'Schulung Grundlagen',
       texts: [{ memo: 'Einführungskurs' }],
     },
-    overrides
+    overrides,
   );
 }
 
@@ -70,7 +70,7 @@ module('Integration | Component | event-list-search', function (hooks) {
     assert.dom('.result-item').doesNotExist('no result items are yielded');
     assert.ok(
       this.element.textContent.toLowerCase().includes('keine kurse'),
-      'empty-state text is rendered'
+      'empty-state text is rendered',
     );
   });
 });

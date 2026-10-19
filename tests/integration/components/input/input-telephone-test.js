@@ -9,7 +9,7 @@ function makeField(overrides = {}) {
       id: 'Phone',
       options: { required: false, disabled: false, autocomplete: 'tel' },
     },
-    overrides
+    overrides,
   );
 }
 
@@ -30,7 +30,7 @@ module('Integration | Component | input/input-telephone', function (hooks) {
       'field',
       makeField({
         options: { required: false, disabled: true, autocomplete: 'tel' },
-      })
+      }),
     );
     await render(hbs`{{input/input-telephone field=this.field}}`);
 

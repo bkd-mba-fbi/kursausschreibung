@@ -14,7 +14,7 @@ export default class InputFreeformDropdownComponent extends Component {
 
   get options() {
     return (this.args.field?.options?.options ?? []).map(
-      (option) => option.Value
+      (option) => option.Value,
     );
   }
 
@@ -77,8 +77,8 @@ export default class InputFreeformDropdownComponent extends Component {
         event.key === 'ArrowDown'
           ? (this.activeIndex + 1) % this.suggestions.length
           : this.activeIndex <= 0
-          ? last
-          : this.activeIndex - 1;
+            ? last
+            : this.activeIndex - 1;
     } else if (event.key === 'Enter' && this.activeIndex !== -1) {
       event.preventDefault();
       this.select(this.suggestions[this.activeIndex]?.value);
@@ -90,7 +90,7 @@ export default class InputFreeformDropdownComponent extends Component {
     // keep the focus so focusout doesn't close the list before the click lands
     event.preventDefault();
     this.select(
-      this.suggestions[Number(event.currentTarget.dataset.index)]?.value
+      this.suggestions[Number(event.currentTarget.dataset.index)]?.value,
     );
   }
 
