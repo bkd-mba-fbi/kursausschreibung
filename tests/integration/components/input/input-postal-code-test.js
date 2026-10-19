@@ -14,7 +14,7 @@ function makeField(overrides = {}) {
         autocomplete: 'postal-code',
       },
     },
-    overrides
+    overrides,
   );
 }
 
@@ -30,12 +30,12 @@ module('Integration | Component | input/input-postal-code', function (hooks) {
     assert.equal(
       input.getAttribute('type'),
       'text',
-      'postal code input uses text type'
+      'postal code input uses text type',
     );
     assert.equal(
       input.getAttribute('name'),
       'ZipCode',
-      'postal code input uses field id as name'
+      'postal code input uses field id as name',
     );
   });
 
@@ -48,7 +48,7 @@ module('Integration | Component | input/input-postal-code', function (hooks) {
     assert.equal(
       input.getAttribute('placeholder'),
       '8000',
-      'postal code input renders placeholder'
+      'postal code input renders placeholder',
     );
   });
 });

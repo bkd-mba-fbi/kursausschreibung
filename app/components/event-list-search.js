@@ -55,7 +55,7 @@ export default class EventListSearchComponent extends Component {
     return events.filter(
       (event) =>
         Object.keys(event).some((key) => match(event[key], query)) ||
-        event.texts.some((text) => match(text.memo, query))
+        event.texts.some((text) => match(text.memo, query)),
     );
   }
 

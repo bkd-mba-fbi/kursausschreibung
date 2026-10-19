@@ -18,7 +18,7 @@ export default class RemainingSeatsBadgeComponent extends Component {
 
     if (typeof interval !== 'number') {
       console.warn(
-        'settings.badgeFreeSeats.intervalSec not found. falling back to 30 seconds'
+        'settings.badgeFreeSeats.intervalSec not found. falling back to 30 seconds',
       ); // eslint-disable-line no-console
       interval = 30;
     }

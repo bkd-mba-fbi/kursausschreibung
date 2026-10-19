@@ -9,7 +9,7 @@ function makeField(overrides = {}) {
       id: 'AcceptTerms',
       options: { required: false, disabled: false, autocomplete: 'off' },
     },
-    overrides
+    overrides,
   );
 }
 
@@ -25,7 +25,7 @@ module('Integration | Component | input/input-checkbox', function (hooks) {
     assert.equal(
       input.getAttribute('name'),
       'AcceptTerms',
-      'name matches field id'
+      'name matches field id',
     );
   });
 
@@ -34,7 +34,7 @@ module('Integration | Component | input/input-checkbox', function (hooks) {
       'field',
       makeField({
         options: { required: false, disabled: true, autocomplete: 'off' },
-      })
+      }),
     );
     await render(hbs`{{input/input-checkbox field=this.field}}`);
 
@@ -46,7 +46,7 @@ module('Integration | Component | input/input-checkbox', function (hooks) {
       'field',
       makeField({
         options: { required: true, disabled: false, autocomplete: 'off' },
-      })
+      }),
     );
     await render(hbs`{{input/input-checkbox field=this.field}}`);
 

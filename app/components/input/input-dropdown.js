@@ -42,7 +42,7 @@ export default class InputDropdownComponent extends Component {
         currentValue === '4000197' || currentValue === '4000198';
 
       let companyAddressButton = document.querySelector(
-        'button[name="useCompanyAddress"]'
+        'button[name="useCompanyAddress"]',
       );
 
       // if we “need” company‐address but the button is still disabled, click it
@@ -57,7 +57,7 @@ export default class InputDropdownComponent extends Component {
       // finally toggle “required” on all inputs inside the fieldset
       document
         .querySelectorAll(
-          '.company-address-fields input, .company-address-fields select, .company-address-fields textarea'
+          '.company-address-fields input, .company-address-fields select, .company-address-fields textarea',
         )
         .forEach((element) => {
           element.required = needsCompany;

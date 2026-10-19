@@ -45,7 +45,7 @@ export default class InputBaseComponent extends Component {
 
     if (component === undefined) {
       throw new Error(
-        `Unknown dataType "${dataType}" for field "${field?.id}" (check formFields in settings.js)`
+        `Unknown dataType "${dataType}" for field "${field?.id}" (check formFields in settings.js)`,
       );
     }
 

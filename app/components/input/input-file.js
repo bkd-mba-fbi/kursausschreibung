@@ -140,7 +140,7 @@ export default class InputFileComponent extends Component {
               `,
             });
           },
-          { once: true }
+          { once: true },
         );
       }
 

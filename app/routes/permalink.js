@@ -14,7 +14,7 @@ export default class permalink extends Route {
         'list.category.event',
         event.areaKey,
         event.categoryKey,
-        event.Id
+        event.Id,
       );
     } else {
       this.router.transitionTo('');

@@ -9,7 +9,7 @@ function makeField(overrides = {}) {
       id: 'Email',
       options: { required: false, disabled: false, autocomplete: 'email' },
     },
-    overrides
+    overrides,
   );
 }
 
@@ -30,7 +30,7 @@ module('Integration | Component | input/input-email', function (hooks) {
       'field',
       makeField({
         options: { required: false, disabled: true, autocomplete: 'email' },
-      })
+      }),
     );
     await render(hbs`{{input/input-email field=this.field}}`);
 
