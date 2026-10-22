@@ -1,3 +1,4 @@
+<div {{on "vss-dependency-hidden" this.resetDependency}}>
 {{#if this.isUploadControlVisible}}
 <div class="js-upload uk-form-custom">
     <input id="file{{@field.id}}" class="uk-input" type="file" accept={{@field.acceptFileType}} name={{@field.id}} required={{@field.options.required}} disabled={{@field.options.disabled}} {{on "change" this.handleChange}}>
@@ -26,3 +27,4 @@
 </div>
 <img id="imgDev{{@field.id}}" class="uk-margin uk-hidden" width="100" alt={{translate key="cropUploadedPreviewAlt"}} />
 <button type="button" id="fileBtDel{{@field.id}}" class="uk-button-danger uk-hidden" {{on "click" this.deleteFile}}><span uk-icon="icon: close; ratio: 1"></span></button>
+</div>
