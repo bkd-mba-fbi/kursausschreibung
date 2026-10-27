@@ -74,7 +74,7 @@
     "stylelint-config-standard": "^32.0.0",
     "stylelint-prettier": "^4.1.0",
     "tracked-built-ins": "^3.1.1",
-    "uikit": "^3.5.5",
+    "uikit": "^3.25.28",
     "vite": "^8.0.10"
   },
   "engines": {
