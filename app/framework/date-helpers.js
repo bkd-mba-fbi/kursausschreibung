@@ -67,11 +67,20 @@ export function isInSubscriptionRange(event) {
 }
 
 /**
- * return true if DateFrom or SubscriptionDateTo is greater than or equal
- * to the current date
+ * return true if the event can still be booked: it has not started yet, or
+ * the late registration (SubscriptionDateTo) is still open.
+ * The later of DateFrom and SubscriptionDateTo is compared with now.
+ *
+ * | DateFrom | SubscriptionDateTo | result |
+ * |----------|--------------------|--------|
+ * | null     | any                | true   |
+ * | future   | any                | true   |
+ * | past     | future             | true   |
+ * | past     | past               | false  |
+ *
  * @param {object} event event to check
  */
-export function eventStarted(event) {
+export function isStillBookable(event) {
   let now = new Date();
   if (event.DateFrom === null) {
     return true;

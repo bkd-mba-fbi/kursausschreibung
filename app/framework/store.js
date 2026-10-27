@@ -15,7 +15,7 @@ import {
   combineDate,
   isInSubscriptionRange,
   removeMinutes,
-  eventStarted,
+  isStillBookable,
   eventEnded,
 } from './date-helpers';
 import { all } from 'rsvp';
@@ -352,8 +352,8 @@ function filterEvents(events, language, eventCodes) {
     // Filter out events which have not ended yet
     events = events.filter((event) => !eventEnded(event));
   } else {
-    // Default behaviour, filter out events which have started
-    events = events.filter((event) => eventStarted(event));
+    // Default behaviour, only show events that can still be booked
+    events = events.filter((event) => isStillBookable(event));
   }
 
   return events;
