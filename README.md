@@ -58,6 +58,8 @@ Without this the build fails with `EPERM: operation not permitted, symlink`. Do 
 
 Also required for accounts in the Administrators group: UAC removes the symlink right in normal shells. Sources: [Microsoft: enable Developer Mode via PowerShell](https://learn.microsoft.com/en-us/windows/advanced-settings/developer-mode) (the command above), [Ember CLI Windows appendix](https://cli.emberjs.com/release/appendix/windows/) (why symlinks are needed).
 
+If the build suddenly fails with `Could not find ember-source` or similar, packages in `node_modules` were emptied: run `npm ci`.
+
 ## Running / Development
 
 * `npm start` (Vite dev server)
