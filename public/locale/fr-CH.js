@@ -26,8 +26,7 @@ window.kursausschreibung.locale['fr-CH'] = {
   subscribewithLogin: 'Se connecter avec login',
   back: 'Retour',
   backToCourses: "Retour à l'aperçu",
-  thankYou:
-    'Merci pour votre inscription à {Designation} le {DateFrom} à {Location} ({Number}) [{Room}]',
+  thankYou: 'Merci pour votre inscription à {Designation}.',
   thankYouWaitingList: "Merci de vous inscrire sur la liste d'attente.",
   youWillReceiveAConfirmationEMail:
     "Vous recevrez une confirmation d'inscription par e-mail.",
