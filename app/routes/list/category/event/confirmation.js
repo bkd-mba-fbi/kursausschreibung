@@ -24,7 +24,7 @@ export default class confirmation extends Route {
     let dataToSubmit = getDataToSubmit();
     let event = this.modelFor('list.category.event');
 
-    if (dataToSubmit === null) {
+    if (dataToSubmit === null || dataToSubmit === undefined) {
       this.router.transitionTo('list.category.event');
       return;
     }
@@ -105,6 +105,7 @@ export default class confirmation extends Route {
         return {
           tableData: tableData,
           statusIsRed: event.status === 'red',
+          event: event,
         };
       })
       .catch((error) => {
