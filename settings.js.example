@@ -28,6 +28,9 @@ window.kursausschreibung.settings = {
   //  + "Time" (combination of TimeFrom and TimeTo)
   // a translation has to be provided for each of the values
   // (the key of the translation has to be in camelCase)
+  // * "EventText{Number}" e.g. "EventText5" (only for eventListFields)
+  //   shows label and memo of the event-text with this number, no translation needed.
+  //   the row is hidden if the event has no such text in the active language
   eventListTitle: 'Designation',
   eventListFields: [
     'SubscriptionFrom',
