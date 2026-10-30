@@ -20,32 +20,36 @@
 {{/if}}
 <EventDetailsTable @event={{this.model}} />
 
-{{#if this.model.externalSubscriptionURL}}
-  <div class="uk-margin">
-    <a href={{this.model.externalSubscriptionURL}} class="uk-button uk-button-primary uk-float-left subscribe-button"
-      target="_blank" rel="noopener">
-      {{translate key="subscribe"}}
-    </a>
-   <LinkTo @route="list.category" class="uk-button uk-button-default uk-float-right">{{translate key="back"}}</LinkTo>
-  </div>
-{{else}}
-  {{#if this.badgeFreeSeatsEnabled}}
+{{#if this.badgeFreeSeatsEnabled}}
     <RemainingSeatsBadge @event={{this.model}} />
-  {{/if}}
-  <div class="uk-margin">
-    {{#if this.model.canDoSubscription}}
-      <LinkTo @route="list.category.event.subscribe" data-uk-tooltip={{translate key=(concat this.model.status "Lamp")}} class="uk-button uk-button-primary uk-float-left subscribe-button">{{translate key="subscribe"}}</LinkTo>
-    {{else}}
-      <button data-uk-tooltip={{translate key=(concat this.model.status "Lamp")}} disabled class="uk-button uk-button-primary uk-float-left subscribe-button">{{translate key="subscribe"}}</button>
-    {{/if}}
-    <LinkTo @route="list.category" class="uk-button uk-button-default uk-float-right">{{translate key="back"}}</LinkTo>
-  </div>
-  {{#if this.model.subscriptionWithLoginURL}}
-    {{#if this.model.canDoSubscription }}
-    <div class="uk-margin">
-      <a id="subscriptionWithLoginURL" href={{this.model.subscriptionWithLoginURL}}  target="_blank" rel="noopener" class="uk-button uk-button-primary uk-float-left subscribeWithLogin-button"
-        data-uk-tooltip={{translate key=(concat this.model.status "Lamp")}} >{{translate key="subscribeWithLogin"}}</a>
-    </div>
-    {{/if}}
-  {{/if}}
 {{/if}}
+
+<div class="uk-margin">
+
+{{#if this.isTypeTwoSubscription}}
+  {{#if this.model.subscriptionWithLoginURL}}
+    <a id="subscriptionWithLoginURL" href={{this.model.subscriptionWithLoginURL}} target="_blank" rel="noopener" class="uk-button uk-button-primary uk-float-left subscribeWithLogin-button"
+      data-uk-tooltip={{translate key=(concat this.model.status "Lamp")}} >{{translate key="subscribeWithLogin"}}</a>
+  {{else}}
+    <button id="subscribeButton" data-uk-tooltip={{translate key=(concat this.model.status "Lamp")}} disabled class="uk-button uk-button-primary uk-float-left subscribe-button">{{translate key="subscribe"}}</button>
+  {{/if}}
+{{else if this.model.externalSubscriptionURL}}
+  <a id="externalSubscriptionURL" href={{this.model.externalSubscriptionURL}} class="uk-button uk-button-primary uk-float-left subscribe-button"
+    target="_blank" rel="noopener">
+    {{translate key="subscribe"}}
+  </a>
+{{else if this.model.canDoSubscription}}
+    <LinkTo id="subscribeButton" @route="list.category.event.subscribe" data-uk-tooltip={{translate key=(concat this.model.status "Lamp")}} class="uk-button uk-button-primary uk-float-left subscribe-button">{{translate key="subscribe"}}</LinkTo>
+    {{#if this.model.subscriptionWithLoginURL}}
+      <div class="uk-margin">
+        <a id="subscriptionWithLoginURL" href={{this.model.subscriptionWithLoginURL}}  target="_blank" rel="noopener" class="uk-button uk-button-primary uk-float-left subscribeWithLogin-button"
+          data-uk-tooltip={{translate key=(concat this.model.status "Lamp")}} >{{translate key="subscribeWithLogin"}}</a>
+      </div>
+    {{/if}}
+{{else}}
+    <button id="subscribeButton" data-uk-tooltip={{translate key=(concat this.model.status "Lamp")}} disabled class="uk-button uk-button-primary uk-float-left subscribe-button">{{translate key="subscribe"}}</button>
+{{/if}}
+</div>
+<div class="uk-margin">
+  <LinkTo @route="list.category" class="uk-button uk-button-default uk-float-right">{{translate key="back"}}</LinkTo>
+</div>
