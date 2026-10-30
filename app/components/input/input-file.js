@@ -176,9 +176,10 @@ export default class InputFileComponent extends Component {
     this.isCropModalOpen = false;
 
     let imgFielDev = document.getElementById('imgDev' + fieldId);
-    imgFielDev.classList.add('uk-hidden');
+    imgFielDev?.classList.add('uk-hidden');
     removeFile(elementIdFile);
     field.fileTypeLabel = field.fileLabelBevorFileChoose;
+    field.fileObject = null;
 
     if (this.previewUrl) {
       URL.revokeObjectURL(this.previewUrl);
@@ -188,6 +189,33 @@ export default class InputFileComponent extends Component {
     destroyCropper(this);
 
     resetImageUi(fieldId);
+  }
+
+  @action
+  resetDependency() {
+    const field = this.args.field;
+    const fieldId = field.id;
+    const fileButton = document.getElementById('fileBt' + fieldId);
+    const deleteButton = document.getElementById('fileBtDel' + fieldId);
+
+    removeFile(getElementIdFile(fieldId));
+    field.fileObject = null;
+    field.fileTypeLabel = field.fileLabelBevorFileChoose;
+    this.isUploadControlVisible = true;
+    this.isCropModalOpen = false;
+    this.isCropCanvasVisible = false;
+    this.isUploadConfirmVisible = false;
+    fileButton?.classList.toggle('required', field.options?.required === true);
+    deleteButton?.classList.add('uk-hidden');
+
+    if (this.previewUrl) {
+      URL.revokeObjectURL(this.previewUrl);
+      this.previewUrl = null;
+    }
+
+    destroyCropper(this);
+    resetImageUi(fieldId);
+    vssDependency('', field);
   }
 
   @action
