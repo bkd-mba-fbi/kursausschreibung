@@ -2,6 +2,7 @@
 
 import parseISO from 'date-fns/parseISO';
 import format from 'date-fns/format';
+import startOfDay from 'date-fns/startOfDay';
 import de from 'date-fns/locale/de';
 import fr from 'date-fns/locale/fr';
 import { getLanguage } from './translate';
@@ -69,19 +70,19 @@ export function isInSubscriptionRange(event) {
 /**
  * return true if the event can still be booked: it has not started yet, or
  * the late registration (SubscriptionDateTo) is still open.
- * The later of DateFrom and SubscriptionDateTo is compared with now.
+ * The later of DateFrom and SubscriptionDateTo is compared with the start
+ * of today, so the event is still shown on that day.
  *
- * | DateFrom | SubscriptionDateTo | result |
- * |----------|--------------------|--------|
- * | null     | any                | true   |
- * | future   | any                | true   |
- * | past     | future             | true   |
- * | past     | past               | false  |
+ * | DateFrom     | SubscriptionDateTo | result |
+ * |--------------|--------------------|--------|
+ * | null         | any                | true   |
+ * | today/future | any                | true   |
+ * | past         | today/future       | true   |
+ * | past         | past/null          | false  |
  *
  * @param {object} event event to check
  */
 export function isStillBookable(event) {
-  let now = new Date();
   if (event.DateFrom === null) {
     return true;
   }
@@ -89,27 +90,19 @@ export function isStillBookable(event) {
     event.DateFrom <= event.SubscriptionDateTo
       ? event.SubscriptionDateTo
       : event.DateFrom;
-  return parseISO(date).getTime() >= now.getTime();
+  return parseISO(date).getTime() >= startOfDay(new Date()).getTime();
 }
 
 /**
- * return true if DateTo + TimeTo is smaller than or equal
- * to the current datetime
+ * return true if DateTo is before today. The event is still shown
+ * on its last day, regardless of TimeTo.
  * @param {object} event event to check
  */
 export function eventEnded(event) {
-  let now = new Date();
-  let dateTo = event.DateTo;
-  let repalcePattern = '00:00:00';
-  if (dateTo === null) {
+  if (event.DateTo === null) {
     return false;
   }
-
-  dateTo =
-    dateTo.search(repalcePattern) > 0
-      ? dateTo.replace(repalcePattern, event.TimeTo)
-      : dateTo;
-  return parseISO(dateTo).getTime() <= now.getTime();
+  return parseISO(event.DateTo).getTime() < startOfDay(new Date()).getTime();
 }
 
 /**
