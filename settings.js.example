@@ -28,9 +28,6 @@ window.kursausschreibung.settings = {
   //  + "Time" (combination of TimeFrom and TimeTo)
   // a translation has to be provided for each of the values
   // (the key of the translation has to be in camelCase)
-  // * "EventText{Number}" e.g. "EventText5" (only for eventListFields)
-  //   shows label and memo of the event-text with this number, no translation needed.
-  //   the row is hidden if the event has no such text in the active language
   eventListTitle: 'Designation',
   eventListFields: [
     'SubscriptionFrom',
@@ -280,9 +277,6 @@ window.kursausschreibung.settings = {
     },
   },
 
-  // set this to true to add a button to change the langauge (optional)
-  showLanguageButton: true,
-
   // callback functions for status-lamps (optional)
   // these get executed in order to determine the status of an event
   // the parameters of the callback are isInSubscriptionRange and event
@@ -320,8 +314,14 @@ window.kursausschreibung.settings = {
   // it will overwrite null values in the post to the person endpoint (optional)
   personDefaultValue: { CountryId: 'CH' },
 
+  // set this to true to add a button to change the langauge (optional)
+  showLanguageButton: true,
+
   // set this to true to only show events with matching language (optional)
   languageOfInstructionFilter: false,
+
+  // event IDs that are shown in both languages (expects array also if one value, [123]) (optional)
+  bilingualEventIds: [],
 
   // Header Offset for scrolling
   headerOffset: 133,
