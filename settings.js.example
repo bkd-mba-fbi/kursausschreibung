@@ -11,6 +11,11 @@ window.kursausschreibung.settings = {
   },
 
   // show events which have already started, but not yet ended
+  // | value | event is shown up to and including           |
+  // |-------|----------------------------------------------|
+  // | false | the later of DateFrom and SubscriptionDateTo |
+  // | true  | DateTo (TimeTo is ignored)                   |
+  // events without DateFrom (false) or DateTo (true) are always shown
   showStartedEvents: false,
 
   // items per page on the event-list (required)
