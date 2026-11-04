@@ -1,10 +1,21 @@
 /* loosely based on the CLX framework */
 
+import { get } from '@ember/object';
 import { getCulture, setCulture } from './storage';
 import appConfig from './app-config';
 
 let language = detectLanguage();
 let locale = window.kursausschreibung.locale[language];
+
+/**
+ * get the custom locale of the current language
+ * the keys in locale/{culture}-custom.js override the ones in locale/{culture}.js
+ */
+function getCustomLocale() {
+  let customLocales = window.kursausschreibung.localeCustom;
+
+  return (customLocales && customLocales[language]) || {};
+}
 
 /**
  * get the current language
@@ -30,10 +41,20 @@ export function setLanguage(newLanguage) {
  * returns a localized sring
  * @param {string} key the key to localize
  * @param {string[]?} placeholderValues these values replace {0}, {1}, ...
+ * @param {object?} namedPlaceholderValues these values replace named placeholders
  */
-export function getString(key, placeholderValues = []) {
+export function getString(
+  key,
+  placeholderValues = [],
+  namedPlaceholderValues = {}
+) {
   try {
-    let string = locale[key];
+    let string = getCustomLocale()[key];
+
+    // fall back to the default locale if the key is not customized
+    if (string === undefined || string === null) {
+      string = locale[key];
+    }
 
     if (string === undefined || string === null) {
       return '<span style="color:red;">Key not found: ' + key + '</span>';
@@ -42,6 +63,14 @@ export function getString(key, placeholderValues = []) {
     placeholderValues.forEach((placeholderValue, i) => {
       string = string.replace('{' + i + '}', placeholderValue);
     });
+
+    string = string.replace(
+      /\{([A-Za-z][A-Za-z0-9_]*)\}/g,
+      (placeholder, name) => {
+        let value = get(namedPlaceholderValues, name);
+        return value === undefined || value === null ? '' : value;
+      }
+    );
 
     return string;
   } catch (ex) {
