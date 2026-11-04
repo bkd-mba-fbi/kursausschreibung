@@ -101,6 +101,8 @@ function subscribe(form, self) {
   subscriptionDetailFieldset
     .querySelectorAll('input, select, textarea')
     .forEach((element) => {
+      if (isHiddenField(element)) return;
+
       let vssId = parseInt(element.name);
       let value = null;
 
@@ -268,11 +270,16 @@ function getFieldSetData(properties, fieldset) {
     return data;
   }
 
-  fieldset
-    .querySelectorAll('input, select, textarea')
-    .forEach((element) => setProperties(data, element));
+  fieldset.querySelectorAll('input, select, textarea').forEach((element) => {
+    if (!isHiddenField(element)) setProperties(data, element);
+  });
 
   return data;
+}
+
+// finds closest parent with id starting with "hidden" and checks if it has the class "uk-hidden"
+function isHiddenField(element) {
+  return element.closest('[id^="hidden"]')?.classList.contains('uk-hidden');
 }
 
 // add input data of element to data object

@@ -20,7 +20,8 @@ export function formFieldError(element, valid, message = 'invalidInput') {
  * @param {string} elementId
  */
 export function removeFile(elementId) {
-  document.getElementById(elementId).value = '';
+  const element = document.getElementById(elementId);
+  if (element) element.value = '';
 }
 
 /**
@@ -114,7 +115,36 @@ export function vssDependency(formValue, field) {
         requiredElement.required = element.required;
       } else {
         hidden.classList.add(hiddenClass);
-        requiredElement.required = false;
+        hidden.querySelectorAll('input, select, textarea').forEach((input) => {
+          input.required = false;
+
+          if (input.type === 'checkbox' || input.type === 'radio') {
+            input.checked = false;
+          } else if (input.tagName === 'SELECT') {
+            input.selectedIndex = 0;
+          } else {
+            input.value = '';
+          }
+        });
+
+        hidden.querySelectorAll('input, select, textarea').forEach((input) => {
+          if (input.type === 'file') {
+            // Dispatch custom event to input-file.js so it can reset the file input and UI
+            input.dispatchEvent(
+              new CustomEvent('vss-dependency-hidden', { bubbles: true })
+            );
+            return;
+          }
+
+          // Dispatch event type that was registered on the input element
+          const eventName =
+            input.type === 'checkbox' ||
+            input.type === 'radio' ||
+            input.tagName === 'SELECT'
+              ? 'change'
+              : 'focusout';
+          input.dispatchEvent(new Event(eventName, { bubbles: true }));
+        });
       }
     });
   }
