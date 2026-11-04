@@ -7,6 +7,16 @@ let language = detectLanguage();
 let locale = window.kursausschreibung.locale[language];
 
 /**
+ * get the custom locale of the current language
+ * the keys in locale/{culture}-custom.js override the ones in locale/{culture}.js
+ */
+function getCustomLocale() {
+  let customLocales = window.kursausschreibung.localeCustom;
+
+  return (customLocales && customLocales[language]) || {};
+}
+
+/**
  * get the current language
  */
 export function getLanguage() {
@@ -33,7 +43,12 @@ export function setLanguage(newLanguage) {
  */
 export function getString(key, placeholderValues = []) {
   try {
-    let string = locale[key];
+    let string = getCustomLocale()[key];
+
+    // fall back to the default locale if the key is not customized
+    if (string === undefined || string === null) {
+      string = locale[key];
+    }
 
     if (string === undefined || string === null) {
       return '<span style="color:red;">Key not found: ' + key + '</span>';
