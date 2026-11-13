@@ -229,6 +229,20 @@ export function postSubscription(data) {
 }
 
 /**
+ * set the value of one subscription detail of an existing subscription
+ * @param {number} subscriptionId id of the subscription
+ * @param {object} data EventId, IdPerson, VssId and Value of the detail
+ */
+export function putSubscriptionDetail(subscriptionId, data) {
+  return put(`SubscriptionDetails/${subscriptionId}_${data.VssId}`, {
+    EventId: data.EventId,
+    IdPerson: data.IdPerson,
+    VssId: data.VssId,
+    Value: data.Value,
+  });
+}
+
+/**
  * Post Files to SubscriptionDetails
  * @param {object} data of the subscription files
  * @param {image} image des files Base64Codierung

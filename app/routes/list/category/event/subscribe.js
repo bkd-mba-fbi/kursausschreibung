@@ -109,6 +109,7 @@ function getSubscriptionDetailFields(subscriptionDetails) {
       fileLabelBevorFileChoose: getString('fileType' + detail.VssStyle),
       maxFileSize: detail.MaxFileSize,
       fileObject: null,
+      internetRequired: detail.VssInternet === 'M',
       options: {
         required: detail.VssInternet === 'M',
         autocomplete: 'off',

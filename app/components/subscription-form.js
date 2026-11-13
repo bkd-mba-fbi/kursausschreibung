@@ -7,6 +7,7 @@ import {
   getYMD,
 } from 'kursausschreibung/framework/date-helpers';
 import { setDataToSubmit } from 'kursausschreibung/framework/storage';
+import { addPlaceholders } from 'kursausschreibung/framework/form-helpers';
 import { getString } from 'kursausschreibung/framework/translate';
 import uikit from 'uikit';
 
@@ -122,6 +123,17 @@ function subscribe(form, self) {
           Value: value,
         });
     });
+
+  // 33707: hidden required details get a placeholder, so Evento accepts
+  // the subscription. confirmation.js clears them afterwards.
+  let hiddenDetails = addPlaceholders(
+    subscriptionData,
+    self.args.subscriptionDetailFields ?? [],
+    (field) =>
+      document
+        .getElementById('hidden' + field.id)
+        ?.classList.contains('uk-hidden')
+  );
 
   //made a array of Files for upload to server
   let subscriptionFiles = [];
@@ -254,6 +266,7 @@ function subscribe(form, self) {
     additionalPeople,
     tableData,
     subscriptionFiles,
+    hiddenDetails,
   });
 }
 
