@@ -189,3 +189,52 @@ function vssDependencyCheck(formValue, operator, values) {
     return formValue.length > 0 ? true : false; //formValue !== undefined ||
   }
 }
+
+/**
+ * placeholder value for a hidden required subscription detail (33707)
+ * @param {object} field subscription detail field
+ */
+export function getPlaceholder(field) {
+  switch (field.dataType) {
+    case 'date':
+      return '01.01.2000';
+    case 'number':
+      return '0';
+    case 'checkbox':
+      return 'Ja';
+    case 'file':
+      return 'platzhalter.pdf';
+    case 'dropdown':
+    case 'freeform-dropdown':
+      return field.options?.options?.[0]?.Key ?? '-';
+    default:
+      return '-';
+  }
+}
+
+/**
+ * give every hidden required subscription detail a placeholder (33707)
+ * and return their ids, so they can be cleared after the subscription
+ * @param {object} subscriptionData data for POST Subscriptions
+ * @param {array} fields subscription detail fields
+ * @param {function} isHidden returns true if a field is hidden
+ */
+export function addPlaceholders(subscriptionData, fields, isHidden) {
+  let hiddenDetails = [];
+
+  fields
+    .filter((field) => field.internetRequired && isHidden(field))
+    .forEach((field) => {
+      subscriptionData.SubscriptionDetails =
+        subscriptionData.SubscriptionDetails.filter(
+          (detail) => detail.VssId !== field.id
+        );
+      subscriptionData.SubscriptionDetails.push({
+        VssId: field.id,
+        Value: getPlaceholder(field),
+      });
+      hiddenDetails.push(field.id);
+    });
+
+  return hiddenDetails;
+}
