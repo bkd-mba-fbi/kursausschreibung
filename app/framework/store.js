@@ -10,12 +10,13 @@ import {
 } from './api';
 import { isGreen, isChartreuse, isYellow, isRed } from './status';
 import ObjectProxy from '@ember/object/proxy';
+import { set } from '@ember/object';
 import {
   formatDate,
   combineDate,
   isInSubscriptionRange,
   removeMinutes,
-  eventStarted,
+  isStillBookable,
   eventEnded,
 } from './date-helpers';
 import { all } from 'rsvp';
@@ -171,6 +172,22 @@ function addTextsToEvents(eventTexts, language) {
         (text) => text.label !== null && text.memo !== null
       ))
   );
+
+  // make the texts addressable for settings.eventListFields
+  eventsById.forEach(addEventTextFields);
+}
+
+/**
+ * add the properties EventText{Number} (memo) and EventText{Number}Label (label)
+ * for every text of the event to its displayData
+ * (the event itself is a copy of the content of displayData)
+ * @param {object} event event with texts and displayData
+ */
+export function addEventTextFields(event) {
+  event.texts.forEach((text) => {
+    set(event.displayData, 'EventText' + text.id, text.memo);
+    set(event.displayData, 'EventText' + text.id + 'Label', text.label);
+  });
 }
 
 /**
@@ -271,7 +288,7 @@ function addCodesToEvents(eventCodes) {
  * @param {object[]} events events returned by the API
  * @param {string} language the active language
  */
-function filterEvents(events, language, eventCodes) {
+export function filterEvents(events, language, eventCodes) {
   // filter out events with undesired parameters
 
   // backwards compatibility fallback for single hostId filter
@@ -340,11 +357,14 @@ function filterEvents(events, language, eventCodes) {
   if (settings.languageOfInstructionFilter) {
     events = events.filter(
       (event) =>
-        event.LanguageOfInstruction === 'Bilingue' ||
         (event.LanguageOfInstruction === '1' && language === 'de-CH') ||
         (event.LanguageOfInstruction === 'Deutsch' && language === 'de-CH') ||
         (event.LanguageOfInstruction === '2' && language === 'en-US') ||
-        (event.LanguageOfInstruction === 'Französisch' && language === 'en-US')
+        (event.LanguageOfInstruction === 'Französisch' &&
+          language === 'en-US') ||
+        event.LanguageOfInstruction === 'Bilingue' ||
+        (Array.isArray(settings.bilingualEventIds) &&
+          settings.bilingualEventIds.includes(event.Id))
     );
   }
 
@@ -352,8 +372,8 @@ function filterEvents(events, language, eventCodes) {
     // Filter out events which have not ended yet
     events = events.filter((event) => !eventEnded(event));
   } else {
-    // Default behaviour, filter out events which have started
-    events = events.filter((event) => eventStarted(event));
+    // Default behaviour, only show events that can still be booked
+    events = events.filter((event) => isStillBookable(event));
   }
 
   return events;

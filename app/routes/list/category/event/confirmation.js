@@ -10,6 +10,7 @@ import {
   putPerson,
   postAddress,
   postSubscription,
+  putSubscriptionDetail,
   postSubscriptionDetailsFiles,
 } from 'kursausschreibung/framework/api';
 import { autoCheckForLogin } from 'kursausschreibung/framework/login-helpers';
@@ -24,7 +25,7 @@ export default class confirmation extends Route {
     let dataToSubmit = getDataToSubmit();
     let event = this.modelFor('list.category.event');
 
-    if (dataToSubmit === null) {
+    if (dataToSubmit === null || dataToSubmit === undefined) {
       this.router.transitionTo('list.category.event');
       return;
     }
@@ -38,6 +39,7 @@ export default class confirmation extends Route {
       additionalPeople,
       tableData,
       subscriptionFiles,
+      hiddenDetails = [],
     } = dataToSubmit;
 
     // make sure the session is still active
@@ -82,20 +84,34 @@ export default class confirmation extends Route {
                 Value: additionalPeople.length,
               });
             }
-            return postSubscription(subscriptionData).then((id) => {
-              subscriptionFiles.forEach((file) => {
-                let data = {
-                  SubscriptionDetail: {
-                    SubscriptionId: id,
-                    VssId: file.IdVss,
-                  },
-                  FileStreamInfo: {
-                    FileName: file.name,
-                  },
-                };
-                promises.push(postSubscriptionDetailsFiles(data, file));
+            return postSubscription(subscriptionData)
+              .then((id) => {
+                // 33707: clear the placeholders of hidden required details
+                return Promise.all(
+                  hiddenDetails.map((vssId) =>
+                    putSubscriptionDetail(id, {
+                      EventId: subscriptionData.EventId,
+                      IdPerson: subscriptionData.PersonId,
+                      VssId: vssId,
+                      Value: '',
+                    })
+                  )
+                ).then(() => id);
+              })
+              .then((id) => {
+                subscriptionFiles.forEach((file) => {
+                  let data = {
+                    SubscriptionDetail: {
+                      SubscriptionId: id,
+                      VssId: file.IdVss,
+                    },
+                    FileStreamInfo: {
+                      FileName: file.name,
+                    },
+                  };
+                  promises.push(postSubscriptionDetailsFiles(data, file));
+                });
               });
-            });
           });
         });
 
@@ -105,6 +121,7 @@ export default class confirmation extends Route {
         return {
           tableData: tableData,
           statusIsRed: event.status === 'red',
+          event: event,
         };
       })
       .catch((error) => {

@@ -80,7 +80,9 @@ export function getCorrectApiUrl(url) {
     var getIndex = url.split('/')[apiUriSplitLength];
     return url.substring(url.indexOf(getIndex), url.length);
   } else {
-    return '..' + url;
+    // relative location like /restApi/files/{id}: drop /restApi,
+    // ajax() puts apiUrl in front (works with .../restApi and .../api)
+    return url.replace(/^\/restApi\//i, '').replace(/^\//, '');
   }
 }
 
