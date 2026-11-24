@@ -86,6 +86,7 @@ function subscribe(form, self) {
   let eventId = self.args.event?.Id;
   let userSettings = self.args.userSettings;
   let showCompanyButtonOnly = self.args.showCompanyButtonOnly;
+  let showAddressInputs = self.args.showAddressInputs;
 
   // subscription
   let subscriptionData = {
@@ -212,22 +213,26 @@ function subscribe(form, self) {
     'Zip',
   ];
 
-  // read address and companyAddress if we don't know the personId yet
-  if (showCompanyButtonOnly) {
-    // main address
+  // read the main address whenever its fieldset is rendered, which is the
+  // case for everyone who is not logged in. This must not depend on the
+  // company address button: an event without an editable AD 10895 shows no
+  // such button, but still needs the address to create the person.
+  if (showAddressInputs) {
     addressData = getFieldSetData(
       addressProperties,
       form.querySelector('.address-fields')
     );
 
-    // company address
+    // set tableData for the main person
+    tableData.fields = getTableData(self.args.fields, addressData);
+  }
+
+  // the company address only exists when its button is shown
+  if (showCompanyButtonOnly) {
     companyAddressData = getFieldSetData(
       companyAddressProperties,
       form.querySelector('.company-address-fields')
     );
-
-    // set tableData for the main person
-    tableData.fields = getTableData(self.args.fields, addressData);
 
     // set tableData for the company address
     if (useCompanyAddress) {

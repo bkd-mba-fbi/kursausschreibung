@@ -223,7 +223,11 @@ export default class ListCategoryEventSubscribeRoute extends Route {
                 return false;
               }
               if (detail.VssId === SUBSCRIPTION_DETAIL_INVOICE_ADRESS) {
-                enableInvoiceAddress = true;
+                // 33645: only an editable AD 10895 enables the invoice address.
+                // The detail is removed here, so the 'H' filter below never
+                // sees it and the visibility has to be decided right away.
+                enableInvoiceAddress =
+                  detail.VssInternet === 'E' || detail.VssInternet === 'M';
                 return false;
               }
               return true;
@@ -293,7 +297,9 @@ export default class ListCategoryEventSubscribeRoute extends Route {
     controller.enableInvoiceAddress = model.enableInvoiceAddress === true;
     controller.companyFields = addTranslations(formFields.companyFields || []);
     controller.showAddressInputs = !model.userSettings.isLoggedIn;
-    controller.showCompanyButtonOnly = !model.userSettings.isLoggedIn;
+    // 33645: the company address button needs an editable AD 10895 on the event
+    controller.showCompanyButtonOnly =
+      !model.userSettings.isLoggedIn && controller.enableInvoiceAddress;
 
     controller.subscriptionDetailFields = model.subscriptionDetailFields;
 
