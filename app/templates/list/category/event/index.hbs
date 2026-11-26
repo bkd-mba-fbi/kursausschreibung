@@ -1,8 +1,10 @@
 {{#if this.showBreadcrumbs}}
   <ul class="uk-breadcrumb">
-    <li>
-      <LinkTo @route="list">{{this.model.AreaOfEducation}}</LinkTo>
-    </li>
+    {{#if this.showAreaOfEducation}}
+      <li>
+        <LinkTo @route="list">{{this.model.AreaOfEducation}}</LinkTo>
+      </li>
+    {{/if}}
     <li>
       <LinkTo @route="list.category">{{this.model.EventCategory}}</LinkTo>
     </li>

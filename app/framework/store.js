@@ -107,11 +107,17 @@ export function init() {
     // add codes to events (it's important to filter)
     addCodesToEvents(eventCodes);
 
+    // hide the area of education: all categories in one area
+    if (settings.showAreaOfEducation === false) {
+      mergeAreas(events.map((event) => eventsById[event.Id]));
+    }
+
     // sort areaKeys
     eventsByArea.areaKeys = Object.keys(eventsByArea.areas).sort();
     eventsByArea.moreOneAreaKeys =
-      eventsByArea.areaKeys.length === 1 &&
-      settings.eventCategoryDropdown === false
+      (eventsByArea.areaKeys.length === 1 &&
+        settings.eventCategoryDropdown === false) ||
+      settings.showAreaOfEducation === false
         ? false
         : true;
 
@@ -447,6 +453,46 @@ function prepareEvent(event) {
 
   // put event into associative arrays
   putIntoAssocArrays(event);
+}
+
+/**
+ * replaces all areas of education with one area (settings.showAreaOfEducation).
+ * categories with the same key are merged, so they appear only once.
+ * the area key of the merged area is the first area key, the URLs of
+ * the other areas still work (see routes/list.js).
+ * @param {object[]} events all prepared events in sort order
+ */
+export function mergeAreas(events) {
+  let areaKeys = Object.keys(eventsByArea.areas).sort();
+
+  if (areaKeys.length === 0) {
+    return;
+  }
+
+  let merged = {
+    name: '',
+    key: areaKeys[0],
+    events: [],
+    categories: {},
+    categoryKeys: [],
+  };
+
+  events.forEach((event) => {
+    set(event, 'areaKey', merged.key);
+    merged.events.push(event);
+
+    let categoryKey = event.categoryKey;
+    if (!merged.categories.hasOwnProperty(categoryKey)) {
+      merged.categories[categoryKey] = {
+        name: event.EventCategory,
+        key: categoryKey,
+        events: [],
+      };
+    }
+    merged.categories[categoryKey].events.push(event);
+  });
+
+  eventsByArea.areas = { [merged.key]: merged };
 }
 
 /**
