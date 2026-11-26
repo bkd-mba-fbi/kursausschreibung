@@ -105,6 +105,13 @@ export function getUserSettings() {
 }
 
 /**
+ * get the configuration entry WebM_SchoolAppNavigation of the school
+ */
+export function getSchoolAppNavigation() {
+  return get('Configurations/SchoolAppNavigation', false);
+}
+
+/**
  * get all events
  */
 export function getEvents() {
