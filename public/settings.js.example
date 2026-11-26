@@ -1,4 +1,8 @@
 window.kursausschreibung = window.kursausschreibung || {};
+// Evento-Portal: these values are the default for all schools. Per school, the section
+// "kursausschreibung" in the configuration entry WebM_SchoolAppNavigation overrides single
+// entries as a whole (see settingsFromBackendIfConsumer in appConfig.js). Entries with
+// functions (lampIsGreen, lampIsChartreuse, lampIsYellow, lampIsRed) can only be set here.
 window.kursausschreibung.settings = {
   // only show matching events (expects array also if one value, [123]) (optional)
   initialListFilters: {

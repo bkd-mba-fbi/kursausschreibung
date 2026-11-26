@@ -7,6 +7,7 @@ import {
 } from 'kursausschreibung/framework/store';
 import { getDataToSubmit } from 'kursausschreibung/framework/storage';
 import { autoCheckForLogin } from 'kursausschreibung/framework/login-helpers';
+import { loadSchoolSettings } from 'kursausschreibung/framework/school-settings';
 import { setJsonLd } from '../framework/seo';
 
 export default class ApplicationRoute extends Route {
@@ -16,6 +17,7 @@ export default class ApplicationRoute extends Route {
 
     // initialization
     return autoCheckForLogin() // get a valid access_token if we don't have one
+      .then(loadSchoolSettings) // settings of the school from WebM_SchoolAppNavigation (portal only)
       .then(initStore)
       .then(() => {
         // reroute to the confirmation page if there is data that has to be submitted
