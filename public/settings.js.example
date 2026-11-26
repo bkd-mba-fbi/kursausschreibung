@@ -351,4 +351,10 @@ window.kursausschreibung.settings = {
   //      "1-1-Deutsch-S1-2022/23-26ab"             => "Deutsch-S1"
   // Designations not matching the convention stay unchanged.
   trimDesignation: false,
+
+  // show the navigation level area of education (Ausbildung / Weiterbildung) (optional, default true)
+  // false: no area navigation and no area in the breadcrumb, the categories of all areas
+  // are shown directly (categories with the same name only once). Links like
+  // #/ausbildung/... and #/uid/{id} still work.
+  showAreaOfEducation: true,
 };
