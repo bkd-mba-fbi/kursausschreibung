@@ -77,6 +77,11 @@ export function init() {
     // filter events
     events = filterEvents(events, language, eventCodes);
 
+    // shorten designations before sorting, so sorting uses the short designation
+    if (settings.trimDesignation === true) {
+      events.forEach(applyTrimDesignation);
+    }
+
     // sort events
     var sortAs = getSortAs();
     if (sortAs === null) {
@@ -377,6 +382,42 @@ export function filterEvents(events, language, eventCodes) {
   }
 
   return events;
+}
+
+// Mittelschul convention: Stufe-Semester-Fach-Fächergruppe-Schuljahr-Klassen-freier Term
+const DESIGNATION_PATTERN = /^\d+-\d+-(.+?)-\d{4}\/\d{2}(-.*)?$/;
+
+/**
+ * returns only the subject part of a designation following the
+ * Mittelschul convention, e.g. "14-2-Chor-FF-2025/26-26bc" => "Chor-FF".
+ * Designations not matching the convention are returned unchanged.
+ * @param {string} designation
+ */
+export function trimDesignation(designation) {
+  if (typeof designation !== 'string') {
+    return designation;
+  }
+  const match = designation.match(DESIGNATION_PATTERN);
+  return match ? match[1] : designation;
+}
+
+/**
+ * shortens event.Designation (settings.trimDesignation).
+ * a subtitle (settings.eventSubtitle) is kept and only the part
+ * before it is shortened.
+ * @param {object} event event returned by the API
+ */
+export function applyTrimDesignation(event) {
+  const separator = settings.eventSubtitle;
+  if (typeof event.Designation !== 'string') {
+    return;
+  }
+  if (separator && event.Designation.includes(separator)) {
+    const [main, ...rest] = event.Designation.split(separator);
+    event.Designation = [trimDesignation(main), ...rest].join(separator);
+  } else {
+    event.Designation = trimDesignation(event.Designation);
+  }
 }
 
 /**

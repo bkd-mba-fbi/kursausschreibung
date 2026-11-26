@@ -340,4 +340,11 @@ window.kursausschreibung.settings = {
 
   //if in designation this sign. Module will add event subtitle as uk-label-warning
   eventSubtitle: '>',
+
+  // Mittelschulen: show only the subject part of the designation (optional, default false)
+  // Convention: Stufe-Semester-Fach-Fächergruppe-Schuljahr-Klassen-freier Term
+  // e.g. "14-2-Chor-FF-2025/26-26bc27aPMVDA2023af" => "Chor-FF"
+  //      "1-1-Deutsch-S1-2022/23-26ab"             => "Deutsch-S1"
+  // Designations not matching the convention stay unchanged.
+  trimDesignation: false,
 };

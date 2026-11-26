@@ -3,7 +3,9 @@ import { get } from '@ember/object';
 import ObjectProxy from '@ember/object/proxy';
 import {
   addEventTextFields,
+  applyTrimDesignation,
   filterEvents,
+  trimDesignation,
 } from 'kursausschreibung/framework/store';
 import settings from 'kursausschreibung/framework/settings';
 
@@ -104,5 +106,60 @@ module('Unit | Framework | store | addEventTextFields', function () {
     addEventTextFields(event);
 
     assert.deepEqual(Object.keys(event.displayData.content), ['Id']);
+  });
+});
+
+module('Unit | Framework | store | trimDesignation', function (hooks) {
+  hooks.beforeEach(function () {
+    settings.eventSubtitle = '>';
+  });
+
+  test('keeps only the subject part of the Mittelschul convention', function (assert) {
+    assert.strictEqual(
+      trimDesignation('14-2-Chor-FF-2025/26-26bc27aPMVDA2023af'),
+      'Chor-FF'
+    );
+    assert.strictEqual(
+      trimDesignation('1-1-Deutsch-S1-2022/23-26ab'),
+      'Deutsch-S1'
+    );
+  });
+
+  test('trims a designation without classes after the school year', function (assert) {
+    assert.strictEqual(trimDesignation('1-1-Deutsch-S1-2022/23'), 'Deutsch-S1');
+  });
+
+  test('leaves designations not matching the convention unchanged', function (assert) {
+    assert.strictEqual(
+      trimDesignation('Excel Grundkurs'),
+      'Excel Grundkurs'
+    );
+    assert.strictEqual(
+      trimDesignation('BFS-Deutsch-2025/26-1a'),
+      'BFS-Deutsch-2025/26-1a',
+      'no Stufe-Semester prefix'
+    );
+    assert.strictEqual(
+      trimDesignation('14-2-Chor-FF'),
+      '14-2-Chor-FF',
+      'no school year'
+    );
+    assert.strictEqual(trimDesignation(undefined), undefined);
+  });
+
+  test('applyTrimDesignation keeps the subtitle', function (assert) {
+    let event = { Designation: '14-2-Chor-FF-2025/26-26bc>Neu' };
+
+    applyTrimDesignation(event);
+
+    assert.strictEqual(event.Designation, 'Chor-FF>Neu');
+  });
+
+  test('applyTrimDesignation trims a designation without subtitle', function (assert) {
+    let event = { Designation: '1-1-Deutsch-S1-2022/23-26ab' };
+
+    applyTrimDesignation(event);
+
+    assert.strictEqual(event.Designation, 'Deutsch-S1');
   });
 });
