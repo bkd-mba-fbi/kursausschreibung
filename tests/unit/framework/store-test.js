@@ -130,10 +130,7 @@ module('Unit | Framework | store | trimDesignation', function (hooks) {
   });
 
   test('leaves designations not matching the convention unchanged', function (assert) {
-    assert.strictEqual(
-      trimDesignation('Excel Grundkurs'),
-      'Excel Grundkurs'
-    );
+    assert.strictEqual(trimDesignation('Excel Grundkurs'), 'Excel Grundkurs');
     assert.strictEqual(
       trimDesignation('BFS-Deutsch-2025/26-1a'),
       'BFS-Deutsch-2025/26-1a',
