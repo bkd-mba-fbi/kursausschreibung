@@ -29,15 +29,12 @@ function dataToSubmit() {
     subscriptionData: {
       EventId: 15571,
       PersonId: null,
-      SubscriptionDetails: [
-        { VssId: 10819, Value: 'Ja' },
-        { VssId: 10801, Value: '01.01.2000' },
-      ],
+      // 10801 is hidden and required, so it is not part of the request
+      SubscriptionDetails: [{ VssId: 10819, Value: 'Ja' }],
     },
     additionalPeople: [],
     tableData: {},
     subscriptionFiles: [],
-    hiddenDetails: [10801],
   };
 }
 
@@ -116,40 +113,9 @@ module('Unit | Route | list/category/event/confirmation', function (hooks) {
       return route;
     }
 
-    test('subscribes with placeholder and clears it with the new id', async function (assert) {
+    test('subscribes with one request and without the hidden detail', async function (assert) {
       let route = lookupRoute(this.owner);
       setDataToSubmit(dataToSubmit());
-      let fetch = stubFetch((request) =>
-        request.method === 'POST' ? [201, '325668'] : [204, null]
-      );
-
-      try {
-        await route.model();
-      } finally {
-        fetch.restore();
-      }
-
-      let [post, put] = fetch.requests;
-      assert.strictEqual(fetch.requests.length, 2, 'one POST, one PUT');
-      assert.strictEqual(post.method, 'POST');
-      assert.ok(post.url.endsWith('/Subscriptions/'));
-      assert.deepEqual(post.body.SubscriptionDetails, [
-        { VssId: 10819, Value: 'Ja' },
-        { VssId: 10801, Value: '01.01.2000' },
-      ]);
-      assert.strictEqual(put.method, 'PUT');
-      assert.ok(put.url.endsWith('/SubscriptionDetails/325668_10801'));
-      assert.deepEqual(put.body, {
-        EventId: 15571,
-        IdPerson: 17450,
-        VssId: 10801,
-        Value: '',
-      });
-    });
-
-    test('sends no PUT when no detail is hidden', async function (assert) {
-      let route = lookupRoute(this.owner);
-      setDataToSubmit({ ...dataToSubmit(), hiddenDetails: [] });
       let fetch = stubFetch(() => [201, '325668']);
 
       try {
@@ -158,17 +124,25 @@ module('Unit | Route | list/category/event/confirmation', function (hooks) {
         fetch.restore();
       }
 
+      let [post] = fetch.requests;
       assert.strictEqual(fetch.requests.length, 1, 'only the POST');
+      assert.strictEqual(post.method, 'POST');
+      assert.ok(post.url.endsWith('/Subscriptions/'));
+      assert.deepEqual(
+        post.body.SubscriptionDetails,
+        [{ VssId: 10819, Value: 'Ja' }],
+        '10801 is not part of the request'
+      );
     });
 
-    test('shows an error and does not subscribe again when clearing fails', async function (assert) {
+    test('shows an error and does not subscribe again when it fails', async function (assert) {
       assert.expect(3);
       let route = lookupRoute(this.owner);
       setDataToSubmit(dataToSubmit());
       let fetch = stubFetch((request) =>
-        request.method === 'POST'
-          ? [201, '325668']
-          : [500, JSON.stringify({ Issues: [{ Message: 'Fehler' }] })]
+        request.url.includes('/Subscriptions/')
+          ? [409, JSON.stringify({ Issues: [{ Message: 'Fehler' }] })]
+          : [201, '17450']
       );
 
       try {

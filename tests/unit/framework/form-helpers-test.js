@@ -1,36 +1,15 @@
 import { module, test } from 'qunit';
-import {
-  getPlaceholder,
-  addPlaceholders,
-} from 'kursausschreibung/framework/form-helpers';
+import { removeEmptyHiddenDetails } from 'kursausschreibung/framework/form-helpers';
 
-module('Unit | Framework | form-helpers | placeholders', function () {
-  test('getPlaceholder returns a value per data type', function (assert) {
-    assert.strictEqual(getPlaceholder({ dataType: 'date' }), '01.01.2000');
-    assert.strictEqual(getPlaceholder({ dataType: 'number' }), '0');
-    assert.strictEqual(getPlaceholder({ dataType: 'checkbox' }), 'Ja');
-    assert.strictEqual(getPlaceholder({ dataType: 'file' }), 'platzhalter.pdf');
-    assert.strictEqual(getPlaceholder({ dataType: 'string' }), '-');
-    assert.strictEqual(getPlaceholder({ dataType: 'textarea' }), '-');
-  });
-
-  test('getPlaceholder uses the first dropdown item', function (assert) {
-    let field = {
-      dataType: 'dropdown',
-      options: { options: [{ Key: 'Ja' }, { Key: 'Nein' }] },
-    };
-    assert.strictEqual(getPlaceholder(field), 'Ja');
-    assert.strictEqual(
-      getPlaceholder({ dataType: 'freeform-dropdown', options: {} }),
-      '-'
-    );
-  });
-
-  test('addPlaceholders only fills hidden required details', function (assert) {
+module('Unit | Framework | form-helpers | hidden details', function () {
+  test('an empty hidden required detail is not sent', function (assert) {
     let subscriptionData = {
       EventId: 15571,
       PersonId: 17450,
-      SubscriptionDetails: [{ VssId: 10819, Value: 'Ja' }],
+      SubscriptionDetails: [
+        { VssId: 10819, Value: 'Ja' },
+        { VssId: 10801, Value: '' },
+      ],
     };
     let fields = [
       { id: 10801, dataType: 'date', internetRequired: true }, // hidden, required
@@ -39,41 +18,83 @@ module('Unit | Framework | form-helpers | placeholders', function () {
     ];
     let hidden = [10801, 10802];
 
-    let hiddenDetails = addPlaceholders(subscriptionData, fields, (field) =>
-      hidden.includes(field.id)
+    let removedDetails = removeEmptyHiddenDetails(
+      subscriptionData,
+      fields,
+      (field) => hidden.includes(field.id)
     );
 
-    assert.deepEqual(hiddenDetails, [10801]);
+    assert.deepEqual(removedDetails, [10801]);
     assert.deepEqual(subscriptionData.SubscriptionDetails, [
       { VssId: 10819, Value: 'Ja' },
-      { VssId: 10801, Value: '01.01.2000' },
     ]);
   });
 
-  test('addPlaceholders replaces an old value of a hidden detail', function (assert) {
+  test('a hidden required detail that was never filled in is not added', function (assert) {
     let subscriptionData = {
-      SubscriptionDetails: [{ VssId: 10801, Value: '15.06.2020' }],
+      SubscriptionDetails: [{ VssId: 10819, Value: 'Ja' }],
     };
-    let fields = [{ id: 10801, dataType: 'date', internetRequired: true }];
+    let fields = [
+      { id: 10801, dataType: 'date', internetRequired: true },
+      { id: 10819, dataType: 'checkbox', internetRequired: true },
+    ];
 
-    addPlaceholders(subscriptionData, fields, () => true);
+    let removedDetails = removeEmptyHiddenDetails(
+      subscriptionData,
+      fields,
+      (field) => field.id === 10801
+    );
 
+    assert.deepEqual(removedDetails, [10801]);
     assert.deepEqual(subscriptionData.SubscriptionDetails, [
-      { VssId: 10801, Value: '01.01.2000' },
+      { VssId: 10819, Value: 'Ja' },
     ]);
   });
 
-  test('addPlaceholders changes nothing when no field is hidden', function (assert) {
+  test('blank values count as empty', function (assert) {
+    let subscriptionData = {
+      SubscriptionDetails: [{ VssId: 10801, Value: '   ' }],
+    };
+    let fields = [{ id: 10801, dataType: 'string', internetRequired: true }];
+
+    removeEmptyHiddenDetails(subscriptionData, fields, () => true);
+
+    assert.deepEqual(subscriptionData.SubscriptionDetails, []);
+  });
+
+  test('a hidden detail with a value keeps it', function (assert) {
     let subscriptionData = {
       SubscriptionDetails: [{ VssId: 10801, Value: '15.06.2020' }],
     };
     let fields = [{ id: 10801, dataType: 'date', internetRequired: true }];
 
-    let hiddenDetails = addPlaceholders(subscriptionData, fields, () => false);
+    let removedDetails = removeEmptyHiddenDetails(
+      subscriptionData,
+      fields,
+      () => true
+    );
 
-    assert.deepEqual(hiddenDetails, []);
+    assert.deepEqual(removedDetails, []);
     assert.deepEqual(subscriptionData.SubscriptionDetails, [
       { VssId: 10801, Value: '15.06.2020' },
+    ]);
+  });
+
+  test('changes nothing when no field is hidden', function (assert) {
+    let subscriptionData = {
+      SubscriptionDetails: [{ VssId: 10801, Value: '' }],
+    };
+    let fields = [{ id: 10801, dataType: 'date', internetRequired: true }];
+
+    let removedDetails = removeEmptyHiddenDetails(
+      subscriptionData,
+      fields,
+      () => false
+    );
+
+    assert.deepEqual(removedDetails, []);
+    assert.deepEqual(subscriptionData.SubscriptionDetails, [
+      { VssId: 10801, Value: '' },
     ]);
   });
 });

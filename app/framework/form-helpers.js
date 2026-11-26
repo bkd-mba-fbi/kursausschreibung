@@ -191,50 +191,46 @@ function vssDependencyCheck(formValue, operator, values) {
 }
 
 /**
- * placeholder value for a hidden required subscription detail (33707)
- * @param {object} field subscription detail field
+ * a subscription detail is empty when it carries no value at all (33707)
+ * @param {*} value value of the subscription detail
  */
-export function getPlaceholder(field) {
-  switch (field.dataType) {
-    case 'date':
-      return '01.01.2000';
-    case 'number':
-      return '0';
-    case 'checkbox':
-      return 'Ja';
-    case 'file':
-      return 'platzhalter.pdf';
-    case 'dropdown':
-    case 'freeform-dropdown':
-      return field.options?.options?.[0]?.Key ?? '-';
-    default:
-      return '-';
-  }
+function hasNoValue(value) {
+  return value === null || value === undefined || String(value).trim() === '';
 }
 
 /**
- * give every hidden required subscription detail a placeholder (33707)
- * and return their ids, so they can be cleared after the subscription
+ * leave empty hidden required subscription details out of the subscription (33707).
+ *
+ * A detail that its "Sichtbarkeit ist abhängig von" dependency hides cannot be
+ * filled in, so it is not sent at all instead of being sent with a placeholder
+ * value. A hidden detail that still carries a value keeps that value and is sent.
+ *
+ * Evento rejects this with 409 "MUSS-Anmeldedetail nicht gesetzt" as long as the
+ * MUSS check runs over the AD configuration of the event instead of the request.
+ * A task for that is filed with SLH, see issue #276.
  * @param {object} subscriptionData data for POST Subscriptions
  * @param {array} fields subscription detail fields
  * @param {function} isHidden returns true if a field is hidden
+ * @returns {array} VssIds that are not sent
  */
-export function addPlaceholders(subscriptionData, fields, isHidden) {
-  let hiddenDetails = [];
+export function removeEmptyHiddenDetails(subscriptionData, fields, isHidden) {
+  let removedDetails = [];
 
   fields
     .filter((field) => field.internetRequired && isHidden(field))
     .forEach((field) => {
+      let detail = subscriptionData.SubscriptionDetails.find(
+        (item) => item.VssId === field.id
+      );
+
+      if (detail !== undefined && !hasNoValue(detail.Value)) return;
+
       subscriptionData.SubscriptionDetails =
         subscriptionData.SubscriptionDetails.filter(
-          (detail) => detail.VssId !== field.id
+          (item) => item.VssId !== field.id
         );
-      subscriptionData.SubscriptionDetails.push({
-        VssId: field.id,
-        Value: getPlaceholder(field),
-      });
-      hiddenDetails.push(field.id);
+      removedDetails.push(field.id);
     });
 
-  return hiddenDetails;
+  return removedDetails;
 }

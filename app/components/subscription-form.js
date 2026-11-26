@@ -7,7 +7,7 @@ import {
   getYMD,
 } from 'kursausschreibung/framework/date-helpers';
 import { setDataToSubmit } from 'kursausschreibung/framework/storage';
-import { addPlaceholders } from 'kursausschreibung/framework/form-helpers';
+import { removeEmptyHiddenDetails } from 'kursausschreibung/framework/form-helpers';
 import { getString } from 'kursausschreibung/framework/translate';
 import uikit from 'uikit';
 
@@ -125,9 +125,9 @@ function subscribe(form, self) {
         });
     });
 
-  // 33707: hidden required details get a placeholder, so Evento accepts
-  // the subscription. confirmation.js clears them afterwards.
-  let hiddenDetails = addPlaceholders(
+  // 33707: an empty hidden required detail is not sent at all, so it stays
+  // empty in Evento. Needs the MUSS check on the Evento side, see issue #276.
+  removeEmptyHiddenDetails(
     subscriptionData,
     self.args.subscriptionDetailFields ?? [],
     (field) =>
@@ -271,7 +271,6 @@ function subscribe(form, self) {
     additionalPeople,
     tableData,
     subscriptionFiles,
-    hiddenDetails,
   });
 }
 
