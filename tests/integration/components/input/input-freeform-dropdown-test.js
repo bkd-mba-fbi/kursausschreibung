@@ -24,7 +24,7 @@ function makeField(overrides = {}) {
         ],
       },
     },
-    overrides
+    overrides,
   );
 }
 
@@ -58,9 +58,9 @@ module(
 
       assert.deepEqual(
         findAll('.freeform-typeahead__suggestion').map((el) =>
-          el.textContent.trim()
+          el.textContent.trim(),
         ),
-        ['Bern']
+        ['Bern'],
       );
     });
 
@@ -83,5 +83,5 @@ module(
 
       assert.dom('input.typeahead').hasValue('Freitext');
     });
-  }
+  },
 );

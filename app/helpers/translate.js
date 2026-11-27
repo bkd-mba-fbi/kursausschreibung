@@ -4,7 +4,7 @@ import { htmlSafe } from '@ember/template';
 
 export function translate(
   [positionalKey, ...placeholderValues],
-  { key, event } = {}
+  { key, event } = {},
 ) {
   const translationKey = key ?? positionalKey;
   const eventValues = event?.displayData ?? event ?? {};

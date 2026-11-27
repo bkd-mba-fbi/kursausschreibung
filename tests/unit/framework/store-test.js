@@ -34,12 +34,12 @@ module('Unit | Framework | store', function (hooks) {
     assert.deepEqual(
       filterEvents(events, 'de-CH', []).map((event) => event.Id),
       [1],
-      'German language code 1 is shown for de-CH'
+      'German language code 1 is shown for de-CH',
     );
     assert.deepEqual(
       filterEvents(events, 'en-US', []).map((event) => event.Id),
       [2],
-      'English language code 2 is shown for en-US'
+      'English language code 2 is shown for en-US',
     );
   });
 
@@ -49,12 +49,12 @@ module('Unit | Framework | store', function (hooks) {
     assert.strictEqual(
       filterEvents([event], 'de-CH', []).length,
       1,
-      'bilingual event is shown for de-CH'
+      'bilingual event is shown for de-CH',
     );
     assert.strictEqual(
       filterEvents([event], 'en-US', []).length,
       1,
-      'bilingual event is shown for en-US'
+      'bilingual event is shown for en-US',
     );
   });
 
@@ -64,7 +64,7 @@ module('Unit | Framework | store', function (hooks) {
     assert.deepEqual(
       filterEvents([makeEvent(42, '1')], 'en-US', []).map((event) => event.Id),
       [42],
-      'configured event is shown despite a language mismatch'
+      'configured event is shown despite a language mismatch',
     );
   });
 });
@@ -117,11 +117,11 @@ module('Unit | Framework | store | trimDesignation', function (hooks) {
   test('keeps only the subject part of the Mittelschul convention', function (assert) {
     assert.strictEqual(
       trimDesignation('14-2-Chor-FF-2025/26-26bc27aPMVDA2023af'),
-      'Chor-FF'
+      'Chor-FF',
     );
     assert.strictEqual(
       trimDesignation('1-1-Deutsch-S1-2022/23-26ab'),
-      'Deutsch-S1'
+      'Deutsch-S1',
     );
   });
 
@@ -134,12 +134,12 @@ module('Unit | Framework | store | trimDesignation', function (hooks) {
     assert.strictEqual(
       trimDesignation('BFS-Deutsch-2025/26-1a'),
       'BFS-Deutsch-2025/26-1a',
-      'no Stufe-Semester prefix'
+      'no Stufe-Semester prefix',
     );
     assert.strictEqual(
       trimDesignation('14-2-Chor-FF'),
       '14-2-Chor-FF',
-      'no school year'
+      'no school year',
     );
     assert.strictEqual(trimDesignation(undefined), undefined);
   });

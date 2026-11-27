@@ -68,7 +68,7 @@ export function loadSchoolSettings() {
       // eslint-disable-next-line no-console
       console.warn(
         'could not load settings from WebM_SchoolAppNavigation, using settings.js',
-        error
+        error,
       );
     });
 }

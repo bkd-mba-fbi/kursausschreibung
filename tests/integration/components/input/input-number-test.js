@@ -10,7 +10,7 @@ function makeField(overrides = {}) {
       placeholder: '',
       options: { required: false, disabled: false, autocomplete: 'off' },
     },
-    overrides
+    overrides,
   );
 }
 
@@ -26,7 +26,7 @@ module('Integration | Component | input/input-number', function (hooks) {
     assert.equal(
       input.getAttribute('name'),
       'NumberOfParticipants',
-      'name matches field id'
+      'name matches field id',
     );
   });
 
@@ -35,7 +35,7 @@ module('Integration | Component | input/input-number', function (hooks) {
       'field',
       makeField({
         options: { required: true, disabled: false, autocomplete: 'off' },
-      })
+      }),
     );
     await render(hbs`{{input/input-number field=this.field}}`);
 

@@ -22,7 +22,7 @@ module('Unit | Framework | form-helpers | placeholders', function () {
     assert.strictEqual(getPlaceholder(field), 'Ja');
     assert.strictEqual(
       getPlaceholder({ dataType: 'freeform-dropdown', options: {} }),
-      '-'
+      '-',
     );
   });
 
@@ -40,7 +40,7 @@ module('Unit | Framework | form-helpers | placeholders', function () {
     let hidden = [10801, 10802];
 
     let hiddenDetails = addPlaceholders(subscriptionData, fields, (field) =>
-      hidden.includes(field.id)
+      hidden.includes(field.id),
     );
 
     assert.deepEqual(hiddenDetails, [10801]);

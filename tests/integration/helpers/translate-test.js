@@ -16,7 +16,7 @@ module('Integration | Helper | translate', function (hooks) {
 
     assert.ok(
       this.element.textContent.toLowerCase().includes('bersicht'),
-      'known key is translated'
+      'known key is translated',
     );
   });
 
@@ -27,7 +27,7 @@ module('Integration | Helper | translate', function (hooks) {
 
     assert.ok(
       this.element.textContent.includes('Key not found'),
-      'fallback marker is rendered'
+      'fallback marker is rendered',
     );
   });
 
@@ -56,7 +56,7 @@ module('Integration | Helper | translate', function (hooks) {
 
       assert.strictEqual(
         this.element.textContent,
-        `Danke Französisch A2 am ${formattedDate} in Bern (123) [] `
+        `Danke Französisch A2 am ${formattedDate} in Bern (123) [] `,
       );
     } finally {
       locale.thankYou = originalThankYou;

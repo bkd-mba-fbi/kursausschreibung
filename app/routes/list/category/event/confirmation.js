@@ -63,7 +63,7 @@ export default class confirmation extends Route {
         // handle main person
         if (personId === 0) {
           promises.push(
-            createAddresses(useCompanyAddress, addressData, companyAddressData)
+            createAddresses(useCompanyAddress, addressData, companyAddressData),
           );
         } else {
           promises.push(Promise.resolve(personId));
@@ -94,8 +94,8 @@ export default class confirmation extends Route {
                       IdPerson: subscriptionData.PersonId,
                       VssId: vssId,
                       Value: '',
-                    })
-                  )
+                    }),
+                  ),
                 ).then(() => id);
               })
               .then((id) => {
@@ -193,7 +193,7 @@ function createPerson(addressData) {
 
     if (duplicateHeader === null && locationHeader === null) {
       throw new Error(
-        'failed to read personId. neither x-duplicate nor location header could be read.'
+        'failed to read personId. neither x-duplicate nor location header could be read.',
       );
     }
 

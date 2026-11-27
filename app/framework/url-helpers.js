@@ -49,7 +49,7 @@ export function setParameterByName(name, value, url) {
     if (params.indexOf(name) >= 0) {
       params = params.replace(
         name + '=' + getParameterByName(name, url),
-        name + '=' + value
+        name + '=' + value,
       );
     } else {
       let newParam = '&';

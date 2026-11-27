@@ -71,13 +71,13 @@ export default class ListPaginationComponent extends Component {
       ? this.args.items
       : this.args.items.slice(
           settings.itemsPerPage * (page - 1),
-          settings.itemsPerPage * page
+          settings.itemsPerPage * page,
         );
   }
 
   get filterCodes() {
     let filterCodes = this.itemsOnCurrentPage.filter(
-      (item) => item.allfilterCodes instanceof Array
+      (item) => item.allfilterCodes instanceof Array,
     );
     let eventfilterCodes = [];
 
@@ -87,7 +87,7 @@ export default class ListPaginationComponent extends Component {
 
     filterCodes.forEach((event) => {
       let existsFilter = filterCodes[0].allfilterCodes.filter(
-        (filter) => event.filter.indexOf(filter.id) > -1
+        (filter) => event.filter.indexOf(filter.id) > -1,
       );
 
       existsFilter.map((filter) => {

@@ -50,7 +50,7 @@ export function loadLatestVersion(url = LATEST_VERSION_URL) {
     .then((data) =>
       data && typeof data.version === 'string'
         ? { version: cleanVersion(data.version), url: data.url }
-        : null
+        : null,
     )
     .catch(() => null);
 }

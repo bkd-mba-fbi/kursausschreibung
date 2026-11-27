@@ -24,11 +24,11 @@ module('Unit | Framework | translate', function (hooks) {
       assert.strictEqual(
         typeof originalCustomLocales[culture],
         'object',
-        `${culture}-custom.js is loaded`
+        `${culture}-custom.js is loaded`,
       );
       assert.ok(
         window.kursausschreibung.locale[culture].overview,
-        `${culture}.js is still complete`
+        `${culture}.js is still complete`,
       );
     }
   });
@@ -85,7 +85,7 @@ module('Unit | Framework | translate', function (hooks) {
     locale.translateTestKey = 'default {0} {1}';
     assert.strictEqual(
       getString('translateTestKey', ['a', 'b']),
-      'default a b'
+      'default a b',
     );
 
     window.kursausschreibung.localeCustom[language] = {

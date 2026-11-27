@@ -40,7 +40,7 @@ export default class VersionFooterComponent extends Component {
         ) {
           this.latest = latest;
         }
-      }
+      },
     );
   }
 

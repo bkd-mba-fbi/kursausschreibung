@@ -46,7 +46,7 @@ export function setLanguage(newLanguage) {
 export function getString(
   key,
   placeholderValues = [],
-  namedPlaceholderValues = {}
+  namedPlaceholderValues = {},
 ) {
   try {
     let string = getCustomLocale()[key];
@@ -69,7 +69,7 @@ export function getString(
       (placeholder, name) => {
         let value = get(namedPlaceholderValues, name);
         return value === undefined || value === null ? '' : value;
-      }
+      },
     );
 
     return string;

@@ -125,8 +125,8 @@ export function init() {
     eventsByArea.areaKeys.forEach(
       (area) =>
         (eventsByArea.areas[area].categoryKeys = Object.keys(
-          eventsByArea.areas[area].categories
-        ).sort())
+          eventsByArea.areas[area].categories,
+        ).sort()),
     );
 
     initialized = true;
@@ -180,8 +180,8 @@ function addTextsToEvents(eventTexts, language) {
   eventsById.forEach(
     (event) =>
       (event.texts = event.texts.filter(
-        (text) => text.label !== null && text.memo !== null
-      ))
+        (text) => text.label !== null && text.memo !== null,
+      )),
   );
 
   // make the texts addressable for settings.eventListFields
@@ -245,7 +245,7 @@ function addLessonsToEvents(lessons) {
 
   Object.values(eventsById).forEach(function (event) {
     event.lessons.sort(
-      (a, b) => new Date(a.DateTimeFrom) - new Date(b.DateTimeFrom)
+      (a, b) => new Date(a.DateTimeFrom) - new Date(b.DateTimeFrom),
     );
     event.lessonsCollaps = event.lessons.length > settings.howManyLessonsShow;
   });
@@ -265,7 +265,7 @@ function addCodesToEvents(eventCodes) {
       codeIds.push(code.CodeId);
       let codeName =
         getString(prefix + code.CodeId).indexOf(
-          '<span style="color:red;">Key not found:'
+          '<span style="color:red;">Key not found:',
         ) >= 0
           ? code.Code
           : getString(prefix + code.CodeId);
@@ -305,7 +305,7 @@ export function filterEvents(events, language, eventCodes) {
   // backwards compatibility fallback for single hostId filter
   if (settings.hostIds instanceof Array) {
     events = events.filter(
-      (event) => settings.hostIds.indexOf(event.HostId) !== -1
+      (event) => settings.hostIds.indexOf(event.HostId) !== -1,
     );
   }
   // or use initialListFilters array
@@ -313,7 +313,7 @@ export function filterEvents(events, language, eventCodes) {
     if (settings.initialListFilters.hostIds instanceof Array) {
       events = events.filter(
         (event) =>
-          settings.initialListFilters.hostIds.indexOf(event.HostId) !== -1
+          settings.initialListFilters.hostIds.indexOf(event.HostId) !== -1,
       );
     }
 
@@ -321,8 +321,8 @@ export function filterEvents(events, language, eventCodes) {
       events = events.filter(
         (event) =>
           settings.initialListFilters.eventCategoryIds.indexOf(
-            event.EventCategoryId
-          ) !== -1
+            event.EventCategoryId,
+          ) !== -1,
       );
     }
 
@@ -330,8 +330,8 @@ export function filterEvents(events, language, eventCodes) {
       events = events.filter(
         (event) =>
           settings.initialListFilters.eventLevelIds.indexOf(
-            event.EventLevelId
-          ) !== -1
+            event.EventLevelId,
+          ) !== -1,
       );
     }
 
@@ -339,22 +339,22 @@ export function filterEvents(events, language, eventCodes) {
       events = events.filter(
         (event) =>
           settings.initialListFilters.eventTypeIds.indexOf(
-            event.EventTypeId
-          ) !== -1
+            event.EventTypeId,
+          ) !== -1,
       );
     }
 
     if (settings.initialListFilters.statusIds instanceof Array) {
       events = events.filter(
         (event) =>
-          settings.initialListFilters.statusIds.indexOf(event.StatusId) !== -1
+          settings.initialListFilters.statusIds.indexOf(event.StatusId) !== -1,
       );
     }
 
     if (settings.initialListFilters.codeIds instanceof Array) {
       eventCodes = eventCodes.filter(
         (code) =>
-          settings.initialListFilters.codeIds.indexOf(code.CodeId) !== -1
+          settings.initialListFilters.codeIds.indexOf(code.CodeId) !== -1,
       );
       let codes = [];
       eventCodes.forEach((eventcode) => {
@@ -375,7 +375,7 @@ export function filterEvents(events, language, eventCodes) {
           language === 'en-US') ||
         event.LanguageOfInstruction === 'Bilingue' ||
         (Array.isArray(settings.bilingualEventIds) &&
-          settings.bilingualEventIds.includes(event.Id))
+          settings.bilingualEventIds.includes(event.Id)),
     );
   }
 
@@ -550,7 +550,7 @@ function putIntoAssocArrays(event) {
               categoryKey +
               '/' +
               event.Id +
-              '/subscribe'
+              '/subscribe',
           );
   }
 }
@@ -666,7 +666,7 @@ function addPropertiesToEvent(event) {
   // add event.Time
   if (typeof event.TimeFrom === 'string' && typeof event.TimeTo === 'string') {
     event.Time = `${removeMinutes(event.TimeFrom)} - ${removeMinutes(
-      event.TimeTo
+      event.TimeTo,
     )}`;
   }
 }
