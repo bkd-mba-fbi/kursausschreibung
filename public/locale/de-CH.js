@@ -9,6 +9,7 @@ window.kursausschreibung.locale['de-CH'] = {
     'Kasernenstrasse 27<br>Postfach<br>3000 Bern 22<br>Telefon: <a href="tel:0316338700"> 031 633 87 00</a><br><br>',
   search: 'Suche...',
   legend: 'Legende',
+  newVersionAvailable: 'Neue Version {0} verfügbar',
   noResults: 'Keine Ergebnisse',
   greenLamp: 'Freie Plätze',
   chartreuseLamp: 'Garantierte Durchführung',
