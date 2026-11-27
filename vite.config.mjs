@@ -1,6 +1,13 @@
 import { defineConfig } from 'vite';
 import { extensions, classicEmberSupport, ember } from '@embroider/vite';
 import { babel } from '@rollup/plugin-babel';
+import { readFileSync } from 'node:fs';
+
+// installed version shown in the footer (#264). The CI sets the version of
+// package.json from the git tag before the build (buildDeploy.yml).
+const { version } = JSON.parse(
+  readFileSync(new URL('./package.json', import.meta.url), 'utf8')
+);
 
 // Consumers (evento-portal and the schools' pages) host the module in a
 // sub directory and embed it with classic <script src="assets/app.js">
@@ -56,6 +63,9 @@ export default defineConfig(({ mode }) => ({
   // has tests/index.html as a second entry, where './@embroider/...' would
   // point into dist/tests/ instead of dist/.
   base: mode === 'production' ? './' : '/',
+  define: {
+    'import.meta.env.APP_VERSION': JSON.stringify(version),
+  },
   server: {
     // same port as `ember serve` used to have
     port: 4200,

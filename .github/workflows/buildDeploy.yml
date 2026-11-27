@@ -65,7 +65,7 @@ jobs:
     - name: Build 🏭
       run: |
         npm install
-        # ember-cli-app-version writes the version of package.json into assets/app.js
+        # vite.config.mjs writes the version of package.json into assets/app.js (footer, #264)
         npm version "${{ steps.version.outputs.version }}" --no-git-tag-version --allow-same-version
         # vite build (see vite.config.mjs) emits exactly assets/app.js and
         # assets/app.css with relative paths, nothing to post-process.
