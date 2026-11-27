@@ -1,0 +1,49 @@
+# Dependabot version updates (#216)
+#
+# Every Monday Dependabot opens pull requests against develop:
+#   - one grouped PR with all minor and patch updates
+#   - one PR per major update (may break code, plan it in an issue)
+#   - one grouped PR for the GitHub Actions used in .github/workflows
+#
+# Note: Dependabot reads this file from the default branch (master).
+# It is active after develop has been merged into master.
+#
+# Process (owner, deadlines): see the pull request of #216 / project wiki.
+
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    target-branch: "develop"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "Europe/Zurich"
+    open-pull-requests-limit: 10
+    assignees:
+      - "WalidBoul"
+    commit-message:
+      prefix: "chore(deps)"
+    groups:
+      npm-minor-patch:
+        update-types:
+          - "minor"
+          - "patch"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    target-branch: "develop"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "Europe/Zurich"
+    assignees:
+      - "WalidBoul"
+    commit-message:
+      prefix: "chore(ci)"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
