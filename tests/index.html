@@ -30,6 +30,11 @@
     <script src="/testem.js" integrity="" data-embroider-ignore></script>
     <script src="/settings.js"></script>
     <script src="/appConfig.js"></script>
+    <script>
+      // public/appConfig.js is not in git (CI): the tests set the values they need
+      window.kursausschreibung = window.kursausschreibung || {};
+      window.kursausschreibung.appConfig = window.kursausschreibung.appConfig || {};
+    </script>
     <script src="/locale/de-CH.js"></script>
     <script src="/locale/de-CH-custom.js"></script>
     <script src="/locale/fr-CH.js"></script>
