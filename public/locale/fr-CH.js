@@ -8,6 +8,7 @@ window.kursausschreibung.locale['fr-CH'] = {
   contactContent: '',
   search: 'Recherche...',
   legend: 'Légende',
+  newVersionAvailable: 'Nouvelle version {0} disponible',
   noResults: 'Pas de résultats',
   greenLamp: 'Places libres',
   chartreuseLamp: 'exécution garantie',

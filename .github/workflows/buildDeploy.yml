@@ -7,6 +7,9 @@ on:
   pull_request:
     branches: [ master ]
 
+permissions:
+  contents: write # push the version tag
+
 jobs:
   build:
 
@@ -19,6 +22,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0 # tags are needed for the version
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
@@ -26,9 +31,42 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
 
+    # Version (like evento-portal container-build.yml):
+    # - commit already has a version tag (e.g. set by hand on the merge commit) => use it
+    # - otherwise on push to master => bump the minor version of the latest tag and push the tag (v3.6.4 => v3.7.0)
+    # - pull request => latest tag with suffix "-pr", nothing is tagged
+    - name: Get version tag of HEAD if any
+      id: existing-version
+      run: echo "version=$(git tag -l --points-at=HEAD 'v*' | sort -V | tail -1)" >> $GITHUB_OUTPUT
+
+    - name: Bump Git version tag and push it
+      id: bump
+      if: github.event_name == 'push' && steps.existing-version.outputs.version == ''
+      uses: anothrNick/github-tag-action@1.75.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        WITH_V: true
+        DEFAULT_BUMP: minor
+
+    - name: Determine version
+      id: version
+      run: |
+        TAG="${{ steps.existing-version.outputs.version }}"
+        [ -z "$TAG" ] && TAG="${{ steps.bump.outputs.new_tag }}"
+        if [ -z "$TAG" ]; then
+          VERSION="$(git describe --tags --abbrev=0 | sed 's/^v//')-pr"
+        else
+          VERSION="${TAG#v}"
+        fi
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "tag=$TAG" >> $GITHUB_OUTPUT
+        echo "Version: $VERSION"
+
     - name: Build 🏭
       run: |
         npm install
+        # ember-cli-app-version writes the version of package.json into assets/app.js
+        npm version "${{ steps.version.outputs.version }}" --no-git-tag-version --allow-same-version
         npm run build
         # ember-auto-import emits chunks with absolute /assets/ paths.
         # Rewrite them relative so the app can be served from a subdirectory.
@@ -44,9 +82,11 @@ jobs:
         (cd dist; zip --move --recurse-paths kursausschreibung.zip *)
         mv README.md dist
         mv dist/kursausschreibung.zip latest/
-        
+        # latest version for the hint "Neue Version verfügbar" in the module
+        echo "{\"version\":\"${{ steps.version.outputs.version }}\",\"url\":\"https://github.com/${{ github.repository }}/releases/tag/${{ steps.version.outputs.tag }}\"}" > latest/version.json
 
     - name: Deploy latest 🚀
+      if: github.event_name == 'push'
       uses: JamesIves/github-pages-deploy-action@4.1.4
       with:
          branch: gh-pages # The branch the action should deploy to.
