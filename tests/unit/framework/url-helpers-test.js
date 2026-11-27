@@ -20,7 +20,7 @@ module('Unit | Framework | url-helpers | getCorrectApiUrl', function (hooks) {
     assert.strictEqual(relative, 'files/0e722e36');
     assert.strictEqual(
       `${appConfig.apiUrl}/${relative}`,
-      'https://eventoapp-test.apps.be.ch/restApi/files/0e722e36'
+      'https://eventoapp-test.apps.be.ch/restApi/files/0e722e36',
     );
   });
 
@@ -30,7 +30,7 @@ module('Unit | Framework | url-helpers | getCorrectApiUrl', function (hooks) {
 
     assert.strictEqual(
       `${appConfig.apiUrl}/${relative}`,
-      'https://a4o-evt26-dev-apps.k8s.infra.be.ch/api/files/0e722e36'
+      'https://a4o-evt26-dev-apps.k8s.infra.be.ch/api/files/0e722e36',
     );
   });
 
@@ -43,9 +43,9 @@ module('Unit | Framework | url-helpers | getCorrectApiUrl', function (hooks) {
     appConfig.apiUrl = 'https://eventoapp-test.apps.be.ch/restApi';
     assert.strictEqual(
       getCorrectApiUrl(
-        'https://eventoapp-test.apps.be.ch/restApi/files/0e722e36'
+        'https://eventoapp-test.apps.be.ch/restApi/files/0e722e36',
       ),
-      'files/0e722e36'
+      'files/0e722e36',
     );
   });
 });

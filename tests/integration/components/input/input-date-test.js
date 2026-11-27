@@ -9,7 +9,7 @@ function makeField(overrides = {}) {
       id: 'BirthDate',
       options: { required: false, disabled: false, autocomplete: 'bday' },
     },
-    overrides
+    overrides,
   );
 }
 
@@ -25,7 +25,7 @@ module('Integration | Component | input/input-date', function (hooks) {
     assert.equal(
       input.getAttribute('name'),
       'BirthDate',
-      'name matches field id'
+      'name matches field id',
     );
   });
 
@@ -34,7 +34,7 @@ module('Integration | Component | input/input-date', function (hooks) {
       'field',
       makeField({
         options: { required: true, disabled: false, autocomplete: 'bday' },
-      })
+      }),
     );
     await render(hbs`{{input/input-date field=this.field}}`);
 

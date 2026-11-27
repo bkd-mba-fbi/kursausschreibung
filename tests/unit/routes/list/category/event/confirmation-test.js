@@ -17,7 +17,7 @@ function fakeLogin() {
     JSON.stringify({
       instance_id: appConfig.instanceId,
       culture_info: getLanguage(),
-    })
+    }),
   );
   setAccessToken(`header.${payload}.signature`);
   setTokenExpire(Date.now() + 60000);
@@ -54,7 +54,7 @@ function stubFetch(responder) {
     requests.push(request);
     let [status, body] = responder(request);
     return Promise.resolve(
-      new Response(status === 204 ? null : body, { status })
+      new Response(status === 204 ? null : body, { status }),
     );
   };
   return { requests, restore: () => (window.fetch = original) };
@@ -120,7 +120,7 @@ module('Unit | Route | list/category/event/confirmation', function (hooks) {
       let route = lookupRoute(this.owner);
       setDataToSubmit(dataToSubmit());
       let fetch = stubFetch((request) =>
-        request.method === 'POST' ? [201, '325668'] : [204, null]
+        request.method === 'POST' ? [201, '325668'] : [204, null],
       );
 
       try {
@@ -168,7 +168,7 @@ module('Unit | Route | list/category/event/confirmation', function (hooks) {
       let fetch = stubFetch((request) =>
         request.method === 'POST'
           ? [201, '325668']
-          : [500, JSON.stringify({ Issues: [{ Message: 'Fehler' }] })]
+          : [500, JSON.stringify({ Issues: [{ Message: 'Fehler' }] })],
       );
 
       try {

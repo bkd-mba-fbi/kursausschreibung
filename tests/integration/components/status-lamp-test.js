@@ -18,12 +18,12 @@ module('Integration | Component | status-lamp', function (hooks) {
       .hasClass('lamp-green', 'green status adds lamp-green class');
     assert.ok(
       lamp.getAttribute('data-uk-tooltip')?.length > 0,
-      'tooltip attribute is set'
+      'tooltip attribute is set',
     );
     assert.equal(
       lamp.getAttribute('uk-icon'),
       'pencil',
-      'green status sets expected icon'
+      'green status sets expected icon',
     );
   });
 
@@ -41,7 +41,7 @@ module('Integration | Component | status-lamp', function (hooks) {
     assert.equal(
       lamp.getAttribute('uk-icon'),
       'close',
-      'status change updates icon'
+      'status change updates icon',
     );
   });
 });

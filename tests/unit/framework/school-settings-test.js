@@ -26,25 +26,25 @@ module(
     test('loads if consumer_id matches', function (assert) {
       appConfig.settingsFromBackendIfConsumer = 'portal';
       assert.true(
-        shouldLoadSchoolSettings(createToken({ consumer_id: 'portal' }))
+        shouldLoadSchoolSettings(createToken({ consumer_id: 'portal' })),
       );
     });
 
     test('does not load for another consumer (school website)', function (assert) {
       appConfig.settingsFromBackendIfConsumer = 'portal';
       assert.false(
-        shouldLoadSchoolSettings(createToken({ consumer_id: 'schulweb' }))
+        shouldLoadSchoolSettings(createToken({ consumer_id: 'schulweb' })),
       );
     });
 
     test('does not load without setting in appConfig', function (assert) {
       appConfig.settingsFromBackendIfConsumer = undefined;
       assert.false(
-        shouldLoadSchoolSettings(createToken({ consumer_id: 'portal' }))
+        shouldLoadSchoolSettings(createToken({ consumer_id: 'portal' })),
       );
       appConfig.settingsFromBackendIfConsumer = '';
       assert.false(
-        shouldLoadSchoolSettings(createToken({ consumer_id: 'portal' }))
+        shouldLoadSchoolSettings(createToken({ consumer_id: 'portal' })),
       );
     });
 
@@ -53,7 +53,7 @@ module(
       assert.false(shouldLoadSchoolSettings(null));
       assert.false(shouldLoadSchoolSettings('not-a-jwt'));
     });
-  }
+  },
 );
 
 module('Unit | Framework | school-settings | mergeSchoolSettings', function () {

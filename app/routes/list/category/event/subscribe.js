@@ -26,7 +26,7 @@ function loadDropdownItems(fields) {
             });
             let setDefaultLand = options;
             let defaultLand = options.findIndex(
-              (nationality) => nationality.Key === 2008100
+              (nationality) => nationality.Key === 2008100,
             );
             setDefaultLand.splice(0, 0, options[defaultLand]);
           }
@@ -36,8 +36,8 @@ function loadDropdownItems(fields) {
 
           if (item.options.options === undefined)
             item.options.options = options;
-        })
-      )
+        }),
+      ),
   );
 }
 
@@ -127,7 +127,7 @@ function getSubscriptionDetailFields(subscriptionDetails) {
 
 function addSubscriptionDetailDependencies(
   subscriptionDetailDependencies,
-  subscriptionDetails
+  subscriptionDetails,
 ) {
   subscriptionDetails.map((item) => {
     subscriptionDetailDependencies.find((dependency) => {
@@ -180,7 +180,7 @@ function getFormFields(settings, eventTypeId, eventCategoryId) {
     throw new Error(
       'config for eventTypeId ' +
         eventTypeId +
-        ' not found and no default config is available'
+        ' not found and no default config is available',
     );
 
   return settings.formFields.default;
@@ -205,7 +205,7 @@ export default class ListCategoryEventSubscribeRoute extends Route {
           getUserSettings(),
           getSubscriptionDetails(model.Id),
           getSubscriptionDetailDependencies(model.Id),
-        ])
+        ]),
       )
       .then(
         ([
@@ -234,7 +234,7 @@ export default class ListCategoryEventSubscribeRoute extends Route {
             });
 
             subscriptionDetails = subscriptionDetails.filter(
-              (det) => det.VssInternet !== 'H'
+              (det) => det.VssInternet !== 'H',
             );
           }
 
@@ -247,13 +247,13 @@ export default class ListCategoryEventSubscribeRoute extends Route {
           const sortedDetails = A(subscriptionDetails).sortBy('Sort');
           model.subscriptionDetailFields = addSubscriptionDetailDependencies(
             subscriptionDetailDependencies,
-            getSubscriptionDetailFields(sortedDetails)
+            getSubscriptionDetailFields(sortedDetails),
           );
 
           const formFields = getFormFields(
             settings,
             model.EventTypeId,
-            model.EventCategoryId
+            model.EventCategoryId,
           );
           const fields = formFields.addressFields || [];
           const additionalPeopleFields =
@@ -278,7 +278,7 @@ export default class ListCategoryEventSubscribeRoute extends Route {
               return loadDropdownItems(companyFields);
             }
           }
-        }
+        },
       )
       .then(() => model);
   }
@@ -289,7 +289,7 @@ export default class ListCategoryEventSubscribeRoute extends Route {
     const formFields = getFormFields(
       settings,
       model.EventTypeId,
-      model.EventCategoryId
+      model.EventCategoryId,
     );
 
     controller.fields = addTranslations(formFields.addressFields);

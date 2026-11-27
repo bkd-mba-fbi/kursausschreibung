@@ -227,7 +227,7 @@ export function addPlaceholders(subscriptionData, fields, isHidden) {
     .forEach((field) => {
       subscriptionData.SubscriptionDetails =
         subscriptionData.SubscriptionDetails.filter(
-          (detail) => detail.VssId !== field.id
+          (detail) => detail.VssId !== field.id,
         );
       subscriptionData.SubscriptionDetails.push({
         VssId: field.id,

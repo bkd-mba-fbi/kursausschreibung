@@ -18,7 +18,7 @@ function makeEvent(overrides = {}) {
       lessons: [],
       texts: [],
     },
-    overrides
+    overrides,
   );
 }
 
@@ -39,7 +39,7 @@ module('Integration | Route | list/category/event/index', function (hooks) {
         model() {
           return {};
         }
-      }
+      },
     );
     this.owner.register(
       'route:list',
@@ -47,7 +47,7 @@ module('Integration | Route | list/category/event/index', function (hooks) {
         model() {
           return {};
         }
-      }
+      },
     );
     this.owner.register(
       'route:list.category',
@@ -55,7 +55,7 @@ module('Integration | Route | list/category/event/index', function (hooks) {
         model() {
           return {};
         }
-      }
+      },
     );
   });
 
@@ -71,7 +71,7 @@ module('Integration | Route | list/category/event/index', function (hooks) {
             subscriptionWithLoginURL: 'https://example.test/login',
           });
         }
-      }
+      },
     );
 
     await visit('/area/category/1');
@@ -90,7 +90,7 @@ module('Integration | Route | list/category/event/index', function (hooks) {
             canDoSubscription: true,
           });
         }
-      }
+      },
     );
 
     await visit('/area/category/1');
@@ -111,7 +111,7 @@ module('Integration | Route | list/category/event/index', function (hooks) {
             subscriptionWithLoginURL: 'https://example.test/login',
           });
         }
-      }
+      },
     );
 
     await visit('/area/category/1');
@@ -133,7 +133,7 @@ module('Integration | Route | list/category/event/index', function (hooks) {
             canDoSubscription: true,
           });
         }
-      }
+      },
     );
 
     await visit('/area/category/1');
@@ -154,7 +154,7 @@ module('Integration | Route | list/category/event/index', function (hooks) {
             externalSubscriptionURL: null,
           });
         }
-      }
+      },
     );
 
     await visit('/area/category/1');

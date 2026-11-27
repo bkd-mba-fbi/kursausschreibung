@@ -10,7 +10,7 @@ function makeEvent(overrides = {}) {
       status: 'green',
       update() {},
     },
-    overrides
+    overrides,
   );
 }
 
@@ -29,7 +29,7 @@ module('Integration | Component | remaining-seats-badge', function (hooks) {
       .hasClass('uk-label-warning', 'badge uses warning variant');
     assert.ok(
       this.element.textContent.includes('8'),
-      'badge shows the seat count'
+      'badge shows the seat count',
     );
   });
 

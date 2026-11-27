@@ -19,7 +19,7 @@ export function setOffsetStickyHeader(elementId) {
     .getElementById(elementId)
     .setAttribute(
       'uk-sticky',
-      'offset: ' + settings.headerOffset + '; bottom: #top'
+      'offset: ' + settings.headerOffset + '; bottom: #top',
     );
 }
 

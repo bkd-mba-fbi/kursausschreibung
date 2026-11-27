@@ -23,19 +23,19 @@ module('Unit | Framework | date-helpers | isStillBookable', function () {
 
   test('is bookable when DateFrom is in the future', function (assert) {
     assert.true(
-      isStillBookable(makeEvent(daysFromToday(10), daysFromToday(-10)))
+      isStillBookable(makeEvent(daysFromToday(10), daysFromToday(-10))),
     );
   });
 
   test('is bookable when DateFrom is past but late registration is open', function (assert) {
     assert.true(
-      isStillBookable(makeEvent(daysFromToday(-10), daysFromToday(10)))
+      isStillBookable(makeEvent(daysFromToday(-10), daysFromToday(10))),
     );
   });
 
   test('is not bookable when DateFrom and SubscriptionDateTo are past', function (assert) {
     assert.false(
-      isStillBookable(makeEvent(daysFromToday(-10), daysFromToday(-5)))
+      isStillBookable(makeEvent(daysFromToday(-10), daysFromToday(-5))),
     );
   });
 
@@ -49,13 +49,13 @@ module('Unit | Framework | date-helpers | isStillBookable', function () {
 
   test('is bookable when DateFrom is today and SubscriptionDateTo is in the future', function (assert) {
     assert.true(
-      isStillBookable(makeEvent(daysFromToday(0), daysFromToday(10)))
+      isStillBookable(makeEvent(daysFromToday(0), daysFromToday(10))),
     );
   });
 
   test('is not bookable when DateFrom and SubscriptionDateTo are yesterday', function (assert) {
     assert.false(
-      isStillBookable(makeEvent(daysFromToday(-1), daysFromToday(-1)))
+      isStillBookable(makeEvent(daysFromToday(-1), daysFromToday(-1))),
     );
   });
 });

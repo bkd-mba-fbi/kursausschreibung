@@ -20,7 +20,7 @@ function makeEvent(overrides = {}) {
         Price: '120 CHF',
       },
     },
-    overrides
+    overrides,
   );
 }
 
@@ -50,7 +50,7 @@ module('Integration | Component | event-list-item', function (hooks) {
     assert.dom('h3').exists('a heading element is rendered');
     assert.ok(
       this.element.textContent.includes('Introduction to Testing'),
-      'event title from displayData.Designation appears in the heading'
+      'event title from displayData.Designation appears in the heading',
     );
   });
 
@@ -63,11 +63,11 @@ module('Integration | Component | event-list-item', function (hooks) {
     assert.ok(rows.length > 0, 'at least one detail row is rendered');
     assert.ok(
       this.element.textContent.includes('Bern'),
-      'Location field value appears in the detail rows'
+      'Location field value appears in the detail rows',
     );
     assert.ok(
       this.element.textContent.includes('120 CHF'),
-      'Price field value appears in the detail rows'
+      'Price field value appears in the detail rows',
     );
   });
 
@@ -79,7 +79,7 @@ module('Integration | Component | event-list-item', function (hooks) {
     assert.dom('.uk-label-warning').exists('subtitle badge element exists');
     assert.ok(
       this.element.textContent.includes('Noch Plätze frei'),
-      'subtitle text is rendered inside the badge'
+      'subtitle text is rendered inside the badge',
     );
   });
 
@@ -109,16 +109,16 @@ module('Integration | Component | event-list-item', function (hooks) {
     assert.strictEqual(
       cells[0].textContent.trim(),
       'Durchführung',
-      'label of the event text is used as field name'
+      'label of the event text is used as field name',
     );
     assert.strictEqual(
       cells[1].textContent.trim(),
       'Jahreskurs ohne Semesterbezug',
-      'memo of the event text is used as field value'
+      'memo of the event text is used as field value',
     );
     assert.notOk(
       this.element.textContent.includes('Key not found'),
-      'no translation is looked up for the event text'
+      'no translation is looked up for the event text',
     );
   });
 
@@ -132,7 +132,7 @@ module('Integration | Component | event-list-item', function (hooks) {
     assert.strictEqual(rows.length, 1, 'only the price is rendered');
     assert.ok(
       rows[0].textContent.includes('120 CHF'),
-      'the remaining row is the price'
+      'the remaining row is the price',
     );
   });
 });

@@ -19,7 +19,7 @@ function fakeLogin() {
     JSON.stringify({
       instance_id: appConfig.instanceId,
       culture_info: getLanguage(),
-    })
+    }),
   );
   setAccessToken(`header.${payload}.signature`);
   setTokenExpire(Date.now() + 60000);
@@ -76,7 +76,7 @@ function setFormFields(companyFields) {
 async function resolveCompanyAddress(
   owner,
   subscriptionDetails,
-  companyFields
+  companyFields,
 ) {
   setFormFields(companyFields);
 
@@ -140,7 +140,7 @@ module('Unit | Route | list/category/event/subscribe', function (hooks) {
       let result = await resolveCompanyAddress(
         this.owner,
         [makeDetail(SUBSCRIPTION_DETAIL_INVOICE_ADRESS, 'E')],
-        COMPANY_FIELDS
+        COMPANY_FIELDS,
       );
 
       assert.true(result.enableInvoiceAddress, 'invoice address is enabled');
@@ -151,7 +151,7 @@ module('Unit | Route | list/category/event/subscribe', function (hooks) {
       let result = await resolveCompanyAddress(
         this.owner,
         [makeDetail(SUBSCRIPTION_DETAIL_INVOICE_ADRESS, 'M')],
-        COMPANY_FIELDS
+        COMPANY_FIELDS,
       );
 
       assert.true(result.enableInvoiceAddress, 'invoice address is enabled');
@@ -162,7 +162,7 @@ module('Unit | Route | list/category/event/subscribe', function (hooks) {
       let result = await resolveCompanyAddress(
         this.owner,
         [makeDetail(SUBSCRIPTION_DETAIL_INVOICE_ADRESS, 'H')],
-        COMPANY_FIELDS
+        COMPANY_FIELDS,
       );
 
       assert.false(result.enableInvoiceAddress, 'invoice address is disabled');
@@ -173,7 +173,7 @@ module('Unit | Route | list/category/event/subscribe', function (hooks) {
       let result = await resolveCompanyAddress(
         this.owner,
         [makeDetail(10801, 'E')],
-        COMPANY_FIELDS
+        COMPANY_FIELDS,
       );
 
       assert.false(result.enableInvoiceAddress, 'invoice address is disabled');
@@ -191,13 +191,13 @@ module('Unit | Route | list/category/event/subscribe', function (hooks) {
       let result = await resolveCompanyAddress(
         this.owner,
         [makeDetail(SUBSCRIPTION_DETAIL_INVOICE_ADRESS, 'E')],
-        undefined
+        undefined,
       );
 
       assert.deepEqual(result.companyFields, [], 'template gets no fields');
       assert.true(
         result.enableInvoiceAddress,
-        'the AD alone still enables the invoice address'
+        'the AD alone still enables the invoice address',
       );
     });
   });
