@@ -18,7 +18,7 @@ function makeField(overrides = {}) {
         ],
       },
     },
-    overrides
+    overrides,
   );
 }
 
@@ -34,7 +34,7 @@ module('Integration | Component | input/input-dropdown', function (hooks) {
     assert.equal(
       select.getAttribute('name'),
       'Salutation',
-      'name matches field id'
+      'name matches field id',
     );
   });
 
@@ -52,7 +52,7 @@ module('Integration | Component | input/input-dropdown', function (hooks) {
             { Key: 'F', Value: 'Frau' },
           ],
         },
-      })
+      }),
     );
     await render(hbs`{{input/input-dropdown field=this.field}}`);
 

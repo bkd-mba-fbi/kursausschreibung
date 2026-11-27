@@ -7,5 +7,10 @@ let badgeFreeSeatsEnabled =
 
 export default class ListCategoryEventIndexController extends Controller {
   showBreadcrumbs = settings.showBreadcrumbs;
+  showAreaOfEducation = settings.showAreaOfEducation !== false;
   badgeFreeSeatsEnabled = badgeFreeSeatsEnabled;
+
+  get isTypeTwoSubscription() {
+    return this.model?.TypeOfSubscription === 2;
+  }
 }

@@ -12,4 +12,10 @@ window.kursausschreibung.appConfig = {
   useAutoLogin: true,
   // the scope of the application
   applicationScope: 'Public',
+  // optional: if consumer_id in the token matches this value (in the Evento-Portal 'portal'),
+  // the section "kursausschreibung" of the configuration entry WebM_SchoolAppNavigation
+  // (GET /Configurations/SchoolAppNavigation) is loaded. Every entry there replaces the entry
+  // with the same name in settings.js as a whole, missing entries stay from settings.js.
+  // If the request fails, the values from settings.js are used. Leave empty on school websites.
+  settingsFromBackendIfConsumer: '',
 };

@@ -13,7 +13,7 @@ function makeField(overrides = {}) {
       fileLabelBevorFileChoose: 'Datei auswählen',
       options: { required: false, disabled: false },
     },
-    overrides
+    overrides,
   );
 }
 
@@ -31,7 +31,7 @@ module('Integration | Component | input-file', function (hooks) {
     assert.strictEqual(
       input.getAttribute('name'),
       'Attachment',
-      'name matches field id'
+      'name matches field id',
     );
   });
 
@@ -47,7 +47,7 @@ module('Integration | Component | input-file', function (hooks) {
   test('renders a plain upload button when field is not required', async function (assert) {
     this.set(
       'field',
-      makeField({ options: { required: false, disabled: false } })
+      makeField({ options: { required: false, disabled: false } }),
     );
     await render(hbs`{{input/input-file field=this.field}}`);
 
@@ -59,7 +59,7 @@ module('Integration | Component | input-file', function (hooks) {
   test('renders a required upload button when field is required', async function (assert) {
     this.set(
       'field',
-      makeField({ options: { required: true, disabled: false } })
+      makeField({ options: { required: true, disabled: false } }),
     );
     await render(hbs`{{input/input-file field=this.field}}`);
 
@@ -71,7 +71,7 @@ module('Integration | Component | input-file', function (hooks) {
   test('file input is disabled when field option is disabled', async function (assert) {
     this.set(
       'field',
-      makeField({ options: { required: false, disabled: true } })
+      makeField({ options: { required: false, disabled: true } }),
     );
     await render(hbs`{{input/input-file field=this.field}}`);
 
@@ -125,7 +125,7 @@ module('Integration | Component | input-file', function (hooks) {
     assert.strictEqual(
       findAll('input[type="file"]').length,
       1,
-      'exactly one file input is present'
+      'exactly one file input is present',
     );
   });
 

@@ -1,5 +1,6 @@
 import Route from '@ember/routing/route';
 import uikit from 'uikit';
+import uikitIcons from 'uikit/dist/js/uikit-icons';
 import {
   init as initStore,
   getAllEvents,
@@ -7,15 +8,21 @@ import {
 } from 'kursausschreibung/framework/store';
 import { getDataToSubmit } from 'kursausschreibung/framework/storage';
 import { autoCheckForLogin } from 'kursausschreibung/framework/login-helpers';
+import { loadSchoolSettings } from 'kursausschreibung/framework/school-settings';
 import { setJsonLd } from '../framework/seo';
 
 export default class ApplicationRoute extends Route {
   beforeModel() {
+    // register the icon plugin (previously an `app.import` relying on the
+    // global UIkit instance)
+    uikit.use(uikitIcons);
+
     // set uikit scope
     uikit.container = '.uk-scope';
 
     // initialization
     return autoCheckForLogin() // get a valid access_token if we don't have one
+      .then(loadSchoolSettings) // settings of the school from WebM_SchoolAppNavigation (portal only)
       .then(initStore)
       .then(() => {
         // reroute to the confirmation page if there is data that has to be submitted
@@ -27,7 +34,7 @@ export default class ApplicationRoute extends Route {
             'list.category.event.confirmation',
             event.areaKey,
             event.categoryKey,
-            event.Id
+            event.Id,
           );
         }
       })

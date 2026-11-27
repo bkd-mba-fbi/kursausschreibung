@@ -7,6 +7,7 @@ import {
   getYMD,
 } from 'kursausschreibung/framework/date-helpers';
 import { setDataToSubmit } from 'kursausschreibung/framework/storage';
+import { addPlaceholders } from 'kursausschreibung/framework/form-helpers';
 import { getString } from 'kursausschreibung/framework/translate';
 import uikit from 'uikit';
 
@@ -85,6 +86,7 @@ function subscribe(form, self) {
   let eventId = self.args.event?.Id;
   let userSettings = self.args.userSettings;
   let showCompanyButtonOnly = self.args.showCompanyButtonOnly;
+  let showAddressInputs = self.args.showAddressInputs;
 
   // subscription
   let subscriptionData = {
@@ -94,7 +96,7 @@ function subscribe(form, self) {
   };
 
   let subscriptionDetailFieldset = form.querySelector(
-    '.subscription-detail-fields'
+    '.subscription-detail-fields',
   );
   let assocSubscriptionData = getFieldSetData([], subscriptionDetailFieldset);
 
@@ -122,6 +124,17 @@ function subscribe(form, self) {
           Value: value,
         });
     });
+
+  // 33707: hidden required details get a placeholder, so Evento accepts
+  // the subscription. confirmation.js clears them afterwards.
+  let hiddenDetails = addPlaceholders(
+    subscriptionData,
+    self.args.subscriptionDetailFields ?? [],
+    (field) =>
+      document
+        .getElementById('hidden' + field.id)
+        ?.classList.contains('uk-hidden'),
+  );
 
   //made a array of Files for upload to server
   let subscriptionFiles = [];
@@ -200,28 +213,32 @@ function subscribe(form, self) {
     'Zip',
   ];
 
-  // read address and companyAddress if we don't know the personId yet
-  if (showCompanyButtonOnly) {
-    // main address
+  // read the main address whenever its fieldset is rendered, which is the
+  // case for everyone who is not logged in. This must not depend on the
+  // company address button: an event without an editable AD 10895 shows no
+  // such button, but still needs the address to create the person.
+  if (showAddressInputs) {
     addressData = getFieldSetData(
       addressProperties,
-      form.querySelector('.address-fields')
-    );
-
-    // company address
-    companyAddressData = getFieldSetData(
-      companyAddressProperties,
-      form.querySelector('.company-address-fields')
+      form.querySelector('.address-fields'),
     );
 
     // set tableData for the main person
     tableData.fields = getTableData(self.args.fields, addressData);
+  }
+
+  // the company address only exists when its button is shown
+  if (showCompanyButtonOnly) {
+    companyAddressData = getFieldSetData(
+      companyAddressProperties,
+      form.querySelector('.company-address-fields'),
+    );
 
     // set tableData for the company address
     if (useCompanyAddress) {
       tableData.companyFields = getTableData(
         self.args.companyFields,
-        companyAddressData
+        companyAddressData,
       );
     }
   }
@@ -229,12 +246,12 @@ function subscribe(form, self) {
   // set tableData for subscriptionDetails
   tableData.subscriptionDetailFields = getTableData(
     self.args.subscriptionDetailFields,
-    assocSubscriptionData
+    assocSubscriptionData,
   );
 
   // read addresses for additional people
   additionalPeople = Array.from(
-    form.querySelectorAll('.additional-person-fields')
+    form.querySelectorAll('.additional-person-fields'),
   ).map((fieldset) => getFieldSetData(addressProperties, fieldset));
 
   // set tableData for additional people
@@ -254,6 +271,7 @@ function subscribe(form, self) {
     additionalPeople,
     tableData,
     subscriptionFiles,
+    hiddenDetails,
   });
 }
 

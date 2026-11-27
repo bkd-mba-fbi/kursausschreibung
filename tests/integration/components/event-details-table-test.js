@@ -17,7 +17,7 @@ function makeEvent(overrides = {}) {
       texts: [{ label: 'Hinweis', memo: 'Bitte pünktlich erscheinen' }],
       lessonsCollaps: false,
     },
-    overrides
+    overrides,
   );
 }
 
@@ -49,11 +49,11 @@ module('Integration | Component | event-details-table', function (hooks) {
     assert.ok(rows.length > 0, 'renders at least one detail row');
     assert.ok(
       this.element.textContent.includes('Max Muster'),
-      'leadership value is rendered'
+      'leadership value is rendered',
     );
     assert.ok(
       this.element.textContent.includes('120 CHF'),
-      'price value is rendered'
+      'price value is rendered',
     );
   });
 
@@ -62,18 +62,18 @@ module('Integration | Component | event-details-table', function (hooks) {
       'event',
       makeEvent({
         texts: [{ label: 'Wichtig', memo: 'Unterlagen mitbringen' }],
-      })
+      }),
     );
 
     await render(hbs`{{event-details-table event=this.event}}`);
 
     assert.ok(
       this.element.textContent.includes('Wichtig'),
-      'text label is rendered'
+      'text label is rendered',
     );
     assert.ok(
       this.element.textContent.includes('Unterlagen mitbringen'),
-      'text memo is rendered'
+      'text memo is rendered',
     );
   });
 });

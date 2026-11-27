@@ -165,7 +165,7 @@ export default class InputPostalCodeComponent extends Component {
     }
 
     const selected = this.suggestions.find(
-      (suggestion) => String(suggestion.Code) === trimmedValue
+      (suggestion) => String(suggestion.Code) === trimmedValue,
     );
 
     if (!selected) {

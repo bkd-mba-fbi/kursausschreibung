@@ -22,7 +22,7 @@ function ajax(
   relativeUrl,
   readableError = true,
   data = null,
-  file = false
+  file = false,
 ) {
   autoCheckForLogin();
   accessToken = getAccessToken();
@@ -81,19 +81,19 @@ function ajax(
 
 function post(relativeUrl, data) {
   return ajax('POST', relativeUrl, false, data).then(
-    (response) => response.data
+    (response) => response.data,
   );
 }
 
 function put(relativeUrl, data, file = false) {
   return ajax('PUT', relativeUrl, false, data, file).then(
-    (response) => response.data
+    (response) => response.data,
   );
 }
 
 function get(relativeUrl, readableError) {
   return ajax('GET', relativeUrl, readableError).then(
-    (response) => response.data
+    (response) => response.data,
   );
 }
 
@@ -102,6 +102,13 @@ function get(relativeUrl, readableError) {
  */
 export function getUserSettings() {
   return get('UserSettings/');
+}
+
+/**
+ * get the configuration entry WebM_SchoolAppNavigation of the school
+ */
+export function getSchoolAppNavigation() {
+  return get('Configurations/SchoolAppNavigation', false);
 }
 
 /**
@@ -183,7 +190,7 @@ export function getDropDownItems(type) {
   }
 
   return get('DropDownItems/' + type).then(
-    (response) => (dropDownItems[type] = response)
+    (response) => (dropDownItems[type] = response),
   );
 }
 
@@ -229,6 +236,20 @@ export function postSubscription(data) {
 }
 
 /**
+ * set the value of one subscription detail of an existing subscription
+ * @param {number} subscriptionId id of the subscription
+ * @param {object} data EventId, IdPerson, VssId and Value of the detail
+ */
+export function putSubscriptionDetail(subscriptionId, data) {
+  return put(`SubscriptionDetails/${subscriptionId}_${data.VssId}`, {
+    EventId: data.EventId,
+    IdPerson: data.IdPerson,
+    VssId: data.VssId,
+    Value: data.Value,
+  });
+}
+
+/**
  * Post Files to SubscriptionDetails
  * @param {object} data of the subscription files
  * @param {image} image des files Base64Codierung
@@ -241,8 +262,8 @@ export function postSubscriptionDetailsFiles(data, file) {
       let arrayBuffer = base64ToArrayBuffer(
         file.fileAsBase64.substring(
           file.fileAsBase64.indexOf('base64,') + 7,
-          file.fileAsBase64.length
-        )
+          file.fileAsBase64.length,
+        ),
       );
       return put(getCorrectApiUrl(locationHeader), arrayBuffer, true);
     })

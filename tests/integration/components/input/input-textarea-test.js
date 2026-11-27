@@ -10,7 +10,7 @@ function makeField(overrides = {}) {
       placeholder: '',
       options: { required: false, disabled: false, autocomplete: 'off' },
     },
-    overrides
+    overrides,
   );
 }
 
@@ -31,7 +31,7 @@ module('Integration | Component | input/input-textarea', function (hooks) {
       'field',
       makeField({
         options: { required: false, disabled: true, autocomplete: 'off' },
-      })
+      }),
     );
     await render(hbs`{{input/input-textarea field=this.field}}`);
 

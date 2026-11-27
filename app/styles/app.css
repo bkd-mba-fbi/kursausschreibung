@@ -8,6 +8,23 @@
   min-height: 300px;
 }
 
+/* the module fills the height of .uk-scope, so the version footer is at the bottom */
+.uk-scope #kursausschreibung-root {
+  display: flex;
+  flex-direction: column;
+  min-height: inherit;
+}
+
+.uk-scope .kursausschreibung-app {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.uk-scope .kursausschreibung-version {
+  margin-top: auto;
+}
+
 /* navigation */
 .uk-scope .uk-navbar-container:not(.uk-navbar-transparent) {
   background: transparent;

@@ -1,0 +1,19 @@
+{{#if this.installed}}
+  {{#if this.target}}
+    {{#in-element this.target insertBefore=null}}
+      Kursausschreibung {{this.installed}}
+      {{#if this.latest}}
+        ·
+        <a href={{this.latest.url}} target="_blank" rel="noopener noreferrer">{{this.newVersionText}}</a>
+      {{/if}}
+    {{/in-element}}
+  {{else}}
+    <footer class="kursausschreibung-version uk-width-1-1 uk-margin-top uk-padding-small uk-text-small uk-text-muted uk-text-right">
+      Kursausschreibung {{this.installed}}
+      {{#if this.latest}}
+        ·
+        <a href={{this.latest.url}} target="_blank" rel="noopener noreferrer">{{this.newVersionText}}</a>
+      {{/if}}
+    </footer>
+  {{/if}}
+{{/if}}

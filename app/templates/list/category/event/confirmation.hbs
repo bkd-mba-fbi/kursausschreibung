@@ -20,15 +20,15 @@
 </ol>
 <h2>
   {{#if this.model.statusIsRed}}
-    {{translate key="thankYouWaitingList"}}
+    {{translate key="thankYouWaitingList" event=this.model.event}}
   {{else}}
-    {{translate key="thankYou"}}
+    {{translate key="thankYou" event=this.model.event}}
   {{/if}}
 </h2>
 
-<p>{{translate key="youWillReceiveAConfirmationEMail"}}</p>
+<p>{{translate key="youWillReceiveAConfirmationEMail" event=this.model.event}}</p>
 
-<p>{{translate key="officeAddress"}}</p>
+<p>{{translate key="officeAddress" event=this.model.event}}</p>
 
 {{#if this.model.tableData.fields}}
   <h2>{{translate key="yourDetails"}}</h2>

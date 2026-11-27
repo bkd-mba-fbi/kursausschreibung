@@ -22,7 +22,7 @@ function makeEvent(overrides = {}) {
       Id: 101,
       FreeSeats: 5,
     },
-    overrides
+    overrides,
   );
 }
 
@@ -104,6 +104,87 @@ module('Integration | Component | subscription-form', function (hooks) {
       .exists('login hint is visible for logged-in users');
   });
 
+  // 33645: the button needs showCompanyButtonOnly and companyFields together
+  test('shows company address button when both company fields and the AD are there', async function (assert) {
+    this.set('event', makeEvent());
+    this.set('subscribe', () => {});
+    this.set('fields', []);
+    this.set('companyFields', [makeField('Company', 'Firma')]);
+    this.set('subscriptionDetailFields', []);
+    this.set('additionalPeopleFields', []);
+
+    await render(hbs`
+      {{subscription-form
+        event=this.event
+        subscribe=this.subscribe
+        showCompanyButtonOnly=true
+        enableInvoiceAddress=true
+        fields=this.fields
+        companyFields=this.companyFields
+        subscriptionDetailFields=this.subscriptionDetailFields
+        additionalPeopleFields=this.additionalPeopleFields
+      }}
+    `);
+
+    assert
+      .dom('button[name="useCompanyAddress"]')
+      .exists('company address button is shown');
+    assert
+      .dom('fieldset.company-address-fields')
+      .exists('company address fieldset is rendered');
+  });
+
+  test('hides company address button without company fields', async function (assert) {
+    this.set('event', makeEvent());
+    this.set('subscribe', () => {});
+    this.set('fields', []);
+    this.set('companyFields', []);
+    this.set('subscriptionDetailFields', []);
+    this.set('additionalPeopleFields', []);
+
+    await render(hbs`
+      {{subscription-form
+        event=this.event
+        subscribe=this.subscribe
+        showCompanyButtonOnly=true
+        enableInvoiceAddress=true
+        fields=this.fields
+        companyFields=this.companyFields
+        subscriptionDetailFields=this.subscriptionDetailFields
+        additionalPeopleFields=this.additionalPeopleFields
+      }}
+    `);
+
+    assert
+      .dom('button[name="useCompanyAddress"]')
+      .doesNotExist('no button without company fields');
+  });
+
+  test('hides company address button when showCompanyButtonOnly is false', async function (assert) {
+    this.set('event', makeEvent());
+    this.set('subscribe', () => {});
+    this.set('fields', []);
+    this.set('companyFields', [makeField('Company', 'Firma')]);
+    this.set('subscriptionDetailFields', []);
+    this.set('additionalPeopleFields', []);
+
+    await render(hbs`
+      {{subscription-form
+        event=this.event
+        subscribe=this.subscribe
+        showCompanyButtonOnly=false
+        fields=this.fields
+        companyFields=this.companyFields
+        subscriptionDetailFields=this.subscriptionDetailFields
+        additionalPeopleFields=this.additionalPeopleFields
+      }}
+    `);
+
+    assert
+      .dom('button[name="useCompanyAddress"]')
+      .doesNotExist('no button without an editable AD 10895');
+  });
+
   test('shows add person button when allowMultiplePeople is enabled', async function (assert) {
     this.set('event', makeEvent({ FreeSeats: 4 }));
     this.set('subscribe', () => {});
@@ -126,7 +207,7 @@ module('Integration | Component | subscription-form', function (hooks) {
 
     assert.ok(
       this.element.textContent.includes('Person'),
-      'multiple-person area is rendered'
+      'multiple-person area is rendered',
     );
     assert
       .dom('button.uk-button-default')

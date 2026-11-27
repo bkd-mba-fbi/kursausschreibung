@@ -1,4 +1,8 @@
 window.kursausschreibung = window.kursausschreibung || {};
+// Evento-Portal: these values are the default for all schools. Per school, the section
+// "kursausschreibung" in the configuration entry WebM_SchoolAppNavigation overrides single
+// entries as a whole (see settingsFromBackendIfConsumer in appConfig.js). Entries with
+// functions (lampIsGreen, lampIsChartreuse, lampIsYellow, lampIsRed) can only be set here.
 window.kursausschreibung.settings = {
   // only show matching events (expects array also if one value, [123]) (optional)
   initialListFilters: {
@@ -11,6 +15,11 @@ window.kursausschreibung.settings = {
   },
 
   // show events which have already started, but not yet ended
+  // | value | event is shown up to and including           |
+  // |-------|----------------------------------------------|
+  // | false | the later of DateFrom and SubscriptionDateTo |
+  // | true  | DateTo (TimeTo is ignored)                   |
+  // events without DateFrom (false) or DateTo (true) are always shown
   showStartedEvents: false,
 
   // items per page on the event-list (required)
@@ -28,6 +37,9 @@ window.kursausschreibung.settings = {
   //  + "Time" (combination of TimeFrom and TimeTo)
   // a translation has to be provided for each of the values
   // (the key of the translation has to be in camelCase)
+  // * "EventText{Number}" e.g. "EventText5" (only for eventListFields)
+  //   shows label and memo of the event-text with this number, no translation needed.
+  //   the row is hidden if the event has no such text in the active language
   eventListTitle: 'Designation',
   eventListFields: [
     'SubscriptionFrom',
@@ -277,9 +289,6 @@ window.kursausschreibung.settings = {
     },
   },
 
-  // set this to true to add a button to change the langauge (optional)
-  showLanguageButton: true,
-
   // callback functions for status-lamps (optional)
   // these get executed in order to determine the status of an event
   // the parameters of the callback are isInSubscriptionRange and event
@@ -317,8 +326,14 @@ window.kursausschreibung.settings = {
   // it will overwrite null values in the post to the person endpoint (optional)
   personDefaultValue: { CountryId: 'CH' },
 
+  // set this to true to add a button to change the langauge (optional)
+  showLanguageButton: true,
+
   // set this to true to only show events with matching language (optional)
   languageOfInstructionFilter: false,
+
+  // event IDs that are shown in both languages (expects array also if one value, [123]) (optional)
+  bilingualEventIds: [],
 
   // Header Offset for scrolling
   headerOffset: 133,
@@ -329,4 +344,22 @@ window.kursausschreibung.settings = {
 
   //if in designation this sign. Module will add event subtitle as uk-label-warning
   eventSubtitle: '>',
+
+  // Mittelschulen: show only the subject part of the designation (optional, default false)
+  // Convention: Stufe-Semester-Fach-Fächergruppe-Schuljahr-Klassen-freier Term
+  // e.g. "14-2-Chor-FF-2025/26-26bc27aPMVDA2023af" => "Chor-FF"
+  //      "1-1-Deutsch-S1-2022/23-26ab"             => "Deutsch-S1"
+  // Designations not matching the convention stay unchanged.
+  trimDesignation: false,
+
+  // show the navigation level area of education (Ausbildung / Weiterbildung) (optional, default true)
+  // false: no area navigation and no area in the breadcrumb, the categories of all areas
+  // are shown directly (categories with the same name only once). Links like
+  // #/ausbildung/... and #/uid/{id} still work.
+  showAreaOfEducation: true,
+
+  // URL of version.json with the latest released version ({ "version": "3.7.0", "url": "..." }) (optional)
+  // If it is newer than the installed version, the footer shows a hint with a link.
+  // default: https://bkd-mba-fbi.github.io/kursausschreibung/version.json
+  // latestVersionUrl: 'version-test.json',
 };

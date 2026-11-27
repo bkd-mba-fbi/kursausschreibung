@@ -10,12 +10,13 @@ import {
 } from './api';
 import { isGreen, isChartreuse, isYellow, isRed } from './status';
 import ObjectProxy from '@ember/object/proxy';
+import { set } from '@ember/object';
 import {
   formatDate,
   combineDate,
   isInSubscriptionRange,
   removeMinutes,
-  eventStarted,
+  isStillBookable,
   eventEnded,
 } from './date-helpers';
 import { all } from 'rsvp';
@@ -76,6 +77,11 @@ export function init() {
     // filter events
     events = filterEvents(events, language, eventCodes);
 
+    // shorten designations before sorting, so sorting uses the short designation
+    if (settings.trimDesignation === true) {
+      events.forEach(applyTrimDesignation);
+    }
+
     // sort events
     var sortAs = getSortAs();
     if (sortAs === null) {
@@ -101,11 +107,17 @@ export function init() {
     // add codes to events (it's important to filter)
     addCodesToEvents(eventCodes);
 
+    // hide the area of education: all categories in one area
+    if (settings.showAreaOfEducation === false) {
+      mergeAreas(events.map((event) => eventsById[event.Id]));
+    }
+
     // sort areaKeys
     eventsByArea.areaKeys = Object.keys(eventsByArea.areas).sort();
     eventsByArea.moreOneAreaKeys =
-      eventsByArea.areaKeys.length === 1 &&
-      settings.eventCategoryDropdown === false
+      (eventsByArea.areaKeys.length === 1 &&
+        settings.eventCategoryDropdown === false) ||
+      settings.showAreaOfEducation === false
         ? false
         : true;
 
@@ -113,8 +125,8 @@ export function init() {
     eventsByArea.areaKeys.forEach(
       (area) =>
         (eventsByArea.areas[area].categoryKeys = Object.keys(
-          eventsByArea.areas[area].categories
-        ).sort())
+          eventsByArea.areas[area].categories,
+        ).sort()),
     );
 
     initialized = true;
@@ -168,9 +180,25 @@ function addTextsToEvents(eventTexts, language) {
   eventsById.forEach(
     (event) =>
       (event.texts = event.texts.filter(
-        (text) => text.label !== null && text.memo !== null
-      ))
+        (text) => text.label !== null && text.memo !== null,
+      )),
   );
+
+  // make the texts addressable for settings.eventListFields
+  eventsById.forEach(addEventTextFields);
+}
+
+/**
+ * add the properties EventText{Number} (memo) and EventText{Number}Label (label)
+ * for every text of the event to its displayData
+ * (the event itself is a copy of the content of displayData)
+ * @param {object} event event with texts and displayData
+ */
+export function addEventTextFields(event) {
+  event.texts.forEach((text) => {
+    set(event.displayData, 'EventText' + text.id, text.memo);
+    set(event.displayData, 'EventText' + text.id + 'Label', text.label);
+  });
 }
 
 /**
@@ -217,7 +245,7 @@ function addLessonsToEvents(lessons) {
 
   Object.values(eventsById).forEach(function (event) {
     event.lessons.sort(
-      (a, b) => new Date(a.DateTimeFrom) - new Date(b.DateTimeFrom)
+      (a, b) => new Date(a.DateTimeFrom) - new Date(b.DateTimeFrom),
     );
     event.lessonsCollaps = event.lessons.length > settings.howManyLessonsShow;
   });
@@ -237,7 +265,7 @@ function addCodesToEvents(eventCodes) {
       codeIds.push(code.CodeId);
       let codeName =
         getString(prefix + code.CodeId).indexOf(
-          '<span style="color:red;">Key not found:'
+          '<span style="color:red;">Key not found:',
         ) >= 0
           ? code.Code
           : getString(prefix + code.CodeId);
@@ -271,13 +299,13 @@ function addCodesToEvents(eventCodes) {
  * @param {object[]} events events returned by the API
  * @param {string} language the active language
  */
-function filterEvents(events, language, eventCodes) {
+export function filterEvents(events, language, eventCodes) {
   // filter out events with undesired parameters
 
   // backwards compatibility fallback for single hostId filter
   if (settings.hostIds instanceof Array) {
     events = events.filter(
-      (event) => settings.hostIds.indexOf(event.HostId) !== -1
+      (event) => settings.hostIds.indexOf(event.HostId) !== -1,
     );
   }
   // or use initialListFilters array
@@ -285,7 +313,7 @@ function filterEvents(events, language, eventCodes) {
     if (settings.initialListFilters.hostIds instanceof Array) {
       events = events.filter(
         (event) =>
-          settings.initialListFilters.hostIds.indexOf(event.HostId) !== -1
+          settings.initialListFilters.hostIds.indexOf(event.HostId) !== -1,
       );
     }
 
@@ -293,8 +321,8 @@ function filterEvents(events, language, eventCodes) {
       events = events.filter(
         (event) =>
           settings.initialListFilters.eventCategoryIds.indexOf(
-            event.EventCategoryId
-          ) !== -1
+            event.EventCategoryId,
+          ) !== -1,
       );
     }
 
@@ -302,8 +330,8 @@ function filterEvents(events, language, eventCodes) {
       events = events.filter(
         (event) =>
           settings.initialListFilters.eventLevelIds.indexOf(
-            event.EventLevelId
-          ) !== -1
+            event.EventLevelId,
+          ) !== -1,
       );
     }
 
@@ -311,22 +339,22 @@ function filterEvents(events, language, eventCodes) {
       events = events.filter(
         (event) =>
           settings.initialListFilters.eventTypeIds.indexOf(
-            event.EventTypeId
-          ) !== -1
+            event.EventTypeId,
+          ) !== -1,
       );
     }
 
     if (settings.initialListFilters.statusIds instanceof Array) {
       events = events.filter(
         (event) =>
-          settings.initialListFilters.statusIds.indexOf(event.StatusId) !== -1
+          settings.initialListFilters.statusIds.indexOf(event.StatusId) !== -1,
       );
     }
 
     if (settings.initialListFilters.codeIds instanceof Array) {
       eventCodes = eventCodes.filter(
         (code) =>
-          settings.initialListFilters.codeIds.indexOf(code.CodeId) !== -1
+          settings.initialListFilters.codeIds.indexOf(code.CodeId) !== -1,
       );
       let codes = [];
       eventCodes.forEach((eventcode) => {
@@ -340,11 +368,14 @@ function filterEvents(events, language, eventCodes) {
   if (settings.languageOfInstructionFilter) {
     events = events.filter(
       (event) =>
-        event.LanguageOfInstruction === 'Bilingue' ||
         (event.LanguageOfInstruction === '1' && language === 'de-CH') ||
         (event.LanguageOfInstruction === 'Deutsch' && language === 'de-CH') ||
         (event.LanguageOfInstruction === '2' && language === 'en-US') ||
-        (event.LanguageOfInstruction === 'Französisch' && language === 'en-US')
+        (event.LanguageOfInstruction === 'Französisch' &&
+          language === 'en-US') ||
+        event.LanguageOfInstruction === 'Bilingue' ||
+        (Array.isArray(settings.bilingualEventIds) &&
+          settings.bilingualEventIds.includes(event.Id)),
     );
   }
 
@@ -352,11 +383,47 @@ function filterEvents(events, language, eventCodes) {
     // Filter out events which have not ended yet
     events = events.filter((event) => !eventEnded(event));
   } else {
-    // Default behaviour, filter out events which have started
-    events = events.filter((event) => eventStarted(event));
+    // Default behaviour, only show events that can still be booked
+    events = events.filter((event) => isStillBookable(event));
   }
 
   return events;
+}
+
+// Mittelschul convention: Stufe-Semester-Fach-Fächergruppe-Schuljahr-Klassen-freier Term
+const DESIGNATION_PATTERN = /^\d+-\d+-(.+?)-\d{4}\/\d{2}(-.*)?$/;
+
+/**
+ * returns only the subject part of a designation following the
+ * Mittelschul convention, e.g. "14-2-Chor-FF-2025/26-26bc" => "Chor-FF".
+ * Designations not matching the convention are returned unchanged.
+ * @param {string} designation
+ */
+export function trimDesignation(designation) {
+  if (typeof designation !== 'string') {
+    return designation;
+  }
+  const match = designation.match(DESIGNATION_PATTERN);
+  return match ? match[1] : designation;
+}
+
+/**
+ * shortens event.Designation (settings.trimDesignation).
+ * a subtitle (settings.eventSubtitle) is kept and only the part
+ * before it is shortened.
+ * @param {object} event event returned by the API
+ */
+export function applyTrimDesignation(event) {
+  const separator = settings.eventSubtitle;
+  if (typeof event.Designation !== 'string') {
+    return;
+  }
+  if (separator && event.Designation.includes(separator)) {
+    const [main, ...rest] = event.Designation.split(separator);
+    event.Designation = [trimDesignation(main), ...rest].join(separator);
+  } else {
+    event.Designation = trimDesignation(event.Designation);
+  }
 }
 
 /**
@@ -386,6 +453,46 @@ function prepareEvent(event) {
 
   // put event into associative arrays
   putIntoAssocArrays(event);
+}
+
+/**
+ * replaces all areas of education with one area (settings.showAreaOfEducation).
+ * categories with the same key are merged, so they appear only once.
+ * the area key of the merged area is the first area key, the URLs of
+ * the other areas still work (see routes/list.js).
+ * @param {object[]} events all prepared events in sort order
+ */
+export function mergeAreas(events) {
+  let areaKeys = Object.keys(eventsByArea.areas).sort();
+
+  if (areaKeys.length === 0) {
+    return;
+  }
+
+  let merged = {
+    name: '',
+    key: areaKeys[0],
+    events: [],
+    categories: {},
+    categoryKeys: [],
+  };
+
+  events.forEach((event) => {
+    set(event, 'areaKey', merged.key);
+    merged.events.push(event);
+
+    let categoryKey = event.categoryKey;
+    if (!merged.categories.hasOwnProperty(categoryKey)) {
+      merged.categories[categoryKey] = {
+        name: event.EventCategory,
+        key: categoryKey,
+        events: [],
+      };
+    }
+    merged.categories[categoryKey].events.push(event);
+  });
+
+  eventsByArea.areas = { [merged.key]: merged };
 }
 
 /**
@@ -443,7 +550,7 @@ function putIntoAssocArrays(event) {
               categoryKey +
               '/' +
               event.Id +
-              '/subscribe'
+              '/subscribe',
           );
   }
 }
@@ -559,7 +666,7 @@ function addPropertiesToEvent(event) {
   // add event.Time
   if (typeof event.TimeFrom === 'string' && typeof event.TimeTo === 'string') {
     event.Time = `${removeMinutes(event.TimeFrom)} - ${removeMinutes(
-      event.TimeTo
+      event.TimeTo,
     )}`;
   }
 }

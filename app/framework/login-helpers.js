@@ -44,7 +44,7 @@ function isLoggedIn() {
  * parse accessToken and return the JWT payload
  * @param {string} accessToken the accessToken
  */
-function parseJWT(accessToken) {
+export function parseJWT(accessToken) {
   return JSON.parse(atob(accessToken.split('.')[1]));
 }
 

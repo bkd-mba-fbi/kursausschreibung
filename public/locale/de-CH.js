@@ -9,6 +9,7 @@ window.kursausschreibung.locale['de-CH'] = {
     'Kasernenstrasse 27<br>Postfach<br>3000 Bern 22<br>Telefon: <a href="tel:0316338700"> 031 633 87 00</a><br><br>',
   search: 'Suche...',
   legend: 'Legende',
+  newVersionAvailable: 'Neue Version {0} verfügbar',
   noResults: 'Keine Ergebnisse',
   greenLamp: 'Freie Plätze',
   chartreuseLamp: 'Garantierte Durchführung',
@@ -27,7 +28,7 @@ window.kursausschreibung.locale['de-CH'] = {
   subscribeWithLogin: 'Anmelden mit Login',
   back: 'zurück',
   backToCourses: 'Zurück zur Übersicht',
-  thankYou: 'Besten Dank für Ihre Anmeldung',
+  thankYou: 'Besten Dank für Ihre Anmeldung an {Designation}.',
   thankYouWaitingList: 'Besten Dank für Ihre Anmeldung auf die Warteliste.',
   youWillReceiveAConfirmationEMail:
     'Sie erhalten eine Anmeldebestätigung per E-Mail.',
