@@ -3,19 +3,16 @@ import config from 'kursausschreibung/config/environment';
 import * as QUnit from 'qunit';
 import { setApplication } from '@ember/test-helpers';
 import { setup } from 'qunit-dom';
-import { start } from 'ember-qunit';
+import { start as qunitStart, setupEmberOnerrorValidation } from 'ember-qunit';
 
-// Classic ember-cli: load test modules via the AMD require global (loader.js).
-// ember-qunit/test-loader cannot be bundled through webpack in classic builds.
-// eslint-disable-next-line no-undef
-Object.keys(requirejs.entries).forEach((key) => {
-  if (key.startsWith('kursausschreibung/tests/') && key.endsWith('-test')) {
-    requirejs(key);
-  }
-});
+// The test modules are imported by tests/index.html (import.meta.glob)
+// before start() is called.
+export function start() {
+  setApplication(Application.create(config.APP));
 
-setApplication(Application.create(config.APP));
+  setup(QUnit.assert);
 
-setup(QUnit.assert);
+  setupEmberOnerrorValidation();
 
-start();
+  qunitStart();
+}

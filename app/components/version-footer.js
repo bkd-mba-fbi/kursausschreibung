@@ -1,6 +1,5 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { getOwner } from '@ember/owner';
 import {
   LATEST_VERSION_URL,
   cleanVersion,
@@ -24,8 +23,8 @@ export default class VersionFooterComponent extends Component {
   constructor(owner, args) {
     super(owner, args);
 
-    // the version is written into app.js by the build (ember-cli-app-version)
-    this.installed = cleanVersion(getOwner(this).application?.version);
+    // the version of package.json is written into app.js by the build (vite.config.mjs)
+    this.installed = cleanVersion(import.meta.env.APP_VERSION);
 
     // if the page has a footer with this element, the version is shown there,
     // otherwise it is shown as the last line of the module (e.g. in the portal iframe)
