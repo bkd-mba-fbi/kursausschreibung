@@ -85,6 +85,10 @@ Make use of the many generators for code, try `ember help generate` for more det
 * `npm run build` (production: exactly `dist/assets/app.js` and `dist/assets/app.css`, see `vite.config.mjs`)
 * `npx vite build --mode development` (unminified, with tests)
 
+### Dependency Updates
+
+Dependabot opens update pull requests against `develop` every Monday. Owner, weekly routine and deadlines for security alerts: [wiki/dependabot-prozess.md](wiki/dependabot-prozess.md).
+
 ## Further Reading / Useful Links
 
 * [ember.js](https://emberjs.com/)
